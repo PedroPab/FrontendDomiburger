@@ -9,6 +9,8 @@ import "./index.css";
 import About from "./components/About";
 import App from "./App";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const router = createBrowserRouter([
   {
     path: "/",
