@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
-import { NavbarComponent } from './components/Navbar';
 
 const MyPage = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -24,11 +23,8 @@ const MyPage = () => {
           </Button>
         </Container>
       </Navbar>
+      hola
 
-<NavbarComponent 
-darkMode={darkMode}
-  toggleTheme={toggleTheme}
-/>
 
 
       <Container className="mt-4">
