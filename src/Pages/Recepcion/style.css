@@ -1,0 +1,8 @@
+/* Asegura que html y body ocupen toda la altura disponible */
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
