@@ -8,11 +8,10 @@ import { TotalPrecio } from '../TotalPrecio';
 import { ListButtonModalPedido } from '../ListButtonModalPedido';
 
 
-const OrderCard = ({
-  dataPedido
-}) => {
+const OrderCard = ({ dataPedido }) => {
   return (
     <Card
+      className='mb-3'
       style={{
         width: '20rem'
       }}
