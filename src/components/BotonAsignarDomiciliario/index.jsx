@@ -13,11 +13,12 @@ const BotonDomiciliario = ({ idDomiciliario, nameDomiciliario }) => {
 
   return (
     <>
-      <Button size="" variant="outline-success" onClick={handleShowModalAsignarDomiciliario}>{nameDomiciliario}</Button>
+      <Button size="" variant="outline-warning" onClick={handleShowModalAsignarDomiciliario}>{nameDomiciliario}</Button>
 
       <ModalAsignarPedido
         show={showModalAsignarDomiciliario}
         handleClose={handleCloseModalAsignarDomiciliario}
+        idDomiciliario={idDomiciliario}
         data={{}}
       />
     </>

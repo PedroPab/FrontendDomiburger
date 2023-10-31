@@ -8,9 +8,7 @@ import './style.css'
 import { ColsPedidos } from '../../components/ColsPedidos';
 
 const Recepcion = () => {
-
   const context = useContext(MiContexto)
-
 
   return (
     <>
@@ -19,17 +17,12 @@ const Recepcion = () => {
           modoOscuro={context.modoOscuro}
           alternarModo={context.alternarModo}
         />
-
-        <Container fluid >
-
-
+        <Container fluid  >
           <RowListCol >
             <ColsPedidos
               pedidos={context.items ? context.items : []}
             />
           </RowListCol>
-
-
         </Container>
       </Layout >
     </>

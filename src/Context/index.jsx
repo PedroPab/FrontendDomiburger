@@ -31,6 +31,16 @@ export const ContextProvider = ({ children }) => {
       }
     };
 
+    // setInterval(() => {
+    //   fetch(`${apiUrl}/api/pedidos/historialDia`, options)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       console.log(data, '<=data');
+    //       return data
+    //     })
+    //     .then(data => setItems(data.body))
+    // }, 800000)
+
     fetch(`${apiUrl}/api/pedidos/historialDia`, options)
       .then(response => response.json())
       .then(data => {
@@ -38,6 +48,7 @@ export const ContextProvider = ({ children }) => {
         return data
       })
       .then(data => setItems(data.body))
+
   }, [])
 
 

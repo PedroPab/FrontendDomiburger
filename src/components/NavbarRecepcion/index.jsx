@@ -6,7 +6,7 @@ import logo from './../../assets/logo.png';
 
 const NavBar = ({ modoOscuro, alternarModo }) => {
   return (
-    <Navbar expand="lg">
+    <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'light' : 'dark'}  >
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img

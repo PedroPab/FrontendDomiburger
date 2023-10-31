@@ -1,8 +1,14 @@
 import { Button, ButtonGroup } from 'react-bootstrap';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useContext } from 'react'
+import { MiContexto } from '../../Context'
 
+import { traladarPedidoDeEstado } from './../../Utils/utilsApi'
+import { listaEstados } from '../../Utils/listEstados';
 
 const BotonAccionPedido = ({ dataPedido }) => {
+  const context = useContext(MiContexto)
+
   //miramos cual es el la accion que se va ha hacer 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -14,62 +20,49 @@ const BotonAccionPedido = ({ dataPedido }) => {
     handleToggle()
     //ejecutamos la accion  del boton 
     console.log(`el pedido ejecuta la funcion para el estado del id ${dataPedido.id} con el estado ${dataPedido.estado}`);
+    switchaFunctionMoviEstate({ id: dataPedido.id, estado: dataPedido.estado }, context)
+
+
   }
   return (
     <>
       {isVisible ? (
-        <Button size="" variant="outline-secondary" onClick={handleToggle} >
+        <Button size="" variant="outline-success" onClick={handleToggle} >
           {eventoBtn(dataPedido.estado)}
         </Button>
       ) : (
         <ButtonGroup vertical>
-          <Button size="" variant="outline-secondary" onClick={activarAccion}>Confirmar</Button>
-          <Button size="" variant="outline-secondary" onClick={handleToggle}>Cancelar</Button>
+          <Button size="" variant="outline-success" onClick={activarAccion}>Confirmar</Button>
+          <Button size="" variant="outline-danger" onClick={handleToggle}>Cancelar</Button>
         </ButtonGroup>
       )}
     </>
   );
 }
 
-function switchaFunctionMoviEstate(estado, id) {
-  let rta
+function switchaFunctionMoviEstate({ id, estado }, context) {
 
-  switch (estado) {
-    case 'PendienteConfimacion':
-      rta = PendienteConfimacion(id)
+  // por motivos de las desiciones del disenador de la api (yo) se ponen  el esto al que se va  a poner , y en minusculas , proximo a coreeccion
+  const estadoAEnviar = listaEstados[listaEstados.findIndex(e => e.name == estado) + 1].name
+  //ejecutamos el trapaso
+  traladarPedidoDeEstado({ id, estado: estadoAEnviar })
+    .then(data => { console.log(`la data del botonn `, data); return data })
+    .then(data => {
+      //remplazamos el pedido de nuetra lista de pedidos
+      const pedidoIndex = context.items.findIndex(pedido => pedido.id == data.id)
 
-      break;
-    case 'Calientes':
-    case 'Caliente':
-      rta = preparar(id)
+      if (!pedidoIndex || pedidoIndex < 0) {
+        console.log(`ocurrio un error , no esta el pediod en la lista`);
+      }
+      const newItems = [...context.items]
+      newItems[pedidoIndex] = { data: data, ref: undefined }
 
-      break;
-    case 'Preparando':
-      rta = espera(id)
+      context.setItems(newItems)
+    })
+    .catch(error => { console.error(error, 'No se pudo mandar corectamente el pedido'); return error })
+    .catch()
 
-      break;
-    case 'Espera':
-      rta = despachar(id)
-
-      break;
-    case 'Despachados':
-      rta = entregado(id)
-
-      break;
-    case 'Entregados':
-      rta = facturado(id)
-
-      break;
-    case 'PendieteTransferencia':
-      rta = facturado(id)
-
-      break;
-
-    default:
-      break;
-  }
-  return rta
-
+  return
 }
 
 

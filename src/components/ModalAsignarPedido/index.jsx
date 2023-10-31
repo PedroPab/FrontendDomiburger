@@ -1,6 +1,6 @@
 import { Modal, Button } from 'react-bootstrap';
 
-const ModalAsignarPedido = ({ show, handleClose }) => {
+const ModalAsignarPedido = ({ show, handleClose, idDomiciliario }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -8,6 +8,7 @@ const ModalAsignarPedido = ({ show, handleClose }) => {
       </Modal.Header>
       <Modal.Body>
         Contenido del modal...
+        {idDomiciliario}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
