@@ -6,13 +6,20 @@ import RowListCol from "../../components/RowListCol";
 import Layout from "../../components/Layout";
 import './style.css'
 import { ColsPedidos } from '../../components/ColsPedidos';
+import { ErrorAlert } from "../../components/ErrorAlert"
 
 const Recepcion = () => {
   const context = useContext(MiContexto)
 
+  if (context.tokenLogin) {
+    console.log(context.tokenLogin);
+    console.log('hoal');
+  }
+
   return (
     <>
       <Layout>
+
         <NavbarRecepcion
           modoOscuro={context.modoOscuro}
           alternarModo={context.alternarModo}
@@ -24,6 +31,8 @@ const Recepcion = () => {
             />
           </RowListCol>
         </Container>
+        <ErrorAlert />
+
       </Layout >
     </>
   );

@@ -1,10 +1,12 @@
 import { Button, ButtonGroup } from 'react-bootstrap';
-import { useState } from 'react';
-import { useContext } from 'react'
+import { useState, useContext } from 'react';
 import { MiContexto } from '../../Context'
 
 import { traladarPedidoDeEstado } from './../../Utils/utilsApi'
 import { listaEstados } from '../../Utils/listEstados';
+import { agregarAlerta, retirarAlerta } from '../../Utils/alert';
+import { makeid } from '../../Utils/makeId';
+
 
 const BotonAccionPedido = ({ dataPedido }) => {
   const context = useContext(MiContexto)
@@ -50,6 +52,8 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
     .then(data => {
       //remplazamos el pedido de nuetra lista de pedidos
       const pedidoIndex = context.items.findIndex(pedido => pedido.id == data.id)
+      console.log("🚀 ~ file: index.jsx:54 ~ switchaFunctionMoviEstate ~ context:", context.items)
+      console.log("🚀 ~ file: index.jsx:54 ~ switchaFunctionMoviEstate ~ pedidoIndex:", pedidoIndex)
 
       if (!pedidoIndex || pedidoIndex < 0) {
         console.log(`ocurrio un error , no esta el pediod en la lista`);
@@ -59,8 +63,20 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
 
       context.setItems(newItems)
     })
-    .catch(error => { console.error(error, 'No se pudo mandar corectamente el pedido'); return error })
-    .catch()
+    .catch((error) => {
+      console.log("🚀 ~ file: index.jsx:67 ~ switchaFunctionMoviEstate ~ error:", error)
+      //agregamos un aleta al estado de alerta y en 5s lo quitamos 
+      const newAlert = {
+        type: 'danger',
+        message: error.message,
+        id: makeid(5),
+      }
+      agregarAlerta({ itemsAlerts: context.alerts, setItesmAlert: context.setAlerts, newAlert })
+      setTimeout(() => {
+        retirarAlerta({ itemsAlerts: context.alerts, setItesmAlert: context.setAlerts, newAlert })
+
+      }, 3000)
+    })
 
   return
 }

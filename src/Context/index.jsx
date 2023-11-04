@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { cambiarTema } from '../Utils/theme';
+import { useLocalStorage } from '../Utils/localStore';
 
 const ENV = import.meta.env
 
@@ -7,6 +8,12 @@ export const MiContexto = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const ContextProvider = ({ children }) => {
+  //token de usuario
+  const tokenItemLocalStore = useLocalStorage({ itemName: 'tokenUseremPloyee', initialValue: {} })
+  console.log("🚀 ~ file: index.jsx:13 ~ ContextProvider ~ tokenItemLocalStore:", tokenItemLocalStore.item)
+  const [tokenLogin, setTokenLogin] = useState(tokenItemLocalStore.item)
+  console.log("🚀 ~ file: index.jsx:15 ~ ContextProvider ~ tokenLogin:", tokenLogin)
+
   // Estado para el modo oscuro
   const [modoOscuro, setModoOscuro] = useState(true);
 
@@ -51,13 +58,23 @@ export const ContextProvider = ({ children }) => {
 
   }, [])
 
+  ///aletas de la aplicacion 
+  const [alerts, setAlerts] = useState([{ type: 'success', id: '4', message: 'Operación exitosa' }]);
+
+
 
   return (
     <MiContexto.Provider value={
       {
+        // token , pued no tener un token hasta que ingrese en login 
+        tokenLogin, setTokenLogin, tokenItemLocalStore,
+
+
         modoOscuro, alternarModo,
 
-        items, setItems
+        items, setItems,
+
+        alerts, setAlerts
       }
     }>
       {children}
