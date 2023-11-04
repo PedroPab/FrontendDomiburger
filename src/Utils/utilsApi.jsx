@@ -17,7 +17,7 @@ export const traladarPedidoDeEstado = async ({ id, estado }) => {
       .then(response => response.json())
       .then(data => {
         console.log(data, '<=data');
-        if (!data.data) throw data
+        if (!data.body) throw data
         return data
       })
       .then(data => resolve(data.body))
