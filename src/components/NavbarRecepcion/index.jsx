@@ -7,7 +7,7 @@ import { BiLogIn } from "react-icons/bi"
 
 const NavBar = ({ modoOscuro, alternarModo }) => {
   return (
-    <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'light' : 'dark'}  >
+    <Navbar expand="lg" className='sticky-top'  >
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img
@@ -24,7 +24,7 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
 
             <Nav.Link as={Link} to="/pagina2">Página 2</Nav.Link>
           </Nav>
-          <Button variant={modoOscuro ? 'outline-dark' : 'outline-light'} onClick={alternarModo}>
+          <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (alternarModo())}>
             <BsMoonStars />
           </Button>
         </Navbar.Collapse>

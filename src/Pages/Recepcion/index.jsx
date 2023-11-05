@@ -12,8 +12,7 @@ const Recepcion = () => {
   const context = useContext(MiContexto)
 
   if (context.tokenLogin) {
-    console.log(context.tokenLogin);
-    console.log('hoal');
+    // console.log(`tokenLogin`, context.tokenLogin);
   }
 
   return (

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useEffect, useState } from 'react';
-import { cambiarTema } from '../Utils/theme';
+import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
 
 const ENV = import.meta.env
@@ -9,18 +10,20 @@ export const MiContexto = createContext()
 // eslint-disable-next-line react/prop-types
 export const ContextProvider = ({ children }) => {
   //token de usuario
-  const tokenItemLocalStore = useLocalStorage({ itemName: 'tokenUseremPloyee', initialValue: {} })
-  console.log("🚀 ~ file: index.jsx:13 ~ ContextProvider ~ tokenItemLocalStore:", tokenItemLocalStore.item)
-  const [tokenLogin, setTokenLogin] = useState(tokenItemLocalStore.item)
-  console.log("🚀 ~ file: index.jsx:15 ~ ContextProvider ~ tokenLogin:", tokenLogin)
+  const tokenItemLocalStore = useLocalStorage({ itemName: 'tokenUser', initialValue: {} })
 
+  const [tokenLogin, setTokenLogin] = useState(tokenItemLocalStore.item)
+
+  const saveToken = (token) => {
+    setTokenLogin(token)
+    tokenItemLocalStore.saveItem(token)
+  }
   // Estado para el modo oscuro
-  const [modoOscuro, setModoOscuro] = useState(true);
+  const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: true })
 
   // Función para alternar entre el modo oscuro y claro
   const alternarModo = () => {
-    setModoOscuro(prevModo => !prevModo);
-    cambiarTema(modoOscuro)
+    setModoOscuro(!modoOscuro);
   };
 
   //get pedidos 
@@ -51,7 +54,7 @@ export const ContextProvider = ({ children }) => {
     fetch(`${apiUrl}/api/pedidos/historialDia`, options)
       .then(response => response.json())
       .then(data => {
-        console.log(data, '<=data');
+        // console.log(data, '<=data');
         return data
       })
       .then(data => setItems(data.body))
@@ -67,7 +70,7 @@ export const ContextProvider = ({ children }) => {
     <MiContexto.Provider value={
       {
         // token , pued no tener un token hasta que ingrese en login 
-        tokenLogin, setTokenLogin, tokenItemLocalStore,
+        tokenLogin, saveToken,
 
 
         modoOscuro, alternarModo,
@@ -77,6 +80,7 @@ export const ContextProvider = ({ children }) => {
         alerts, setAlerts
       }
     }>
+      <CambiarTema />
       {children}
     </MiContexto.Provider>
   )
