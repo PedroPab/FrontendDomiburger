@@ -10,14 +10,12 @@ export const MiContexto = createContext()
 // eslint-disable-next-line react/prop-types
 export const ContextProvider = ({ children }) => {
   //token de usuario
-  const tokenItemLocalStore = useLocalStorage({ itemName: 'tokenUser', initialValue: {} })
+  const { item: tokenLogin, saveItem: saveToken } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} })
 
-  const [tokenLogin, setTokenLogin] = useState(tokenItemLocalStore.item)
 
-  const saveToken = (token) => {
-    setTokenLogin(token)
-    tokenItemLocalStore.saveItem(token)
-  }
+  // const saveToken = (token) => {
+  //   setTokenLogin(token)
+  // }
   // Estado para el modo oscuro
   const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: true })
 
@@ -30,9 +28,10 @@ export const ContextProvider = ({ children }) => {
   const [items, setItems] = useState(null)
 
   useEffect(() => {
+    if (!tokenLogin.token) return
     const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
 
-    const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzeXVWWXI2MDlUaUltcXQxeUtwQSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjM2MjQ1Mn0.ypWAj30EdC8J74TcO3BaXzzRBsaMddhdUe-Iumu4lhs"
+    const token = `Bearer ${tokenLogin.token}`
 
     const options = {
       method: 'GET',
@@ -59,7 +58,7 @@ export const ContextProvider = ({ children }) => {
       })
       .then(data => setItems(data.body))
 
-  }, [])
+  }, [tokenLogin])
 
   ///aletas de la aplicacion 
   const [alerts, setAlerts] = useState([{ type: 'success', id: '4', message: 'Operación exitosa' }]);
