@@ -16,6 +16,9 @@ function FormLogin() {
   const context = useContext(MiContexto)
   const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
 
+  //al entrar al login , borramos el token que tengamos guardado
+  // context.saveToken({})
+
   const enviarFormualario = async () => {
     const usernameInput = document.getElementsByName(`usernameInput`)[0]
     const passwordInput = document.getElementsByName(`passwordInput`)[0]
