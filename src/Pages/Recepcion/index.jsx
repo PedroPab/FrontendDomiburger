@@ -10,6 +10,7 @@ import { ErrorAlert } from "../../components/ErrorAlert"
 
 const Recepcion = () => {
   const context = useContext(MiContexto)
+  console.log("🚀 ~ file: index.jsx:13 ~ Recepcion ~ context:", context)
 
   if (context.tokenLogin) {
     // console.log(`tokenLogin`, context.tokenLogin);
