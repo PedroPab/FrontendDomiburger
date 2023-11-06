@@ -17,6 +17,7 @@ const ListMarker = ({ pedidos }) => {
           animation='DROP'
           label={`${pedido.data.numeroDeOrdenDelDia}`}
           clickable={true}
+          icon=''
           visible={true}
           onClick={() => {
             console.log(`se clico el peidod ${pedido.data.id}`)

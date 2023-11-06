@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { MiContexto } from '../../Context'
 import { Carousel } from "react-bootstrap"
 import OrderCard from "../OrderCard"
