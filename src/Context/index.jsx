@@ -63,6 +63,11 @@ export const ContextProvider = ({ children }) => {
   ///aletas de la aplicacion 
   const [alerts, setAlerts] = useState([{ type: 'success', id: '4', message: 'Operación exitosa' }]);
 
+  //el pedio que tenemos selecionado 
+  const [indexItems, setIndexItems] = useState(null)
+
+  //zoom del mapa
+  const [zoomMaps, setZoomMaps] = useState(15)
 
 
   return (
@@ -76,7 +81,11 @@ export const ContextProvider = ({ children }) => {
 
         items, setItems,
 
-        alerts, setAlerts
+        alerts, setAlerts,
+
+        indexItems, setIndexItems,
+
+        zoomMaps, setZoomMaps
       }
     }>
       <CambiarTema />
