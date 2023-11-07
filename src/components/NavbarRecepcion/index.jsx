@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { BsMoonStars } from 'react-icons/bs';
+import { PiMotorcycleFill } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
 import logo from './../../assets/logo.png';
 import { BiLogIn } from "react-icons/bi"
@@ -23,6 +24,9 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
             <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
 
             <Nav.Link as={Link} to="/pagina2">Página 2</Nav.Link>
+
+            <Nav.Link as={Link} to="/domiciliario">  <PiMotorcycleFill /> Domiciliario</Nav.Link>
+
           </Nav>
           <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (alternarModo())}>
             <BsMoonStars />

@@ -7,20 +7,12 @@ const CarouselListCards = ({ data }) => {
   const context = useContext(MiContexto)
 
   const handleSelect = (selectedIndex) => {
-    console.log("🚀 ~ file: index.jsx:10 ~ handleSelect ~ selectedIndex:", selectedIndex)
-
     context.setIndexItems(selectedIndex);
   };
 
-
-  const index = context.indexItems
-  console.log("index del carruserl index:", index)
-
-
-
   return (
     <>
-      <Carousel interval={null} activeIndex={index} onSelect={handleSelect}>
+      <Carousel interval={null} activeIndex={context.indexItems} onSelect={handleSelect}>
         {
           data ?
             data.map((pedido, i) => (

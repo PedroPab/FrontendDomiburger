@@ -10,19 +10,15 @@ import CarouselListCards from '../../components/CarouselListCards';
 
 const Domiciliario = () => {
   const context = useContext(MiContexto)
-  console.log("🚀 ~ file: index.jsx:15 ~ Domiciliario ~ context:", context)
   const [centerMaps, setCenterMaps] = useState({
     lat: 6.29,
     lng: -75.576
   })
 
-
   const containerStyle = {
     width: '100%', // Establece el ancho al 100% del contenedor padre
     height: '50vh', // Establece la altura al 100% de la altura de la ventana
   };
-
-
 
   return (
     <>
