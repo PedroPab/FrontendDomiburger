@@ -1,24 +1,35 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { MiContexto } from '../../Context'
 import { Carousel } from "react-bootstrap"
 import OrderCard from "../OrderCard"
+import Slider from 'react-slick'
 
 const CarouselListCards = ({ data }) => {
   const context = useContext(MiContexto)
+  const sliderRef = useRef(null); // Crea una referencia para el Slider
 
-  const handleSelect = (selectedIndex) => {
-    context.setIndexItems(selectedIndex);
+  //cada vez que se camien el index se cambian mualmente el
+  useEffect(() => {
+    sliderRef.current.slickGoTo(context.indexItems);
+  }, [context.indexItems])
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 200,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
   };
 
   return (
     <>
-      <Carousel interval={null} activeIndex={context.indexItems} onSelect={handleSelect}>
+      <Slider {...settings} ref={sliderRef}>
         {
           data ?
             data.map((pedido, i) => (
               <Carousel.Item
                 key={i}
-
               >
                 <div
                   className="d-flex justify-content-around"
@@ -27,16 +38,12 @@ const CarouselListCards = ({ data }) => {
                     dataPedido={pedido.data}
                   />
                 </div>
-
               </Carousel.Item>
             )) :
             <></>
         }
-      </Carousel>
-
-
+      </Slider>
     </>
-
   )
 }
 

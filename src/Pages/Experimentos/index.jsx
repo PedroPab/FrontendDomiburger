@@ -1,71 +1,19 @@
-import { Carousel, Card } from 'react-bootstrap';
+import Carousel from './../../components/Carousel';
 
-const CarouselComponent = () => {
+const cards = [
+  <div key={1}>Card 1</div>,
+  <div key={2}>Card 2</div>,
+  <div key={3}>Card 3</div>,
+  // ... Agrega más cards según necesites
+];
+
+const App = () => {
   return (
-    <Carousel className='sticky'>
-      <Carousel.Item>
-        <div className="d-flex justify-content-around">
-          <Card style={{ width: '30rem' }}>
-            <Card.Body>
-              <Card.Title>Card 1</Card.Title>
-              <Card.Text>
-                Contenido de la Card 1.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-
-          <Card style={{ width: '30rem' }}>
-            <Card.Body>
-              <Card.Title>Card 2</Card.Title>
-              <Card.Text>
-                Contenido de la Card 2.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-
-          <Card style={{ width: '30rem' }}>
-            <Card.Body>
-              <Card.Title>Card 3</Card.Title>
-              <Card.Text>
-                Contenido de la Card 3.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </div>
-      </Carousel.Item>
-
-      <Carousel.Item>
-        <div className="d-flex justify-content-around">
-          <Card style={{ width: '30rem' }}>
-            <Card.Body>
-              <Card.Title>Card 4</Card.Title>
-              <Card.Text>
-                Contenido de la Card 4.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-
-          <Card style={{ width: '30rem' }}>
-            <Card.Body>
-              <Card.Title>Card 5</Card.Title>
-              <Card.Text>
-                Contenido de la Card 5.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-
-          <Card style={{ width: '30rem' }}>
-            <Card.Body>
-              <Card.Title>Card 6</Card.Title>
-              <Card.Text>
-                Contenido de la Card 6.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </div>
-      </Carousel.Item>
-    </Carousel>
+    <div>
+      <h1>Carousel Example</h1>
+      <Carousel cards={cards} />
+    </div>
   );
 };
 
-export default CarouselComponent;
+export default App;
