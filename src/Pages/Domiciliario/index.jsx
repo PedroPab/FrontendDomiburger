@@ -42,7 +42,7 @@ const Domiciliario = () => {
 
             </Mapa>
           </Row>
-          <Row>
+          <Row className=''>
             <CarouselListCards
 
               data={context.items}
