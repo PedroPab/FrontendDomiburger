@@ -15,7 +15,7 @@ const CarouselListCards = ({ data }) => {
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 200,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -32,7 +32,7 @@ const CarouselListCards = ({ data }) => {
                 key={i}
               >
                 <div
-                  className="d-flex justify-content-around"
+                  className="d-flex "
                 >
                   <OrderCard
                     dataPedido={pedido.data}
