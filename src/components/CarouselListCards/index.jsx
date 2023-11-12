@@ -13,12 +13,10 @@ const CarouselListCards = ({ data }) => {
   }, [context.indexItems])
 
   const settings = {
-    dots: true,
     infinite: false,
     speed: 200,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    centerMode: true,
+    accessibility: false,
+    arrows: false
   };
 
   return (
@@ -26,9 +24,9 @@ const CarouselListCards = ({ data }) => {
       <Slider {...settings} ref={sliderRef}>
         {
           data ?
-            data.map((pedido, i) => (
+            data.map((pedido) => (
               <Carousel.Item
-                key={i}
+                key={pedido.data.id}
               >
                 <div
                   className="d-flex "
