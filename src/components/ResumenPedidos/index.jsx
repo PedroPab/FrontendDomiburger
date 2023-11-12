@@ -1,4 +1,3 @@
-import React from 'react';
 import { ProductoBadge } from '../ProductoBadge';
 
 const ResumenPedidos = ({ order }) => {
@@ -8,7 +7,12 @@ const ResumenPedidos = ({ order }) => {
     <div role="alert" className={`alert ${order.find((e) => e.modifique) ? 'alert-danger' : 'alert-success'}`}>
       {Object.keys(productos).map((key) => {
         return (
-          <ProductoBadge key={key} {...productos[key]} />
+          <ProductoBadge
+            key={key}
+            cantidad={productos[key].cantidad}
+            name={productos[key].name}
+            colorSecondary={productos[key].colorSecondary}
+          />
         )
       })}
     </div>
@@ -18,7 +22,7 @@ const ResumenPedidos = ({ order }) => {
 function resumirProductos(order) {
   const productos = {}
 
-  order.forEach((e, i, array) => {
+  order.forEach((e) => {
     //miramos si hay una gaseoa
     if (e?.modifique) {
       e.modifique.forEach(ee => {

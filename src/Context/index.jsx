@@ -34,7 +34,6 @@ export const ContextProvider = ({ children }) => {
 
     socket.on('api/pedidos', (pedidosEEE) => {
       const newListPedido = pedidosEEE.map(e => ({ data: e }))
-      console.log("🚀 ~ file: index.jsx:37 ~ socket.on ~ newListPedido:", newListPedido)
       if (!items) {
         setItems(newListPedido);
       } else {

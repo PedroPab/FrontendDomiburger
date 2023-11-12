@@ -11,21 +11,21 @@ const CardHeader = ({ title, orden, horaCreate, horaPronostico, urlMap, urlPhone
         <small className="text-muted">{horaCreate}</small>
         <small className="text-muted">{horaPronostico}</small>
       </div>
-
       <div className="d-flex justify-content-between align-items-center mb-3">
         <Badge bg="secondary">{orden}</Badge>
-
-
         <CardTitle>{title}</CardTitle>
-        <ButtonGroup aria-label="Basic example">
-          <Button size="sm" variant="outline-success" href={urlMap}>
-            <SlCallOut />
-          </Button>
-          <Button size="sm" variant="outline-primary" href={urlPhone}>
-            <BiMap />
-          </Button>
+        <ButtonGroup >
+          <a href={urlPhone} target="_blank" rel="noreferrer" >
+            <Button size="sm" variant="outline-info" >
+              <SlCallOut />
+            </Button>
+          </a>
+          <a href={urlMap} target="_blank" rel="noreferrer">
+            <Button size="sm" variant="outline-primary" >
+              <BiMap />
+            </Button>
+          </a>
         </ButtonGroup>
-
       </div>
     </>
   );

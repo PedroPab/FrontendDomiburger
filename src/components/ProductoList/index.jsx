@@ -1,5 +1,6 @@
 import { ListGroup } from "react-bootstrap";
 import { ProductoBadge } from "../ProductoBadge";
+import formatearNumeroConPuntos from "../../Utils/formatearNumeroConPuntos";
 
 const ProductoList = ({ productos }) => {
   return (
@@ -21,14 +22,14 @@ const ProductoList = ({ productos }) => {
                       key={keyAdicion}
                       name={adicion.name}
                       cantidad={5}
-                      colorSecundary={adicion.colorSecondary}
+                      colorSecondary={adicion.colorSecondary}
                     />
                   )
                 }) : ''
               }
             </div>
 
-            <span className="numeroPrecios" > {priceProductoTotal}</span>
+            <span className="numeroPrecios" >{formatearNumeroConPuntos(priceProductoTotal)}</span>
           </ListGroup.Item >
         )
       })}

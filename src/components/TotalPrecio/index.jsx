@@ -1,14 +1,25 @@
 import { ListGroup } from "react-bootstrap";
+import formatearNumeroConPuntos from "../../Utils/formatearNumeroConPuntos";
+import { ImCheckmark } from "react-icons/im";
+import { GiCancel } from "react-icons/gi";
 
-const Total = ({ totalPrecio, fee }) => (
-  <>
-    {
-      fee == `Transferencia` ? (<div className="text-decoration-line-through">{totalPrecio}</div>) : (<div>{totalPrecio}</div>)
-    }
-  </>
-)
 
-const TotalPrecio = ({ listProductos, totalPrecio, fee }) => {
+
+const Total = ({ totalPrecio, fee, yaPago }) => {
+  const PagadoIcon = (yaPago) => (<>{yaPago == true ? <ImCheckmark /> : <GiCancel />}</>)
+  return (
+    <>
+      {
+        fee == `Transferencia` ?
+
+          (<div className="text-decoration-line-through">{formatearNumeroConPuntos(totalPrecio)}<PagadoIcon yaPago={yaPago} /></div>) :
+          (<div>{formatearNumeroConPuntos(totalPrecio)}</div>)
+      }
+    </>
+  )
+}
+
+const TotalPrecio = ({ totalPrecio, fee, yaPago }) => {
   return (
     <>
       <ListGroup>
@@ -19,6 +30,7 @@ const TotalPrecio = ({ listProductos, totalPrecio, fee }) => {
             <Total
               totalPrecio={totalPrecio}
               fee={fee}
+              yaPago={yaPago}
             /></span>
         </ListGroup.Item>
       </ListGroup>

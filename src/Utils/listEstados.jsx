@@ -3,7 +3,7 @@ import { ESTADOS, ROLES } from "./constList";
 export const listaEstados = [
   {
     name: ESTADOS.PendienteConfimacion,
-    color: ``,
+    color: ` #FFB6C1`,
     estadoNext: `A calientes`,
     rolesView: [
       ROLES.admin,
@@ -17,7 +17,7 @@ export const listaEstados = [
   },
   {
     name: ESTADOS.Calientes,
-    color: ``,
+    color: `#87CEEB`,
     estadoNext: `Preparara`,
     rolesView: [
       ROLES.admin,
@@ -33,7 +33,7 @@ export const listaEstados = [
   },
   {
     name: ESTADOS.Preparando,
-    color: ``,
+    color: `#E6E6FA`,
     estadoNext: `A Espera`,
     rolesView: [
       ROLES.admin,
@@ -49,7 +49,7 @@ export const listaEstados = [
   },
   {
     name: ESTADOS.Espera,
-    color: ``,
+    color: ` #FFDAB9`,
     estadoNext: `Despachar`,
     rolesView: [
       ROLES.admin,
@@ -64,7 +64,7 @@ export const listaEstados = [
   },
   {
     name: ESTADOS.Despachados,
-    color: ``,
+    color: `#98FB98`,
     estadoNext: `Entregado`,
     rolesView: [
       ROLES.admin,
@@ -79,7 +79,7 @@ export const listaEstados = [
   },
   {
     name: ESTADOS.Entregados,
-    color: ``,
+    color: `#FFFACD`,
     estadoNext: `Facturar`,
     rolesView: [
       ROLES.admin,
@@ -89,12 +89,11 @@ export const listaEstados = [
     rolesActions: [
       ROLES.admin,
       ROLES.recepcion,
-      ROLES.domiciliario,
     ]
   },
   {
     name: ESTADOS.Facturados,
-    color: ``,
+    color: `#D3D3D3`,
     estadoNext: `PendieteTransferencia`,
     rolesView: [
       ROLES.admin,
@@ -104,12 +103,11 @@ export const listaEstados = [
     rolesActions: [
       ROLES.admin,
       ROLES.recepcion,
-      ROLES.domiciliario,
     ]
   },
   {
     name: ESTADOS.PendieteTransferencia,
-    color: ``,
+    color: `#ADD8E6`,
     estadoNext: `Facturar`,
     rolesView: [
       ROLES.admin,

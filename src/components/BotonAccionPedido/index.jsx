@@ -28,7 +28,6 @@ const BotonAccionPedido = ({ dataPedido }) => {
   }
 
   const objBotonEvent = eventoBtn(dataPedido.estado, context.tokenLogin.user.role)
-  console.log("🚀 ~ file: index.jsx:31 ~ BotonAccionPedido ~ objBotonEvent:", objBotonEvent)
 
 
   return (

@@ -18,7 +18,6 @@ function MyComponent({ center, containerStyle, zoom, children, setCenter }) {
   const handleZoomChanged = () => {
     // const currentZoom = mapRef.current.getZoom();
     console.log(`Zoom actual: ${context.zoomMaps}`);
-    console.log("🚀 ~ file: index.jsx:22 ~ handleZoomChanged ~ mapRef:", mapRef)
     // console.log("🚀 ~ file: index.jsx:22 ~ handleZoomChanged ~ mapRef:", mapRef.current.state.map.zoom)
     const zoom = mapRef.current?.state?.map?.zoom
     zoom ? context.setZoomMaps(zoom) : null
@@ -29,10 +28,10 @@ function MyComponent({ center, containerStyle, zoom, children, setCenter }) {
   const handleCenterChanged = () => {
     const center = mapRef.current?.state?.map?.center
 
-    console.log(`el centro actual es de `, {
-      lat: center.lat(),
-      lng: center.lng(),
-    });
+    // console.log(`el centro actual es de `, {
+    //   lat: center.lat(),
+    //   lng: center.lng(),
+    // });
 
     if (!center) return
 
