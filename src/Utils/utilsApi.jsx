@@ -5,7 +5,6 @@ export const traladarPedidoDeEstado = async ({ id, estado, token }) => {
 
   const TOKEN = `Bearer ${token}`
 
-  console.log("🚀 ~ file: utilsApi.jsx:8 ~ traladarPedidoDeEstado ~ TOKEN:", TOKEN)
   const options = {
     method: 'POST',
     headers: {

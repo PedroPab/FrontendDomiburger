@@ -22,6 +22,7 @@ export const ContextProvider = ({ children }) => {
   //get pedidos 
   const [items, setItems] = useState(null)
   useEffect(() => {
+    console.log(`se actualiso el coso de socket`);
     // Escuchar eventos de Socket.IO
     socket.on('connect', () => {
       // const token = `Bearer ${tokenLogin.token}`
@@ -33,6 +34,7 @@ export const ContextProvider = ({ children }) => {
 
     socket.on('api/pedidos', (pedidosEEE) => {
       const newListPedido = pedidosEEE.map(e => ({ data: e }))
+      console.log("🚀 ~ file: index.jsx:37 ~ socket.on ~ newListPedido:", newListPedido)
       if (!items) {
         setItems(newListPedido);
       } else {

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // OrderCard.js
 import { useContext } from 'react'
-import { Card, CardBody, CardSubtitle, CardFooter } from 'react-bootstrap';
+import { Card, CardBody, CardSubtitle, CardFooter, Badge } from 'react-bootstrap';
 import { CardHeader } from '../CardHeader';
 import { ResumenProductos } from '../ResumenProductos';
 import { ProductoList } from '../ProductoList';
@@ -17,7 +17,7 @@ const OrderCard = ({ dataPedido }) => {
     <Card
       className='mb-3'
       style={{
-        width: '20rem'
+        width: '30rem'
       }}
     >
       <CardBody>
@@ -51,7 +51,9 @@ const OrderCard = ({ dataPedido }) => {
           <ListButtonModalPedido dataPedido={dataPedido} role={role} />
         </CardFooter>
       </CardBody>
-      {dataPedido.estado}
+      <Badge>
+        {dataPedido.estado}
+      </Badge>
     </Card>
   );
 }
