@@ -1,38 +1,122 @@
+import { ESTADOS, ROLES } from "./constList";
 
 export const listaEstados = [
   {
-    name: `PendienteConfimacion`,
+    name: ESTADOS.PendienteConfimacion,
     color: ``,
-    estadoNext: `A calientes`
+    estadoNext: `A calientes`,
+    rolesView: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ],
+    rolesActions: [
+      ROLES.admin,
+      ROLES.recepcion,
+    ]
   },
   {
-    name: `Calientes`,
+    name: ESTADOS.Calientes,
     color: ``,
-    estadoNext: `Preparara`
+    estadoNext: `Preparara`,
+    rolesView: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.cocinero,
+      ROLES.domiciliario,
+    ],
+    rolesActions: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.cocinero,
+    ]
   },
   {
-    name: `Preparando`,
+    name: ESTADOS.Preparando,
     color: ``,
-    estadoNext: `A Espera`
+    estadoNext: `A Espera`,
+    rolesView: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.cocinero,
+      ROLES.domiciliario,
+    ],
+    rolesActions: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.cocinero,
+    ]
   },
   {
-    name: `Espera`,
+    name: ESTADOS.Espera,
     color: ``,
-    estadoNext: `Despachar`
+    estadoNext: `Despachar`,
+    rolesView: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ],
+    rolesActions: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ]
   },
   {
-    name: `Despachados`,
+    name: ESTADOS.Despachados,
     color: ``,
-    estadoNext: `Entregado`
+    estadoNext: `Entregado`,
+    rolesView: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ],
+    rolesActions: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ]
   },
   {
-    name: `Entregados`,
+    name: ESTADOS.Entregados,
     color: ``,
-    estadoNext: `Facturar`
+    estadoNext: `Facturar`,
+    rolesView: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ],
+    rolesActions: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ]
   },
   {
-    name: `PendieteTransferencia`,
+    name: ESTADOS.Facturados,
     color: ``,
-    estadoNext: `Facturar`
+    estadoNext: `PendieteTransferencia`,
+    rolesView: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ],
+    rolesActions: [
+      ROLES.admin,
+      ROLES.recepcion,
+      ROLES.domiciliario,
+    ]
+  },
+  {
+    name: ESTADOS.PendieteTransferencia,
+    color: ``,
+    estadoNext: `Facturar`,
+    rolesView: [
+      ROLES.admin,
+      ROLES.recepcion,
+    ],
+    rolesActions: [
+
+    ]
   },
 ]

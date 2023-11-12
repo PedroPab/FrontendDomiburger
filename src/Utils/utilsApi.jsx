@@ -1,14 +1,15 @@
 
-export const traladarPedidoDeEstado = async ({ id, estado }) => {
+export const traladarPedidoDeEstado = async ({ id, estado, token }) => {
   const ENV = import.meta.env
   const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
 
-  const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzeXVWWXI2MDlUaUltcXQxeUtwQSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4MjM2MjQ1Mn0.ypWAj30EdC8J74TcO3BaXzzRBsaMddhdUe-Iumu4lhs"
+  const TOKEN = `Bearer ${token}`
 
+  console.log("🚀 ~ file: utilsApi.jsx:8 ~ traladarPedidoDeEstado ~ TOKEN:", TOKEN)
   const options = {
     method: 'POST',
     headers: {
-      Authorization: token
+      Authorization: TOKEN
     }
   }
 

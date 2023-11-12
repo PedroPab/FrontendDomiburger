@@ -28,7 +28,7 @@ const Domiciliario = () => {
           alternarModo={context.alternarModo}
         />
         <Container fluid  >
-          <Row >
+          <Row className='mb-3'>
             <Mapa
               center={centerMaps}
               setCenter={setCenterMaps}

@@ -26,12 +26,20 @@ const BotonAccionPedido = ({ dataPedido }) => {
 
 
   }
+
+  const objBotonEvent = eventoBtn(dataPedido.estado, context.tokenLogin.user.role)
+  console.log("🚀 ~ file: index.jsx:31 ~ BotonAccionPedido ~ objBotonEvent:", objBotonEvent)
+
+
   return (
     <>
+
       {isVisible ? (
-        <Button size="" variant="outline-success" onClick={handleToggle} >
-          {eventoBtn(dataPedido.estado)}
-        </Button>
+        objBotonEvent.acceses ?
+          <Button size="" variant="outline-success" onClick={handleToggle} >
+            {objBotonEvent.view}
+          </Button> :
+          <></>
       ) : (
         <ButtonGroup vertical>
           <Button size="" variant="outline-success" onClick={activarAccion}>Confirmar</Button>
@@ -47,24 +55,22 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
   // por motivos de las desiciones del disenador de la api (yo) se ponen  el esto al que se va  a poner , y en minusculas , proximo a coreeccion
   const estadoAEnviar = listaEstados[listaEstados.findIndex(e => e.name == estado) + 1].name
   //ejecutamos el trapaso
-  traladarPedidoDeEstado({ id, estado: estadoAEnviar })
+  traladarPedidoDeEstado({ id, estado: estadoAEnviar, token: context.tokenLogin.token })
     .then(data => { console.log(`la data del botonn `, data); return data })
     .then(data => {
       //remplazamos el pedido de nuetra lista de pedidos
       const pedidoIndex = context.items.findIndex(pedido => pedido.id == data.id)
-      console.log("🚀 ~ file: index.jsx:54 ~ switchaFunctionMoviEstate ~ context:", context.items)
-      console.log("🚀 ~ file: index.jsx:54 ~ switchaFunctionMoviEstate ~ pedidoIndex:", pedidoIndex)
 
       if (!pedidoIndex || pedidoIndex < 0) {
         console.log(`ocurrio un error , no esta el pediod en la lista`);
-      }
-      const newItems = [...context.items]
-      newItems[pedidoIndex] = { data: data, ref: undefined }
+      } else {
+        const newItems = [...context.items]
+        newItems[pedidoIndex] = { data: data, ref: undefined }
 
-      context.setItems(newItems)
+        context.setItems(newItems)
+      }
     })
     .catch((error) => {
-      console.log("🚀 ~ file: index.jsx:67 ~ switchaFunctionMoviEstate ~ error:", error)
       //agregamos un aleta al estado de alerta y en 5s lo quitamos 
       const newAlert = {
         type: 'danger',
@@ -82,17 +88,13 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
 }
 
 
-function eventoBtn(estado) {
-  const listEventoSiguiete = {
-    PendienteConfimacion: `A calientes`,
-    Calientes: `Preparando`,
-    Preparando: `A Espera`,
-    Espera: `Despachar`,
-    Despachados: `Entregado`,
-    Entregados: `Facturar`,
-    PendieteTransferencia: `Facturar`,
-  }
-  return listEventoSiguiete[estado]
+function eventoBtn(estado, role) {
+  const botonAction = listaEstados[listaEstados.findIndex(e => e.name == estado)]
+
+  const view = botonAction.rolesView.includes(role) ? botonAction.estadoNext : false
+  const acceses = botonAction.rolesActions.includes(role) ? true : false
+
+  return { view, acceses }
 }
 
 export { BotonAccionPedido }
