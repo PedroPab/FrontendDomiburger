@@ -36,6 +36,7 @@ const Domiciliario = () => {
         <NavbarDomiciliario
           modoOscuro={context.modoOscuro}
           alternarModo={context.alternarModo}
+          pedidos={context.items}
         />
         <Container fluid  >
           <Row className='mb-3'>
