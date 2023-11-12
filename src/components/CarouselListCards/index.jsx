@@ -7,7 +7,6 @@ import Slider from 'react-slick'
 const CarouselListCards = ({ data }) => {
   const context = useContext(MiContexto)
   const sliderRef = useRef(null); // Crea una referencia para el Slider
-
   //cada vez que se camien el index se cambian mualmente el
   useEffect(() => {
     sliderRef.current.slickGoTo(context.indexItems);

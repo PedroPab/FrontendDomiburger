@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
 // OrderCard.js
+import { useContext } from 'react'
 import { Card, CardBody, CardSubtitle, CardFooter } from 'react-bootstrap';
 import { CardHeader } from '../CardHeader';
 import { ResumenProductos } from '../ResumenProductos';
 import { ProductoList } from '../ProductoList';
 import { TotalPrecio } from '../TotalPrecio';
 import { ListButtonModalPedido } from '../ListButtonModalPedido';
-
+import { MiContexto } from '../../Context'
 
 const OrderCard = ({ dataPedido }) => {
+  const context = useContext(MiContexto)
+  const role = context.tokenLogin?.user?.role
+
   return (
     <Card
       className='mb-3'
@@ -44,9 +48,10 @@ const OrderCard = ({ dataPedido }) => {
           fee={dataPedido.fee}
         />
         <CardFooter>
-          <ListButtonModalPedido dataPedido={dataPedido} />
+          <ListButtonModalPedido dataPedido={dataPedido} role={role} />
         </CardFooter>
       </CardBody>
+      {dataPedido.estado}
     </Card>
   );
 }
