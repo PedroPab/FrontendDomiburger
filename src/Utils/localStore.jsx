@@ -20,7 +20,6 @@ function useLocalStorage({ itemName, initialValue }) {
           parsedItem = initialValue;
         } else {
           parsedItem = JSON.parse(localStorageItem);
-          console.log("🚀 ~ file: localStore.jsx:20 ~ logicaFuncion ~ parsedItem:", parsedItem)
           setItem(parsedItem);
         }
 
