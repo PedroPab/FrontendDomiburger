@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
 function useLocalStorage({ itemName, initialValue }) {
-  const [item, setItem] = useState(initialValue);
+  const localStorageItem1 = localStorage.getItem(itemName);
+  const parsedItem1 = JSON.parse(localStorageItem1);
+
+  const [item, setItem] = useState(parsedItem1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 

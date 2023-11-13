@@ -45,8 +45,8 @@ function FormLogin() {
       const body = login.body
 
       document.cookie = `token=${token}; Secure; SameSite=Strict`;
-
-      context.saveToken(body)
+      console.log(`context.savetoek`, context.setTokenLogin);
+      context.setTokenLogin(body)
       // Después de que el usuario inicie sesión, redirigirlo a la página anterior
 
       const objRedireccionRole = {

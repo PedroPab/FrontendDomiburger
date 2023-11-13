@@ -2,14 +2,14 @@
 import { createContext, useEffect, useState } from 'react';
 import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
-import socket from '../Utils/socket';
+import socketApp from '../Utils/socket';
 
 export const MiContexto = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const ContextProvider = ({ children }) => {
   //token de usuario
-  const { item: tokenLogin, saveItem: saveToken } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} })
+  const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} })
 
   // Estado para el modo oscuro
   const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: true })
@@ -22,7 +22,7 @@ export const ContextProvider = ({ children }) => {
   //get pedidos 
   const [items, setItems] = useState(null)
   useEffect(() => {
-    console.log(`se actualiso el coso de socket`);
+    const socket = socketApp()
     // Escuchar eventos de Socket.IO
     socket.on('connect', () => {
       // const token = `Bearer ${tokenLogin.token}`
@@ -46,7 +46,6 @@ export const ContextProvider = ({ children }) => {
       socket.off('nuevoPedido');
     };
 
-
   }, [tokenLogin]);
 
 
@@ -64,7 +63,7 @@ export const ContextProvider = ({ children }) => {
     <MiContexto.Provider value={
       {
         // token , pued no tener un token hasta que ingrese en login 
-        tokenLogin, saveToken,
+        tokenLogin, setTokenLogin,
 
 
         modoOscuro, alternarModo,
