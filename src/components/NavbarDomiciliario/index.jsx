@@ -7,7 +7,6 @@ import { BiLogIn } from "react-icons/bi"
 import { GiSeaDragon } from 'react-icons/gi';
 
 const NavBar = ({ modoOscuro, alternarModo, pedidos }) => {
-  console.log("🚀 ~ file: index.jsx:9 ~ NavBar ~ pedidos:", pedidos)
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'} >
       <Container>
@@ -21,7 +20,7 @@ const NavBar = ({ modoOscuro, alternarModo, pedidos }) => {
           Domiburguer
         </Navbar.Brand>
         <Nav>
-          <span><GiSeaDragon />: {pedidos.length}</span>
+          <span><GiSeaDragon />: {pedidos?.length || 0}</span>
         </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

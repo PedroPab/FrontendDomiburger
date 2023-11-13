@@ -4,6 +4,6 @@ const ENV = import.meta.env
 
 const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`
 
-const socket = io(apiUrl); // Reemplaza con la URL de tu servidor Socket.IO
+const socket = () => { return io(apiUrl) }; // Reemplaza con la URL de tu servidor Socket.IO
 
 export default socket;

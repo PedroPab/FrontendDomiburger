@@ -13,11 +13,17 @@ import { Navigate } from 'react-router-dom';
 const Domiciliario = () => {
   const context = useContext(MiContexto)
   let redireccionar = { ok: false, to: '/login' }
-  if (context.tokenLogin?.user?.role) {
+  console.log(`context.tokenLogin`, context.tokenLogin);
+  if (context.tokenLogin) {
     if (context.tokenLogin?.user?.role !== ROLES.domiciliario) {
       console.log(context.tokenLogin?.user?.role, 'hcontext.loginToken?.user?.role');
       redireccionar.ok = true
     }
+
+  }
+  if (context.tokenLogin == undefined) {
+    console.log(`no hay token`);
+    redireccionar.ok = true
   }
 
   const [centerMaps, setCenterMaps] = useState({
