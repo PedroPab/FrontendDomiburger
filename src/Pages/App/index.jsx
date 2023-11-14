@@ -1,23 +1,32 @@
-import { BrowserRouter, useRoutes } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { ContextProvider } from "../../Context"
 import Domiciliario from "../Domiciliario"
 import Experimentos from "../Experimentos"
 import Login from "../Login"
 import Recepcion from "../Recepcion"
+import ProtectedRoute from "../../components/ProtectedRoute/inde"
+import { ROLES } from "../../Utils/constList"
 
 const AppRoutes = () => {
-  let routes = useRoutes([
-    { path: '/', element: <Recepcion /> },
-    { path: '/login', element: <Login /> },
-    { path: '/recepcion', element: <Recepcion /> },
-    { path: '/domiciliario', element: <Domiciliario /> },
-    { path: '/domiciliarios', element: <Domiciliario /> },
-    { path: '/experimentos', element: <Experimentos /> },
-    { path: '/hola', element: <Experimentos /> },
-    { path: '/*', element: <Recepcion /> },
-  ])
+  return (
+    <Routes>
+      <Route path="/" element={<><h1>Domiburguer</h1></>} />
 
-  return routes
+      <Route path="/login" element={<Login />} />
+
+      <Route element={<ProtectedRoute users={[ROLES.admin, ROLES.recepcion]} redirectTo={'/login'} />} >
+        <Route path="/recepcion" element={<Recepcion />} />
+      </Route>
+      <Route element={<ProtectedRoute users={[ROLES.domiciliario]} redirectTo={'/login'} />} >
+        <Route path="/domiciliarios" element={<Domiciliario />} />
+        <Route path="/domiciliario" element={<Domiciliario />} />
+      </Route>
+      {/* este deberia de ser el 404 */}
+      <Route element={<ProtectedRoute redirectTo={'/login'} />} >
+        <Route path="/*" element={<Experimentos />} />
+      </Route>
+    </Routes>
+  );
 }
 
 const App = () => {
@@ -25,6 +34,8 @@ const App = () => {
     <ContextProvider>
 
       <BrowserRouter>
+        <Routes>
+        </Routes>
         <AppRoutes />
       </BrowserRouter>
 
