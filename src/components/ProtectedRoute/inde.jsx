@@ -5,7 +5,7 @@ import { MiContexto } from './../../Context'; // Ajusta la importación según l
 const ProtectedRoute = ({ users, children, redirectTo }) => {
   const { tokenLogin } = useContext(MiContexto); // Ajusta el contexto de autenticación según tu implementación
 
-  if (!users?.includes(tokenLogin.user.role) && users > 0 || users !== undefined) {
+  if (!users?.includes(tokenLogin.user.role) && users > 0 || users == undefined) {
     console.log(`no es valido `);
     return <Navigate to={redirectTo} />
   }
