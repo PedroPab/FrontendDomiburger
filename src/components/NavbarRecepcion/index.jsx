@@ -21,11 +21,12 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
         </Navbar.Brand>        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+
+            <Nav.Link as={Link} to="/pagina2">Crear pedido</Nav.Link>
+
             <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
 
-            <Nav.Link as={Link} to="/pagina2">Página 2</Nav.Link>
-
-            <Nav.Link as={Link} to="/domiciliario">  <PiMotorcycleFill /> Domiciliario</Nav.Link>
+            <Nav.Link as={Link} to="/domiciliario">  <PiMotorcycleFill />Domiciliario</Nav.Link>
 
           </Nav>
           <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (alternarModo())}>

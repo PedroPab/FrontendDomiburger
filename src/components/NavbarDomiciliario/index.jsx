@@ -27,11 +27,17 @@ const NavBar = ({ modoOscuro, alternarModo, pedidos }) => {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
 
-            {/* <Nav.Link as={Link} to="/pagina2">Página 2</Nav.Link> */}
+            <Nav.Link as={Link} to="/misPedidos">Mis pedidos</Nav.Link>
+
+            <Nav.Link as={Link} to="/misPedidos">Mis pedidos</Nav.Link>
+
+            <Nav.Item>
+              <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (alternarModo())}>
+                <BsMoonStars />
+              </Button>
+            </Nav.Item>
           </Nav>
-          <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (alternarModo())}>
-            <BsMoonStars />
-          </Button>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>
