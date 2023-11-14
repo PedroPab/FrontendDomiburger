@@ -10,7 +10,7 @@ import { ROLES } from "../../Utils/constList"
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<><h1>Domiburguer</h1></>} />
+      <Route path="/" element={<Login />} />
 
       <Route path="/login" element={<Login />} />
 
