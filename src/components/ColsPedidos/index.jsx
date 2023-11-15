@@ -34,7 +34,9 @@ export const ColsPedidos = ({ pedidos }) => {
       {listPedidosEstados.map((estado, i) => {
         return (
           <Col
-            key={i}>
+            key={i}
+            style={{ width: '30rem' }}
+          >
             <h4>{estado.name}</h4>
             {
               estado?.pedidos.map((pedido, i) => (

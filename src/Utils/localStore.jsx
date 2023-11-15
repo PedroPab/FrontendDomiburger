@@ -14,7 +14,7 @@ function useLocalStorage({ itemName, initialValue }) {
     const logicaFuncion = () => {
       try {
         const localStorageItem = localStorage.getItem(itemName);
-        console.log(`itemName ${itemName}`, localStorageItem)
+        // console.log(`itemName ${itemName}`, localStorageItem)
 
         let parsedItem;
 

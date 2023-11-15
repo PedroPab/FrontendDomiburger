@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { BsMoonStars } from 'react-icons/bs';
-import { PiMotorcycleFill } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
 import logo from './../../assets/logo.png';
-import { BiLogIn } from "react-icons/bi"
+import { BiHappy, BiLogIn, BiMobile, } from "react-icons/bi"
+import { RecepcionContexto } from '../../Context/RecepcionContex';
+import { useContext } from 'react';
 
 const NavBar = ({ modoOscuro, alternarModo }) => {
+  const contextRecepcion = useContext(RecepcionContexto)
+
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'}  >
       <Container>
@@ -22,11 +25,11 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
 
-            <Nav.Link as={Link} to="/pagina2">Crear pedido</Nav.Link>
+            <Nav.Link as={Link} to="/pagina2"> <BiHappy /> Crear pedido</Nav.Link>
 
             <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
 
-            <Nav.Link as={Link} to="/domiciliario">  <PiMotorcycleFill />Domiciliario</Nav.Link>
+            <Nav.Link onClick={() => { contextRecepcion.openCloseModalAgregarDo() }}>  <BiMobile /> Domiciliarios</Nav.Link>
 
           </Nav>
           <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (alternarModo())}>

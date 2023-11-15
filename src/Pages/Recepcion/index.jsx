@@ -7,31 +7,31 @@ import Layout from "../../components/Layout";
 import './style.css'
 import { ColsPedidos } from '../../components/ColsPedidos';
 import { ErrorAlert } from "../../components/ErrorAlert"
+import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
+import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
 
 const Recepcion = () => {
   const context = useContext(MiContexto)
-  console.log("🚀 ~ file: index.jsx:13 ~ Recepcion ~ context:", context)
-
-  if (context.tokenLogin) {
-    // console.log(`tokenLogin`, context.tokenLogin);
-  }
 
   return (
     <>
       <Layout>
+        <ContextProviderRecepcion>
 
-        <NavbarRecepcion
-          modoOscuro={context.modoOscuro}
-          alternarModo={context.alternarModo}
-        />
-        <Container fluid  >
-          <RowListCol >
-            <ColsPedidos
-              pedidos={context.items ? context.items : []}
-            />
-          </RowListCol>
-        </Container>
-        <ErrorAlert />
+          <NavbarRecepcion
+            modoOscuro={context.modoOscuro}
+            alternarModo={context.alternarModo}
+          />
+          <Container fluid  >
+            <RowListCol >
+              <ColsPedidos
+                pedidos={context.items ? context.items : []}
+              />
+            </RowListCol>
+          </Container>
+          <ErrorAlert />
+          <SelectListDomiciliarios />
+        </ContextProviderRecepcion>
 
       </Layout >
     </>
