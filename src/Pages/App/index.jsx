@@ -15,15 +15,21 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
 
       <Route element={<ProtectedRoute users={[ROLES.admin, ROLES.recepcion]} redirectTo={'/login'} />} >
+
         <Route path="/recepcion" element={<Recepcion />} />
+
       </Route>
       <Route element={<ProtectedRoute users={[ROLES.domiciliario]} redirectTo={'/login'} />} >
+
         <Route path="/domiciliarios" element={<Domiciliario />} />
         <Route path="/domiciliario" element={<Domiciliario />} />
+
       </Route>
       {/* este deberia de ser el 404 */}
-      <Route element={<ProtectedRoute redirectTo={'/login'} />} >
+      <Route element={<ProtectedRoute redirectTo={'/'} />} >
+
         <Route path="/*" element={<Experimentos />} />
+
       </Route>
     </Routes>
   );
