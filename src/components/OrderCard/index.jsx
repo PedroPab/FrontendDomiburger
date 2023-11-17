@@ -9,6 +9,7 @@ import { TotalPrecio } from '../TotalPrecio';
 import { ListButtonModalPedido } from '../ListButtonModalPedido';
 import { MiContexto } from '../../Context'
 import { listaEstados } from '../../Utils/listEstados';
+import { formatTimeString } from '../../Utils/formatTime';
 
 const OrderCard = ({ dataPedido }) => {
   const context = useContext(MiContexto)
@@ -16,7 +17,7 @@ const OrderCard = ({ dataPedido }) => {
   const objEstado = listaEstados[listaEstados.findIndex(e => e.name == dataPedido.estado)]
   const colorEstado = objEstado.color
   const urlAdress = encodeURIComponent(dataPedido.address.address_complete);
-
+  console.log(dataPedido.order, `dataPedido.order`);
   return (
     <Card
       className='mb-3'
@@ -28,8 +29,10 @@ const OrderCard = ({ dataPedido }) => {
         <CardHeader
           title={dataPedido.name}
           orden={dataPedido.numeroDeOrdenDelDia}
-          horaCreate={`4:01 pm`}
-          horaPronostico={`4:01 pm`}
+          horaCreate={formatTimeString(dataPedido.date)}
+          horaPronostico={formatTimeString({
+            ...dataPedido.date, _seconds: dataPedido.date._seconds + (dataPedido.duracionEstimada.value * 60)
+          })}
           urlMap={`https://www.google.com/maps/dir/?api=1&destination=${urlAdress}`}
           urlPhone={`tel:${dataPedido.phone}`}
         />

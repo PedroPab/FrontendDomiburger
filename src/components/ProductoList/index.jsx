@@ -8,7 +8,6 @@ const ProductoList = ({ productos }) => {
       {productos.map((producto, i) => {
         const key = `${i}${producto.id}`
         let priceProductoTotal = producto.price
-
         return (
           <ListGroup.Item key={key} className=" d-flex justify-content-between align-items-center" >
             <span>{producto.name}</span>
@@ -21,7 +20,7 @@ const ProductoList = ({ productos }) => {
                     <ProductoBadge
                       key={keyAdicion}
                       name={adicion.name}
-                      cantidad={5}
+                      cantidad={adicion.cuanty}
                       colorSecondary={adicion.colorSecondary}
                     />
                   )
