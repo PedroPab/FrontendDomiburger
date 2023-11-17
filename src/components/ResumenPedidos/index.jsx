@@ -1,7 +1,7 @@
 import { ProductoBadge } from '../ProductoBadge';
 
 const ResumenPedidos = ({ order }) => {
-  const productos = resumirProductos(order);
+  let productos = resumirProductos(order)
 
   return (
     <div role="alert" className={`alert ${order.find((e) => e.modifique) ? 'alert-danger' : 'alert-success'}`}>
@@ -27,13 +27,14 @@ function resumirProductos(order) {
     if (e?.modifique) {
       e.modifique.forEach(ee => {
         if (ee.id == '9' || ee.id == '10') {
-          ee.name = `🍺 ${ee.name}`
+          const nameModificado = `🍺 ${ee.name}`
           if (productos[ee.id]) {
             productos[ee.id].cantidad += 1
           } else {
             productos[ee.id] = {
               ...ee,
-              cantidad: 1
+              cantidad: 1,
+              name: nameModificado,
             }
           }
         }
