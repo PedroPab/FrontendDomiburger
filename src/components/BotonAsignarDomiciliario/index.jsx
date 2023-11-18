@@ -3,7 +3,7 @@ import { ModalAsignarPedido } from '../ModalAsignarPedido';
 import React from 'react';
 
 1
-const BotonDomiciliario = ({ idDomiciliario, nameDomiciliario }) => {
+const BotonDomiciliario = ({ idDomiciliario, nameDomiciliario, idPedido }) => {
   //miramos cual es el nombre del domciliaor con el id
 
   const [showModalAsignarDomiciliario, setShowModalAsignarDomiciliario] = React.useState(false);
@@ -20,6 +20,7 @@ const BotonDomiciliario = ({ idDomiciliario, nameDomiciliario }) => {
         handleClose={handleCloseModalAsignarDomiciliario}
         idDomiciliario={idDomiciliario}
         nameDomiciliario={nameDomiciliario}
+        idPedido={idPedido}
         data={{}}
       />
     </>
