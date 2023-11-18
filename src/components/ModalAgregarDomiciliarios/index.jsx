@@ -1,14 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { RecepcionContexto } from "../../Context/RecepcionContex";
-import { UtilsApi } from '../../Utils/utilsApi';
-import { MiContexto } from '../../Context';
 
 const ModalAgregarDomiciliarios = ({ show, handleClose }) => {
   //la lista de los domiciliario que tenemo en local
-  const { listDomiciliarios, setListDomiciliarios } = useContext(RecepcionContexto)
-  const context = useContext(MiContexto)
+  const { listDomiciliarios, setListDomiciliarios, users } = useContext(RecepcionContexto)
 
   const handleSelectUser = (user, id) => {
     const find = listDomiciliarios.find(e => e.id == id)
@@ -20,19 +17,6 @@ const ModalAgregarDomiciliarios = ({ show, handleClose }) => {
   const handleRemoveUser = (id) => {
     setListDomiciliarios(listDomiciliarios.filter(user => user.id !== id));
   };
-  //la lista de todos los domiciliarios 
-  const [users, setUsers] = useState([]);
-  //miramos todo los domicilair en la api
-  useEffect(() => {
-    const token = context.tokenLogin.token
-    UtilsApi({ peticion: `domiciliarios`, token: token, vervo: `GET` })
-      .then(result => {
-        setUsers(result)
-      })
-      .catch(error => console.log('error', error));
-  }, [])
-
-
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -44,7 +28,7 @@ const ModalAgregarDomiciliarios = ({ show, handleClose }) => {
           <div>
             <h3>Seleccionar Usuarios:</h3>
             {
-
+              users &&
               users.map(user => (
                 <button key={user.id} onClick={() => handleSelectUser(user, user.id)}>
                   {user.name}

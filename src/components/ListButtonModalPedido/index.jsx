@@ -5,7 +5,6 @@ import { BotonAccionPedido } from '../BotonAccionPedido';
 import { ROLES } from '../../Utils/constList';
 
 const ListButtonModalPedido = ({ dataPedido, role }) => {
-
   return (
     <>
       <div>
