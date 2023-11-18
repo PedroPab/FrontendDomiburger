@@ -6,7 +6,10 @@ import { GiCancel } from "react-icons/gi";
 
 
 const Total = ({ totalPrecio, fee, yaPago }) => {
-  const PagadoIcon = (yaPago) => (<>{yaPago == true ? <ImCheckmark /> : <GiCancel />}</>)
+  const PagadoIcon = (yaPago) => {
+    if (yaPago) return (<ImCheckmark />)
+    else return (<GiCancel />)
+  }
   return (
     <>
       {
