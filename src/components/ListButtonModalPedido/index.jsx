@@ -17,6 +17,7 @@ const ListButtonModalPedido = ({ dataPedido, role }) => {
               <BotonDomiciliario
                 nameDomiciliario={dataPedido?.domiciliario_asignado?.name || 'Sin Asignar'}
                 idDomiciliario={dataPedido?.domiciliario_asignado?.id || undefined}
+                idPedido={dataPedido.id}
               />)
 
           }
