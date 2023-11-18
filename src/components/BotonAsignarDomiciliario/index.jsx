@@ -19,6 +19,7 @@ const BotonDomiciliario = ({ idDomiciliario, nameDomiciliario }) => {
         show={showModalAsignarDomiciliario}
         handleClose={handleCloseModalAsignarDomiciliario}
         idDomiciliario={idDomiciliario}
+        nameDomiciliario={nameDomiciliario}
         data={{}}
       />
     </>
