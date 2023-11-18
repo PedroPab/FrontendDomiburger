@@ -6,9 +6,12 @@ import logo from './../../assets/logo.png';
 import { BiHappy, BiLogIn, BiMobile, } from "react-icons/bi"
 import { RecepcionContexto } from '../../Context/RecepcionContex';
 import { useContext } from 'react';
+import { GiSeaDragon } from 'react-icons/gi';
+import { MiContexto } from '../../Context';
 
 const NavBar = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto)
+  const context = useContext(MiContexto)
 
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'}  >
@@ -21,11 +24,15 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
             className="d-inline-block align-top"
           />
           Domiburguer
-        </Navbar.Brand>        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        </Navbar.Brand>
+        <Nav>
+          <span><GiSeaDragon />: {context.items?.length || 0}</span>
+        </Nav>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
 
-            <Nav.Link as={Link} to="/pagina2"> <BiHappy /> Crear pedido</Nav.Link>
+            <Nav.Link as={Link}> <BiHappy /> Crear pedido</Nav.Link>
 
             <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
 
