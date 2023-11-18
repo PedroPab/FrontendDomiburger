@@ -27,7 +27,7 @@ export const ContextProviderRecepcion = ({ children }) => {
   }, [])
 
   //el modal para agrega los domiciliarios
-  const [showModalAgregarDomiciliarios, setShowModalAgregarDomiciliarios] = useState(true);
+  const [showModalAgregarDomiciliarios, setShowModalAgregarDomiciliarios] = useState(false);
   const openCloseModalAgregarDo = () => setShowModalAgregarDomiciliarios(!showModalAgregarDomiciliarios);
 
 
