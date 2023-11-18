@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { UtilsApi } from '../../Utils/utilsApi';
+import { MiContexto } from '../../Context';
 
-const CambiarMetodoPago = () => {
+const CambiarMetodoPago = ({ data }) => {
+  const context = useContext(MiContexto)
+  const selectMetodoDePago = useRef();
   const [showButtons, setShowButtons] = useState(true);
 
   const handleEnviar = () => {
@@ -10,7 +14,13 @@ const CambiarMetodoPago = () => {
 
   const handleConfirmar = () => {
     // Lógica para confirmar el cambio de método de pago
+    //cambiamos el metodo de pago
+    const token = context.tokenLogin.token
+
+    const url = `pedidos/cambiarFee?id=${data.id}&fee=${selectMetodoDePago.current.value}`
+    UtilsApi({ peticion: url, token, vervo: 'PATCH' })
     setShowButtons(true);
+
   };
 
   const handleCancelar = () => {
@@ -24,7 +34,7 @@ const CambiarMetodoPago = () => {
         <Form.Group controlId="metodoDePagoSelect" >
           <Form.Label>Cambiar Método de Pago</Form.Label>
           <div className='d-flex'>
-            <Form.Control as="select">
+            <Form.Control as="select" ref={selectMetodoDePago}>
               <option>Transferencia</option>
               <option>Efectivo</option>
 
