@@ -52,7 +52,7 @@ export const ContextProvider = ({ children }) => {
 
 
   ///aletas de la aplicacion 
-  const [alerts, setAlerts] = useState([{ type: 'success', id: '4', message: 'Operación exitosa' }]);
+  const [alerts, setAlerts] = useState([]);
 
   //el pedio que tenemos selecionado 
   const [indexItems, setIndexItems] = useState(null)

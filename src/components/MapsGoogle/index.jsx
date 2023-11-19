@@ -7,7 +7,7 @@ import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { memo, useCallback, useState } from 'react';
 const ENV = import.meta.env
 
-function MyComponent({ center, containerStyle, zoom, children, setCenter }) {
+function Mapa({ center, containerStyle, zoom, children, setCenter }) {
   const context = useContext(MiContexto)
   const mapRef = useRef(null); // Crea una referencia usando useRef
 
@@ -55,4 +55,4 @@ function MyComponent({ center, containerStyle, zoom, children, setCenter }) {
   ) : <></>
 }
 
-export default memo(MyComponent)
+export default memo(Mapa)
