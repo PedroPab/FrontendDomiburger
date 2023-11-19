@@ -25,6 +25,7 @@ export const ContextProvider = ({ children }) => {
     const socket = socketApp()
     // Escuchar eventos de Socket.IO
     socket.on('connect', () => {
+      console.log(`conectando 🏁`);
       // const token = `Bearer ${tokenLogin.token}`
       const ROLE = tokenLogin?.user?.role
       const ID = tokenLogin?.user?.id
@@ -33,6 +34,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('api/pedidos', (pedidosEEE) => {
+      console.log(`recibienod datos 🎈`);
       const newListPedido = pedidosEEE.map(e => ({ data: e }))
       if (!items) {
         setItems(newListPedido);
