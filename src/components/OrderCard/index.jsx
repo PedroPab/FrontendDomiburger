@@ -17,6 +17,7 @@ const OrderCard = ({ dataPedido }) => {
   const objEstado = listaEstados[listaEstados.findIndex(e => e.name == dataPedido.estado)]
   const colorEstado = objEstado.color
   const urlAdress = encodeURIComponent(dataPedido.address.address_complete);
+  console.log(`dataPedido?.pagoConfirmado?.confirmado`, dataPedido?.pagoConfirmado?.confirmado, dataPedido?.id);
   return (
     <Card
       className='mb-3'
