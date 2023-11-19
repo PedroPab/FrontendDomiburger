@@ -27,27 +27,25 @@ const ModalAgregarDomiciliarios = ({ show, handleClose }) => {
         <div>
           <h3>Seleccionar Usuarios:</h3>
           <ListGroup>
-            {users && users.map(user => (
-              <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center">
-                {user.name}
-                <Button variant="success" size="sm" onClick={() => handleSelectUser(user, user.id)}>
-                  <FaPlus />
-                </Button>
-              </ListGroupItem>
-            ))}
-          </ListGroup>
-        </div>
-        <div className="mt-3">
-          <h3>Usuarios Seleccionados:</h3>
-          <ListGroup>
-            {listDomiciliarios.map(user => (
-              <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center">
-                {user.name}
-                <Button variant="danger" size="sm" onClick={() => handleRemoveUser(user.id)}>
-                  <FaTimes />
-                </Button>
-              </ListGroupItem>
-            ))}
+            {users && users.map(user => {
+              const yaSeleccionado = listDomiciliarios.find(e => e.id == user.id)
+              if (!yaSeleccionado) {
+                return (<ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center">
+                  {user.name}
+                  <Button variant="danger" size="sm" onClick={() => handleSelectUser(user, user.id)}>
+                    <FaTimes />
+                  </Button>
+                </ListGroupItem>)
+              }
+              return (
+                <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center">
+                  {user.name}
+                  <Button variant="success" size="sm" onClick={() => handleRemoveUser(user.id)}>
+                    <FaPlus />
+                  </Button>
+                </ListGroupItem>
+              )
+            })}
           </ListGroup>
         </div>
       </Modal.Body>
