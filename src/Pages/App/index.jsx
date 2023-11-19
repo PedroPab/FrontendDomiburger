@@ -6,6 +6,7 @@ import Login from "../Login"
 import Recepcion from "../Recepcion"
 import ProtectedRoute from "../../components/ProtectedRoute/inde"
 import { ROLES } from "../../Utils/constList"
+import MapRecepcion from "../MapRecepcion"
 
 const AppRoutes = () => {
   return (
@@ -17,7 +18,7 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute users={[ROLES.admin, ROLES.recepcion]} redirectTo={'/login'} />} >
 
         <Route path="/recepcion" element={<Recepcion />} />
-
+        <Route path="/mapRecepcion" element={<MapRecepcion />} />
       </Route>
       <Route element={<ProtectedRoute users={[ROLES.domiciliario]} redirectTo={'/login'} />} >
 
