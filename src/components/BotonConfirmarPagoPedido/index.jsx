@@ -4,7 +4,7 @@ import { MiContexto } from '../../Context';
 import { UtilsApi } from '../../Utils/utilsApi';
 
 // eslint-disable-next-line no-unused-vars
-const BotonConfirmarPagoPedido = ({ data }) => {
+const BotonConfirmarPagoPedido = ({ data, handleClose }) => {
   const context = useContext(MiContexto)
 
   const [confirmar, setConfirmar] = useState(false);
@@ -16,6 +16,8 @@ const BotonConfirmarPagoPedido = ({ data }) => {
 
     const url = `pedidos/confirmarPago/?id=${data.id}`
     UtilsApi({ peticion: url, token, vervo: 'POST' })
+      .then(() => handleClose())
+
     setConfirmar(false);
   };
 

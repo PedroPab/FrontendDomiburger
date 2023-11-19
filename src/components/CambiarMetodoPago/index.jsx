@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { UtilsApi } from '../../Utils/utilsApi';
 import { MiContexto } from '../../Context';
 
-const CambiarMetodoPago = ({ data }) => {
+const CambiarMetodoPago = ({ data, handleClose }) => {
   const context = useContext(MiContexto)
   const selectMetodoDePago = useRef();
   const [showButtons, setShowButtons] = useState(true);
@@ -19,6 +19,8 @@ const CambiarMetodoPago = ({ data }) => {
 
     const url = `pedidos/cambiarFee?id=${data.id}&fee=${selectMetodoDePago.current.value}`
     UtilsApi({ peticion: url, token, vervo: 'PATCH' })
+      .then(() => handleClose())
+
     setShowButtons(true);
 
   };

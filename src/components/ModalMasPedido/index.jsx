@@ -16,10 +16,10 @@ const ModalMasPedido = ({ show, handleClose, data }) => {
 
         <EstadoPago pagado={data.pagoConfirmado.confirmado} />
         <MetodoDePago metodo={data.fee} />
-        <BotonEliminarPedido data={data} />
-        <BotonMasInformacionPedido data={data} />
-        <CambiarMetodoPago data={data} />
-        <BotonConfirmarPagoPedido data={data} />
+        <BotonEliminarPedido data={data} handleClose={handleClose} />
+        <BotonMasInformacionPedido data={data} handleClose={handleClose} />
+        <CambiarMetodoPago data={data} handleClose={handleClose} />
+        <BotonConfirmarPagoPedido data={data} handleClose={handleClose} />
 
       </Modal.Body>
       <Modal.Footer>
