@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { MiContexto } from '../../Context'
 import { Container } from 'react-bootstrap';
 import NavbarRecepcion from "../../components/NavbarRecepcion";

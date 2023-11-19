@@ -5,7 +5,7 @@ const StickyCard = ({ show, children }) => {
     bottom: '20px',   // Colocada en la parte inferior
     right: '20px',    // Colocada a la derecha
     zIndex: 1000,     // Asegura que esté sobre otros elementos
-    display: show ? 'block' : 'none' // Se muestra solo si 'show' es true
+    display: show ? 'block' : 'none', // Se muestra solo si 'show' es true
   };
 
   return (
