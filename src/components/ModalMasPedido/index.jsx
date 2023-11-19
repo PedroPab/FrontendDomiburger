@@ -1,4 +1,4 @@
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Row } from 'react-bootstrap';
 import { EstadoPago } from '../EstadoPago';
 import MetodoDePago from '../MetodoDePago';
 import BotonEliminarPedido from '../BotonEliminarPedido';
@@ -14,12 +14,22 @@ const ModalMasPedido = ({ show, handleClose, data }) => {
       </Modal.Header>
       <Modal.Body>
 
-        <EstadoPago pagado={data.pagoConfirmado.confirmado} />
-        <MetodoDePago metodo={data.fee} />
-        <BotonEliminarPedido data={data} handleClose={handleClose} />
-        <BotonMasInformacionPedido data={data} handleClose={handleClose} />
-        <CambiarMetodoPago data={data} handleClose={handleClose} />
-        <BotonConfirmarPagoPedido data={data} handleClose={handleClose} />
+        <Row className='m-3 '>
+          <EstadoPago pagado={data.pagoConfirmado.confirmado} />
+          <MetodoDePago metodo={data.fee} />
+        </Row>
+        <Row className='m-3 '>
+          <BotonEliminarPedido data={data} handleClose={handleClose} />
+        </Row>
+        <Row className='m-3 '>
+          <BotonMasInformacionPedido data={data} handleClose={handleClose} />
+        </Row>
+        <Row className='m-3 '>
+          <CambiarMetodoPago data={data} handleClose={handleClose} />
+        </Row>
+        <Row className='m-3 '>
+          <BotonConfirmarPagoPedido data={data} handleClose={handleClose} />
+        </Row>
 
       </Modal.Body>
       <Modal.Footer>
