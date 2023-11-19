@@ -1,12 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { FaTimes, FaPlus } from 'react-icons/fa';
 import { RecepcionContexto } from "../../Context/RecepcionContex";
 
 const ModalAgregarDomiciliarios = ({ show, handleClose }) => {
-  //la lista de los domiciliario que tenemo en local
-  const { listDomiciliarios, setListDomiciliarios, users } = useContext(RecepcionContexto)
+  const { listDomiciliarios, setListDomiciliarios, users } = useContext(RecepcionContexto);
 
+  // Funciones handleSelectUser y handleRemoveUser permanecen iguales
   const handleSelectUser = (user, id) => {
     const find = listDomiciliarios.find(e => e.id == id)
     if (!find) {
@@ -25,36 +25,36 @@ const ModalAgregarDomiciliarios = ({ show, handleClose }) => {
       </Modal.Header>
       <Modal.Body>
         <div>
-          <div>
-            <h3>Seleccionar Usuarios:</h3>
-            {
-              users &&
-              users.map(user => (
-                <button key={user.id} onClick={() => handleSelectUser(user, user.id)}>
+          <h3>Seleccionar Usuarios:</h3>
+          <ListGroup>
+            {users && users.map(user => {
+              const yaSeleccionado = listDomiciliarios.find(e => e.id == user.id)
+              if (!yaSeleccionado) {
+                return (<ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center">
                   {user.name}
-                </button>
-              ))}
-          </div>
-          <div>
-            <h3>Usuarios Seleccionados:</h3>
-            {listDomiciliarios.map(user => (
-              <div key={user.id}>
-                {user.name} <button onClick={() => handleRemoveUser(user.id)}>Eliminar</button>
-              </div>
-            ))}
-          </div>
+                  <Button variant="danger" size="sm" onClick={() => handleSelectUser(user, user.id)}>
+                    <FaTimes />
+                  </Button>
+                </ListGroupItem>)
+              }
+              return (
+                <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center">
+                  {user.name}
+                  <Button variant="success" size="sm" onClick={() => handleRemoveUser(user.id)}>
+                    <FaPlus />
+                  </Button>
+                </ListGroupItem>
+              )
+            })}
+          </ListGroup>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Cerrar
-        </Button>
-        <Button variant="primary" onClick={handleClose}>
-          Guardar Cambios
-        </Button>
+        <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
+        <Button variant="primary" onClick={handleClose}>Guardar Cambios</Button>
       </Modal.Footer>
     </Modal>
-  )
+  );
 }
 
-export default ModalAgregarDomiciliarios
+export default ModalAgregarDomiciliarios;
