@@ -12,20 +12,17 @@ import { listaEstados } from '../../Utils/listEstados';
 import { formatTimeString } from '../../Utils/formatTime';
 
 const OrderCard = ({ dataPedido }) => {
-  console.log("🚀 ~ file: index.jsx:15 ~ OrderCard ~ dataPedido:", dataPedido)
   const context = useContext(MiContexto)
   const role = context.tokenLogin?.user?.role
   const indexEstado = listaEstados.findIndex(e => e.name == dataPedido.estado)
-  console.log("🚀 ~ file: index.jsx:18 ~ OrderCard ~ indexEstado:", indexEstado)
   const objEstado = listaEstados[indexEstado]
-  console.log("🚀 ~ file: index.jsx:18 ~ OrderCard ~ objEstado:", objEstado)
   const colorEstado = objEstado.color
   const urlAdress = encodeURIComponent(dataPedido.address.address_complete);
   return (
     <Card
       className='mb-3'
       style={{
-        width: '30rem'
+        width: '25rem'
       }}
     >
       <CardBody>
