@@ -1,0 +1,12 @@
+.sinPedidosContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh; /* Altura completa de la ventana */
+  width: 100vw; /* Ancho completo de la ventana */
+  text-align: center;
+}
+
+.sinPedidosContent {
+  /* Estilos adicionales para el contenido si es necesario */
+}
