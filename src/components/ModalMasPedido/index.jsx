@@ -10,7 +10,7 @@ const ModalMasPedido = ({ show, handleClose, data }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Mas...</Modal.Title>
+        <Modal.Title>Mas... {data.id}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
 

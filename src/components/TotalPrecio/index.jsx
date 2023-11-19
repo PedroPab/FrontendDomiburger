@@ -6,16 +6,20 @@ import { GiCancel } from "react-icons/gi";
 
 
 const Total = ({ totalPrecio, fee, yaPago }) => {
-  const PagadoIcon = (yaPago) => {
-    if (yaPago) return (<ImCheckmark />)
-    else return (<GiCancel />)
+  const PagadoIcon = () => {
+    if (yaPago == true) {
+      return (<><ImCheckmark /></>)
+    }
+    else if (yaPago == false) {
+      return (<><GiCancel /></>)
+    }
   }
   return (
     <>
       {
         fee == `Transferencia` ?
 
-          (<div className="text-decoration-line-through">{formatearNumeroConPuntos(totalPrecio)}<PagadoIcon yaPago={yaPago} /></div>) :
+          (<div className="text-decoration-line-through">{formatearNumeroConPuntos(totalPrecio)}<PagadoIcon /></div>) :
           (<div>{formatearNumeroConPuntos(totalPrecio)}</div>)
       }
     </>
