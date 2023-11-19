@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { UtilsApi } from '../../Utils/utilsApi';
+import { MiContexto } from '../../Context';
 
-const BotonEliminarPedido = ({ data }) => {
+const BotonEliminarPedido = ({ data, handleClose }) => {
   const [confirmar, setConfirmar] = useState(false);
+  const context = useContext(MiContexto)
 
   const handleConfirmar = () => {
     // Lógica para confirmar el pedido
+    const token = context.tokenLogin.token
+
+    const url = `estados/eliminados?idPedido=${data.id}`
+    UtilsApi({ peticion: url, token, vervo: 'DELETE' })
+      .then(() => handleClose())
     setConfirmar(false);
+
   };
 
   const handleCancelar = () => {
