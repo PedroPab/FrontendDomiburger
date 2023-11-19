@@ -7,6 +7,7 @@ import Recepcion from "../Recepcion"
 import ProtectedRoute from "../../components/ProtectedRoute/inde"
 import { ROLES } from "../../Utils/constList"
 import MapRecepcion from "../MapRecepcion"
+import Cocina from "../Cocina"
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,11 @@ const AppRoutes = () => {
 
         <Route path="/domiciliarios" element={<Domiciliario />} />
         <Route path="/domiciliario" element={<Domiciliario />} />
+
+      </Route>
+      <Route element={<ProtectedRoute users={[ROLES.cocinero]} redirectTo={'/login'} />} >
+
+        <Route path="/cocina" element={<Cocina />} />
 
       </Route>
       {/* este deberia de ser el 404 */}
