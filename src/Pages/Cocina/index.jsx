@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { MiContexto } from '../../Context'
 import NavbarCocinero from "../../components/NavbarDomiciliario copy";
 import Layout from "../../components/Layout";
-import { Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import OrderCard from '../../components/OrderCard';
 import './index.css'
 import { FaBoxOpen } from 'react-icons/fa';
@@ -17,12 +17,16 @@ const Cocina = () => {
 
     if (context.items.length <= 0) {
       return (
-        <div className="sinPedidosContainer">
-          <div className="sinPedidosContent">
-            <FaBoxOpen size={50} /> {/* Tamaño del icono */}
-            <h2>Sin Pedidos</h2>
-          </div>
-        </div>
+        <Container fluid
+          style={{ height: '90vh' }}
+          className="d-flex align-items-center justify-content-center">
+          <Row>
+            <Col className="text-center">
+              <FaBoxOpen size={50} />
+              <h3>Sin pedidos</h3>
+            </Col>
+          </Row>
+        </Container>
       )
     }
 

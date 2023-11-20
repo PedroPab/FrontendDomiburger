@@ -1,8 +1,9 @@
 import { useContext, useEffect, useRef } from 'react'
 import { MiContexto } from '../../Context'
-import { Carousel } from "react-bootstrap"
+import { Carousel, Col, Container, Row } from "react-bootstrap"
 import OrderCard from "../OrderCard"
 import Slider from 'react-slick'
+import { FaBoxOpen } from 'react-icons/fa';
 
 const CarouselListCards = ({ data }) => {
   const context = useContext(MiContexto)
@@ -23,7 +24,7 @@ const CarouselListCards = ({ data }) => {
     <>
       <Slider {...settings} ref={sliderRef}>
         {
-          data ?
+          (data && data.length > 0) ?
             data.map((pedido) => (
               <Carousel.Item
                 key={pedido.id}
@@ -37,7 +38,16 @@ const CarouselListCards = ({ data }) => {
                 </div>
               </Carousel.Item>
             )) :
-            <></>
+            <>
+              <Container fluid style={{ height: '40vh' }} className=" d-flex align-items-center justify-content-center">
+                <Row>
+                  <Col className="text-center">
+                    <FaBoxOpen size={50} />
+                    <h3>Sin pedidos</h3>
+                  </Col>
+                </Row>
+              </Container>
+            </>
         }
       </Slider>
     </>
