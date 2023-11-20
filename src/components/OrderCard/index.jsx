@@ -16,7 +16,7 @@ const OrderCard = ({ dataPedido }) => {
   const role = context.tokenLogin?.user?.role
   const indexEstado = listaEstados.findIndex(e => e.name == dataPedido.estado)
   const objEstado = listaEstados[indexEstado]
-  const colorEstado = objEstado.color
+  const colorEstado = objEstado?.color
   const urlAdress = encodeURIComponent(dataPedido.address.address_complete);
   return (
     <Card

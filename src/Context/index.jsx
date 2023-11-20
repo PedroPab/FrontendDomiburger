@@ -19,9 +19,17 @@ export const ContextProvider = ({ children }) => {
     setModoOscuro(!modoOscuro);
   };
 
+  const lanzarAlarma = (pedido) => {
+    console.log(`Nuevo pedido recibido:✨✨✨✨ `, pedido);
+  };
+
   //get pedidos 
-  const [items, setItems] = useState(null)
+  const { item: items, saveItem: setItems } = useLocalStorage({ itemName: 'items', initialValue: null })
+
+
   useEffect(() => {
+
+
     const socket = socketApp()
     // Escuchar eventos de Socket.IO
     socket.on('connect', () => {
@@ -33,14 +41,31 @@ export const ContextProvider = ({ children }) => {
       socket.emit('api/pedidos/role', ROLE, ID);
     });
 
-    socket.on('api/pedidos', (pedidosEEE) => {
-      console.log(`recibienod datos 🎈`);
-      const newListPedido = pedidosEEE.map(e => ({ data: e }))
-      if (!items) {
-        setItems(newListPedido);
-      } else {
-        setItems([...items, ...newListPedido]);
-      }
+    socket.on('api/pedidos', (pedidos) => {
+      //creamos un mapa para que no se reten y se puedan acutralisar 
+      const mapItems = new Map
+      items?.forEach(element => {
+        mapItems.set(element.id, element)
+      });
+
+      const countPre = mapItems.size
+      console.log("mmapItems 💙💙💙", countPre)
+      console.log("items 🏜🏜🏜", items)
+
+      let pedidosNuevos = []
+      pedidos?.forEach(element => {
+        mapItems.set(element.id, element)
+      });
+      const countPos = mapItems.size
+      console.log("🎈🎈🎈🎈:", countPos)
+
+      if (countPos > countPre) lanzarAlarma(pedidosNuevos)
+
+      const newArrayItems = Array.from(mapItems.values());
+      console.log("🚀 ~ file: index.jsx:65 ~ socket.on ~ newArrayItems:", newArrayItems)
+
+      setItems(newArrayItems);
+
     });
 
     // Limpiar el listener cuando el componente se desmonta
@@ -50,6 +75,9 @@ export const ContextProvider = ({ children }) => {
 
   }, [tokenLogin]);
 
+  useEffect(() => {
+    console.log(`items`, items);
+  }, [items])
 
   ///aletas de la aplicacion 
   const [alerts, setAlerts] = useState([]);

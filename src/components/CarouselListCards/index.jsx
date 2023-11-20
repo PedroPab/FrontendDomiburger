@@ -26,13 +26,13 @@ const CarouselListCards = ({ data }) => {
           data ?
             data.map((pedido) => (
               <Carousel.Item
-                key={pedido.data.id}
+                key={pedido.id}
               >
                 <div
                   className="d-flex "
                 >
                   <OrderCard
-                    dataPedido={pedido.data}
+                    dataPedido={pedido}
                   />
                 </div>
               </Carousel.Item>

@@ -59,7 +59,7 @@ const MapRecepcion = () => {
               show={true}
             >
               <OrderCard
-                dataPedido={pedidoSelecionado.data}
+                dataPedido={pedidoSelecionado}
               />
             </StickyCard>)
           }

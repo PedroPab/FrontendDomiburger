@@ -30,13 +30,13 @@ const Cocina = () => {
       context.items.map((pedido) => (
         <div
           className=' col-md-4 col-lg-4'
-          key={pedido.data.id}
+          key={pedido.id}
         >
           <div
             className="d-flex "
           >
             <OrderCard
-              dataPedido={pedido.data}
+              dataPedido={pedido}
             />
           </div>
         </div>

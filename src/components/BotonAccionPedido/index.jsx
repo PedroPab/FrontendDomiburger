@@ -60,11 +60,12 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
       //remplazamos el pedido de nuetra lista de pedidos
       const pedidoIndex = context.items.findIndex(pedido => pedido.id == data.id)
 
+
       if (!pedidoIndex || pedidoIndex < 0) {
         console.log(`ocurrio un error , no esta el pediod en la lista`);
       } else {
         const newItems = [...context.items]
-        newItems[pedidoIndex] = { data: data, ref: undefined }
+        newItems[pedidoIndex] = data
 
         context.setItems(newItems)
       }
