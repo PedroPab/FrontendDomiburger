@@ -6,7 +6,6 @@ import Mapa from './../../components/MapsGoogle';
 import ListMarker from '../../components/ListMarker';
 import { Container, Row } from 'react-bootstrap';
 import CarouselListCards from '../../components/CarouselListCards';
-import { Navigate } from 'react-router-dom';
 
 
 const Domiciliario = () => {
