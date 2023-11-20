@@ -4,7 +4,6 @@ import NavbarCocinero from "../../components/NavbarDomiciliario copy";
 import Layout from "../../components/Layout";
 import { Col, Container, Row } from 'react-bootstrap';
 import OrderCard from '../../components/OrderCard';
-import './index.css'
 import { FaBoxOpen } from 'react-icons/fa';
 
 
