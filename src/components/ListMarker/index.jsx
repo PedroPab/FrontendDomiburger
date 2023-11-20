@@ -18,17 +18,15 @@ const ListMarker = ({ pedidos }) => {
       {pedidos.map((pedido, index) => (
         <Marker
           key={index}
-          position={pedido.data.address.coordinates}
+          position={pedido.address.coordinates}
           title='title'
           animation='DROP'
-          label={`${pedido.data.numeroDeOrdenDelDia}`}
+          label={`${pedido.numeroDeOrdenDelDia}`}
           clickable={true}
           // icon={iconMarker}
           visible={true}
           onClick={() => {
-            console.log(`se clico el peidod ${pedido.data.id}`)
-            const index = context.items.findIndex(e => e.data.id == pedido.data.id)
-            console.log("🚀 ~ file: index.jsx:24 ~ ListMarker ~ index:", index)
+            const index = context.items.findIndex(e => e.id == pedido.id)
             context.setIndexItems(index == -1 ? null : index)
           }}
         />

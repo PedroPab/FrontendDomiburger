@@ -6,24 +6,11 @@ import Mapa from './../../components/MapsGoogle';
 import ListMarker from '../../components/ListMarker';
 import { Container, Row } from 'react-bootstrap';
 import CarouselListCards from '../../components/CarouselListCards';
-import { ROLES } from '../../Utils/constList';
 import { Navigate } from 'react-router-dom';
 
 
 const Domiciliario = () => {
   const context = useContext(MiContexto)
-  let redireccionar = { ok: false, to: '/login' }
-  if (context.tokenLogin) {
-    if (context.tokenLogin?.user?.role !== ROLES.domiciliario) {
-      console.log(context.tokenLogin?.user?.role, 'hcontext.loginToken?.user?.role');
-      redireccionar.ok = true
-    }
-
-  }
-  if (context.tokenLogin == undefined) {
-    console.log(`no hay token`);
-    redireccionar.ok = true
-  }
 
   const [centerMaps, setCenterMaps] = useState({
     lat: 6.29,
@@ -65,7 +52,6 @@ const Domiciliario = () => {
           </Row>
         </Container>
       </Layout >
-      {redireccionar.ok && <Navigate to={redireccionar.to} />}
     </>
   );
 };

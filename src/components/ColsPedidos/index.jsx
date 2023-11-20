@@ -6,7 +6,6 @@ import { OrderCard } from "../../components/OrderCard"
 
 export const ColsPedidos = ({ pedidos }) => {
   // dejamos solo la data
-  pedidos = pedidos.map(e => (e.data))
 
   //el orden de los estados 
   const listPedidosEstados = listaEstados.map(estado => {
