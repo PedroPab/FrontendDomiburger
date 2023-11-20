@@ -24,7 +24,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   //get pedidos 
-  const { item: items, saveItem: setItems } = useLocalStorage({ itemName: 'items', initialValue: null })
+  const [items, setItems] = useState(null)
 
 
   useEffect(() => {
