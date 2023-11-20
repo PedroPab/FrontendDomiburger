@@ -58,17 +58,14 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
     .then(data => { console.log(`la data del botonn `, data); return data })
     .then(data => {
       //remplazamos el pedido de nuetra lista de pedidos
-      const pedidoIndex = context.items.findIndex(pedido => pedido.id == data.id)
+      const mapItems = new Map
+      context.items?.forEach(element => {
+        mapItems.set(element.id, element)
+      });
+      mapItems.set(data.id, data)
+      const newArrayItems = Array.from(mapItems.values());
+      context.setItems(newArrayItems)
 
-
-      if (!pedidoIndex || pedidoIndex < 0) {
-        console.log(`ocurrio un error , no esta el pediod en la lista`);
-      } else {
-        const newItems = [...context.items]
-        newItems[pedidoIndex] = data
-
-        context.setItems(newItems)
-      }
     })
     .catch((error) => {
       //agregamos un aleta al estado de alerta y en 5s lo quitamos 

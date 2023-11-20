@@ -42,6 +42,8 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('api/pedidos', (pedidos) => {
+      console.log("🎈:", pedidos)
+
       //creamos un mapa para que no se reten y se puedan acutralisar 
       const mapItems = new Map
       items?.forEach(element => {
@@ -49,20 +51,16 @@ export const ContextProvider = ({ children }) => {
       });
 
       const countPre = mapItems.size
-      console.log("mmapItems 💙💙💙", countPre)
-      console.log("items 🏜🏜🏜", items)
 
       let pedidosNuevos = []
       pedidos?.forEach(element => {
         mapItems.set(element.id, element)
       });
       const countPos = mapItems.size
-      console.log("🎈🎈🎈🎈:", countPos)
 
       if (countPos > countPre) lanzarAlarma(pedidosNuevos)
 
       const newArrayItems = Array.from(mapItems.values());
-      console.log("🚀 ~ file: index.jsx:65 ~ socket.on ~ newArrayItems:", newArrayItems)
 
       setItems(newArrayItems);
 
@@ -75,9 +73,6 @@ export const ContextProvider = ({ children }) => {
 
   }, [tokenLogin]);
 
-  useEffect(() => {
-    console.log(`items`, items);
-  }, [items])
 
   ///aletas de la aplicacion 
   const [alerts, setAlerts] = useState([]);
