@@ -3,7 +3,6 @@ import { MiContexto } from '../../Context'
 import { Container } from 'react-bootstrap';
 import NavbarRecepcion from "../../components/NavbarRecepcion";
 import Layout from "../../components/Layout";
-import { ErrorAlert } from "../../components/ErrorAlert"
 import Mapa from "../../components/MapsGoogle"
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
@@ -64,7 +63,6 @@ const MapRecepcion = () => {
             </StickyCard>)
           }
 
-          <ErrorAlert />
           <SelectListDomiciliarios />
         </ContextProviderRecepcion>
 

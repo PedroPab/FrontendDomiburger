@@ -13,6 +13,7 @@ import { MiContexto } from '../../Context';
 const NavBar = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto)
   const context = useContext(MiContexto)
+  console.log("🚀 ~ file: index.jsx:16 ~ NavBar ~ context:", context)
 
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'}  >
@@ -27,7 +28,7 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
           Domiburguer
         </Navbar.Brand>
         <Nav>
-          <span><GiSeaDragon />: {context.items?.length || 0}</span>
+          <span><GiSeaDragon />: {context?.items?.length || 0}</span>
         </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

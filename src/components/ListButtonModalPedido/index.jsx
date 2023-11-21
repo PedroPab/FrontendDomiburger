@@ -10,7 +10,13 @@ const ListButtonModalPedido = ({ dataPedido, role }) => {
       <div>
         <ButtonGroup aria-label="Basic example"
           className='d-flex justify-content-between '>
-          <BotonMasModal dataPedido={dataPedido} />
+          {
+            (role == ROLES.admin || role == ROLES.recepcion) &&
+            (
+              <BotonMasModal dataPedido={dataPedido} />
+            )
+
+          }
           {
             (role == ROLES.admin || role == ROLES.recepcion) &&
             (
