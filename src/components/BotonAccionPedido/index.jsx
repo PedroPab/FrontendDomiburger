@@ -6,6 +6,7 @@ import { traladarPedidoDeEstado } from './../../Utils/utilsApi'
 import { listaEstados } from '../../Utils/listEstados';
 import { agregarAlerta, retirarAlerta } from '../../Utils/alert';
 import { makeid } from '../../Utils/makeId';
+import { filtrarPedidos } from '../../Utils/filtrarPedidos';
 
 
 const BotonAccionPedido = ({ dataPedido }) => {
@@ -58,13 +59,23 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
     .then(data => { console.log(`la data del botonn `, data); return data })
     .then(data => {
       //remplazamos el pedido de nuetra lista de pedidos
-      const mapItems = new Map
-      context.items?.forEach(element => {
-        mapItems.set(element.id, element)
+      // const mapItems = new Map
+      // context.items?.forEach(element => {
+      //   mapItems.set(element.id, element)
+      // });
+      // mapItems.set(data.id, data)
+      // const newArrayItems = Array.from(mapItems.values());
+
+      context.setItems(itemsPrevios => {
+        const mapItems = new Map(itemsPrevios.map(item => [item.id, item]));
+        mapItems.set(data.id, data);
+
+        const newArray = Array.from(mapItems.values());
+        return filtrarPedidos(newArray);
       });
-      mapItems.set(data.id, data)
-      const newArrayItems = Array.from(mapItems.values());
-      context.setItems(newArrayItems)
+      // context.setItems(() => [...newArrayItems])
+
+      // context.setItems(newArrayItems)
 
     })
     .catch((error) => {

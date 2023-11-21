@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
-import { Container } from 'react-bootstrap';
+import { Container, ToastContainer } from 'react-bootstrap';
 import NavbarRecepcion from "../../components/NavbarRecepcion";
 import RowListCol from "../../components/RowListCol";
 import Layout from "../../components/Layout";
@@ -29,6 +29,7 @@ const Recepcion = () => {
             </RowListCol>
           </Container>
           <ErrorAlert />
+          <ToastContainer />
           <SelectListDomiciliarios />
         </ContextProviderRecepcion>
 

@@ -2,12 +2,18 @@
 import { createContext, useEffect, useState } from 'react';
 import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
+import { filtrarPedidos } from '../Utils/filtrarPedidos';
 import socketApp from '../Utils/socket';
+import useNotificacionConSonido from '../Utils/useNotificacionConSonido';
 
 export const MiContexto = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const ContextProvider = ({ children }) => {
+  //get pedidos 
+  const [items, setItems] = useState([])
+  // const { item: items, saveItem: setItems } = useLocalStorage({ itemName: 'items', initialValue: null })
+
   //token de usuario
   const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} })
 
@@ -19,17 +25,13 @@ export const ContextProvider = ({ children }) => {
     setModoOscuro(!modoOscuro);
   };
 
-  const lanzarAlarma = (pedido) => {
-    console.log(`Nuevo pedido recibido:✨✨✨✨ `, pedido);
+  const mostrarNotificacion = useNotificacionConSonido();
+
+  const manejarAccion = () => {
+    // Lógica de la acción
+    mostrarNotificacion("Acción realizada con éxito!");
   };
-
-  //get pedidos 
-  const [items, setItems] = useState(null)
-
-
   useEffect(() => {
-
-
     const socket = socketApp()
     // Escuchar eventos de Socket.IO
     socket.on('connect', () => {
@@ -38,40 +40,95 @@ export const ContextProvider = ({ children }) => {
       const ROLE = tokenLogin?.user?.role
       const ID = tokenLogin?.user?.id
       if (!ROLE || !ID) return
-      socket.emit('api/pedidos/role', ROLE, ID);
+      socket.emit('api/v2/pedidos/role', ROLE, ID);
     });
 
-    socket.on('api/pedidos', (pedidos) => {
-      console.log("🎈:", pedidos)
+    // Escuchar eventos de Socket.IO
+    socket.on('message', (data) => {
+      console.log(`message `, data);
+    });
 
+    socket.on('pedidosIniciales', (pedido) => {
+      setItems(filtrarPedidos(pedido))
+    })
+
+    socket.on('pedidos/added', (pedido) => {
+      console.log(`se creo un nuevo pedido`);
+      manejarAccion()
+      console.log(`los pedios actuales son :`, items);
+      setItems(itemsPrevios => {
+        const mapItems = new Map(itemsPrevios.map(item => [item.id, item]));
+        mapItems.set(pedido.id, pedido);
+        const newArray = Array.from(mapItems.values());
+        return filtrarPedidos(newArray);
+      });
+    });
+
+    socket.on('pedidos/modified', (pedido) => {
+      console.log(`se modifico un pedido`);
       //creamos un mapa para que no se reten y se puedan acutralisar 
-      const mapItems = new Map
-      items?.forEach(element => {
-        mapItems.set(element.id, element)
+      setItems(itemsPrevios => {
+        const mapItems = new Map(itemsPrevios.map(item => [item.id, item]));
+        mapItems.set(pedido.id, pedido);
+        const newArray = Array.from(mapItems.values());
+        return filtrarPedidos(newArray);
+
       });
-
-      const countPre = mapItems.size
-
-      let pedidosNuevos = []
-      pedidos?.forEach(element => {
-        mapItems.set(element.id, element)
-      });
-      const countPos = mapItems.size
-
-      if (countPos > countPre) lanzarAlarma(pedidosNuevos)
-
-      const newArrayItems = Array.from(mapItems.values());
-
-      setItems(newArrayItems);
 
     });
+
+    // socket.on('api/pedidos', (pedidos) => {
+    //   console.log("🎈:", pedidos)
+
+    //   //creamos un mapa para que no se reten y se puedan acutralisar 
+    //   const mapItems = new Map
+    //   items?.forEach(element => {
+    //     mapItems.set(element.id, element)
+    //   });
+
+    //   const countPre = mapItems.size
+
+    //   let pedidosNuevos = []
+    //   pedidos?.forEach(element => {
+    //     mapItems.set(element.id, element)
+    //   });
+    //   const countPos = mapItems.size
+
+    //   if (countPos > countPre) lanzarAlarma(pedidosNuevos)
+
+    //   const newArrayItems = Array.from(mapItems.values());
+
+    //   setItems(newArrayItems);
+
+    // });
 
     // Limpiar el listener cuando el componente se desmonta
     return () => {
-      socket.off('nuevoPedido');
+      // socket.off('connect');
+      // socket.off('message');
+      // socket.off('pedidosIniciales');
+      // socket.off('pedidos/added');
+      // socket.off('pedidos/modified');
     };
 
   }, [tokenLogin]);
+
+  useEffect(() => {
+    console.log(`items`, items);
+    setItems(itemsPrevios => {
+      const mapItems = new Map(itemsPrevios.map(item => {
+        return [item.id, item]
+      }));
+
+      let newArray = Array.from(mapItems.values())
+
+      //revisomos que que no estn en facaturardos, y si estn en pendiente tranfesrtenc si tienen el pago se elimine
+      return filtrarPedidos(newArray);
+
+
+    });
+  }, [])
+
 
 
   ///aletas de la aplicacion 
@@ -82,6 +139,9 @@ export const ContextProvider = ({ children }) => {
 
   //zoom del mapa
   const [zoomMaps, setZoomMaps] = useState(15)
+
+  const [alertaActiva, setAlertaActiva] = useState(false);
+
 
 
   return (
@@ -99,7 +159,9 @@ export const ContextProvider = ({ children }) => {
 
         indexItems, setIndexItems,
 
-        zoomMaps, setZoomMaps
+        zoomMaps, setZoomMaps,
+
+        alertaActiva, setAlertaActiva,
       }
     }>
       <CambiarTema />
