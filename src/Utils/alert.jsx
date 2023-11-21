@@ -1,13 +1,9 @@
 
-
-
-
 export const agregarAlerta = ({ itemsAlerts, setItesmAlert, newAlert }) => {
   const newItemsAlert = [
     ...itemsAlerts,
     newAlert
   ]
-  console.log("🚀 ~ file: alert.jsx:10 ~ agregarAlerta ~ newItemsAlert:", newItemsAlert)
 
   setItesmAlert(newItemsAlert)
 }

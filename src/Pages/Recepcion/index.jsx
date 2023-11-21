@@ -5,7 +5,6 @@ import NavbarRecepcion from "../../components/NavbarRecepcion";
 import RowListCol from "../../components/RowListCol";
 import Layout from "../../components/Layout";
 import { ColsPedidos } from '../../components/ColsPedidos';
-import { ErrorAlert } from "../../components/ErrorAlert"
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
 
@@ -28,7 +27,6 @@ const Recepcion = () => {
               />
             </RowListCol>
           </Container>
-          <ErrorAlert />
           <ToastContainer />
           <SelectListDomiciliarios />
         </ContextProviderRecepcion>

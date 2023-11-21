@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useState, useContext } from 'react';
 import { MiContexto } from '../../Context'
 
@@ -41,10 +41,10 @@ const BotonAccionPedido = ({ dataPedido }) => {
           </Button> :
           <></>
       ) : (
-        <ButtonGroup vertical>
+        <div className='btn btn-group' >
           <Button size="" variant="outline-success" onClick={activarAccion}>Confirmar</Button>
           <Button size="" variant="outline-danger" onClick={handleToggle}>Cancelar</Button>
-        </ButtonGroup>
+        </div>
       )}
     </>
   );
