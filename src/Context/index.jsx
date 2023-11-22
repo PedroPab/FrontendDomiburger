@@ -4,7 +4,6 @@ import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
 import socketApp from '../Utils/socket';
-import useNotificacionConSonido from '../Utils/useNotificacionConSonido';
 
 export const MiContexto = createContext()
 
@@ -25,11 +24,12 @@ export const ContextProvider = ({ children }) => {
     setModoOscuro(!modoOscuro);
   };
 
-  const mostrarNotificacion = useNotificacionConSonido();
 
   const manejarAccion = () => {
     // Lógica de la acción
-    mostrarNotificacion("Acción realizada con éxito!");
+    // mostrarNotificacion("Acción realizada con éxito!");
+    // useNotificacionConSonido()
+    console.log('Alerta activada');
   };
   useEffect(() => {
     const socket = socketApp()
