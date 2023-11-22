@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Row } from 'react-bootstrap';
 import { RecepcionContexto } from '../../Context/RecepcionContex';
 import Form from 'react-bootstrap/Form';
 import { UtilsApi } from '../../Utils/utilsApi';
@@ -52,26 +52,29 @@ const ModalAsignarPedido = ({ show, handleClose, nameDomiciliario, idPedido, dat
       <Modal.Body>
         <p>Domiciliario actual: <span>{nameDomiciliario}</span> </p>
         <p>{domiciliarioSelect}</p>
-        <Form.Select
-          name="domiciliario"
-          onChange={(e) => (setDomiciliarioSelect(e.target.value))}
-        >
-          <option value=''>Selecionar Domiciliario</option>
+        <Row className='m-3'>
+          <Form.Select
+            name="domiciliario"
+            onChange={(e) => (setDomiciliarioSelect(e.target.value))}
+          >
+            <option value='Selecionar' disabled selected="true">Selecionar domiciliario</option>
 
-          {
-            contextRecepcion.listDomiciliarios &&
-            contextRecepcion.listDomiciliarios.map(domiciliario => (
-              <option
-                key={domiciliario.id}
-                value={domiciliario.id}>
-                {domiciliario.name}
-              </option>
-            ))
-          }
-          <option value='otros'>Otros</option>
-        </Form.Select>
+            {
+              contextRecepcion.listDomiciliarios &&
+              contextRecepcion.listDomiciliarios.map(domiciliario => (
+                <option
+                  key={domiciliario.id}
+                  value={domiciliario.id}>
+                  {domiciliario.name}
+                </option>
+              ))
+            }
+            <option value='otros'>Otros</option>
+          </Form.Select>
 
-        <div>
+        </Row>
+
+        <Row className='m-3'>
           {confirmar ? (
             <div>
               <Button variant="outline-success" onClick={handleConfirmar}>Confirmar</Button>
@@ -80,7 +83,7 @@ const ModalAsignarPedido = ({ show, handleClose, nameDomiciliario, idPedido, dat
           ) : (
             <Button variant='warning' onClick={() => setConfirmar(true)}>Asignar Domiciliario</Button>
           )}
-        </div>
+        </Row>
 
       </Modal.Body>
       <Modal.Footer>
