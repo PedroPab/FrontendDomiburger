@@ -47,6 +47,8 @@ const Cocina = () => {
     )
   }
 
+
+
   return (
     <>
       <Layout>

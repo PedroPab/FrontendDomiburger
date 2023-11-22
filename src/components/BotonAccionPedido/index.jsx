@@ -71,7 +71,7 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
         mapItems.set(data.id, data);
 
         const newArray = Array.from(mapItems.values());
-        return filtrarPedidos(newArray);
+        return filtrarPedidos(newArray, context.tokenLogin.user.role);
       });
       // context.setItems(() => [...newArrayItems])
 

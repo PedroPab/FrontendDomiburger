@@ -49,7 +49,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('pedidosIniciales', (pedido) => {
-      setItems(filtrarPedidos(pedido))
+      setItems(filtrarPedidos(pedido, tokenLogin.user.role))
     })
 
     socket.on('pedidos/added', (pedido) => {
@@ -60,7 +60,7 @@ export const ContextProvider = ({ children }) => {
         const mapItems = new Map(itemsPrevios.map(item => [item.id, item]));
         mapItems.set(pedido.id, pedido);
         const newArray = Array.from(mapItems.values());
-        return filtrarPedidos(newArray);
+        return filtrarPedidos(newArray, tokenLogin.user.role);
       });
     });
 
@@ -71,7 +71,7 @@ export const ContextProvider = ({ children }) => {
         const mapItems = new Map(itemsPrevios.map(item => [item.id, item]));
         mapItems.set(pedido.id, pedido);
         const newArray = Array.from(mapItems.values());
-        return filtrarPedidos(newArray);
+        return filtrarPedidos(newArray, tokenLogin.user.role);
 
       });
 
@@ -123,7 +123,7 @@ export const ContextProvider = ({ children }) => {
       let newArray = Array.from(mapItems.values())
 
       //revisomos que que no estn en facaturardos, y si estn en pendiente tranfesrtenc si tienen el pago se elimine
-      return filtrarPedidos(newArray);
+      return filtrarPedidos(newArray, tokenLogin.user.role);
 
 
     });
