@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../assets/logo.png';
-import { BiHappy, BiLogIn, BiMobile, } from "react-icons/bi"
+import { BiArrowFromBottom, BiHappy, BiLogIn, BiMobile, } from "react-icons/bi"
 import { RecepcionContexto } from '../../Context/RecepcionContex';
 import { useContext } from 'react';
 import { GiSeaDragon } from 'react-icons/gi';
@@ -39,6 +39,7 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
             <Nav.Link as={Link} to="/recepcion">  <FaAngellist /> Domi Rastreo</Nav.Link>
             <Nav.Link as={Link} to="/mapRecepcion">  <FaMapMarkedAlt /> Map</Nav.Link>
             <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
+            <Nav.Link as={Link} to="/contabilidad">  <BiArrowFromBottom /> Contabilidad</Nav.Link>
 
             <Nav.Link onClick={() => { contextRecepcion.openCloseModalAgregarDo() }}>  <BiMobile /> Domiciliarios</Nav.Link>
 
