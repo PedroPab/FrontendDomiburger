@@ -7,6 +7,7 @@ const cards = [
   // ... Agrega más cards según necesites
 ];
 
+import Cocina from "../Cocina"
 const App = () => {
   return (
     <div>
