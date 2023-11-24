@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { ContextProvider } from "../../Context"
 import Domiciliario from "../Domiciliario"
-import Experimentos from "../Experimentos"
+import NotFoundPage from "../NotFoundPage"
 import Login from "../Login"
 import Recepcion from "../Recepcion"
 import ProtectedRoute from "../../components/ProtectedRoute/inde"
@@ -35,7 +35,7 @@ const AppRoutes = () => {
       {/* este deberia de ser el 404 */}
       <Route element={<ProtectedRoute redirectTo={'/'} />} >
 
-        <Route path="/*" element={<Experimentos />} />
+        <Route path="/*" element={<NotFoundPage />} />
 
       </Route>
     </Routes>
