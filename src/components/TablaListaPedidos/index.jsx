@@ -25,8 +25,6 @@ const TablaListaPedidos = ({ pedidos }) => {
           <FilaPedidos
             pedidos={pedidos}
           />
-
-          {/* Iterar sobre pedidos para crear filas */}
         </tbody>
       </Table>
     </div>
