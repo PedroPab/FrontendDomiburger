@@ -25,7 +25,7 @@ const FormulariFiltros = ({ onBuscar }) => {
     // Obtener la hora en formato UTC
     var fechaUTC = fechaLocal.toISOString();
 
-    return fechaUTC
+    return fechaUT
   }
   return (<>
     <Form >

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
-import NavbarCocinero from "../../components/NavbarDomiciliario copy";
+import NavbarCocinero from "../../components/NavbarCocinero";
 import Layout from "../../components/Layout";
 import { Col, Container, Row } from 'react-bootstrap';
 import OrderCard from '../../components/OrderCard';
