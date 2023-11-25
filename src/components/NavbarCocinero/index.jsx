@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import logo from './../../assets/logo.png';
 import { BiLogIn } from "react-icons/bi"
 import { GiSeaDragon } from 'react-icons/gi';
-import { FaAddressCard, FaHistory, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaHome, FaMapMarkedAlt } from 'react-icons/fa';
 
 const NavBar = ({ modoOscuro, alternarModo, pedidos }) => {
   return (
@@ -26,10 +26,12 @@ const NavBar = ({ modoOscuro, alternarModo, pedidos }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+
+            <Nav.Link as={Link} to="/cocina">  <FaHome /> Home</Nav.Link>
+
+            <Nav.Link as={Link} to="/mapCocina">  <FaMapMarkedAlt /> Map</Nav.Link>
             <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
 
-
-            {/* <Nav.Link as={Link} to="/mapCocina">  <FaMapMarkedAlt /> Map</Nav.Link> */}
 
             {/* <Nav.Link as={Link} to="/historial">  <FaHistory /> Historial</Nav.Link> */}
 
