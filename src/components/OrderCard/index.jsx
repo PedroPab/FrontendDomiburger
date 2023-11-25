@@ -8,15 +8,15 @@ import { ProductoList } from '../ProductoList';
 import { TotalPrecio } from '../TotalPrecio';
 import { ListButtonModalPedido } from '../ListButtonModalPedido';
 import { MiContexto } from '../../Context'
-import { listaEstados } from '../../Utils/listEstados';
 import { formatTimeString } from '../../Utils/formatTime';
+import extraeColorEstado from '../../Utils/extraeColorEstado';
 
 const OrderCard = ({ dataPedido }) => {
   const context = useContext(MiContexto)
   const role = context.tokenLogin?.user?.role
-  const indexEstado = listaEstados.findIndex(e => e.name == dataPedido.estado)
-  const objEstado = listaEstados[indexEstado]
-  const colorEstado = objEstado?.color
+
+  const colorEstado = extraeColorEstado(dataPedido.estado)
+
   const urlAdress = encodeURIComponent(dataPedido.address.address_complete);
 
   const origin = dataPedido.origin
