@@ -7,6 +7,7 @@ import Recepcion from "../Recepcion"
 import ProtectedRoute from "../../components/ProtectedRoute/inde"
 import { ROLES } from "../../Utils/constList"
 import MapRecepcion from "../MapRecepcion"
+import Contabilidad from "../Contabilidad"
 import Cocina from "../Cocina"
 
 const AppRoutes = () => {
@@ -20,6 +21,8 @@ const AppRoutes = () => {
 
         <Route path="/recepcion" element={<Recepcion />} />
         <Route path="/mapRecepcion" element={<MapRecepcion />} />
+        <Route path="/contabilidad" element={<Contabilidad />} />
+
       </Route>
       <Route element={<ProtectedRoute users={[ROLES.domiciliario]} redirectTo={'/login'} />} >
 
