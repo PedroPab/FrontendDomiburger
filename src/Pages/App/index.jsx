@@ -10,6 +10,7 @@ import MapRecepcion from "../MapRecepcion"
 import Contabilidad from "../Contabilidad"
 import Cocina from "../Cocina"
 import MapCocina from "../MapCocina"
+import DomiciliarioHistory from "../DomiciliarioHistory"
 
 const AppRoutes = () => {
   return (
@@ -29,6 +30,7 @@ const AppRoutes = () => {
 
         <Route path="/domiciliarios" element={<Domiciliario />} />
         <Route path="/domiciliario" element={<Domiciliario />} />
+        <Route path="/domiciliario/history" element={<DomiciliarioHistory />} />
 
       </Route>
       <Route element={<ProtectedRoute users={[ROLES.cocinero]} redirectTo={'/login'} />} >

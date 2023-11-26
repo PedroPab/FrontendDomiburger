@@ -1,6 +1,7 @@
 import { Button, Form, InputGroup, Row } from "react-bootstrap"
 import { RecepcionContexto } from "../../Context/RecepcionContex"
 import { useContext, useState } from "react"
+import { convertirFecha } from "../../Utils/formatTime"
 
 
 const FormulariFiltros = ({ onBuscar }) => {
@@ -15,18 +16,7 @@ const FormulariFiltros = ({ onBuscar }) => {
     onBuscar([fechaInicio, fechaFin, estado, domiciliario]);
   };
 
-  const convertirFecha = (fechaInput) => {
-    var dateInput = fechaInput.value
-    var fechaLocal = new Date(dateInput + "T00:00:00");
 
-    // Ajustar la diferencia horaria a la hora internacional
-    fechaLocal.setHours(fechaLocal.getHours());
-
-    // Obtener la hora en formato UTC
-    var fechaUTC = fechaLocal.toISOString();
-
-    return fechaUT
-  }
   return (<>
     <Form >
       <InputGroup className="mb-3">
