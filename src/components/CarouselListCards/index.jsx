@@ -26,17 +26,25 @@ const CarouselListCards = ({ data }) => {
         {
           (data && data.length > 0) ?
             data.map((pedido) => (
-              <div key={pedido.id}>
+              <div
+                key={pedido.id}
 
+                className="d-flex "
+              >
                 <OrderCard
                   dataPedido={pedido}
                 />
-
               </div>
-
             )) :
             <>
-              ds
+              <Container fluid style={{ height: '40vh' }} className=" d-flex align-items-center justify-content-center">
+                <Row>
+                  <Col className="text-center">
+                    <FaBoxOpen size={50} />
+                    <h3>Sin pedidos</h3>
+                  </Col>
+                </Row>
+              </Container>
             </>
         }
       </Slider>
