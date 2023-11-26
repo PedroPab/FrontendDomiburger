@@ -221,7 +221,9 @@ function Mapa({ center, containerStyle, zoom, children, setCenter }) {
     }
   ]
   const mapOptions = {
-    styles: context.modoOscuro ? darkThemeStyles : []
+    styles: context.modoOscuro ? darkThemeStyles : [],
+    disableDefaultUI: false,
+    gestureHandling: 'greedy',// Permitir el desplazamiento con un solo dedo
   };
 
   return isLoaded ? (
