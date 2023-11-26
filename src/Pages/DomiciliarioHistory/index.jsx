@@ -30,7 +30,10 @@ const DomiciliarioHistory = () => {
       "options": ">=",
       "type": "Date",
       "value": convertirFecha2(diaAnteriorStr)
-
+    }, {
+      key: `domiciliario_asignado.id`,
+      options: `==`,
+      value: context.tokenLogin.user.id
     }]
 
     const filter = JSON.stringify({ filter: dataFilter })
