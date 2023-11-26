@@ -18,4 +18,31 @@ function formatTimeString(timestamp) {
   return `${hours}:${minutesStr} ${ampm}`;
 }
 
-export { formatTimeString }
+
+const convertirFecha = (fechaInput) => {
+  var dateInput = fechaInput
+  var fechaLocal = new Date(dateInput + "T00:00:00");
+
+  // Ajustar la diferencia horaria a la hora internacional
+  fechaLocal.setHours(fechaLocal.getHours());
+
+  // Obtener la hora en formato UTC
+  var fechaUTC = fechaLocal.toISOString();
+
+  return fechaUTC
+}
+
+
+const convertirFecha2 = (fechaInput) => {
+  var fechaLocal = new Date(fechaInput + "T00:00:00");
+
+  // Ajustar la diferencia horaria a la hora internacional
+  fechaLocal.setHours(fechaLocal.getHours());
+
+  // Obtener la hora en formato UTC
+  var fechaUTC = fechaLocal.toISOString();
+
+  return fechaUTC
+}
+
+export { formatTimeString, convertirFecha, convertirFecha2 }
