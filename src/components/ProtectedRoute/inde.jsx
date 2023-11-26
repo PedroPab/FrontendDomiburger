@@ -9,7 +9,7 @@ const ProtectedRoute = ({ users, children, redirectTo }) => {
     return children ? <children /> : <Outlet />
   }
 
-  if (!users?.includes(tokenLogin.user.role) && users > 0) {
+  if (!users?.includes(tokenLogin?.user?.role) && users > 0) {
     console.log(`no es valido `);
     return <Navigate to={redirectTo} />
   }

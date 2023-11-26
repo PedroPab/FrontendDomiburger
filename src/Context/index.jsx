@@ -123,11 +123,11 @@ export const ContextProvider = ({ children }) => {
       let newArray = Array.from(mapItems.values())
 
       //revisomos que que no estn en facaturardos, y si estn en pendiente tranfesrtenc si tienen el pago se elimine
-      return filtrarPedidos(newArray, tokenLogin.user.role);
+      return filtrarPedidos(newArray, tokenLogin?.user?.role);
 
 
     });
-  }, [])
+  }, [tokenLogin])
 
 
 
