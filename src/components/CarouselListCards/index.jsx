@@ -1,8 +1,10 @@
 import { useContext, useEffect, useRef } from 'react'
 import { MiContexto } from '../../Context'
-import { Carousel, Col, Container, Row } from "react-bootstrap"
+import { Col, Container, Row } from "react-bootstrap"
 import OrderCard from "../OrderCard"
-import Slider from 'react-slick'
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { FaBoxOpen } from 'react-icons/fa';
 
 const CarouselListCards = ({ data }) => {
@@ -28,12 +30,14 @@ const CarouselListCards = ({ data }) => {
             data.map((pedido) => (
               <div
                 key={pedido.id}
-
-                className="d-flex "
               >
-                <OrderCard
-                  dataPedido={pedido}
-                />
+                <div
+                  className="d-flex "
+                >
+                  <OrderCard
+                    dataPedido={pedido}
+                  />
+                </div>
               </div>
             )) :
             <>
