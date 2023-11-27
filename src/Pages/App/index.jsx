@@ -11,11 +11,12 @@ import Contabilidad from "../Contabilidad"
 import Cocina from "../Cocina"
 import MapCocina from "../MapCocina"
 import DomiciliarioHistory from "../DomiciliarioHistory"
+import FormClient from "../FormClient"
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<FormClient />} />
 
       <Route path="/login" element={<Login />} />
 
