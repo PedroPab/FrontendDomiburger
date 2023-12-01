@@ -7,10 +7,10 @@ export const ContexClient = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const ContextProviderClient = ({ children }) => {
-  console.log(`hoal`);
+  console.log(`[ContextProviderClient]`);
 
   //token de usuario
-  const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} })
+  const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUserClient', initialValue: {} })
 
   // Estado para el modo oscuro
   const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: true })
@@ -27,6 +27,10 @@ export const ContextProviderClient = ({ children }) => {
   const [alertaActiva, setAlertaActiva] = useState(false);
 
 
+  const { item: pedido, saveItem: setPedido } = useLocalStorage({ itemName: 'pedido', initialValue: {} })
+
+
+
 
   return (
     <ContexClient.Provider value={
@@ -39,6 +43,8 @@ export const ContextProviderClient = ({ children }) => {
         alerts, setAlerts,
 
         alertaActiva, setAlertaActiva,
+
+        pedido, setPedido,
       }
     }>
       <CambiarTema modoOscuro={modoOscuro} />
