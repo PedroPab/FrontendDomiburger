@@ -104,11 +104,11 @@ export const ContextProvider = ({ children }) => {
 
     // Limpiar el listener cuando el componente se desmonta
     return () => {
-      // socket.off('connect');
-      // socket.off('message');
-      // socket.off('pedidosIniciales');
-      // socket.off('pedidos/added');
-      // socket.off('pedidos/modified');
+      socket.off('connect');
+      socket.off('message');
+      socket.off('pedidosIniciales');
+      socket.off('pedidos/added');
+      socket.off('pedidos/modified');
     };
 
   }, [tokenLogin]);
