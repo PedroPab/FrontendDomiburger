@@ -1,19 +1,19 @@
 import { Form } from "react-bootstrap"
 
-
-const SelectAdicionClient = ({ producto }) => {
-
+const SelectAdicionClient = ({ producto, adiciones, onChangeSelect }) => {
   return (
     <>
       <Form.Select
-        id="metodoDePagoInput"
-        required
-      // value={}
-      // onChange={(e) => setMetodoDePago(e.target.value)}
+        className="mw-20"
+        onChange={(e) => onChangeSelect(e.target.value, producto.idInter)}
       >
-        <option value="Efectivo">Efectivo</option>
-        <option value="Transferencia">Transferencia</option>
-      </Form.Select>
+        <option value="Seleccionar Adicion">Seleccionar Adicion</option>
+        {
+          adiciones.map(e => (
+            <option key={e.id} value={e.id} >{e.name}</option>
+          ))
+        }
+      </Form.Select >
     </>
   )
 }
