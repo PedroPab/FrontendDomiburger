@@ -1,20 +1,18 @@
-import { Card, Table, Button } from 'react-bootstrap';
-import formatearNumeroConPuntos from './../../Utils/formatearNumeroConPuntos'
-import { SelectAdicionClient } from '../SelectAdicionClient';
-import { UtilsApi } from './../../Utils/utilsApi'
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { Card, Table } from 'react-bootstrap';
+import ProductoRow from './../../components/ProductoRow'; // Nuevo componente
+import { UtilsApi } from './../../Utils/utilsApi';
 import { makeid } from '../../Utils/makeId';
 
 const ResumenProductosForm = ({ listaProducto, setListaProducto }) => {
   const [adiciones, setAdiciones] = useState([]);
+
   useEffect(() => {
     UtilsApi({ peticion: 'productos/filter?key=type&options===&value=Adicion', vervo: 'GET' })
-      .then(data => {
-        return data.map(e => e.data)
-      })
+      .then(data => data.map(e => e.data))
       .then(data => setAdiciones(data))
-      .catch(error => console.log(error))
-  }, [])
+      .catch(error => console.log(error));
+  }, []);
 
   const onChangeSelectAdicion = (idAdicion, idProducto) => {
     //buscamos la adcion
@@ -47,64 +45,33 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto }) => {
   }
 
   return (
-    <>
-      <Card.Body>
-        <Card.Title style={{ fontSize: '20px' }}>RESUMEN DE PEDIDO</Card.Title>
-        <div id="totalResumido">
-          <Table striped>
-            <thead>
-              <tr>
-                <th>PRODUCTOS</th>
-                <th>MAS...</th>
-                <th>PRECIO</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                listaProducto &&
-                listaProducto.map(producto => {
-                  console.log(`listaProducto`, producto.modifique);
-                  let totalProducto = producto.price
-                  producto?.modifique.forEach(element => {
-                    totalProducto += element.price
-                  });
-                  return (
-                    <tr key={producto.idInter} >
-                      <td ><small >{producto.name}
-                        <div>
-                          {
-                            producto?.modifique &&
-                            producto.modifique.map(modifique => {
-                              return (
-                                <span
-                                  className='badge'
-                                  style={{
-                                    backgroundColor: modifique.colorPrimary,
-                                  }}
-                                  key={modifique.idInter}
-                                  onClick={() => onClicAdicion(modifique.idInter, producto.idInter)}
-                                >
-                                  {modifique.name}
+    <Card.Body>
+      <Card.Title style={{ fontSize: '20px' }}>RESUMEN DE PEDIDO</Card.Title>
+      <div id="totalResumido">
+        <Table striped>
+          <thead>
+            <tr>
+              <th>PRODUCTOS</th>
+              <th>MAS...</th>
+              <th>PRECIO</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listaProducto && listaProducto.map(producto => (
+              <ProductoRow
+                key={producto.idInter}
+                producto={producto}
+                adiciones={adiciones}
+                setListaProducto={setListaProducto}
+                onChangeSelectAdicion={onChangeSelectAdicion}
+                onClicAdicion={onClicAdicion}
+              />
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    </Card.Body>
+  );
+};
 
-                                </span>
-                              )
-                            })
-                          }
-                        </div></small></td>
-                      <td><SelectAdicionClient producto={producto} onChangeSelect={onChangeSelectAdicion} adiciones={adiciones} /></td>
-                      <td><span >{formatearNumeroConPuntos(totalProducto)}</span></td>
-                    </tr>)
-                })
-              }
-            </tbody>
-          </Table>
-        </div>
-        <div className="d-flex justify-content-center">
-          <Button variant="primary" style={{ backgroundColor: '#f89708', borderColor: '#f89708' }}>ENVIAR PEDIDO</Button>
-        </div>
-      </Card.Body >
-    </>
-  )
-}
-
-export default ResumenProductosForm
+export default ResumenProductosForm;

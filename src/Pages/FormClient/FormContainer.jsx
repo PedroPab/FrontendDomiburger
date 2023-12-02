@@ -47,14 +47,15 @@ const FormContainer = () => {
   };
 
   const decrementCount = (product) => {
-    const listaProducts = [...listaProdutosOrder]
+    //los reversamos para que saqeu el ultimo que se agrego
+    const listaProducts = [...listaProdutosOrder.reverse()]
     const indexProduct = listaProducts.findIndex(e => e.name === product)
 
     if (indexProduct <= -1) return `no se encontro ningun prouduc que cumple con las condiciones de busqueda`
 
     listaProducts.splice(indexProduct, 1)
 
-    setListaProdutosOrder(listaProducts)
+    setListaProdutosOrder(listaProducts.reverse())
   };
 
   useEffect(() => {
