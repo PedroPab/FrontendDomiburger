@@ -33,16 +33,12 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto }) => {
     setListaProducto(newData)
   }
   const onClicAdicion = (idInterAdicion, idInterProducto) => {
-    //buscamos la adcion
-    const indexAdicion = adiciones.findIndex(e => e.id == idAdicion)
-    const dataAdicion = adiciones[indexAdicion]
     //le ponemo un id unico
-    dataAdicion.idInter = makeid()
     //buscamo le prouducto
-    const indexProducto = listaProducto.findIndex(e => e.idInter == idProducto)
+    const indexProducto = listaProducto.findIndex(e => e.idInter == idInterProducto)
     const dataProducto = listaProducto[indexProducto]
     //le agregamos la adcion
-    dataProducto.anadirModifique(dataAdicion)
+    dataProducto.retirarModifique(idInterAdicion)
     //remplasamo por el nuevo objeto de proudco y actualisamos el estado de los productos
     const newData = [...listaProducto]
     newData[indexProducto] = dataProducto
@@ -68,7 +64,10 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto }) => {
                 listaProducto &&
                 listaProducto.map(producto => {
                   console.log(`listaProducto`, producto.modifique);
-
+                  let totalProducto = producto.price
+                  producto?.modifique.forEach(element => {
+                    totalProducto += element.price
+                  });
                   return (
                     <tr key={producto.idInter} >
                       <td ><small >{producto.name}
@@ -93,7 +92,7 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto }) => {
                           }
                         </div></small></td>
                       <td><SelectAdicionClient producto={producto} onChangeSelect={onChangeSelectAdicion} adiciones={adiciones} /></td>
-                      <td><span >{formatearNumeroConPuntos(producto.price)}</span></td>
+                      <td><span >{formatearNumeroConPuntos(totalProducto)}</span></td>
                     </tr>)
                 })
               }
