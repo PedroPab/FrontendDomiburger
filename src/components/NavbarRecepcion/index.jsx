@@ -34,7 +34,7 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
 
-            <Nav.Link as={Link}> <BiHappy /> Crear pedido</Nav.Link>
+            <Nav.Link href="https://domiburguer.com/forAdmin" target="_blank"> <BiHappy /> Crear pedido</Nav.Link>
 
             <Nav.Link as={Link} to="/recepcion">  <FaAngellist /> Domi Rastreo</Nav.Link>
             <Nav.Link as={Link} to="/mapRecepcion">  <FaMapMarkedAlt /> Map</Nav.Link>
