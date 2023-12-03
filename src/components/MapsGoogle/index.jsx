@@ -17,7 +17,7 @@ function Mapa({ center, containerStyle, zoom, children, setCenter }) {
   })
   const handleZoomChanged = () => {
     // const currentZoom = mapRef.current.getZoom();
-    console.log(`Zoom actual: ${context.zoomMaps}`);
+    // console.log(`Zoom actual: ${context.zoomMaps}`);
     // console.log("🚀 ~ file: index.jsx:22 ~ handleZoomChanged ~ mapRef:", mapRef.current.state.map.zoom)
     const zoom = mapRef.current?.state?.map?.zoom
     zoom ? context.setZoomMaps(zoom) : null

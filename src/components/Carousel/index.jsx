@@ -8,7 +8,6 @@ const Carousel = ({ cards }) => {
   const sliderRef = useRef(null); // Crea una referencia para el Slider
 
   const goToSlide = (index) => {
-    console.log("🚀 ~ file: index.jsx:12 ~ goToSlide ~ sliderRef:", sliderRef)
 
     sliderRef.current.slickGoTo(index); // Utiliza el método slickGoTo para cambiar el índice
   };

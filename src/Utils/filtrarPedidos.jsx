@@ -1,7 +1,6 @@
 import { ESTADOS, ROLES } from "./constList";
 
 function filtrarPedidos(list, role = null) {
-  console.log("🚀 ~ file: filtrarPedidos.jsx:4 ~ filtrarPedidos ~ role:", role)
 
   const newArray = list.filter(pedido => {
 

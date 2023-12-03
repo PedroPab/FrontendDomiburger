@@ -13,7 +13,6 @@ import { MiContexto } from '../../Context';
 const NavBar = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto)
   const context = useContext(MiContexto)
-  console.log("🚀 ~ file: index.jsx:16 ~ NavBar ~ context:", context)
 
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'}  >

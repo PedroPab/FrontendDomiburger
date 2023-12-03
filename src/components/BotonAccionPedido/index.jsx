@@ -22,7 +22,7 @@ const BotonAccionPedido = ({ dataPedido }) => {
   const activarAccion = () => {
     handleToggle()
     //ejecutamos la accion  del boton 
-    console.log(`el pedido ejecuta la funcion para el estado del id ${dataPedido.id} con el estado ${dataPedido.estado}`);
+    // console.log(`el pedido ejecuta la funcion para el estado del id ${dataPedido.id} con el estado ${dataPedido.estado}`);
     switchaFunctionMoviEstate({ id: dataPedido.id, estado: dataPedido.estado }, context)
 
 

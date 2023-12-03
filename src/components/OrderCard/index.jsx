@@ -10,7 +10,6 @@ import { ListButtonModalPedido } from '../ListButtonModalPedido';
 import { MiContexto } from '../../Context'
 import { listaEstados } from '../../Utils/listEstados';
 import { formatTimeString } from '../../Utils/formatTime';
-import extraeColorEstado from '../../Utils/extraeColorEstado';
 import { copyTextToClipboard } from '../../Utils/copyTextToClipboard';
 import { BiClipboard } from 'react-icons/bi';
 

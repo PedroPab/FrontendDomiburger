@@ -33,9 +33,10 @@ export const ContextProvider = ({ children }) => {
   };
   useEffect(() => {
     const socket = socketApp()
+    // console.log("inciando coneccion id: ", JSON.stringify(socket))
     // Escuchar eventos de Socket.IO
-    socket.on('connect', () => {
-      console.log(`conectando 🏁`);
+    socket.on('connect', (e) => {
+      console.log(`conectando 🏁`, e);
       // const token = `Bearer ${tokenLogin.token}`
       const ROLE = tokenLogin?.user?.role
       const ID = tokenLogin?.user?.id
@@ -53,7 +54,7 @@ export const ContextProvider = ({ children }) => {
     })
 
     socket.on('pedidos/added', (pedido) => {
-      console.log(`se creo un nuevo pedido`);
+      // console.log(`se creo un nuevo pedido`);
       manejarAccion()
       console.log(`los pedios actuales son :`, items);
       setItems(itemsPrevios => {
@@ -65,7 +66,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('pedidos/modified', (pedido) => {
-      console.log(`se modifico un pedido`);
+      // console.log(`se modifico un pedido`);
       //creamos un mapa para que no se reten y se puedan acutralisar 
       setItems(itemsPrevios => {
         const mapItems = new Map(itemsPrevios.map(item => [item.id, item]));
@@ -114,7 +115,7 @@ export const ContextProvider = ({ children }) => {
   }, [tokenLogin]);
 
   useEffect(() => {
-    console.log(`items`, items);
+    // console.log(`items`, items);
     setItems(itemsPrevios => {
       const mapItems = new Map(itemsPrevios.map(item => {
         return [item.id, item]

@@ -65,7 +65,6 @@ function FormLogin() {
       return
 
     } else {
-      console.log(`eror en la contrasetana`, login);
       setMessageErrorLogin('Usuario o contraseña incorrectas')
       // alert('error al logearse', login)
     }
