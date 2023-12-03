@@ -57,7 +57,7 @@ const ModalAsignarPedido = ({ show, handleClose, nameDomiciliario, idPedido, dat
             name="domiciliario"
             onChange={(e) => (setDomiciliarioSelect(e.target.value))}
           >
-            <option value='Selecionar' disabled selected="true">Selecionar domiciliario</option>
+            <option value='Selecionar'  >Selecionar domiciliario</option>
 
             {
               contextRecepcion.listDomiciliarios &&
