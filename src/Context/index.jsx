@@ -29,24 +29,32 @@ export const ContextProvider = ({ children }) => {
     // Lógica de la acción
     // mostrarNotificacion("Acción realizada con éxito!");
     // useNotificacionConSonido()
-    console.log('Alerta activada');
+    // console.log('Alerta activada');
   };
   useEffect(() => {
     const socket = socketApp()
     // console.log("inciando coneccion id: ", JSON.stringify(socket))
     // Escuchar eventos de Socket.IO
-    socket.on('connect', (e) => {
-      console.log(`conectando 🏁`, e);
+
+    socket.on('connect', () => {
+      console.log(`conectando 🏁`);
+      console.log(`socket id: ${socket?.id}`);
+
       // const token = `Bearer ${tokenLogin.token}`
       const ROLE = tokenLogin?.user?.role
       const ID = tokenLogin?.user?.id
       if (!ROLE || !ID) return
+
       socket.emit('api/v2/pedidos/role', ROLE, ID);
     });
 
+    socket.on('disconnect', () => {
+      console.log(`🥊 el  socket se a desconectado : ${socket.id}`)
+      return
+    })
     // Escuchar eventos de Socket.IO
-    socket.on('message', (data) => {
-      console.log(`message `, data);
+    socket.on('message', () => {
+      // console.log(`message `, data);
     });
 
     socket.on('pedidosIniciales', (pedido) => {
@@ -56,7 +64,7 @@ export const ContextProvider = ({ children }) => {
     socket.on('pedidos/added', (pedido) => {
       // console.log(`se creo un nuevo pedido`);
       manejarAccion()
-      console.log(`los pedios actuales son :`, items);
+      // console.log(`los pedios actuales son :`, items);
       setItems(itemsPrevios => {
         const mapItems = new Map(itemsPrevios.map(item => [item.id, item]));
         mapItems.set(pedido.id, pedido);
@@ -104,13 +112,6 @@ export const ContextProvider = ({ children }) => {
     // });
 
     // Limpiar el listener cuando el componente se desmonta
-    return () => {
-      socket.off('connect');
-      socket.off('message');
-      socket.off('pedidosIniciales');
-      socket.off('pedidos/added');
-      socket.off('pedidos/modified');
-    };
 
   }, [tokenLogin]);
 
