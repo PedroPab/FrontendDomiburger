@@ -1,10 +1,10 @@
 {
   "name": "Domiburguer App",
   "short_name": "Domiburguer",
-	"description": "¡Haz tu pedido de hamburguesas , creamos nuestro porpio sabor!",
+  "description": "¡Haz tu pedido de hamburguesas , creamos nuestro porpio sabor!",
   "orientation": "portrait",
   "start_url": "/",
-  "display": "minimal-ui",
+  "display": "fullscreen",
   "background_color": "#ffffff",
   "theme_color": "#ffffffff",
   "icons": [
@@ -19,5 +19,4 @@
       "type": "image/png"
     }
   ]
-  
 }
