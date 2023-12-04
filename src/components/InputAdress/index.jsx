@@ -9,12 +9,13 @@ const InputAdress = ({ input, direccion, setDireccion }) => {
       lat: data.geometry.location.lat(),
       lng: data.geometry.location.lng()
     }
-
-    setDireccion({
-      ...direccion,
-      address_complete: data.formatted_address,
-      coordinates: cordenadas
-    })
+    console.log(`direccion`, direccion);
+    // setDireccion({
+    //   // ...direccion,
+    //   address_complete: data.formatted_address,
+    //   coordinates: cordenadas
+    // })
+    return
   }
   return (
     <>

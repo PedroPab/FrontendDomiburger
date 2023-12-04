@@ -115,7 +115,7 @@ const FormContainer = () => {
 
         {/* mapa de la direccion del usuario */}
 
-        <MapClient coordinates={direccion?.coordinates} />
+        {/* <MapClient coordinates={direccion?.coordinates} /> */}
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="metodoDePagoInput">Metodo de pago</Form.Label>
