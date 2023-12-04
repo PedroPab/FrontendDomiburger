@@ -4,6 +4,7 @@ import { useLoadScript, Autocomplete } from '@react-google-maps/api';
 const libraries = ['places'];
 
 const PlaceAutocomplete = ({ KEY, InputAdress, placeChanged }) => {
+  console.log(`[PlaceAutocomplete]`);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: KEY, // Reemplaza con tu API key
     libraries,
