@@ -3,7 +3,6 @@ import { Button, Container, Form, InputGroup } from 'react-bootstrap';
 import { BsFillGeoAltFill, BsPerson, BsWhatsapp } from 'react-icons/bs';
 import CardProduct from '../../components/CardProduct';
 import FormField from './../../components/FormField'; // Asegúrate de tener este componente creado
-import Mapa from "../../components/MapsGoogle"
 
 import ResumenProductosForm from '../../components/ResumenProductosForm';
 

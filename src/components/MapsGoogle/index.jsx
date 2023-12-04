@@ -1,14 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
-import { useContext, useRef } from 'react'
-import { MiContexto } from '../../Context'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import { memo, useCallback, useState } from 'react';
+
+import { useRef } from 'react'
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { memo } from 'react';
 const ENV = import.meta.env
 
-function Mapa({ center, containerStyle, zoom, children, setCenter }) {
-  const context = useContext(MiContexto)
+function Mapa({ center, containerStyle, zoom, setZoomMaps, children, setCenter, modoOscuro }) {
   const mapRef = useRef(null); // Crea una referencia usando useRef
 
   const { isLoaded } = useJsApiLoader({
@@ -17,10 +13,10 @@ function Mapa({ center, containerStyle, zoom, children, setCenter }) {
   })
   const handleZoomChanged = () => {
     // const currentZoom = mapRef.current.getZoom();
-    console.log(`Zoom actual: ${context.zoomMaps}`);
+    console.log(`Zoom actual: ${zoom}`);
     // console.log("🚀 ~ file: index.jsx:22 ~ handleZoomChanged ~ mapRef:", mapRef.current.state.map.zoom)
-    const zoom = mapRef.current?.state?.map?.zoom
-    zoom ? context.setZoomMaps(zoom) : null
+    const zoomMap = mapRef.current?.state?.map?.zoom
+    zoomMap ? setZoomMaps(zoom) : null
 
   };
 
@@ -221,7 +217,7 @@ function Mapa({ center, containerStyle, zoom, children, setCenter }) {
     }
   ]
   const mapOptions = {
-    styles: context.modoOscuro ? darkThemeStyles : [],
+    styles: modoOscuro ? darkThemeStyles : [],
     disableDefaultUI: false,
     gestureHandling: 'greedy',// Permitir el desplazamiento con un solo dedo
   };
@@ -230,7 +226,7 @@ function Mapa({ center, containerStyle, zoom, children, setCenter }) {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={context.zoomMaps}
+      zoom={zoom}
       onZoomChanged={handleZoomChanged} // Agregar el manejador de evento onZoomChanged
       ref={mapRef}
       onMouseUp={handleCenterChanged}
