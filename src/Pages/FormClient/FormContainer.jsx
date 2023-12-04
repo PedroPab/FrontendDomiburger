@@ -3,6 +3,8 @@ import { Button, Container, Form, InputGroup } from 'react-bootstrap';
 import { BsFillGeoAltFill, BsPerson, BsWhatsapp } from 'react-icons/bs';
 import CardProduct from '../../components/CardProduct';
 import FormField from './../../components/FormField'; // Asegúrate de tener este componente creado
+import Mapa from "../../components/MapsGoogle"
+
 import ResumenProductosForm from '../../components/ResumenProductosForm';
 
 import imgHamburguesa from './Hmaburguesa.png';
@@ -10,13 +12,15 @@ import imgCombo from './Combo.png';
 // import { ContexClient } from '../../Context/ClientContex';
 import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
+import InputAdress from '../../components/InputAdress';
+import MapClient from '../../components/MapClient';
 
 const FormContainer = () => {
 
   //estados del los datos del formulario
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [direccion, setDireccion] = useState('');
+  const [direccion, setDireccion] = useState({});
   const [metodoDePago, setMetodoDePago] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [nota, setNota] = useState('');
   const [validado, setValidado] = useState(false);
@@ -63,6 +67,19 @@ const FormContainer = () => {
     console.log(listaProdutosOrder);
   }, [listaProdutosOrder])
 
+  const Direccion = () => {
+    return (<FormField
+      id="adressInput"
+      label="Dirección"
+      type="text"
+      placeholder="Dirección"
+      // value={direccion?.address_complete}
+      // onChange={(e) => setDireccion(e.target.value)}
+      icon={<BsFillGeoAltFill />}
+      feedback="Por favor ingrese una dirección válida."
+      feedbackType="invalid"
+    />)
+  }
 
   return (
     <Container>
@@ -91,18 +108,15 @@ const FormContainer = () => {
           feedback="Por favor ingrese un número de WhatsApp válido."
           feedbackType="invalid"
         />
-
-        <FormField
-          id="adressInput"
-          label="Dirección"
-          type="text"
-          placeholder="Dirección"
-          value={direccion}
-          onChange={(e) => setDireccion(e.target.value)}
-          icon={<BsFillGeoAltFill />}
-          feedback="Por favor ingrese una dirección válida."
-          feedbackType="invalid"
+        <InputAdress
+          direccion={direccion}
+          setDireccion={setDireccion}
+          input={Direccion}
         />
+
+        {/* mapa de la direccion del usuario */}
+
+        <MapClient coordinates={direccion?.coordinates} />
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="metodoDePagoInput">Metodo de pago</Form.Label>
