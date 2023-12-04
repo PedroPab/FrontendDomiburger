@@ -52,6 +52,9 @@ export const ContextProvider = ({ children }) => {
       console.log(`🥊 el  socket se a desconectado : ${socket.id}`)
       return
     })
+    socket.on('countConnection', (data) => {
+      console.log(`countConnection : `, data)
+    })
     // Escuchar eventos de Socket.IO
     socket.on('message', () => {
       // console.log(`message `, data);
@@ -86,34 +89,7 @@ export const ContextProvider = ({ children }) => {
 
     });
 
-    // socket.on('api/pedidos', (pedidos) => {
-    //   console.log("🎈:", pedidos)
-
-    //   //creamos un mapa para que no se reten y se puedan acutralisar 
-    //   const mapItems = new Map
-    //   items?.forEach(element => {
-    //     mapItems.set(element.id, element)
-    //   });
-
-    //   const countPre = mapItems.size
-
-    //   let pedidosNuevos = []
-    //   pedidos?.forEach(element => {
-    //     mapItems.set(element.id, element)
-    //   });
-    //   const countPos = mapItems.size
-
-    //   if (countPos > countPre) lanzarAlarma(pedidosNuevos)
-
-    //   const newArrayItems = Array.from(mapItems.values());
-
-    //   setItems(newArrayItems);
-
-    // });
-
-    // Limpiar el listener cuando el componente se desmonta
-
-  }, [tokenLogin]);
+  }, []);
 
   useEffect(() => {
     // console.log(`items`, items);
