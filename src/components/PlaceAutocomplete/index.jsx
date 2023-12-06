@@ -1,14 +1,15 @@
 import { useRef } from 'react';
-import { useLoadScript, Autocomplete } from '@react-google-maps/api';
+import { Autocomplete } from '@react-google-maps/api';
 
-const libraries = ['places'];
+// const libraries = ['places'];
 
-const PlaceAutocomplete = ({ KEY, InputAdress, placeChanged }) => {
+const PlaceAutocomplete = ({ InputAdress, placeChanged }) => {
   console.log(`[PlaceAutocomplete]`);
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: KEY, // Reemplaza con tu API key
-    libraries,
-  });
+  // const { isLoaded } = useLoadScript({
+  //   id: 'google-map-script-domiburguer',
+  //   googleMapsApiKey: KEY, // Reemplaza con tu API key
+  //   libraries,
+  // });
 
   const autocompleteRef = useRef(null);
 
@@ -18,7 +19,7 @@ const PlaceAutocomplete = ({ KEY, InputAdress, placeChanged }) => {
     placeChanged(place)
   };
 
-  if (!isLoaded) return <div>Cargando...</div>;
+  // if (!isLoaded) return <div>Cargando...</div>;
 
   return (
     <Autocomplete
