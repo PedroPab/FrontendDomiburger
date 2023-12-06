@@ -10,11 +10,11 @@ const InputAdress = ({ input, direccion, setDireccion }) => {
       lng: data.geometry.location.lng()
     }
     console.log(`direccion`, direccion);
-    // setDireccion({
-    //   // ...direccion,
-    //   address_complete: data.formatted_address,
-    //   coordinates: cordenadas
-    // })
+    setDireccion({
+      // ...direccion,
+      address_complete: data.formatted_address,
+      coordinates: cordenadas
+    })
     return
   }
   return (

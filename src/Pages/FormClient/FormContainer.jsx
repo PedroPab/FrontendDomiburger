@@ -13,13 +13,14 @@ import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
 import InputAdress from '../../components/InputAdress';
 import MapClient from '../../components/MapClient';
+import GoogleMapsApp from '../../components/GoogleMapsApp';
 
 const FormContainer = () => {
 
   //estados del los datos del formulario
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [direccion, setDireccion] = useState({});
+  const [direccion, setDireccion] = useState();
   const [metodoDePago, setMetodoDePago] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [nota, setNota] = useState('');
   const [validado, setValidado] = useState(false);
@@ -107,15 +108,18 @@ const FormContainer = () => {
           feedback="Por favor ingrese un número de WhatsApp válido."
           feedbackType="invalid"
         />
-        <InputAdress
-          direccion={direccion}
-          setDireccion={setDireccion}
-          input={Direccion}
-        />
+        <GoogleMapsApp>
+          <InputAdress
+            direccion={direccion}
+            setDireccion={setDireccion}
+            input={Direccion}
+          />
 
-        {/* mapa de la direccion del usuario */}
 
-        {/* <MapClient coordinates={direccion?.coordinates} /> */}
+          {/* mapa de la direccion del usuario */}
+          {/* <MapClient coordinates={direccion?.coordinates} /> */}
+        </GoogleMapsApp>
+
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="metodoDePagoInput">Metodo de pago</Form.Label>
