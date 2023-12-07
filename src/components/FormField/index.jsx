@@ -13,7 +13,7 @@ const FormField = ({ id, label, type, placeholder, value, onChange, icon, feedba
           required
           type={type}
           placeholder={placeholder}
-          value={value}
+          value={value || null}
           onChange={onChange}
         />
         {feedback && <Form.Control.Feedback type={feedbackType}>{feedback}</Form.Control.Feedback>}

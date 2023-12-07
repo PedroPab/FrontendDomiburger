@@ -11,9 +11,8 @@ import imgCombo from './Combo.png';
 // import { ContexClient } from '../../Context/ClientContex';
 import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
-import InputAdress from '../../components/InputAdress';
-import MapClient from '../../components/MapClient';
-import GoogleMapsApp from '../../components/GoogleMapsApp';
+import MyMapWithAutocomplete from '../../components/MyMapWithAutocomplete';
+// import GoogleMapsApp from '../../components/GoogleMapsApp';
 
 const FormContainer = () => {
 
@@ -67,19 +66,6 @@ const FormContainer = () => {
     console.log(listaProdutosOrder);
   }, [listaProdutosOrder])
 
-  const Direccion = () => {
-    return (<FormField
-      id="adressInput"
-      label="Dirección"
-      type="text"
-      placeholder="Dirección"
-      // value={direccion?.address_complete}
-      // onChange={(e) => setDireccion(e.target.value)}
-      icon={<BsFillGeoAltFill />}
-      feedback="Por favor ingrese una dirección válida."
-      feedbackType="invalid"
-    />)
-  }
 
   return (
     <Container>
@@ -108,18 +94,13 @@ const FormContainer = () => {
           feedback="Por favor ingrese un número de WhatsApp válido."
           feedbackType="invalid"
         />
-        <GoogleMapsApp>
-          <InputAdress
-            direccion={direccion}
-            setDireccion={setDireccion}
-            input={Direccion}
-          />
 
 
-          {/* mapa de la direccion del usuario */}
-          {/* <MapClient coordinates={direccion?.coordinates} /> */}
-        </GoogleMapsApp>
 
+        {/* mapa de la direccion del usuario */}
+
+
+        <MyMapWithAutocomplete />
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="metodoDePagoInput">Metodo de pago</Form.Label>
@@ -173,7 +154,7 @@ const FormContainer = () => {
 
         <Button variant="primary" type="submit">Enviar</Button>
       </Form>
-    </Container>
+    </Container >
   );
 }
 

@@ -1,22 +1,43 @@
-import { useJsApiLoader } from '@react-google-maps/api';
+// App.js o cualquier otro componente padre
+import { useState } from 'react';
+import { useLoadScript } from '@react-google-maps/api';
+import AutocompleteComponent from './AutocompleteComponent';
+import MapComponent from './MapComponent.jsx';
 const ENV = import.meta.env
 
-const GoogleMapsApp = ({ children }) => {
-  const libraries = ['places',];
-
-  const { isLoaded } = useJsApiLoader({
+const App = () => {
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const libraries = ['autoplace']
+  const { isLoaded } = useLoadScript({
     id: 'google-map-script-domiburguer',
     googleMapsApiKey: ENV.VITE_KEYMAPS,
     libraries,
   });
 
-  if (!isLoaded) return <div>Cargando mapa...</div>;
+  const handlePlaceSelect = (place) => {
+    setSelectedPlace({
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+    });
+  };
+
+
+
+  if (!isLoaded) return <div>Cargando...</div>;
+
 
   return (
-    <>
-      {children}
-    </>
+    <div>
+      <InputAdress
+        direccion={direccion}
+        setDireccion={setDireccion}
+        input={Direccion}
+      />
+
+      <AutocompleteComponent onPlaceSelected={handlePlaceSelect} />
+      {selectedPlace && <MapComponent location={selectedPlace} />}
+    </div>
   );
 };
 
-export default GoogleMapsApp;
+export default App;
