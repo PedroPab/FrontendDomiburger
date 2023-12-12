@@ -1,0 +1,16 @@
+div.copied {
+  color: green;
+  transition: color 0.2s ease;
+}
+
+.copy-feedback {
+  margin-left: 10px;
+  opacity: 0;
+  animation: fade-in 0.3s ease forwards;
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
