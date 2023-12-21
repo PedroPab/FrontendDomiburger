@@ -11,6 +11,7 @@ import { MiContexto } from '../../Context'
 import { listaEstados } from '../../Utils/listEstados';
 import { formatTimeString } from '../../Utils/formatTime';
 import CopiableText from '../CopiableText';
+import LineaDeTiempo from '../LineaDeTiempo';
 
 const OrderCard = ({ dataPedido }) => {
   const context = useContext(MiContexto)
@@ -34,6 +35,8 @@ const OrderCard = ({ dataPedido }) => {
       }}
     >
       <CardBody>
+        <LineaDeTiempo datos={dataPedido.timelapseStatus} />
+
         <CardHeader
           title={dataPedido.name}
           orden={dataPedido.numeroDeOrdenDelDia}

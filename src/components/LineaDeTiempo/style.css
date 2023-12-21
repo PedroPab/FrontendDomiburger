@@ -1,0 +1,25 @@
+.timeline-container {
+  position: relative;
+  padding-left: 30px;
+  border-left: 2px solid #000;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px; /* Espaciado base entre elementos */
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -6px; /* Ajustar según el ancho de la línea */
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #000;
+}
+
+.timeline-content {
+  padding-left: 15px; /* Espacio entre el punto y el contenido */
+  /* Aquí puedes agregar más estilos para el contenido */
+}
