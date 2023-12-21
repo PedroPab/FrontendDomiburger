@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 import { UtilsApi } from '../../Utils/utilsApi';
 import ListEstadisticasDomiciliarios from '../../components/ListEstadisticasDomiciliarios';
+import { ConfigProvider, theme } from 'antd';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
 const EstadisticasDomiciliarios = () => {
@@ -29,16 +30,33 @@ const EstadisticasDomiciliarios = () => {
   return (
     <>
       <Layout>
-        <ContextProviderRecepcion>
+        <ContextProviderRecepcion
+          theme={{
+            // 1. Use dark algorithm
+            algorithm: context.modoOscuro ? theme.darkAlgorithm : null,
+            // 2. Combine dark algorithm and compact algorithm
+            // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+          }}
+        >
 
           <NavbarRecepcion
             modoOscuro={context.modoOscuro}
             alternarModo={context.alternarModo}
           />
 
-          <ListEstadisticasDomiciliarios
-            pedidos={pedidos}
-          />
+          <ConfigProvider
+            theme={{
+              // 1. Use dark algorithm
+              algorithm: context.modoOscuro ? theme.darkAlgorithm : null,
+              // 2. Combine dark algorithm and compact algorithm
+              // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+            }}
+          >
+
+            <ListEstadisticasDomiciliarios
+              pedidos={pedidos}
+            />
+          </ConfigProvider>
 
         </ContextProviderRecepcion >
 
