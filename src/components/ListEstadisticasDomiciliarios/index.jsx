@@ -23,7 +23,7 @@ const ListEstadisticasDomiciliarios = ({ pedidos }) => {
   return (
     <>
 
-      <div className="d-flex justify-content-around align-items-center">
+      <div className="d-flex justify-content-around align-items-center" style={{ display: 'flex', flexWrap: 'wrap' }}>
 
         {
           listPedidosD?.map((pedidos, index) => {
