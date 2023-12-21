@@ -95,7 +95,7 @@ const ProgressDataDomiciliario = ({ pedidos }) => {
       })
 
     })
-    kilometros = parseInt(kilometros / 100)
+    kilometros = parseInt(kilometros / 1000)
     return kilometros
   }
 
