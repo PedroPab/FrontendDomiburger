@@ -124,6 +124,24 @@ const DomiciliarioHistory = () => {
   const rta = rtaEstadisticas(pedidos)
 
   const porsentaje = (rta.totalDeDomicilios * 100 / 80000)
+  const rtaKilometrosAprox = (pedidosData) => {
+    let kilometros = 0
+    pedidosData.forEach(element => {
+
+      element.order.forEach(producto => {
+        if (producto.type == 'domicilio') {
+          kilometros = kilometros + producto.distance.value
+        } else {
+          console.log(producto.id);
+        }
+      })
+
+    })
+    kilometros = parseInt(kilometros / 100)
+    return kilometros
+  }
+
+  const km = rtaKilometrosAprox(pedidos)
 
   return (
     <> <ConfigProvider
@@ -146,7 +164,7 @@ const DomiciliarioHistory = () => {
           <Row className='m-5'>
             <div className='d-flex justify-content-center align-items-center'>
               <Progress size={250} type="dashboard" percent={porsentaje} format={() => (<><div className='m-2'>{formatearNumeroConPuntos(rta.totalDeDomicilios)}</div>
-                <small >{rta.NumeroDeRegistros}</small></>)} />
+                <small >{rta.NumeroDeRegistros} </small><span style={{ fontSize: '0.8rem' }}> {km}km</span></>)} />
             </div>
           </Row>
           <Row  >
