@@ -4,13 +4,12 @@ import { RecepcionContexto } from "../../Context/RecepcionContex";
 
 const ListEstadisticasDomiciliarios = ({ pedidos }) => {
   const contex = useContext(RecepcionContexto)
-  console.log("🚀 ~ file: index.jsx:7 ~ ListEstadisticasDomiciliarios ~ contex:", contex)
   //miramos todos los domiciliarios para obter todos los tados
   const domiciliarios = contex.users
 
   //dividimos los pedidos por domicilairo asignado
   const pedidoPorDomiciliario = pedidos?.reduce((objeto, item) => {
-    const idD = item.domiciliario_asignado.id
+    const idD = item?.domiciliario_asignado?.id
 
     //miramos si exisete el key con el id del domiciliairo
     if (!objeto[idD]) objeto[idD] = []
@@ -29,7 +28,7 @@ const ListEstadisticasDomiciliarios = ({ pedidos }) => {
         {
           listPedidosD?.map((pedidos, index) => {
             let domiciliairo
-            const idDomiciliario = pedidos[0].domiciliario_asignado.id
+            const idDomiciliario = pedidos[0]?.domiciliario_asignado?.id
             const domiciliarioIndex = domiciliarios.findIndex(element => element.id == idDomiciliario)
             if (domiciliarioIndex == -1) {
               domiciliairo = {}
