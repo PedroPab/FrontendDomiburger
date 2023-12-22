@@ -1,28 +1,30 @@
-import { useState, } from 'react';
-import { GoogleMap, Autocomplete, useLoadScript } from '@react-google-maps/api';
-import FormField from '../FormField';
-import { BsFillGeoAltFill } from 'react-icons/bs';
+import { memo, useState, } from 'react';
+import { GoogleMap, Autocomplete, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import { BsEgg, BsFillGeoAltFill } from 'react-icons/bs';
 import { Form, FormControl, InputGroup } from 'react-bootstrap';
-const ENV = import.meta.env
 const mapContainerStyle = {
-  height: "400px",
-  width: "800px"
+  height: "12rem",
 };
 
-const center = {
-  lat: 38.685,
-  lng: -115.234
-};
+// const center = {
+//   lat: 38.685,
+//   lng: -115.234
+// };
 const libraries = ['places',];
 
-const MyMapWithAutocomplete = () => {
+const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
+
+  const [center, setCenter] = useState({ lat: 6.3017314, lng: -75.5743796 })
+
+
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: ENV.VITE_KEYMAPS,
+    googleMapsApiKey: VITE_KEYMAPS,
     libraries,
 
   });
 
   const [autocomplete, setAutocomplete] = useState(null);
+
   const onLoad = (autocompleteInstance) => {
     console.log('autocomplete: ', autocompleteInstance);
     setAutocomplete(autocompleteInstance);
@@ -30,26 +32,36 @@ const MyMapWithAutocomplete = () => {
 
   const onPlaceChanged = () => {
     if (autocomplete !== null) {
+
       console.log(autocomplete.getPlace());
+      if (!autocomplete.getPlace()?.geometry) {
+        console.log(autocomplete.geometry)
+        return
+      }
+
+      const coordenadasInput = {
+        lat: autocomplete.getPlace().geometry.location.lat(),
+        lng: autocomplete.getPlace().geometry.location.lng()
+      }
+
+      setCenter(coordenadasInput)
+
+      const address_complete = autocomplete.getPlace().formatted_address
+      console.log("🚀 ~ file: index.jsx:50 ~ onPlaceChanged ~ address_complete:", address_complete)
+      setObjAdrees({ ...objAdrees, address_complete })
+
     } else {
       console.log('Autocomplete is not loaded yet!');
     }
   };
 
-  if (!isLoaded) return <div>Loading...</div>;
-  const Direccion = () => {
-    return (<FormField
-      id="adressInput"
-      label="Dirección"
-      type="text"
-      placeholder="Dirección"
-      // value={direccion?.address_complete}
-      // onChange={(e) => setDireccion(e.target.value)}
-      icon={<BsFillGeoAltFill />}
-      feedback="Por favor ingrese una dirección válida."
-      feedbackType="invalid"
-    />)
+  const onChange = (event) => {
+    const nesValue = event.target.value
+    setObjAdrees({ ...objAdrees, direccionIput: nesValue })
   }
+
+  if (!isLoaded) return <div>Loading...</div>;
+
   return (
     <>
       <Autocomplete
@@ -57,30 +69,57 @@ const MyMapWithAutocomplete = () => {
         onPlaceChanged={onPlaceChanged}
       >
         <Form.Group className="mb-3">
-          <Form.Label htmlFor={'hol'}>direcicon</Form.Label>
+          <Form.Label htmlFor={'hol'}>Direccion Completa</Form.Label>
           <InputGroup>
             <InputGroup.Text>
-              h
+              <BsFillGeoAltFill />
             </InputGroup.Text>
             <FormControl
-              id={'hol'}
+              id={'adress'}
               required
               type={'text'}
-            // placeholder={placeholder}
-            // value={value}
-            // onChange={onChange}
+              placeholder={'Calle 103 # 74b 214'}
+              // value={objAdrees?.direccionIput || ''}
+              onChange={onChange}
             />
             {/* {feedback && <Form.Control.Feedback type={feedbackType}>{feedback}</Form.Control.Feedback>} */}
           </InputGroup>
         </Form.Group>
 
       </Autocomplete>
+
       <GoogleMap
         id="searchbox-example"
         mapContainerStyle={mapContainerStyle}
-        zoom={2.5}
+        zoom={16}
         center={center}
+        options={{
+          disableDefaultUI: true, // Desactiva todos los controles de la interfaz de usuario predeterminada
+          zoomControl: false, // Desactiva el control de zoom
+          draggable: false, // Hace que el mapa no sea arrastrable
+          scrollwheel: false, // Desactiva el zoom con la rueda del ratón
+        }}
       >
+
+        <Marker
+          key={1}
+          position={center}
+          title='title'
+          animation='DROP'
+        // label={`Estoy aqui?`}
+        // clickable={true}
+        // // icon={iconMarker}
+        // visible={true}
+        >
+          {true && (
+            <InfoWindow >
+              <div style={{ color: 'black' }}>
+                Estoy aqui?
+              </div>
+            </InfoWindow>
+          )}
+        </Marker>
+
 
       </GoogleMap>
     </>
@@ -88,4 +127,4 @@ const MyMapWithAutocomplete = () => {
   );
 };
 
-export default MyMapWithAutocomplete;
+export default memo(MyMapWithAutocomplete);

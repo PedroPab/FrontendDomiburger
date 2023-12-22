@@ -13,13 +13,14 @@ import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
 import MyMapWithAutocomplete from '../../components/MyMapWithAutocomplete';
 // import GoogleMapsApp from '../../components/GoogleMapsApp';
+const ENV = import.meta.env
 
 const FormContainer = () => {
 
   //estados del los datos del formulario
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [direccion, setDireccion] = useState();
+  const [direccion, setDireccion] = useState({});
   const [metodoDePago, setMetodoDePago] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [nota, setNota] = useState('');
   const [validado, setValidado] = useState(false);
@@ -62,7 +63,8 @@ const FormContainer = () => {
   };
 
   useEffect(() => {
-    console.log(`Lista de productos`);
+    console.log(`Lista deconst ENV = import.meta.env
+    productos`);
     console.log(listaProdutosOrder);
   }, [listaProdutosOrder])
 
@@ -100,7 +102,11 @@ const FormContainer = () => {
         {/* mapa de la direccion del usuario */}
 
 
-        <MyMapWithAutocomplete />
+        <MyMapWithAutocomplete
+          objAdrees={direccion}
+          setObjAdrees={setDireccion}
+          VITE_KEYMAPS={ENV.VITE_KEYMAPS}
+        />
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="metodoDePagoInput">Metodo de pago</Form.Label>
