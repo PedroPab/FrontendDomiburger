@@ -1,20 +1,51 @@
-import { memo, useState, } from 'react';
+import { memo, useEffect, useState, } from 'react';
 import { GoogleMap, Autocomplete, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
-import { BsEgg, BsFillGeoAltFill } from 'react-icons/bs';
+import { BsFillGeoAltFill } from 'react-icons/bs';
 import { Form, FormControl, InputGroup } from 'react-bootstrap';
+
 const mapContainerStyle = {
   height: "12rem",
 };
 
-// const center = {
-//   lat: 38.685,
-//   lng: -115.234
-// };
-const libraries = ['places',];
+const libraries = ["places", "geometry"];
 
 const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
+  const centerOrigin = { lat: 6.3017314, lng: -75.5743796 }
 
-  const [center, setCenter] = useState({ lat: 6.3017314, lng: -75.5743796 })
+
+  const getDistanceMatrix = (destino) => {
+    new Promise((resolve, reject) => {
+      const service = new google.maps.DistanceMatrixService();
+      var modoTransporte = google.maps.TravelMode.TWO_WHEELER;
+
+      service.getDistanceMatrix(
+        {
+          origins: [centerOrigin], // Reemplaza con tu origen
+          destinations: [destino], // Reemplaza con tu destino
+          travelMode: modoTransporte,
+          unitSystem: google.maps.UnitSystem.METRIC,
+          avoidHighways: false,
+          avoidTolls: false,
+          durationInTraffic: true, // Incluir tráfico en el cálculo
+        },
+        (response, status) => {
+          if (status === 'OK') {
+            const result = response.rows[0].elements[0];
+            console.log("🚀 ~ file: index.jsx:29 ~ getDistanceMatrix ~ result:", response)
+            resolve(result)
+          } else {
+            console.error('Error con la API de Distance Matrix: ' + status);
+            reject('Error con la API de Distance Matrix: ' + status);
+          }
+        }
+      );
+    })
+
+  };
+
+
+
+  const [center, setCenter] = useState(centerOrigin)
 
 
   const { isLoaded } = useLoadScript({
@@ -30,25 +61,37 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
     setAutocomplete(autocompleteInstance);
   };
 
-  const onPlaceChanged = () => {
+  const onPlaceChanged = async () => {
+
     if (autocomplete !== null) {
 
-      console.log(autocomplete.getPlace());
-      if (!autocomplete.getPlace()?.geometry) {
+      const place = autocomplete.getPlace()
+
+      console.log(place);
+
+      if (!place?.geometry) {
         console.log(autocomplete.geometry)
         return
       }
 
       const coordenadasInput = {
-        lat: autocomplete.getPlace().geometry.location.lat(),
-        lng: autocomplete.getPlace().geometry.location.lng()
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
       }
 
       setCenter(coordenadasInput)
 
-      const address_complete = autocomplete.getPlace().formatted_address
-      console.log("🚀 ~ file: index.jsx:50 ~ onPlaceChanged ~ address_complete:", address_complete)
-      setObjAdrees({ ...objAdrees, address_complete })
+      const address_complete = place.formatted_address
+      const type = 'placesAutocomplete'
+      const valid = true
+      // let cost
+      // let durationAprox
+      let dataMatrix = await getDistanceMatrix(coordenadasInput);
+
+      setObjAdrees({ ...objAdrees, address_complete, type, valid, dataMatrix })
+
+      //calculamos las metricas
+
 
     } else {
       console.log('Autocomplete is not loaded yet!');
@@ -57,7 +100,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
 
   const onChange = (event) => {
     const nesValue = event.target.value
-    setObjAdrees({ ...objAdrees, direccionIput: nesValue })
+    setObjAdrees({ ...objAdrees, direccionIput: nesValue, valid: false })
   }
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -87,41 +130,41 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
         </Form.Group>
 
       </Autocomplete>
-
-      <GoogleMap
-        id="searchbox-example"
-        mapContainerStyle={mapContainerStyle}
-        zoom={16}
-        center={center}
-        options={{
-          disableDefaultUI: true, // Desactiva todos los controles de la interfaz de usuario predeterminada
-          zoomControl: false, // Desactiva el control de zoom
-          draggable: false, // Hace que el mapa no sea arrastrable
-          scrollwheel: false, // Desactiva el zoom con la rueda del ratón
-        }}
-      >
-
-        <Marker
-          key={1}
-          position={center}
-          title='title'
-          animation='DROP'
-        // label={`Estoy aqui?`}
-        // clickable={true}
-        // // icon={iconMarker}
-        // visible={true}
+      {
+        autocomplete &&
+        objAdrees?.valid &&
+        < GoogleMap
+          id="searchbox-example"
+          mapContainerStyle={mapContainerStyle}
+          zoom={16}
+          center={center}
+          options={{
+            disableDefaultUI: true, // Desactiva todos los controles de la interfaz de usuario predeterminada
+            zoomControl: false, // Desactiva el control de zoom
+            draggable: false, // Hace que el mapa no sea arrastrable
+            scrollwheel: false, // Desactiva el zoom con la rueda del ratón
+          }}
         >
-          {true && (
-            <InfoWindow >
-              <div style={{ color: 'black' }}>
-                Estoy aqui?
-              </div>
-            </InfoWindow>
-          )}
-        </Marker>
+          <Marker
+            position={center}
+            title='title'
+            animation='DROP'
+          >{
+              autocomplete &&
+              objAdrees?.valid &&
+              <InfoWindow
+                position={center}
+                visible={true}
+              >
+                <div style={{ color: 'black' }}>
+                  Estoy aqui?
+                </div>
+              </InfoWindow>
+            }
+          </Marker>
+        </ GoogleMap>
+      }
 
-
-      </GoogleMap>
     </>
 
   );
