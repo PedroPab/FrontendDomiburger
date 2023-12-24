@@ -1,4 +1,4 @@
-import { memo, useEffect, useState, } from 'react';
+import { useState, } from 'react';
 import { GoogleMap, Autocomplete, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { BsFillGeoAltFill } from 'react-icons/bs';
 import { Form, FormControl, InputGroup } from 'react-bootstrap';
@@ -13,9 +13,11 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
   const centerOrigin = { lat: 6.3017314, lng: -75.5743796 }
 
 
-  const getDistanceMatrix = (destino) => {
-    new Promise((resolve, reject) => {
+  const getDistanceMatrix = async (destino) => {
+    return new Promise((resolve, reject) => {
+      // eslint-disable-next-line no-undef
       const service = new google.maps.DistanceMatrixService();
+      // eslint-disable-next-line no-undef
       var modoTransporte = google.maps.TravelMode.TWO_WHEELER;
 
       service.getDistanceMatrix(
@@ -23,6 +25,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
           origins: [centerOrigin], // Reemplaza con tu origen
           destinations: [destino], // Reemplaza con tu destino
           travelMode: modoTransporte,
+          // eslint-disable-next-line no-undef
           unitSystem: google.maps.UnitSystem.METRIC,
           avoidHighways: false,
           avoidTolls: false,
@@ -31,7 +34,6 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
         (response, status) => {
           if (status === 'OK') {
             const result = response.rows[0].elements[0];
-            console.log("🚀 ~ file: index.jsx:29 ~ getDistanceMatrix ~ result:", response)
             resolve(result)
           } else {
             console.error('Error con la API de Distance Matrix: ' + status);
@@ -87,6 +89,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
       // let cost
       // let durationAprox
       let dataMatrix = await getDistanceMatrix(coordenadasInput);
+      console.log("🚀 ~ file: index.jsx:92 ~ onPlaceChanged ~ dataMatrix:", dataMatrix)
 
       setObjAdrees({ ...objAdrees, address_complete, type, valid, dataMatrix })
 
@@ -149,19 +152,16 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
             position={center}
             title='title'
             animation='DROP'
-          >{
-              autocomplete &&
-              objAdrees?.valid &&
-              <InfoWindow
-                position={center}
-                visible={true}
-              >
-                <div style={{ color: 'black' }}>
-                  Estoy aqui?
-                </div>
-              </InfoWindow>
-            }
-          </Marker>
+          />
+
+          <InfoWindow
+            position={center}
+            visible={true}
+          >
+            <div style={{ color: 'black' }}>
+              Estoy aqui?
+            </div>
+          </InfoWindow>
         </ GoogleMap>
       }
 
@@ -170,4 +170,4 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
   );
 };
 
-export default memo(MyMapWithAutocomplete);
+export default MyMapWithAutocomplete;

@@ -3,8 +3,9 @@ import { Card, Table } from 'react-bootstrap';
 import ProductoRow from './../../components/ProductoRow'; // Nuevo componente
 import { UtilsApi } from './../../Utils/utilsApi';
 import { makeid } from '../../Utils/makeId';
+import formatearNumeroConPuntos from '../../Utils/formatearNumeroConPuntos';
 
-const ResumenProductosForm = ({ listaProducto, setListaProducto }) => {
+const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio }) => {
   const [adiciones, setAdiciones] = useState([]);
 
   useEffect(() => {
@@ -44,6 +45,30 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto }) => {
 
   }
 
+  const totalProductos = () => {
+    let total = 0
+    if (listaProducto) {
+      listaProducto.forEach(producto => {
+        console.log("🚀 ~ file: index.jsx:51 ~ totalProductos ~ producto:", producto)
+        let totalProducto = producto.price;
+        producto?.modifique.forEach(element => {
+          totalProducto += element.price;
+        });
+        total += totalProducto
+      })
+    }
+
+    if (dataDomicilio.price) {
+      total += dataDomicilio.price
+    }
+
+
+    return total
+  }
+
+  const totalCompra = totalProductos()
+
+
   return (
     <Card.Body>
       <Card.Title style={{ fontSize: '20px' }}>RESUMEN DE PEDIDO</Card.Title>
@@ -67,7 +92,20 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto }) => {
                 onClicAdicion={onClicAdicion}
               />
             ))}
+            {
+              dataDomicilio &&
+              <tr>
+                <th>Domicilio</th>
+                <th>{dataDomicilio.timeText}</th>
+                <th>{dataDomicilio.price}</th>
+              </tr>
+            }
           </tbody>
+          <tfoot>
+            <th>TOTAL</th>
+            <th></th>
+            <th>{formatearNumeroConPuntos(totalCompra)}</th>
+          </tfoot>
         </Table>
       </div>
     </Card.Body>
