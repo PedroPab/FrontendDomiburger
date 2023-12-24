@@ -1,6 +1,7 @@
 import { InputGroup, FormControl, Form } from 'react-bootstrap';
 
-const FormField = ({ id, label, type, placeholder, value, onChange, icon, feedback, feedbackType }) => {
+const FormField = (props) => {
+  const { id, label, type, placeholder, value, onChange, icon, feedback, feedbackType, agregado } = props
   return (
     <Form.Group className="mb-3">
       <Form.Label htmlFor={id}>{label}</Form.Label>
@@ -8,6 +9,9 @@ const FormField = ({ id, label, type, placeholder, value, onChange, icon, feedba
         <InputGroup.Text>
           {icon}
         </InputGroup.Text>
+        {
+          agregado
+        }
         <FormControl
           id={id}
           required
@@ -15,6 +19,8 @@ const FormField = ({ id, label, type, placeholder, value, onChange, icon, feedba
           placeholder={placeholder}
           value={value || null}
           onChange={onChange}
+          autoComplete='true'
+          {...props}
         />
         {feedback && <Form.Control.Feedback type={feedbackType}>{feedback}</Form.Control.Feedback>}
       </InputGroup>

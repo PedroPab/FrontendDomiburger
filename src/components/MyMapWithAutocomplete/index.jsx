@@ -91,7 +91,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
       let dataMatrix = await getDistanceMatrix(coordenadasInput);
       console.log("🚀 ~ file: index.jsx:92 ~ onPlaceChanged ~ dataMatrix:", dataMatrix)
 
-      setObjAdrees({ ...objAdrees, address_complete, type, valid, dataMatrix })
+      setObjAdrees({ ...objAdrees, address_complete, type, valid, dataMatrix, coordinates: coordenadasInput })
 
       //calculamos las metricas
 

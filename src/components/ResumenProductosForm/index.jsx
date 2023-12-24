@@ -82,9 +82,9 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio }
             </tr>
           </thead>
           <tbody>
-            {listaProducto && listaProducto.map(producto => (
+            {listaProducto && listaProducto.map((producto, index) => (
               <ProductoRow
-                key={producto.idInter}
+                key={index}
                 producto={producto}
                 adiciones={adiciones}
                 setListaProducto={setListaProducto}
