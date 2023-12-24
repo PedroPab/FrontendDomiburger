@@ -12,6 +12,7 @@ import imgCombo from './Combo.png';
 import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
 import MyMapWithAutocomplete from '../../components/MyMapWithAutocomplete';
+import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
 // import GoogleMapsApp from '../../components/GoogleMapsApp';
 const ENV = import.meta.env
 
@@ -25,6 +26,26 @@ const FormContainer = () => {
   const [metodoDePago, setMetodoDePago] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [nota, setNota] = useState('');
   const [validado, setValidado] = useState(false);
+
+  //para cualcual las distancia y el costo del domcilio 
+  useEffect(() => {
+
+    if (direccion?.dataMatrix?.status == 'OK') {
+      const timeText = calcularTiempo(direccion.dataMatrix.distance.value)
+      const price = calcularPrecio(direccion.dataMatrix.distance.value)
+      console.log({
+        matrixDistancia: timeText,
+        matrixTime: price
+      });
+
+      setDataDomicilio({
+        timeText,
+        price
+      })
+
+
+    }
+  }, [direccion])
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
