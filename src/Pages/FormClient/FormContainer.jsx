@@ -21,6 +21,7 @@ const FormContainer = () => {
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState({});
+  const [dataDomicilio, setDataDomicilio] = useState({});
   const [metodoDePago, setMetodoDePago] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [nota, setNota] = useState('');
   const [validado, setValidado] = useState(false);
@@ -156,6 +157,7 @@ const FormContainer = () => {
         <ResumenProductosForm
           listaProducto={listaProdutosOrder}
           setListaProducto={setListaProdutosOrder}
+          dataDomicilio={dataDomicilio}
         />
 
         <Button variant="primary" type="submit">Enviar</Button>
