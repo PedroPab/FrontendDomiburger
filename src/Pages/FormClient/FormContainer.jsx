@@ -13,6 +13,7 @@ import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
 import MyMapWithAutocomplete from '../../components/MyMapWithAutocomplete';
 import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
+import crearPedido from '../../Utils/crearPedido';
 // import GoogleMapsApp from '../../components/GoogleMapsApp';
 const ENV = import.meta.env
 
@@ -47,14 +48,35 @@ const FormContainer = () => {
     }
   }, [direccion])
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
 
     setValidado(true);
+
+    //organimosmos al data para ser enviada al servirdor
+    const newDireccion = direccion
+    newDireccion.verified = newDireccion.valid
+    delete newDireccion.valid
+
+    const dataPedido = {
+      name: nombre,
+      phone: codigoPais + telefono,
+      address: newDireccion,
+      note: nota,
+      fee: metodoDePago,
+      order: listaProdutosOrder
+    }
+    console.log("🚀 ~ file: FormContainer.jsx:72 ~ handleSubmit ~ dataPedido:", dataPedido)
+
+    const creado = await crearPedido(dataPedido)
+    console.log("🚀 ~ file: FormContainer.jsx:69 ~ handleSubmit ~ creado:", creado)
   };
 
   //la listao de los productos
@@ -90,10 +112,58 @@ const FormContainer = () => {
     console.log(listaProdutosOrder);
   }, [listaProdutosOrder])
 
+  //select de codigo de telefno 
+  const [codigoPais, setCodigoPais] = useState('');
+  const countryCodes = [
+    { code: '+57', name: 'Colombia' },
+    { code: '+1', name: 'USA' },
+    { code: '+61', name: 'Australia' },
+    { code: '+55', name: 'Brazil' },
+    { code: '+33', name: 'France' },
+    { code: '+49', name: 'Germany' },
+    { code: '+81', name: 'Japan' },
+    { code: '+34', name: 'Spain' },
+    { code: '+58', name: 'Venezuela' },
+    { code: '+1', name: 'Canadá' },
+    { code: '+52', name: 'México' },
+    { code: '+503', name: 'El Salvador' },
+    { code: '+505', name: 'Nicaragua' },
+    { code: '+506', name: 'Costa Rica' },
+    { code: '+507', name: 'Panamá' },
+    { code: '+51', name: 'Perú' },
+    { code: '+54', name: 'Argentina' },
+    { code: '+55', name: 'Brasil' },
+    { code: '+56', name: 'Chile' },
+    { code: '+58', name: 'Venezuela' },
+    { code: '+591', name: 'Bolivia' },
+    { code: '+593', name: 'Ecuador' },
+    { code: '+595', name: 'Paraguay' },
+    { code: '+598', name: 'Uruguay' },
+    { code: '+599', name: 'Curazao' },
+    // ... y así sucesivamente para otros países
+  ];
+
+
+  const Agregado = () => {
+    return (
+      <div>
+        <Form.Control
+          as="select"
+          value={codigoPais}
+          onChange={(e) => setCodigoPais(e.target.value)}
+          style={{ width: "auto" }}
+        >
+          {countryCodes.map((country, index) => (
+            <option key={index} value={country.code}> {country.code}</option>
+          ))}
+        </Form.Control>
+      </div>
+    )
+  }
 
   return (
     <Container>
-      <h1 className="text-center">Formulario de Contacto</h1>
+      <h2 className="text-center">Pide tu domi</h2>
       <Form noValidate validated={validado} onSubmit={handleSubmit}>
         <FormField
           id="nameInput"
@@ -101,10 +171,17 @@ const FormContainer = () => {
           type="text"
           placeholder="Sara Restrepo"
           value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          onChange={(e) => {
+            // Convierte la primera letra de cada palabra a mayúscula
+            const capitalizedValue = e.target.value.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+
+            setNombre(capitalizedValue)
+          }}
           icon={<BsPerson />}
           feedback="Que bonito nombre"
           feedbackType="valid"
+          minLength={3}
+
         />
 
         <FormField
@@ -113,22 +190,45 @@ const FormContainer = () => {
           type="tel"
           placeholder="3054857547"
           value={telefono}
-          onChange={(e) => setTelefono(e.target.value)}
+          onChange={(e) => {
+
+            // Permite solo números
+            const onlyNums = e.target.value.replace(/[^0-9]/g, '');
+            setTelefono(onlyNums);
+          }}
           icon={<BsWhatsapp />}
           feedback="Por favor ingrese un número de WhatsApp válido."
           feedbackType="invalid"
+          minLength={9}
+
+          agregado={(<Agregado />)}
+
         />
-
-
-
-        {/* mapa de la direccion del usuario */}
-
 
         <MyMapWithAutocomplete
           objAdrees={direccion}
           setObjAdrees={setDireccion}
           VITE_KEYMAPS={ENV.VITE_KEYMAPS}
         />
+
+        <br />
+
+        <section className="mb-3">
+          <CardProduct
+            img={imgHamburguesa}
+            count={listaProdutosOrder.filter(e => e.name == PRODUCTS.Hamburguesa).length}
+            incrementCount={() => (incrementCount(PRODUCTS.Hamburguesa))}
+            decrementCount={() => (decrementCount(PRODUCTS.Hamburguesa))}
+          />
+        </section>
+        <section className="mb-3">
+          <CardProduct
+            img={imgCombo}
+            count={listaProdutosOrder.filter(e => e.name == PRODUCTS.Combo).length}
+            incrementCount={() => (incrementCount(PRODUCTS.Combo))}
+            decrementCount={() => (decrementCount(PRODUCTS.Combo))} />
+        </section>
+
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="metodoDePagoInput">Metodo de pago</Form.Label>
@@ -156,22 +256,6 @@ const FormContainer = () => {
           onChange={(e) => setNota(e.target.value)}
           icon={<BsFillGeoAltFill />}
         />
-        <section className="mb-3">
-          <CardProduct
-            img={imgHamburguesa}
-            count={listaProdutosOrder.filter(e => e.name == PRODUCTS.Hamburguesa).length}
-            incrementCount={() => (incrementCount(PRODUCTS.Hamburguesa))}
-            decrementCount={() => (decrementCount(PRODUCTS.Hamburguesa))}
-          />
-        </section>
-        <section className="mb-3">
-          <CardProduct
-            img={imgCombo}
-            count={listaProdutosOrder.filter(e => e.name == PRODUCTS.Combo).length}
-            incrementCount={() => (incrementCount(PRODUCTS.Combo))}
-            decrementCount={() => (decrementCount(PRODUCTS.Combo))} />
-
-        </section>
 
         <hr />
 
@@ -181,7 +265,13 @@ const FormContainer = () => {
           dataDomicilio={dataDomicilio}
         />
 
-        <Button variant="primary" type="submit">Enviar</Button>
+        <div className='text-center mt-3 mb-2'>
+
+          <Button variant="primary" type="submit">Enviar</Button>
+
+        </div>
+
+
       </Form>
     </Container >
   );
