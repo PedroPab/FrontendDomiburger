@@ -32,6 +32,7 @@ export const ContextProvider = ({ children }) => {
     // console.log('Alerta activada');
   };
   useEffect(() => {
+
     const socket = socketApp()
     // console.log("inciando coneccion id: ", JSON.stringify(socket))
     // Escuchar eventos de Socket.IO

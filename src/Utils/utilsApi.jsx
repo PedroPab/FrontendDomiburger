@@ -30,12 +30,11 @@ export const UtilsApi = async ({ peticion, token, vervo = 'POST', body }) => {
   const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
 
   const TOKEN = `Bearer ${token}`
-
+  const headers = {}
+  token ? headers.Authorization = TOKEN : undefined
   const options = {
     method: vervo,
-    headers: {
-      Authorization: TOKEN
-    }
+    headers,
   }
   if (body) {
     options.body = body

@@ -39,4 +39,9 @@ const FORMA_DE_PAGO = {
   PayPal: 'PayPal',
 }
 
-export { COLLECTIONS, ESTADOS, ROLES, FORMA_DE_PAGO }
+const PRODUCTS = {
+  Hamburguesa: 'Hamburguesa',
+  Combo: 'Combo',
+}
+
+export { COLLECTIONS, ESTADOS, ROLES, FORMA_DE_PAGO, PRODUCTS }
