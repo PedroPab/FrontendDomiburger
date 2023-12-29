@@ -73,10 +73,15 @@ const FormContainer = () => {
       fee: metodoDePago,
       order: listaProdutosOrder
     }
-    console.log("🚀 ~ file: FormContainer.jsx:72 ~ handleSubmit ~ dataPedido:", dataPedido)
 
-    const creado = await crearPedido(dataPedido)
-    console.log("🚀 ~ file: FormContainer.jsx:69 ~ handleSubmit ~ creado:", creado)
+    // const creado = 
+    await crearPedido(dataPedido)
+      .then(data => {
+        alert(JSON.parse(data))
+      })
+      .catch(error => {
+        alert(JSON.parse(error))
+      })
   };
 
   //la listao de los productos
@@ -105,13 +110,6 @@ const FormContainer = () => {
 
     setListaProdutosOrder(listaProducts.reverse())
   };
-
-  useEffect(() => {
-    console.log(`Lista deconst ENV = import.meta.env
-    productos`);
-    console.log(listaProdutosOrder);
-  }, [listaProdutosOrder])
-
   //select de codigo de telefno 
   const [codigoPais, setCodigoPais] = useState('');
   const countryCodes = [
