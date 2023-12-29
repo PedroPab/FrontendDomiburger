@@ -120,6 +120,10 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
           west: centerOrigin.lng - .5,
         }}
 
+        restrictions={{ 'country': ['CO'] }}
+        fields={['geometry', 'name', 'formatted_address', 'type', 'address_components']}
+
+
       >
         <Form.Group className="mb-3">
           <Form.Label htmlFor={'hol'}>Direccion Completa</Form.Label>
@@ -154,6 +158,10 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
             zoomControl: false, // Desactiva el control de zoom
             draggable: false, // Hace que el mapa no sea arrastrable
             scrollwheel: false, // Desactiva el zoom con la rueda del ratón
+            mapTypeControlOptions: {
+              ///style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+              mapTypeIds: ["roadmap", "terrain"],
+            },
             restriction: {
               latLngBounds: {
                 north: centerOrigin.lat + .5,
