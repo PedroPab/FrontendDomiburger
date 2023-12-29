@@ -40,6 +40,9 @@ const MapRecepcion = () => {
           />
           <Container fluid  >
             <Mapa
+              zoom={context.zoomMaps}
+              setZoomMaps={context.setZoomMaps}
+              modoOscuro={context.modoOscuro}
               center={centerMaps}
               setCenter={setCenterMaps}
               containerStyle={containerStyle}

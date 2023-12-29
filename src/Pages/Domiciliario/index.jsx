@@ -32,6 +32,9 @@ const Domiciliario = () => {
         <Container fluid  >
           <Row className='mb-3'>
             <Mapa
+              zoom={context.zoomMaps}
+              setZoomMaps={context.setZoomMaps}
+              modoOscuro={context.modoOscuro}
               center={centerMaps}
               setCenter={setCenterMaps}
               containerStyle={containerStyle}
