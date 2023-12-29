@@ -64,7 +64,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
   };
 
   const onPlaceChanged = async () => {
-
+    console.log('un cambio en el input');
     if (autocomplete !== null) {
 
       const place = autocomplete.getPlace()
@@ -113,6 +113,13 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
       <Autocomplete
         onLoad={onLoad}
         onPlaceChanged={onPlaceChanged}
+        bounds={{
+          north: centerOrigin.lat + .5,
+          south: centerOrigin.lat - .5,
+          east: centerOrigin.lng + .5,
+          west: centerOrigin.lng - .5,
+        }}
+
       >
         <Form.Group className="mb-3">
           <Form.Label htmlFor={'hol'}>Direccion Completa</Form.Label>
@@ -127,6 +134,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
               placeholder={'Calle 103 # 74b 214'}
               // value={objAdrees?.direccionIput || ''}
               onChange={onChange}
+              autoComplete
             />
             {/* {feedback && <Form.Control.Feedback type={feedbackType}>{feedback}</Form.Control.Feedback>} */}
           </InputGroup>
@@ -146,14 +154,22 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
             zoomControl: false, // Desactiva el control de zoom
             draggable: false, // Hace que el mapa no sea arrastrable
             scrollwheel: false, // Desactiva el zoom con la rueda del ratón
+            restriction: {
+              latLngBounds: {
+                north: centerOrigin.lat + .5,
+                south: centerOrigin.lat - .5,
+                east: centerOrigin.lng + .5,
+                west: centerOrigin.lng - .5,
+              }, //area de busqueda
+              strictBounds: true,
+
+            }
           }}
         >
           <Marker
             position={center}
-            title='title'
-            animation='DROP'
-          />
-
+            visible={true}
+          /> &&
           <InfoWindow
             position={center}
             visible={true}
