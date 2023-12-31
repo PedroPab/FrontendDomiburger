@@ -5,6 +5,8 @@ import Layout from "../../../components/Layout";
 import { ContextProviderRecepcion } from '../../../Context/RecepcionContex';
 import { UtilsApi } from '../../../Utils/utilsApi';
 import GraficaVentasHoy from '../../../components/GraficaVentasHoy';
+// eslint-disable-next-line no-unused-vars
+import Pedido from '../../../Utils/class/Pedido';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
 const EstadisticasVentasHoy = () => {
@@ -43,7 +45,6 @@ const EstadisticasVentasHoy = () => {
       peticion: `/estados/filter`, token, vervo: `POST`, body: JSON.stringify({ filter })
     })
       .then(data => {
-        console.log("🚀 ~ file: index.jsx:46 ~ useEffect ~ data:", data)
         data = data.map(e => e.data)
         setPedidosAyer(data)
       })
@@ -55,13 +56,101 @@ const EstadisticasVentasHoy = () => {
 
 
 
+  /**
+   * @param {Pedido[]} pedidos
+   */
+  const conteoPedidos = (pedidos) => {
+    return pedidos.length
+  }
+
+  /**
+ * @param {Pedido[]} pedidos
+ */
+  const conteoDeProductos = (pedidos, producto) => {
+    let haburguesas = 0, combos = 0
+
+    pedidos.forEach((pedido) => {
+      if (!pedido.order) return
+      pedido.order.forEach(producto => {
+        // if (producto.type !== `Producto`) return
+        pedidos += 1
+        switch (producto.id) {
+          case `1`:
+            combos += 1
+            break
+          case `2`:
+            haburguesas += 1
+            break
+          default:
+            break
+        }
+      })
+    })
+
+    switch (producto) {
+      case 'combo':
+        return combos
+      case 'haburguesa':
+        return haburguesas
+      default:
+        return combos + combos
+    }
+  }
 
 
   const listPedidos = [
-    { name: 'Hoy', data: pedidos, color: 'rgb(200, 28, 28)', dayInit: timeInitHoy },
-    { name: 'mana', data: pedidosAyer, color: 'rgba(205, 201, 201, 0.84)', dayInit: fechaAyer },
+    {
+      name: 'Hoy',
+      data: pedidos,
+      color: 'rgb(200, 28, 28)',
+      dayInit: timeInitHoy,
+      backgroundColor: 'rgba(23, 19, 255, 0.47)',
+      callbackReduceData: conteoPedidos
+    },
+    {
+      name: 'Ayer',
+      data: pedidosAyer,
+      color: 'rgba(0, 0, 0, 0.84)',
+      dayInit: fechaAyer,
+      backgroundColor: 'rgba(255, 70, 70, 0.94)',
+      callbackReduceData: conteoPedidos
+    },
   ]
 
+  const listPedidos2 = [
+    {
+      name: 'Hoy Combos',
+      data: pedidosAyer,
+      color: 'rgba(255, 0, 0, 0.84)',
+      dayInit: timeInitHoy,
+      backgroundColor: 'rgba(255, 70, 70, 0.94)',
+      callbackReduceData: (data) => conteoDeProductos(data, 'combo')
+    },
+    {
+      name: 'Hoy Hambuguesas',
+      data: pedidosAyer,
+      color: 'rgba(235, 0, 0, 0.84)',
+      dayInit: timeInitHoy,
+      backgroundColor: 'rgba(255, 70, 70, 0.94)',
+      callbackReduceData: (data) => conteoDeProductos(data, 'haburguesa')
+    },
+    {
+      name: 'Ayer Combos',
+      data: pedidosAyer,
+      color: 'rgba(0, 64, 255, 0.84)',
+      dayInit: fechaAyer,
+      backgroundColor: 'rgba(255, 70, 70, 0.94)',
+      callbackReduceData: (data) => conteoDeProductos(data, 'combo')
+    },
+    {
+      name: 'Ayer Hambuguesas',
+      data: pedidosAyer,
+      color: 'rgba(0, 42, 255, 0.84)',
+      dayInit: fechaAyer,
+      backgroundColor: 'rgba(255, 70, 70, 0.94)',
+      callbackReduceData: (data) => conteoDeProductos(data, 'haburguesa')
+    },
+  ]
 
   return (
     <>
@@ -75,6 +164,9 @@ const EstadisticasVentasHoy = () => {
 
           <GraficaVentasHoy
             listPedidos={listPedidos} />
+
+          <GraficaVentasHoy
+            listPedidos={listPedidos2} />
 
         </ContextProviderRecepcion >
 
