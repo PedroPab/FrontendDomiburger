@@ -11,9 +11,10 @@ import Contabilidad from "../Contabilidad"
 import Cocina from "../Cocina"
 import MapCocina from "../MapCocina"
 import DomiciliarioHistory from "../DomiciliarioHistory"
-import EstadisticasDomiciliarios from "../EstadisticasDomiciliarios"
+import EstadisticasDomiciliarios from "../EstadisticasHome/EstadisticasDomiciliarios"
 import FormClient from "../FormClient"
 import EstadisticasHome from "../EstadisticasHome"
+import EstadisticasVentasHoy from "../EstadisticasHome/EstadisticasVentasHoy"
 
 const AppRoutes = () => {
   return (
@@ -28,7 +29,8 @@ const AppRoutes = () => {
         <Route path="/mapRecepcion" element={<MapRecepcion />} />
         <Route path="/contabilidad" element={<Contabilidad />} />
 
-        <Route path="/estadisticas/domiciliarios" element={<EstadisticasDomiciliarios />} />
+        {/* <Route path="/estadisticas/domiciliarios" element={<EstadisticasDomiciliarios />} /> */}
+        <Route path="/estadisticas/ventas/hoy" element={<EstadisticasVentasHoy />} />
         <Route path="/estadisticas" element={<EstadisticasHome />} />
 
       </Route>

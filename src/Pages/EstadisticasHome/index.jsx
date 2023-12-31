@@ -25,7 +25,8 @@ const EstadisticasHome = () => {
 
           <ListaEstadisticas
             lista={[
-              { nombre: 'Domiciliarios', path: 'domiciliarios' }
+              { nombre: 'Domiciliarios', path: 'domiciliarios' },
+              { nombre: 'Ventas hoy', path: 'ventas/hoy' },
             ]}
           />
 

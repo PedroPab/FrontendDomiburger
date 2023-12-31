@@ -45,4 +45,9 @@ const convertirFecha2 = (fechaInput) => {
   return fechaUTC
 }
 
-export { formatTimeString, convertirFecha, convertirFecha2 }
+function convertirHoraDeUnixADate(tiempoUnix) {
+  const rta = new Date(tiempoUnix._seconds * 1000 + tiempoUnix._nanoseconds / 1000000)
+  return rta
+}
+
+export { formatTimeString, convertirFecha, convertirFecha2, convertirHoraDeUnixADate }

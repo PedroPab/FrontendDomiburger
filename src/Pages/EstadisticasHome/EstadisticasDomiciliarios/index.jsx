@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import { MiContexto } from '../../Context'
-import NavbarRecepcion from "../../components/NavbarRecepcion";
-import Layout from "../../components/Layout";
-import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
-import { UtilsApi } from '../../Utils/utilsApi';
-import ListEstadisticasDomiciliarios from '../../components/ListEstadisticasDomiciliarios';
+import { MiContexto } from '../../../Context'
+import NavbarRecepcion from "../../../components/NavbarRecepcion";
+import Layout from "../../../components/Layout";
+import { ContextProviderRecepcion } from '../../../Context/RecepcionContex';
+import { UtilsApi } from '../../../Utils/utilsApi';
+import ListEstadisticasDomiciliarios from '../../../components/ListEstadisticasDomiciliarios';
 import { ConfigProvider, theme } from 'antd';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
