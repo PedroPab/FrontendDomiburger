@@ -29,7 +29,7 @@ const AppRoutes = () => {
         <Route path="/mapRecepcion" element={<MapRecepcion />} />
         <Route path="/contabilidad" element={<Contabilidad />} />
 
-        {/* <Route path="/estadisticas/domiciliarios" element={<EstadisticasDomiciliarios />} /> */}
+        <Route path="/estadisticas/domiciliarios" element={<EstadisticasDomiciliarios />} />
         <Route path="/estadisticas/ventas/hoy" element={<EstadisticasVentasHoy />} />
         <Route path="/estadisticas" element={<EstadisticasHome />} />
 

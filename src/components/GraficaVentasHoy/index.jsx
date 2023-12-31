@@ -36,18 +36,17 @@ const GraficaVentasHoy = ({ listPedidos }) => {
   const timePart = 900; // en segundos
 
   const dataEstadisticas = listPedidos.map(pedidos => {
-    let { labels, dataData } = OrganisarDatosEstadisticas(pedidos.data, timePart, pedidos.dayInit);
+    let { labels, dataData } = OrganisarDatosEstadisticas({ listPedidos: pedidos.data, timePart: timePart, dayInit: pedidos.dayInit, callbackReduceData: pedidos.callbackReduceData });
     return { labels, dataData, name: pedidos.name, color: pedidos.color }
   })
-  console.log("🚀 ~ file: index.jsx:42 ~ dataEstadisticas ~ dataEstadisticas:", dataEstadisticas)
 
   const datasets = dataEstadisticas.map(e => {
     return {
       label: e.name,
       data: e.dataData,
-      backgroundColor: 'rgba(75,192,192,0.2)',
+      backgroundColor: e.backgroundColor,
       borderColor: e.color,
-      borderWidth: 1,
+      borderWidth: 2,
     }
   })
   // Datos de ejemplo para la gráfica
@@ -59,9 +58,6 @@ const GraficaVentasHoy = ({ listPedidos }) => {
   return (
     <div>
       <h2>Estadísticas de ventas de hoy</h2>
-      <ol>
-
-      </ol>
       <Line data={data} />
     </div>
   );
@@ -69,7 +65,7 @@ const GraficaVentasHoy = ({ listPedidos }) => {
 
 
 
-function OrganisarDatosEstadisticas(listPedidos, timePart, dayInit = undefined) {
+function OrganisarDatosEstadisticas({ listPedidos, timePart, dayInit = undefined, callbackReduceData }) {
   const listPedidosMod = [...listPedidos];
 
   const listPedidsOrganisado = ordenarPorFecha(listPedidosMod);
@@ -126,7 +122,7 @@ function OrganisarDatosEstadisticas(listPedidos, timePart, dayInit = undefined) 
 
   listaLapsos.forEach(lapso => {
     labels.push(lapso.timeText);
-    dataData.push(lapso.pedidos.length);
+    dataData.push(callbackReduceData(lapso.pedidos));
   });
   return { labels, dataData };
 }

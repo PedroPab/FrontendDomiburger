@@ -42,7 +42,6 @@ export const UtilsApi = async ({ peticion, token, vervo = 'POST', body }) => {
   }
 
 
-  console.log(options);
 
   return new Promise((resolve, reject) => {
     fetch(`${apiUrl}/api/${peticion}`, options)
