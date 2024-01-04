@@ -17,7 +17,17 @@ export const ContextProvider = ({ children }) => {
   const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} })
 
   // Estado para el modo oscuro
-  const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: true })
+  let initDarkMode = false
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // El usuario ha establecido su sistema para usar un tema oscuro
+    console.log('Tema oscuro preferido');
+    initDarkMode = true
+  } else {
+    // El usuario ha establecido su sistema para usar un tema claro
+    console.log('Tema claro preferido');
+    initDarkMode = false
+  }
+  const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: initDarkMode })
 
   // Función para alternar entre el modo oscuro y claro
   const alternarModo = () => {
