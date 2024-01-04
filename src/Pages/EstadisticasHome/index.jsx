@@ -27,6 +27,7 @@ const EstadisticasHome = () => {
             lista={[
               { nombre: 'Domiciliarios', path: 'domiciliarios' },
               { nombre: 'Ventas hoy', path: 'ventas/hoy' },
+              { nombre: 'Clientes', path: 'clientes' },
             ]}
           />
 
