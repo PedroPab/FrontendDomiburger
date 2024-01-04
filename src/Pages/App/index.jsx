@@ -15,6 +15,7 @@ import EstadisticasDomiciliarios from "../EstadisticasHome/EstadisticasDomicilia
 import FormClient from "../FormClient"
 import EstadisticasHome from "../EstadisticasHome"
 import EstadisticasVentasHoy from "../EstadisticasHome/EstadisticasVentasHoy"
+import EstadisticasClientes from "../EstadisticasHome/EstadisticasClientes"
 
 const AppRoutes = () => {
   return (
@@ -31,6 +32,7 @@ const AppRoutes = () => {
 
         <Route path="/estadisticas/domiciliarios" element={<EstadisticasDomiciliarios />} />
         <Route path="/estadisticas/ventas/hoy" element={<EstadisticasVentasHoy />} />
+        <Route path="/estadisticas/clientes" element={<EstadisticasClientes />} />
         <Route path="/estadisticas" element={<EstadisticasHome />} />
 
       </Route>

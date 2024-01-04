@@ -39,7 +39,7 @@ const NavBar = ({ modoOscuro, alternarModo }) => {
             <Nav.Link as={Link} to="/mapRecepcion">  <FaMapMarkedAlt /> Map</Nav.Link>
             <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
             <Nav.Link as={Link} to="/contabilidad">  <BiArrowFromBottom /> Contabilidad</Nav.Link>
-            <Nav.Link as={Link} to="/estadisticas/domiciliarios"> Estadisticas</Nav.Link>
+            <Nav.Link as={Link} to="/estadisticas"> Estadisticas</Nav.Link>
 
             <Nav.Link onClick={() => { contextRecepcion.openCloseModalAgregarDo() }}>  <BiMobile /> Domiciliarios</Nav.Link>
 

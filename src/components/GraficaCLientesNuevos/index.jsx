@@ -1,4 +1,4 @@
-import { Line } from 'react-chartjs-2';
+import { Chart, Line, } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,7 +24,8 @@ ChartJS.register(
   Legend
 )
 
-const GraficaVentasHoy = ({ listPedidos, title, nameValueY }) => {
+const GraficaCLientesNuevos = ({ listPedidos, title, nameValueY }) => {
+  console.log("🚀 ~ file: index.jsx:28 ~ GraficaCLientesNuevos ~ listPedidos:", listPedidos)
 
   const timePart = 900; // en segundos
 
@@ -154,4 +155,4 @@ function ordenarPorFecha(array) {
 }
 
 
-export default GraficaVentasHoy;
+export default GraficaCLientesNuevos;
