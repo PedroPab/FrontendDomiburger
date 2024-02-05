@@ -48,7 +48,9 @@ const Contabilidad = () => {
       totalDeCombos = 0,
       totalDeHamburguesas = 0,
       totalDeDomicilios = 0,
-      TotalDeCostosProductos = 0
+      TotalDeCostosProductos = 0,
+      TotalDeCostosGaseosas = 0,
+      totalDeGaseosas = 0
 
     pedidosData.forEach(element => {
       // element = element.data
@@ -83,6 +85,7 @@ const Contabilidad = () => {
           case `1`:
             comboContador += 1
             TotalDeCostosProductos += producto.price
+
             break;
           case `2`:
             hamburguesaContador += 1
@@ -94,12 +97,38 @@ const Contabilidad = () => {
             }
             break;
         }
+
+        const { contadorProducto, contadorCosteProducto } = contieneAdicionGaseosa(producto.modifique || [], ['9', '10'])
+        totalDeGaseosas += contadorProducto
+        TotalDeCostosGaseosas += contadorCosteProducto
       })
 
       totalDeCombos += comboContador
       totalDeHamburguesas += hamburguesaContador
       totalDeDomicilios += domicilioContador
       //si es de tranferecia miramos si estas confiramado le pago y los  separamos
+
+      //miramos si tiene una adicion de gaseosa para hacer le conteo
+      /**
+       * tratamos de
+       * @param {Array} adiciones
+       * @param {String[] | String} idAdicion
+       * @param {Number} contadorProducto
+       * @param {Number} contadorCosteProducto
+       */
+      function contieneAdicionGaseosa(adiciones, idAdicion) {
+        if (typeof (idAdicion) == 'string') idAdicion = [idAdicion]
+
+        let contadorProducto = 0, contadorCosteProducto = 0
+        adiciones.map(adicion => {
+          if (idAdicion.includes(adicion.id)) {
+            contadorProducto = contadorProducto + 1
+            contadorCosteProducto = contadorCosteProducto + adicion.price
+          }
+        })
+        return { contadorProducto, contadorCosteProducto }
+      }
+
     });
 
     return {
@@ -112,6 +141,8 @@ const Contabilidad = () => {
       totalDeHamburguesas,
       totalDeDomicilios,
       TotalDeCostosProductos,
+      TotalDeCostosGaseosas,
+      totalDeGaseosas,
     }
   }
 
@@ -150,25 +181,31 @@ const Contabilidad = () => {
                           <p>Total de combos: <span>{rta.totalDeCombos}</span></p>
                         </Row>
                         <Row>
-                          <p>Total de hambuguesas: <span>{rta.totalDeHamburguesas}</span></p>
+                          <p>Total de hamburguesas: <span>{rta.totalDeHamburguesas}</span></p>
                         </Row>
                         <Row>
                           <p>Total de domicilios: <span>{rta.totalDeDomicilios}</span></p>
                         </Row>
                         <Row>
-                          <p>Total de precios de productos: <span>{rta.TotalDeCostosProductos}</span></p>
+                          <p>Total de precios de productos: $<span>{rta.TotalDeCostosProductos}</span></p>
                         </Row>
                       </Col>
 
                       <Col>
                         <Row>
-                          <p>Total de ventas: <span>{rta.totalDeVentas}</span></p>
+                          <p>Total de ventas: $<span>{rta.totalDeVentas}</span></p>
                         </Row>
                         <Row>
-                          <p>Total de transferencias:  <span>{rta.totalDeTrasferencias}</span></p>
+                          <p>Total de transferencias:  $<span>{rta.totalDeTrasferencias}</span></p>
                         </Row>
                         <Row>
-                          <p>Total de efictivo: <span>{rta.totalDeEfectivo}</span></p>
+                          <p>Total de efectivo: $<span>{rta.totalDeEfectivo}</span></p>
+                        </Row>
+                        <Row>
+                          <p>Total de gaseosas: <span>{rta.totalDeGaseosas}</span></p>
+                        </Row>
+                        <Row>
+                          <p>Total de ventas gaseosas: $<span>{rta.TotalDeCostosGaseosas}</span></p>
                         </Row>
                       </Col>
                     </Row>
