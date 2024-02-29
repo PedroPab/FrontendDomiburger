@@ -24,7 +24,10 @@ const CarouselListCards = ({ data }) => {
 
   return (
     <>
-      <Slider {...settings} ref={sliderRef}>
+      <Slider {...settings}
+        ref={sliderRef}
+        afterChange={(index) => context.setIndexItems(index)}
+      >
         {
           (data && data.length > 0) ?
             data.map((pedido) => (

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { MiContexto } from '../../Context'
 import NavbarDomiciliario from "../../components/NavbarDomiciliario";
 import Layout from "../../components/Layout";
@@ -15,6 +15,17 @@ const Domiciliario = () => {
     lat: 6.29,
     lng: -75.576
   })
+
+  useEffect(() => {
+    //cando cambie el index del pedido elegido se cambiara el center del mapa
+    if (context.indexItems !== null) {
+      setCenterMaps({
+        lat: context.items[context.indexItems].address.coordinates.lat,
+        lng: context.items[context.indexItems].address.coordinates.lng
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [context.indexItems])
 
   const containerStyle = {
     width: '100%', // Establece el ancho al 100% del contenedor padre
