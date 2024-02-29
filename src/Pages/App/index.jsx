@@ -17,6 +17,7 @@ import EstadisticasHome from "../EstadisticasHome"
 import EstadisticasVentasHoy from "../EstadisticasHome/EstadisticasVentasHoy"
 import EstadisticasClientes from "../EstadisticasHome/EstadisticasClientes"
 import Codigos from "../Codigo"
+import CrearCodigoReferido from "../Codigo/CrearCodigoReferido"
 
 const AppRoutes = () => {
   return (
@@ -35,7 +36,9 @@ const AppRoutes = () => {
         <Route path="/estadisticas/ventas/hoy" element={<EstadisticasVentasHoy />} />
         <Route path="/estadisticas/clientes" element={<EstadisticasClientes />} />
         <Route path="/estadisticas" element={<EstadisticasHome />} />
+
         <Route path="/codigos" element={<Codigos />} />
+        <Route path="/codigos/crearCodigoReferido" element={<CrearCodigoReferido />} />
 
       </Route>
       <Route element={<ProtectedRoute users={[ROLES.domiciliario]} redirectTo={'/login'} />} >

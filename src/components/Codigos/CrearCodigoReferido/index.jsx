@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import BuscadorCliente from './BuscadorCliente';
 import { createCodeReferidos } from '../../../Utils/api/codigos/createCodeReferidos';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const CrearCodigoReferido = ({ token, userId }) => {
   const [telefono, setTelefono] = useState('+573054489598');
@@ -70,7 +69,6 @@ const CrearCodigoReferido = ({ token, userId }) => {
           variant="primary"
         >Crear Código</Button>
       </form>
-      <ToastContainer />
     </div>
   );
 };
