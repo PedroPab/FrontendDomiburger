@@ -1,5 +1,6 @@
 
 export const createCodeReferidos = async (data, token) => {
+  // eslint-disable-next-line no-useless-catch
   try {
     const ENV = import.meta.env
     const apiUrl = `${ENV.VITE_PROTOCOL_CODES}${ENV.VITE_HOST_CODES}:${ENV.VITE_PORT_CODES}`;
@@ -16,9 +17,13 @@ export const createCodeReferidos = async (data, token) => {
     };
 
     const response = await fetch(`${apiUrl}/Referido`, requestOptions);
-    const result = await response.text();
+    const result = await response.json();
+
+    if (response.status !== 200) {
+      throw result
+    }
     return result
   } catch (error) {
-    return error
+    throw error
   }
 }

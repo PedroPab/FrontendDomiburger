@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import BuscadorCliente from './BuscadorCliente';
 import { createCodeReferidos } from '../../../Utils/api/codigos/createCodeReferidos';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CrearCodigoReferido = ({ token, userId }) => {
-  const [telefono, setTelefono] = useState('+573056249956');
+  const [telefono, setTelefono] = useState('+573054489598');
   const [codigo, setCodigo] = useState('');
   const [valid, setValid] = useState(false);
   const [dataCliente, setDataCliente] = useState(null);
@@ -27,10 +29,18 @@ const CrearCodigoReferido = ({ token, userId }) => {
       clientId: dataCliente.id,
       phoneClient: dataCliente.phone,
     }
-    //enviamos la data al backend
-    const code = await createCodeReferidos(data, token)
-    ///si todo fue un éxito , mostramos en la pantalla un mensaje y borramos el formulario , si no mostramos el error
 
+    try {
+      //enviamos la data al backend
+      await createCodeReferidos(data, token)
+      ///si todo fue un éxito , mostramos en la pantalla un mensaje y borramos el formulario , si no mostramos el error
+      toast(`todo fue un éxito `)
+      setTelefono('');
+      setCodigo('');
+      setDataCliente(null);
+    } catch (error) {
+      toast.error(error.message)
+    }
   };
 
   return (
@@ -60,6 +70,7 @@ const CrearCodigoReferido = ({ token, userId }) => {
           variant="primary"
         >Crear Código</Button>
       </form>
+      <ToastContainer />
     </div>
   );
 };
