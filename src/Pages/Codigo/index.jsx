@@ -26,7 +26,7 @@ const Codigos = () => {
             <ListaBotonesLink
               lista={[
                 { nombre: 'Crear Codigo Referido', path: 'crearCodigoReferido' },
-                // { nombre: 'Ventas hoy', path: 'ventas/hoy' },
+                { nombre: 'Crear codigo ya creado', path: 'crearCodigoYaCreado' },
                 // { nombre: 'Clientes', path: 'clientes' },
               ]}
             />

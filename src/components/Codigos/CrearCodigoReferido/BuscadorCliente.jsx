@@ -1,5 +1,5 @@
-import { Button } from "react-bootstrap"
-import { findClientForPhone } from "../../../Utils/api/findClient"
+import { Button, Form, Row, Col } from 'react-bootstrap';
+import { findClientForPhone } from "../../../Utils/api/findClient";
 
 const BuscadorCliente = ({
   telefono,
@@ -10,34 +10,45 @@ const BuscadorCliente = ({
 }) => {
 
   const buscarCliente = async () => {
-    const dataClient = await findClientForPhone(telefono, token)
+    const dataClient = await findClientForPhone(telefono, token);
     if (!dataClient) {
-      setDataCliente(null)
+      setDataCliente(null);
+    } else {
+      setDataCliente(dataClient);
     }
-    //buscamos la cantidad de pedidos asociados al cliente
-    // const orders = await findOrdersForClient(dataClient.id)
-    // dataClient.orders = orders
-    setDataCliente(dataClient)
-  }
+  };
+
   return (
     <>
       <h3>Buscar Cliente</h3>
-
-      <label htmlFor="telefono">Teléfono:</label>
-      <input
-        type="tel"
-        id="telefono"
-        value={telefono}
-        onChange={(e) => {
-          let telefono = e.target.value
-          //formateamos el numero para que no tenga nada raro , como espacios o caracteres especiales con expresiones regulares, solo ser permite los números y el signo +
-          telefono = telefono.replace(/[^+0-9]/g, '')
-          setTelefono(telefono)
-        }}
-      />
-      <Button variant="primary"
-        onClick={() => buscarCliente()}
-      >Buscar Cliente</Button >
+      <Form>
+        <Form.Group controlId="formTelefono">
+          <Row>
+            <Col>
+              <Form.Label>Teléfono:</Form.Label>
+              <Row>
+                <Col>
+                  <Form.Control
+                    type="tel"
+                    value={telefono}
+                    onChange={(e) => {
+                      let telefono = e.target.value;
+                      // Formateamos el número para que no tenga espacios ni caracteres especiales, solo se permite números y el signo +
+                      telefono = telefono.replace(/[^+0-9]/g, '');
+                      setTelefono(telefono);
+                    }}
+                  />
+                </Col>
+                <Col xs="auto">
+                  <Button variant="primary" onClick={() => buscarCliente()}>
+                    Buscar Cliente
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Form.Group>
+      </Form>
       <hr />
       {
         dataCliente ?
@@ -50,13 +61,11 @@ const BuscadorCliente = ({
           :
           <div>
             <p>Cliente no encontrado</p>
-          </div >
+          </div>
       }
       <hr />
-
     </>
+  );
+};
 
-  )
-}
-
-export default BuscadorCliente
+export default BuscadorCliente;
