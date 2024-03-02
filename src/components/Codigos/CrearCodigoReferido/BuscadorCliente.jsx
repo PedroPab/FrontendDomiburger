@@ -1,5 +1,7 @@
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { findClientForPhone } from "../../../Utils/api/findClient";
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 const BuscadorCliente = ({
   telefono,
@@ -24,28 +26,28 @@ const BuscadorCliente = ({
       <Form>
         <Form.Group controlId="formTelefono">
           <Row>
-            <Col>
-              <Form.Label>Teléfono:</Form.Label>
-              <Row>
-                <Col>
-                  <Form.Control
-                    type="tel"
-                    value={telefono}
-                    onChange={(e) => {
-                      let telefono = e.target.value;
-                      // Formateamos el número para que no tenga espacios ni caracteres especiales, solo se permite números y el signo +
-                      telefono = telefono.replace(/[^+0-9]/g, '');
-                      setTelefono(telefono);
-                    }}
-                  />
-                </Col>
-                <Col xs="auto">
-                  <Button variant="primary" onClick={() => buscarCliente()}>
-                    Buscar Cliente
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
+            <Form.Label>Teléfono:</Form.Label>
+            {/* Alineamos de forma vertical el input y el botón */}
+            <Row className="align-items-center">
+              <Col>
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  value={telefono}
+                  onChange={setTelefono}
+                  // Añade aquí las clases de Bootstrap que necesites, por ejemplo:
+                  className="form-control"
+                  inputClass="form-control"
+                  buttonClass="form-control"
+                  country="CO"
+                  defaultCountry="CO"
+                />
+              </Col>
+              <Col>
+                <Button variant="primary" onClick={() => buscarCliente()}>
+                  Buscar Cliente
+                </Button>
+              </Col>
+            </Row>
           </Row>
         </Form.Group>
       </Form>

@@ -1,8 +1,7 @@
-import { Form } from 'react-bootstrap';
+import { Form, ButtonGroup, Button } from 'react-bootstrap';
 
-const InputCantidadNumber = ({ cantidad, setCantidad }) => {
+const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '' }) => {
   const handleChange = (e) => {
-    // Solo se pueden ingresar números positivos
     let value = parseInt(e.target.value, 10);
     if (isNaN(value) || value < 0) {
       value = 0;
@@ -10,15 +9,44 @@ const InputCantidadNumber = ({ cantidad, setCantidad }) => {
     setCantidad(value);
   };
 
+  const incrementar = () => {
+    setCantidad(cantidad + 1);
+  };
+
+  const disminuir = () => {
+    if (cantidad > 0) {
+      setCantidad(cantidad - 1);
+    }
+  };
+
+  // Estilos para los botones redondos
+  const roundButtonStyle = {
+    borderRadius: '50%',
+    width: '40px', // Establece un ancho fijo para hacerlos más circulares
+    height: '40px', // Establece una altura fija para hacerlos más circulares
+    display: 'flex', // Alinea el contenido del botón (icono o texto) en el centro
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '0 5px', // Añade un pequeño espacio entre los botones
+  };
+
   return (
     <Form.Group controlId="formCantidadReferidos">
-      <Form.Label>Cantidad de referidos:</Form.Label>
-      <Form.Control
-        type="number"
-        value={cantidad}
-        onChange={handleChange}
-        min="0" // Asegura que solo se puedan ingresar números positivos directamente desde el input
-      />
+      <Form.Label>{textLabel}</Form.Label>
+      <div className="d-flex align-items-start">
+        <Form.Control
+          type="number"
+          value={cantidad}
+          onChange={handleChange}
+          min="0"
+          className="me-2"
+          style={{ maxWidth: '200px' }} // Puedes ajustar el ancho del input según necesites
+        />
+        <ButtonGroup>
+          <Button variant="outline-secondary" onClick={disminuir} style={roundButtonStyle}>-</Button>
+          <Button variant="outline-secondary" onClick={incrementar} style={roundButtonStyle}>+</Button>
+        </ButtonGroup>
+      </div>
     </Form.Group>
   );
 };

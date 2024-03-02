@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Button, Card, Container, Row, Col } from 'react-bootstrap';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 import BuscadorCliente from './BuscadorCliente';
 import InputCodigoText from './InputCodigoText';
 import InputCantidadNumber from './InputCantidadNumber'; // Asumiendo que este es el nombre correcto del componente
 import { createCodeReferidos } from '../../../Utils/api/codigos/createCodeReferidos';
 import { toast } from 'react-toastify';
+import BotonCrear from './BotonCrearCodigo';
 
 const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
   const [telefono, setTelefono] = useState('+573054489598');
@@ -48,8 +49,11 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
         <Col xs={12} md={5}>
           <Card>
             <Card.Body>
-              <Card.Title>Crear Código de Referido</Card.Title>
+              <Card.Title>
+                <h1>Crear Código de Referido</h1>
+              </Card.Title>
               <form onSubmit={handleSubmit}>
+
                 <BuscadorCliente
                   telefono={telefono}
                   setTelefono={setTelefono}
@@ -62,23 +66,25 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
                   codigo={codigo}
                   setCodigo={setCodigo}
                 />
-
+                <br />
                 <InputCantidadNumber
                   cantidad={cantidadReferidos}
                   setCantidad={setCantidadReferidos}
+                  textLabel='Cantidad de referidos'
                 />
-
+                <br />
                 <InputCantidadNumber
                   cantidad={cantidadPremios}
                   setCantidad={setCantidadPremios}
+                  textLabel='Cantidad de premios'
                 />
 
                 <div className="d-grid gap-2 mt-3">
-                  <Button
-                    type="submit"
-                    disabled={!valid}
-                    variant="primary"
-                  >Crear Código</Button>
+                  <BotonCrear
+                    valid={valid}
+                    message='Asegúrate de tener el cliente y el código'
+                    text='Crear Código de Referido'
+                  />
                 </div>
               </form>
             </Card.Body>
