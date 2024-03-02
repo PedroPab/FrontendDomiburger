@@ -5,7 +5,7 @@ import InputCodigoText from './InputCodigoText';
 import InputCantidadNumber from './InputCantidadNumber'; // Asumiendo que este es el nombre correcto del componente
 import { createCodeReferidos } from '../../../Utils/api/codigos/createCodeReferidos';
 import { toast } from 'react-toastify';
-import BotonCrear from './BotonCrearCodigo';
+import BotonCrearCodigo from './BotonCrearCodigo';
 
 const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
   const [telefono, setTelefono] = useState('+573054489598');
@@ -80,7 +80,7 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
                 />
 
                 <div className="d-grid gap-2 mt-3">
-                  <BotonCrear
+                  <BotonCrearCodigo
                     valid={valid}
                     message='Asegúrate de tener el cliente y el código'
                     text='Crear Código de Referido'

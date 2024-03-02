@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import BuscadorCliente from './BuscadorCliente';
 import { createCodeReferidos } from '../../../Utils/api/codigos/createCodeReferidos';
 import { toast } from 'react-toastify';
+import BotonCrearCodigo from './BotonCrearCodigo';
+import InputCodigoText from './InputCodigoText';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const CrearCodigoReferido = ({ token, userId }) => {
   const [telefono, setTelefono] = useState('+573054489598');
@@ -43,33 +45,43 @@ const CrearCodigoReferido = ({ token, userId }) => {
   };
 
   return (
-    <div>
-      <h1>Crear Código de Referido</h1>
-      <form onSubmit={handleSubmit}>
-        <BuscadorCliente
-          telefono={telefono}
-          setTelefono={setTelefono}
-          dataCliente={dataCliente}
-          setDataCliente={setDataCliente}
-          token={token}
-        />
-        <br />
+    <Container className="mt-4">
+      <Row className="justify-content-md-center">
+        <Col xs={12} md={5}>
+          <Card>
+            <Card.Body>
+              <Card.Title>
+                <h1>Crear Código de Referido</h1>
+              </Card.Title>
+              <form onSubmit={handleSubmit}>
 
-        <label htmlFor="codigo">Código:</label>
-        <input
-          type="text"
-          id="codigo"
-          value={codigo}
-          onChange={(e) => setCodigo(e.target.value)}
-        />
-        <br />
-        <Button
-          type="submit"
-          disabled={!valid}
-          variant="primary"
-        >Crear Código</Button>
-      </form>
-    </div>
+                <BuscadorCliente
+                  telefono={telefono}
+                  setTelefono={setTelefono}
+                  dataCliente={dataCliente}
+                  setDataCliente={setDataCliente}
+                  token={token}
+                />
+
+                <InputCodigoText
+                  codigo={codigo}
+                  setCodigo={setCodigo}
+                />
+
+
+                <div className="d-grid gap-2 mt-3">
+                  <BotonCrearCodigo
+                    valid={valid}
+                    message='Asegúrate de tener el cliente y el código'
+                    text='Crear Código de Referido'
+                  />
+                </div>
+              </form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
