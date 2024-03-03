@@ -14,13 +14,33 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
   const [dataCliente, setDataCliente] = useState(null);
   const [cantidadReferidos, setCantidadReferidos] = useState(0);
   const [cantidadPremios, setCantidadPremios] = useState(0);
+  const [messageInvalid, setMessageInvalid] = useState('Ingresa los datos');
+
+  const messageInvalids = [
+    'Asegúrate de tener el cliente',
+    'Asegúrate de tener el dato del codigo',
+    'La cantidad de premios y referidos no coinciden, debe ser 1 premio por cada 3 referidos'
+  ]
 
   useEffect(() => {
-    if (dataCliente && codigo) {
-      setValid(true);
-    } else {
-      setValid(false);
+    if (!dataCliente) {
+      setValid(false)
+      setMessageInvalid(messageInvalids[0])
+      return
     }
+    if (!codigo) {
+      setValid(false)
+      setMessageInvalid(messageInvalids[1])
+      return
+    }
+    if (cantidadPremios * 3 > cantidadReferidos) {
+      setValid(false)
+      setMessageInvalid(messageInvalids[2])
+      return
+    }
+    setValid(true)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataCliente, codigo]);
 
   const handleSubmit = async (e) => {
@@ -30,6 +50,8 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
       userCreate: userId,
       clientId: dataCliente.id,
       phoneClient: dataCliente.phone,
+      usedImport: cantidadReferidos,
+      rewardImport: cantidadPremios,
     };
 
     try {
@@ -38,8 +60,10 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
       setTelefono('');
       setCodigo('');
       setDataCliente(null);
+      setCantidadPremios(0);
+      setCantidadReferidos(0)
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error?.body);
     }
   };
 
@@ -82,7 +106,7 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
                 <div className="d-grid gap-2 mt-3">
                   <BotonCrearCodigo
                     valid={valid}
-                    message='Asegúrate de tener el cliente y el código'
+                    message={messageInvalid}
                     text='Crear Código de Referido'
                   />
                 </div>

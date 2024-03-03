@@ -19,7 +19,7 @@ export const createCodeReferidos = async (data, token) => {
     const response = await fetch(`${apiUrl}/Referido`, requestOptions);
     const result = await response.json();
 
-    if (response.status !== 200) {
+    if (response.status !== 200 || response.status !== 201) {
       throw result
     }
     return result
