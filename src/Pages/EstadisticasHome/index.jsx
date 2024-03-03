@@ -1,40 +1,31 @@
-import { useContext } from 'react'
-import { MiContexto } from '../../Context'
-import NavbarRecepcion from "../../components/NavbarRecepcion";
-import Layout from "../../components/Layout";
-import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
-import ListaEstadisticas from '../../components/ListaEstadisticas';
-// import { ConfigProvider, theme } from 'antd';
+import LayoutRecepcion from '../../Layout/Recepcion';
+import ListCardPages from '../../components/ListCardPages';
 
-//para mostra los pedidos en una tabla y tener las estadistica a la mano 
+//para mostrar los pedidos en una tabla y tener las estadística a la mano
 const EstadisticasHome = () => {
-  const context = useContext(MiContexto)
-
-
-
-
   return (
     <>
-      <Layout>
-        <ContextProviderRecepcion >
-
-          <NavbarRecepcion
-            modoOscuro={context.modoOscuro}
-            alternarModo={context.alternarModo}
-          />
-
-          <ListaEstadisticas
-            lista={[
-              { nombre: 'Domiciliarios', path: 'domiciliarios' },
-              { nombre: 'Ventas hoy', path: 'ventas/hoy' },
-              { nombre: 'Clientes', path: 'clientes' },
-            ]}
-          />
-
-
-        </ContextProviderRecepcion >
-
-      </Layout>
+      <LayoutRecepcion>
+        <ListCardPages
+          pages={[
+            {
+              title: 'Domiciliarios',
+              description: 'Cuanto domicilios a echo cada domiciliario',
+              path: 'domiciliarios'
+            },
+            {
+              title: 'Ventas Hoy',
+              description: 'Gráfica de todas las ventas del dia colores',
+              path: 'ventas/hoy'
+            },
+            {
+              title: 'Clientes',
+              description: 'No esta disponible, pero mostrar las estadisticas de los nuevos clientes',
+              path: 'clientes'
+            },
+          ]}
+        />
+      </LayoutRecepcion>
     </>
   )
 }
