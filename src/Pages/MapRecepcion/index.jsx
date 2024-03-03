@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { MiContexto } from '../../Context'
 import { Container } from 'react-bootstrap';
-import NavbarRecepcion from "../../components/NavbarRecepcion";
+import { NavbarRecepcion } from "../../components/Navbar/NavbarRecepcion";
 import Layout from "../../components/Layout";
 import Mapa from "../../components/MapsGoogle"
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';

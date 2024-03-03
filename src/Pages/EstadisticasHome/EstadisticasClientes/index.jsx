@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { MiContexto } from '../../../Context'
-import NavbarRecepcion from "../../../components/NavbarRecepcion";
 import Layout from "../../../components/Layout";
 import { ContextProviderRecepcion } from '../../../Context/RecepcionContex';
 import { UtilsApi } from '../../../Utils/utilsApi';
 import GraficaCLientesNuevos from '../../../components/GraficaCLientesNuevos';
 // eslint-disable-next-line no-unused-vars
-import Pedido from '../../../Utils/class/Pedido';
+// import Pedido from '../../../Utils/class/Pedido';
+import { NavbarRecepcion } from '../../../components/Navbar/NavbarRecepcion';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
 const EstadisticasClientes = () => {

@@ -10,7 +10,7 @@ import {
   Legend,
 } from 'chart.js'
 // eslint-disable-next-line no-unused-vars
-import Pedido from '../../Utils/class/Pedido';
+// import Pedido from '../../Utils/class/Pedido';
 import { convertirHoraDeUnixADate } from '../../Utils/formatTime';
 import { Lapso } from '../../Utils/class/LapsoEstadisticas';
 

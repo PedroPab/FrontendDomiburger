@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { MiContexto } from '../../Context'
-import NavbarDomiciliario from "../../components/NavbarDomiciliario";
+import { NavbarDomiciliario } from "../../components/Navbar/NavbarDomiciliario";
 import Layout from "../../components/Layout";
 import Mapa from './../../components/MapsGoogle';
 import ListMarker from '../../components/ListMarker';

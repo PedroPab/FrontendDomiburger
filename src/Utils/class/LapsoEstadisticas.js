@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import Pedido from "./Pedido"
+// import Pedido from "./Pedido"
 
 
 

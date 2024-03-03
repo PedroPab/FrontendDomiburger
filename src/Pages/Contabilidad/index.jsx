@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { MiContexto } from '../../Context'
 import { Card, CardBody, Col, Container, Row } from 'react-bootstrap';
-import NavbarRecepcion from "../../components/NavbarRecepcion";
 import TablaListaPedidos from "../../components/TablaListaPedidos";
 import Layout from "../../components/Layout";
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 import { UtilsApi } from '../../Utils/utilsApi';
 import FormulariFiltros from '../../components/FormulariFiltros';
+import { NavbarRecepcion } from '../../components/Navbar/NavbarRecepcion';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
 const Contabilidad = () => {

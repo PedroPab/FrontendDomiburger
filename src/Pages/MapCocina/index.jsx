@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import { MiContexto } from '../../Context'
 import { Container } from 'react-bootstrap';
-import NavbarCocinero from "../../components/NavbarCocinero";
 import Layout from "../../components/Layout";
 import Mapa from "../../components/MapsGoogle"
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
@@ -9,6 +8,7 @@ import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
 import ListMarker from '../../components/ListMarker';
 import StickyCard from '../../components/StickyCard';
 import OrderCard from '../../components/OrderCard';
+import { NavbarCocinero } from '../../components/Navbar/NavbarCocinero';
 
 const MapCocina = () => {
 

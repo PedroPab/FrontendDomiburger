@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 import { MiContexto } from '../../Context'
-import NavbarDomiciliario from "../../components/NavbarDomiciliario";
 import Layout from "../../components/Layout";
 import { Container, Row } from 'react-bootstrap';
 import TablaListaPedidos from '../../components/TablaListaPedidos';
@@ -10,6 +9,7 @@ import { convertirFecha2 } from "../../Utils/formatTime"
 //para el tema oscuro de antd
 import { ConfigProvider, theme } from 'antd';
 import ProgressDataDomiciliario from '../../components/ProgressDataDomiciliario';
+import { NavbarDomiciliario } from '../../components/Navbar/NavbarDomiciliario';
 
 const DomiciliarioHistory = () => {
   const context = useContext(MiContexto)

@@ -1,8 +1,8 @@
 import { ToastContainer } from "react-toastify"
 import { useContext, } from 'react'
 import { MiContexto } from '../../Context'
-import NavbarRecepcion from "../../components/NavbarRecepcion";
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
+import { NavbarRecepcion } from "../../components/Navbar/NavbarRecepcion";
 
 
 const LayoutRecepcion = ({ children }) => {

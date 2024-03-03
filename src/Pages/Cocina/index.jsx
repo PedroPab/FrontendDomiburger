@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
-import NavbarCocinero from "../../components/NavbarCocinero";
 import Layout from "../../components/Layout";
 import { Col, Container, Row } from 'react-bootstrap';
 import OrderCard from '../../components/OrderCard';
 import { FaBoxOpen } from 'react-icons/fa';
+import { NavbarCocinero } from '../../components/Navbar/NavbarCocinero';
 
 
 const Cocina = () => {

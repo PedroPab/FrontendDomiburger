@@ -1,7 +1,7 @@
 import extraerColorEstado from "../../Utils/extraeColorEstado";
 import { formatTimeString } from "../../Utils/formatTime";
 import formatearNumeroConPuntos from "../../Utils/formatearNumeroConPuntos";
-import { ProductoBadge } from "../ProductoBadge";
+import { ProductoBadge } from "../OrderCard/ProductoBadge";
 const ENV = import.meta.env
 
 const FilaPedidos = ({ pedidos }) => {

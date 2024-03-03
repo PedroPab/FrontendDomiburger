@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import ModalAgregarDomiciliarios from "../ModalAgregarDomiciliarios";
 import { RecepcionContexto } from "../../Context/RecepcionContex";
+import ModalAgregarDomiciliarios from "../OrderCard/ModalAgregarDomiciliarios";
 
 const SelectListDomiciliarios = () => {
 

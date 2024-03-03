@@ -1,9 +1,9 @@
 import { useContext, } from 'react'
 import { MiContexto } from '../../../Context'
-import NavbarRecepcion from "../../../components/NavbarRecepcion";
 import Layout from "../../../components/Layout";
 import { ContextProviderRecepcion } from '../../../Context/RecepcionContex';
 import { default as CrearCodigoReferidoComponent } from '../../../components/Codigos/CrearCodigoReferido';
+import { NavbarRecepcion } from '../../../components/Navbar/NavbarRecepcion';
 
 const CrearCodigoReferido = () => {
 

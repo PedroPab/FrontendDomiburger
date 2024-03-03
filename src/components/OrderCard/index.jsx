@@ -2,15 +2,15 @@
 // OrderCard.js
 import { useContext } from 'react'
 import { Card, CardBody, CardSubtitle, CardFooter } from 'react-bootstrap';
-import { CardHeader } from '../CardHeader';
-import { ResumenProductos } from '../ResumenProductos';
-import { ProductoList } from '../ProductoList';
-import { TotalPrecio } from '../TotalPrecio';
-import { ListButtonModalPedido } from '../ListButtonModalPedido';
+import { CardHeader } from './CardHeader';
+import { ResumenProductos } from './ResumenProductos';
+import { ProductoList } from './ProductoList';
+import { TotalPrecio } from './TotalPrecio';
+import { ListButtonModalPedido } from './ListButtonModalPedido';
 import { MiContexto } from '../../Context'
 import { listaEstados } from '../../Utils/listEstados';
 import { formatTimeString } from '../../Utils/formatTime';
-import CopiableText from '../CopiableText';
+import CopiableText from './CopiableText';
 
 const OrderCard = ({ dataPedido }) => {
   const context = useContext(MiContexto)

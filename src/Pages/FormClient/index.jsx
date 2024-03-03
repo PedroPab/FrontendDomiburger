@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import NavbarCliente from "../../components/NavbarCliente";
 import { MiContexto } from '../../Context';
 import LayoudCliente from '../../Layout/LayoutCliente';
 import FormContainer from './FormContainer';
+import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 
 
 const FormClient = () => {
