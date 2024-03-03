@@ -1,41 +1,24 @@
-import { useContext, } from 'react'
-import { MiContexto } from '../../Context'
-import { Container } from 'react-bootstrap';
-import NavbarRecepcion from "../../components/NavbarRecepcion";
-import Layout from "../../components/Layout";
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
-import ListaBotonesLink from '../../components/ListaBotonesLink';
+import ListCardPages from '../../components/ListCardPages';
+import LayoutRecepcion from '../../Layout/Recepcion';
 
 const Codigos = () => {
 
-  const context = useContext(MiContexto)
-
   return (
     <>
-      <Layout>
+      <LayoutRecepcion>
         <ContextProviderRecepcion>
 
-          <NavbarRecepcion
-            modoOscuro={context.modoOscuro}
-            alternarModo={context.alternarModo}
+          <ListCardPages
+            pages={[
+              { title: 'Codigo Referido', description: 'Crear codigo referido para un cliente', path: 'crearCodigoReferido' },
+              { title: 'Crear codigo ya existente', description: 'Importar o crear un codigo ya existente, para crear de una vez con los referidos y premios desde el principio', path: 'crearCodigoYaCreado' },
+              // { nombre: 'Clientes', path: 'clientes' },
+            ]}
           />
 
-
-          <Container fluid  >
-
-            <ListaBotonesLink
-              lista={[
-                { nombre: 'Crear Codigo Referido', path: 'crearCodigoReferido' },
-                { nombre: 'Crear codigo ya creado', path: 'crearCodigoYaCreado' },
-                // { nombre: 'Clientes', path: 'clientes' },
-              ]}
-            />
-          </Container>
-
-
         </ContextProviderRecepcion>
-
-      </Layout >
+      </LayoutRecepcion >
     </>
   );
 

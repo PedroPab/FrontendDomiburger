@@ -5,7 +5,7 @@ import NavbarRecepcion from "../../components/NavbarRecepcion";
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 
 
-const Layout = ({ children }) => {
+const LayoutRecepcion = ({ children }) => {
   const context = useContext(MiContexto)
 
   return (
@@ -25,4 +25,4 @@ const Layout = ({ children }) => {
   )
 }
 
-export default Layout
+export default LayoutRecepcion
