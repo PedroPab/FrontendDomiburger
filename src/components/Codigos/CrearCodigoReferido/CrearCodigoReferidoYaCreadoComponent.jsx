@@ -41,7 +41,7 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
     setValid(true)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataCliente, codigo]);
+  }, [dataCliente, codigo, cantidadPremios, cantidadReferidos]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
