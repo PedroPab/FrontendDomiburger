@@ -35,9 +35,9 @@ const BuscadorCliente = ({
                   value={telefono}
                   onChange={setTelefono}
                   // Añade aquí las clases de Bootstrap que necesites, por ejemplo:
-                  className="form-control"
-                  inputClass="form-control"
-                  buttonClass="form-control"
+                  // className="form-control"
+                  // inputClass="form-control"
+                  // buttonClass="form-control"
                   country="CO"
                   defaultCountry="CO"
                 />
