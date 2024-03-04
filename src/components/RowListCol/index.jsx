@@ -4,11 +4,16 @@ import { Row } from "react-bootstrap"
 const RowListCol = ({ children }) => {
   return (
     // ocupa toda la pantalla disponible
-    <Row
-      className="flex-nowrap overflow-auto"
-      style={{ "height": "90vh" }}>
-      {children}
-    </Row>
+    <div className='d-flex justify-content-end'>
+      <Row
+        className="flex-nowrap overflow-auto "
+        style={{
+          "height": "90vh",
+          "width": "85vw"
+        }}>
+        {children}
+      </Row>
+    </div>
   )
 }
 

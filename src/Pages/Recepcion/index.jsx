@@ -20,13 +20,15 @@ const Recepcion = () => {
               pedidos={context.items ? context.items : []}
             />
           </RowListCol>
+
         </Container>
+
         <ToastContainer />
         <SelectListDomiciliarios />
+
         <BarraLateral
           modoOscuro={context.modoOscuro}
         />
-
       </LayoutRecepcion >
     </>
   );
