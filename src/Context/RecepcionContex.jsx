@@ -8,15 +8,20 @@ export const RecepcionContexto = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const ContextProviderRecepcion = ({ children }) => {
-  //las lista para tener  los domiciliaros  que queremos y no los todo los que hay
+  //las lista para tener  los domiciliarios  que queremos y no los todo los que hay
   const { item: listDomiciliarios, saveItem: setListDomiciliarios } = useLocalStorage({ itemName: 'listDomiciliarios', initialValue: [] })
 
-  //la lista de todos los domiciliarios 
+  //la lista de todos los domiciliarios
   const { item: users, saveItem: setUsers } = useLocalStorage({ itemName: 'Domiciliarios', initialValue: [] });
+
+  //domiciliarios seleccionados
+  const [domiciliariosSeleccionados, setDomiciliariosSeleccionados] = useState([])
+  //estado seleccionado
+  const [estadoSeleccionado, setEstadoSeleccionado] = useState()
 
   const context = useContext(MiContexto)
 
-  //miramos todo los domicilair en la api
+  //miramos todo los domiciliarios en la api
   useEffect(() => {
     const token = context.tokenLogin.token
     UtilsApi({ peticion: `domiciliarios`, token: token, vervo: `GET` })
@@ -39,7 +44,10 @@ export const ContextProviderRecepcion = ({ children }) => {
 
         users, setUsers,
 
-        openCloseModalAgregarDo, showModalAgregarDomiciliarios
+        openCloseModalAgregarDo, showModalAgregarDomiciliarios,
+
+        domiciliariosSeleccionados, setDomiciliariosSeleccionados,
+        estadoSeleccionado, setEstadoSeleccionado,
       }
     }>
       {children}

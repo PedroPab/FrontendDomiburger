@@ -1,37 +1,36 @@
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
 import { Container, ToastContainer } from 'react-bootstrap';
-import { NavbarRecepcion } from '../../components/Navbar/NavbarRecepcion';
 import RowListCol from "../../components/RowListCol";
-import Layout from "../../components/Layout";
 import { ColsPedidos } from '../../components/ColsPedidos';
-import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
+import LayoutRecepcion from '../../Layout/Recepcion';
+import { BarraLateral } from '../../components/BarraLateral';
 
 const Recepcion = () => {
   const context = useContext(MiContexto)
 
   return (
     <>
-      <Layout>
-        <ContextProviderRecepcion>
+      <LayoutRecepcion>
 
-          <NavbarRecepcion
-            modoOscuro={context.modoOscuro}
-            alternarModo={context.alternarModo}
-          />
-          <Container fluid  >
-            <RowListCol >
-              <ColsPedidos
-                pedidos={context.items ? context.items : []}
-              />
-            </RowListCol>
-          </Container>
-          <ToastContainer />
-          <SelectListDomiciliarios />
-        </ContextProviderRecepcion>
+        <Container fluid
+          //corremos 50px a la derecha
+          className='ms-5'
+          style={{ marginLeft: 50, }}
+        >
+          <RowListCol >
+            <ColsPedidos
+              pedidos={context.items ? context.items : []}
+            />
+          </RowListCol>
+        </Container>
+        <ToastContainer />
+        <SelectListDomiciliarios />
 
-      </Layout >
+        <BarraLateral />
+
+      </LayoutRecepcion >
     </>
   );
 

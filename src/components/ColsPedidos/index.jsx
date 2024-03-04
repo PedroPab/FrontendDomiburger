@@ -7,7 +7,7 @@ import { OrderCard } from "../../components/OrderCard"
 export const ColsPedidos = ({ pedidos }) => {
   // dejamos solo la data
 
-  //el orden de los estados 
+  //el orden de los estados
   const listPedidosEstados = listaEstados.map(estado => {
 
     return {
@@ -34,17 +34,40 @@ export const ColsPedidos = ({ pedidos }) => {
         return (
           <Col
             key={i}
-            style={{ width: '30rem' }}
+            //tendrá un ancho fijo de 30 rm  en todo los tamaños
+            md={4}
+            //tendrá un ancho fijo de 30 rm  en todo los tamaños
+            xs={15}
+            sm={4}
+            // ponemos una separación entre cada columna y un espacio de 10px arriba
+            style={{
+              padding: '10px',
+              height: '100%',
+            }}
           >
-            <h4>{estado.name}</h4>
-            {
-              estado?.pedidos.map((pedido, i) => (
-                <OrderCard
-                  key={i}
-                  dataPedido={pedido}
-                />
-              ))
-            }
+            {/* centramos el titulo  y lo ponemos de forma fija en la pantalla*/}
+            <h3 className=" text-center">
+              {estado.name}
+              {/* mostramos en una un badge redondo pequeño como una notificación  en el titulo y con color de cuantos pedidos hay en ese estado  */}
+              <span className="badge rounded-pill bg-warning text-dark  m-2">
+                {estado.pedidos.length}
+              </span>
+            </h3>
+            {/* creamos un contenedor para contener la lista de pedidos centrada horizontalmente pero no verticalmente , que sigan estando una debajo de la otra */}
+            <div className="d-flex flex-column align-items-center "
+              style={{
+                height: '90%',
+                overflow: 'auto'
+              }}>
+              {
+                estado?.pedidos.map((pedido, i) => (
+                  <OrderCard
+                    key={i}
+                    dataPedido={pedido}
+                  />
+                ))
+              }
+            </div>
           </Col>
         )
       })}

@@ -3,7 +3,10 @@ import { Row } from "react-bootstrap"
 
 const RowListCol = ({ children }) => {
   return (
-    <Row className="flex-nowrap overflow-auto ">
+    // ocupa toda la pantalla disponible
+    <Row
+      className="flex-nowrap overflow-auto"
+      style={{ "height": "90vh" }}>
       {children}
     </Row>
   )
