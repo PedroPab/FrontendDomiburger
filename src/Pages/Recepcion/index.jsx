@@ -23,7 +23,6 @@ const Recepcion = () => {
         </Container>
         <ToastContainer />
         <SelectListDomiciliarios />
-
         <BarraLateral
           modoOscuro={context.modoOscuro}
         />
