@@ -1,13 +1,30 @@
 import { Nav } from 'react-bootstrap';
-import { MdHome, MdContactMail } from 'react-icons/md'; // Ejemplo usando Material Icons
 
-const BarraLateral = () => {
+const BarraLateral = ({ modoOscuro }) => {
+  // Clases condicionales para el modo oscuro
+  const navbarClass = `flex-column navbar navbar-expand-lg ${modoOscuro ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`;
+
   return (
-    <Nav className="flex-column navbar navbar-expand-lg navbar-light bg-light" style={{ height: '100vh', position: 'fixed', top: 50, left: 0, width: 50 }}>
-      <Nav href="#inicio" className="text-dark"><MdHome /></Nav>
-      <Nav href="#servicios" className="text-dark"><MdHome /></Nav>
-      <Nav href="#contacto" className="text-dark"><MdContactMail /></Nav>
-      {/* Agrega más enlaces con iconos según necesites */}
+    <Nav
+      className={navbarClass}
+      style={{ height: '100vh', position: 'fixed', top: 50, left: 0, width: 50 }}
+    >
+      <Nav.Item>
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
+          <button style={{
+            border: 'none',
+            background: 'none',
+            padding: 0,
+            cursor: 'pointer'
+          }}>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              alt="domiciliario"
+              style={{ width: 40, height: 40, borderRadius: '50%' }}
+            />
+          </button>
+        </div>
+      </Nav.Item>
     </Nav>
   );
 };

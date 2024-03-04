@@ -14,11 +14,7 @@ const Recepcion = () => {
     <>
       <LayoutRecepcion>
 
-        <Container fluid
-          //corremos 50px a la derecha
-          className='ms-5'
-          style={{ marginLeft: 50, }}
-        >
+        <Container fluid>
           <RowListCol >
             <ColsPedidos
               pedidos={context.items ? context.items : []}
@@ -28,7 +24,9 @@ const Recepcion = () => {
         <ToastContainer />
         <SelectListDomiciliarios />
 
-        <BarraLateral />
+        <BarraLateral
+          modoOscuro={context.modoOscuro}
+        />
 
       </LayoutRecepcion >
     </>
