@@ -1,7 +1,7 @@
-import { Nav } from 'react-bootstrap';
 import { NavItemDomiciliario } from './NavItemDomiciliario';
 import { useContext, useState } from 'react';
 import { RecepcionContexto } from '../../Context/RecepcionContex';
+import { BiAddToQueue } from 'react-icons/bi';
 
 const BarraLateral = ({ modoOscuro }) => {
   // Clase para el navbar
@@ -42,12 +42,14 @@ const BarraLateral = ({ modoOscuro }) => {
 
   const [collapsable, setCollapsable] = useState(false);
   return (
-    <Nav
-      className={`flex-column ${modoOscuro ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
+    <div
+      className={`d-flex flex-column flex-shrink-0  ${modoOscuro ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
       style={{ height: '100vh', position: 'fixed', top: 50, left: 0, width: 'auto', padding: '10px' }}
     >
       {/* botón para collapsible */}
-      <Nav.Link className="" onClick={() => setCollapsable(!collapsable)}>H</Nav.Link>
+      <div className="d-block p-3 link-body-emphasis text-decoration-none" onClick={() => setCollapsable(!collapsable)}>
+        <BiAddToQueue />
+      </div>
       {collapsable ?
         domiciliarios.map((domiciliario) => (
           <NavItemDomiciliario
@@ -59,7 +61,7 @@ const BarraLateral = ({ modoOscuro }) => {
         ))
         : ''}
 
-    </Nav >
+    </div >
   );
 };
 

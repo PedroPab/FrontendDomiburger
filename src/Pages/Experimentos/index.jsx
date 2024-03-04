@@ -1,20 +1,19 @@
-import Carousel from './../../components/Carousel';
-
-const cards = [
-  <div key={1}>Card 1</div>,
-  <div key={2}>Card 2</div>,
-  <div key={3}>Card 3</div>,
-  // ... Agrega más cards según necesites
-];
-
-import Cocina from "../Cocina"
-const App = () => {
+const Experimentos = () => {
   return (
-    <div>
-      <h1>Carousel Example</h1>
-      <Carousel cards={cards} />
-    </div>
+    <>
+      <div
+        className="d-flex flex-nowrap">
+        <div
+          className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
+
+        </div>
+        <div
+          className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
+
+        </div>
+      </div>
+    </>
   );
 };
 
-export default App;
+export default Experimentos;

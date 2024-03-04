@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
-import { Container, ToastContainer } from 'react-bootstrap';
+import { Container, Row, ToastContainer } from 'react-bootstrap';
 import RowListCol from "../../components/RowListCol";
 import { ColsPedidos } from '../../components/ColsPedidos';
 import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
@@ -15,20 +15,31 @@ const Recepcion = () => {
       <LayoutRecepcion>
 
         <Container fluid>
-          <RowListCol >
-            <ColsPedidos
-              pedidos={context.items ? context.items : []}
-            />
-          </RowListCol>
+          {/* el orden de las columnas es de derecha a izquierda */}
+          <Row className='d-flex align-items-end flex-column'>
+            <div className='col-10'>
+              <RowListCol >
+                <ColsPedidos
+                  pedidos={context.items ? context.items : []}
+                />
+              </RowListCol>
+            </div>
+            <div>
+              <BarraLateral
+                modoOscuro={context.modoOscuro}
+              />
+            </div>
+
+          </Row>
+
+
 
         </Container>
 
         <ToastContainer />
         <SelectListDomiciliarios />
 
-        <BarraLateral
-          modoOscuro={context.modoOscuro}
-        />
+
       </LayoutRecepcion >
     </>
   );

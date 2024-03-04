@@ -19,11 +19,13 @@ import EstadisticasClientes from "../EstadisticasHome/EstadisticasClientes"
 import Codigos from "../Codigo"
 import CrearCodigoReferido from "../Codigo/CrearCodigoReferido"
 import CrearCodigoReferidoYaCreado from "../Codigo/CrearCodigoReferidoYaCreado"
+import Experimentos from "../Experimentos"
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<FormClient />} />
+      <Route path="/experimentos" element={<Experimentos />} />
 
       <Route path="/login" element={<Login />} />
 
@@ -56,6 +58,7 @@ const AppRoutes = () => {
         <Route path="/mapCocina" element={<MapCocina />} />
 
       </Route>
+
       {/* este deberia de ser el 404 */}
       <Route element={<ProtectedRoute redirectTo={'/'} />} >
 

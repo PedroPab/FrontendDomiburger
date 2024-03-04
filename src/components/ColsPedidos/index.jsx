@@ -35,14 +35,13 @@ export const ColsPedidos = ({ pedidos }) => {
           <Col
             key={i}
             //tendrá un ancho fijo de 30 rm  en todo los tamaños
-            md={4}
-            //tendrá un ancho fijo de 30 rm  en todo los tamaños
-            xs={15}
-            sm={4}
+            className="col-11"
+
             // ponemos una separación entre cada columna y un espacio de 10px arriba
             style={{
               padding: '10px',
               height: '100%',
+              width: '30rem',
             }}
           >
             {/* centramos el titulo  y lo ponemos de forma fija en la pantalla*/}
@@ -56,7 +55,7 @@ export const ColsPedidos = ({ pedidos }) => {
             {/* creamos un contenedor para contener la lista de pedidos centrada horizontalmente pero no verticalmente , que sigan estando una debajo de la otra */}
             <div className="d-flex flex-column align-items-center "
               style={{
-                height: '90%',
+                height: '100%',
                 overflow: 'auto'
               }}>
               {
