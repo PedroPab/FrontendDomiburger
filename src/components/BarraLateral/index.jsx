@@ -1,6 +1,6 @@
 import { Nav } from 'react-bootstrap';
 import { NavItemDomiciliario } from './NavItemDomiciliario';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { RecepcionContexto } from '../../Context/RecepcionContex';
 
 const BarraLateral = ({ modoOscuro }) => {
@@ -40,20 +40,25 @@ const BarraLateral = ({ modoOscuro }) => {
     contextRecepcion.setDomiciliariosSeleccionados(meLaPela)
   }
 
+  const [collapsable, setCollapsable] = useState(false);
   return (
     <Nav
       className={`flex-column ${modoOscuro ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
       style={{ height: '100vh', position: 'fixed', top: 50, left: 0, width: 'auto', padding: '10px' }}
     >
-      {domiciliarios.map((domiciliario) => (
-        <NavItemDomiciliario
-          key={domiciliario.id}
-          domiciliario={domiciliario}
-          isActive={(id) => listIsActive(id)}
-          active={(id) => activeListIsActive(id)}
-        />
-      ))
-      }
+      {/* botón para collapsible */}
+      <Nav.Link className="" onClick={() => setCollapsable(!collapsable)}>H</Nav.Link>
+      {collapsable ?
+        domiciliarios.map((domiciliario) => (
+          <NavItemDomiciliario
+            key={domiciliario.id}
+            domiciliario={domiciliario}
+            isActive={(id) => listIsActive(id)}
+            active={(id) => activeListIsActive(id)}
+          />
+        ))
+        : ''}
+
     </Nav >
   );
 };
