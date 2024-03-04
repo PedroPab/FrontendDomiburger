@@ -10,7 +10,7 @@ const RowListCol = ({ children }) => {
       <Row
         className="flex-nowrap overflow-auto "
         style={{
-          "height": "90vh",
+          "height": "100vh",
           "width": "100vw"
         }}
       >

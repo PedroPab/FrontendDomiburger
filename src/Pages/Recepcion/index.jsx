@@ -16,21 +16,18 @@ const Recepcion = () => {
 
         <Container fluid>
           {/* el orden de las columnas es de derecha a izquierda */}
-          <Row className='d-flex align-items-end flex-column'>
-            <div className='col-10'>
-              <RowListCol >
-                <ColsPedidos
-                  pedidos={context.items ? context.items : []}
-                />
-              </RowListCol>
-            </div>
-            <div>
+          <RowListCol >
+            <ColsPedidos
+              pedidos={context.items ? context.items : []}
+            />
+          </RowListCol>
+
+          {/* <div>
               <BarraLateral
                 modoOscuro={context.modoOscuro}
               />
-            </div>
+            </div> */}
 
-          </Row>
 
 
 
