@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import BotonCrearCodigo from './BotonCrearCodigo';
 
 const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
-  const [telefono, setTelefono] = useState('+573054489598');
+  const [telefono, setTelefono] = useState('');
   const [codigo, setCodigo] = useState('');
   const [valid, setValid] = useState(false);
   const [dataCliente, setDataCliente] = useState(null);
@@ -56,7 +56,7 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
 
     try {
       await createCodeReferidos(data, token);
-      toast("todo fue un éxito ");
+      toast("Todo fue un éxito :)");
       setTelefono('');
       setCodigo('');
       setDataCliente(null);

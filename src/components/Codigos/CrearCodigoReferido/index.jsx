@@ -7,7 +7,7 @@ import InputCodigoText from './InputCodigoText';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const CrearCodigoReferido = ({ token, userId }) => {
-  const [telefono, setTelefono] = useState('+573054489598');
+  const [telefono, setTelefono] = useState('');
   const [codigo, setCodigo] = useState('');
   const [valid, setValid] = useState(false);
   const [dataCliente, setDataCliente] = useState(null);
@@ -35,7 +35,7 @@ const CrearCodigoReferido = ({ token, userId }) => {
       //enviamos la data al backend
       await createCodeReferidos(data, token)
       ///si todo fue un éxito , mostramos en la pantalla un mensaje y borramos el formulario , si no mostramos el error
-      toast(`todo fue un éxito `)
+      toast(`Todo fue un éxito :)`)
       setTelefono('');
       setCodigo('');
       setDataCliente(null);

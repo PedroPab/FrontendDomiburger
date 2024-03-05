@@ -2,8 +2,8 @@ import { Form } from 'react-bootstrap';
 
 const InputCodigoText = ({ codigo, setCodigo }) => {
   const handleChange = (e) => {
-    // Quitamos los espacios con expresiones regulares
-    const rta = e.target.value.replace(/\s/g, "");
+    // Quitamos los espacios con expresiones regulares y todo lo que no sea alfanumérico
+    const rta = e.target.value.replace(/\s/g, '').replace(/[^a-zA-Z0-9]/g, '');
     setCodigo(rta);
   };
 
