@@ -4,7 +4,7 @@ import InfoIcon from '../../InfoIcon';
 
 const CodigoReferidoCard = ({ codigo: referido }) => {
   return (
-    <Col xs={12} sm={6} md={4} lg={2} className="mt-4">
+    <Col xs={12} sm={6} md={4} lg={2} className="mt-2">
       <Card className="shadow h-100 position-relative">
         <Card.Body>
           <Card.Title className="text-center display-4 mt-2 mb-3 text-nowrap overflow-hidden text-truncate">{referido.id}</Card.Title>
@@ -12,9 +12,8 @@ const CodigoReferidoCard = ({ codigo: referido }) => {
           <Card.Subtitle
             className="mb-2 d-flex justify-content-around "
           >
-            <InfoIcon Icon={FaAward} title="" number={referido.reward.length} />
             <InfoIcon Icon={FaUsers} title="" number={referido.used.length} />
-
+            <InfoIcon Icon={FaAward} title="" number={referido.reward.length} />
           </Card.Subtitle>
 
           <Dropdown className="d-inline-block w-100">

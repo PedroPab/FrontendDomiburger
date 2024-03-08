@@ -1,54 +1,52 @@
-import { useEffect, useState } from "react"
-import { findFilterCodigos } from "../../../Utils/api/codigos/findFilterCodigos"
-import CodigoReferidoCard from "./CodigoReferidoCard"
-import { Container, Row } from "react-bootstrap"
+import { useEffect, useState } from "react";
+import { findFilterCodigos } from "../../../Utils/api/codigos/findFilterCodigos";
+import CodigoReferidoCard from "./CodigoReferidoCard";
+import { Container, Row } from "react-bootstrap";
+import Buscador from "../../Buscador";
+import MensajeSinCodigos from "./MensajeSinCodigos";
 
-const VisualizarCodigoReferidoComponte = ({ token, userId }) => {
+const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
+  const [codesReferidos, setCodesReferidos] = useState([]);
+  const [busqueda, setBusqueda] = useState('');
 
-  const [codesReferidos, setCodesReferidos] = useState(null)
-  //consultamos los codigos de referidos una vez
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (!token && userId) {
-      //consultamos los codigos de referidos una vez
-      return
+    if (!token && !userId) {
+      return;
     }
-    const filter = [
-      {
-        "key": "type",
-        "options": "==",
-        "value": "Referido"
-      },
-    ]
-    // eslint-disable-next-line no-unused-vars
-    findFilterCodigos({ filter: filter }, token)
-      .then(rtaCodesReferidos => {
-        setCodesReferidos(rtaCodesReferidos.body)
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token])
+    const filter = [{ "key": "type", "options": "==", "value": "Referido" }];
 
+    findFilterCodigos({ filter }, token)
+      .then(rtaCodesReferidos => {
+        setCodesReferidos(rtaCodesReferidos.body);
+      });
+  }, [token, userId]);
+
+  const codigosFiltrados = codesReferidos &&
+    codesReferidos.filter(codigo => codigo.data.id.includes(busqueda));
 
   return (
     <>
       <Container fluid>
+        <Buscador
+          busqueda={busqueda}
+          setBusqueda={setBusqueda}
+          textPlaceholder="Buscar por codigo"
+        />
+
         <Row>
-          {codesReferidos &&
-            codesReferidos.map(codigo => {
-              codigo = codigo.data
-              return (
-                <CodigoReferidoCard
-                  key={codigo.id}
-                  codigo={codigo}
-                />
-              )
-            })}
+          {codigosFiltrados && codigosFiltrados.length > 0 ? (
+            codigosFiltrados.map(codigo => (
+              <CodigoReferidoCard key={codigo.data.id} codigo={codigo.data} />
+            ))
+          ) : (
+            <MensajeSinCodigos
+              busqueda={busqueda} setBusqueda={setBusqueda}
+            />
+          )}
         </Row>
       </Container>
-
     </>
-  )
+  );
+};
 
-}
-
-export { VisualizarCodigoReferidoComponte }
+export { VisualizarCodigoReferidoComponente };

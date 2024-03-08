@@ -2,7 +2,7 @@ import { useContext, } from 'react'
 import { MiContexto } from '../../../Context'
 import { ContextProviderRecepcion } from '../../../Context/RecepcionContex';
 import LayoutRecepcion from '../../../Layout/Recepcion';
-import { VisualizarCodigoReferidoComponte } from '../../../components/Codigos/VisualizarCodigoReferidoComponte';
+import { VisualizarCodigoReferidoComponente } from '../../../components/Codigos/VisualizarCodigoReferidoComponte';
 
 const VisualizarCodigoReferidos = () => {
 
@@ -15,7 +15,7 @@ const VisualizarCodigoReferidos = () => {
       <LayoutRecepcion>
         <ContextProviderRecepcion>
 
-          <VisualizarCodigoReferidoComponte
+          <VisualizarCodigoReferidoComponente
             token={token}
             userId={userId} />
 
