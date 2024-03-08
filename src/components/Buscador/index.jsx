@@ -1,6 +1,6 @@
 import { Row, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { BsXCircle } from 'react-icons/bs'; // Para el ícono de la X, usando react-icons
-
+import './index.css'
 const Buscador = ({ setBusqueda, busqueda, textPlaceholder = '' }) => {
 
   const limpiarBusqueda = () => setBusqueda('');
