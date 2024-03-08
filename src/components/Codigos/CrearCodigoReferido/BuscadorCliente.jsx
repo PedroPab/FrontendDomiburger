@@ -2,6 +2,7 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { findClientForPhone } from "../../../Utils/api/findClient";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import './index.css'
 
 const BuscadorCliente = ({
   telefono,
@@ -40,6 +41,8 @@ const BuscadorCliente = ({
                   // buttonClass="form-control"
                   country="CO"
                   defaultCountry="CO"
+                  className="mi-clase-personalizada-phone-input"
+
                 />
               </Col>
               <Col>
