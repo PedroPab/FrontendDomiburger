@@ -1,19 +1,23 @@
-export const findCodigo = async (codigo, token) => {
+// eslint-disable-next-line no-unused-vars
+export const findFilterCodigos = async (filter, token) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const ENV = import.meta.env
-    const apiUrl = `${ENV.VITE_PROTOCOL_CODES}${ENV.VITE_HOST_CODES}:${ENV.VITE_PORT_CODES}${ENV.VITE_SEARCH_CODE || ''}`;
+    const apiUrl = `${ENV.VITE_PROTOCOL_CODES}${ENV.VITE_HOST_CODES}:${ENV.VITE_PORT_CODES}/${ENV.VITE_SEARCH_CODE || 'filter'}`;
+
+    const raw = JSON.stringify(filter);
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
     myHeaders.append("Content-Type", "application/json");
 
+    //convert el objeto filter en un query params
     const requestOptions = {
-      method: "GET",
+      method: "POST",
       headers: myHeaders,
+      body: raw,
     };
 
-    const response = await fetch(`${apiUrl}/?id=${codigo}`, requestOptions);
+    const response = await fetch(`${apiUrl}`, requestOptions);
     const result = await response.json();
 
     if (response.status !== 200 && response.status !== 201) {
