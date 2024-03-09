@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import { Button, Alert, Row, InputGroup } from 'react-bootstrap';
-import { findClientForPhone } from '../../../../Utils/api/findClient';
+import { findClientForPhone } from '../../../../Utils/api/findClientPhone';
 import { toast } from 'react-toastify';
 import { BsXCircle } from 'react-icons/bs';
 import './index.css'

@@ -1,5 +1,5 @@
 import { Button, Form, Row, Col } from 'react-bootstrap';
-import { findClientForPhone } from "../../../Utils/api/findClient";
+import { findClientForPhone } from "../../../Utils/api/findClientPhone";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import './index.css'

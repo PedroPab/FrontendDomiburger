@@ -21,6 +21,7 @@ import CrearCodigoReferido from "../Codigo/CrearCodigoReferido"
 import CrearCodigoReferidoYaCreado from "../Codigo/CrearCodigoReferidoYaCreado"
 import Experimentos from "../Experimentos"
 import { VisualizarCodigoReferidos } from "../Codigo/VisualisarCodigosReferidos"
+import ClienteInfo from "../Clientes/ClientesInfo"
 
 const AppRoutes = () => {
   return (
@@ -45,6 +46,9 @@ const AppRoutes = () => {
         <Route path="/codigos/crearCodigoReferido" element={<CrearCodigoReferido />} />
         <Route path="/codigos/crearCodigoYaCreado" element={<CrearCodigoReferidoYaCreado />} />
         <Route path="/codigos/buscar" element={<VisualizarCodigoReferidos />} />
+
+        {/* clientes */}
+        <Route path="/clientes/:id" element={<ClienteInfo />} />
 
 
       </Route>
