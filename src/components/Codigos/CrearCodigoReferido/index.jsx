@@ -4,7 +4,7 @@ import { createCodeReferidos } from '../../../Utils/api/codigos/createCodeReferi
 import { toast } from 'react-toastify';
 import BotonCrearCodigo from './BotonCrearCodigo';
 import InputCodigoText from './InputCodigoText';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form } from 'react-bootstrap';
 
 const CrearCodigoReferido = ({ token, userId }) => {
   const [telefono, setTelefono] = useState('');
@@ -53,7 +53,7 @@ const CrearCodigoReferido = ({ token, userId }) => {
               <Card.Title>
                 <h1>Crear Código de Referido</h1>
               </Card.Title>
-              <form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
 
                 <BuscadorCliente
                   telefono={telefono}
@@ -76,7 +76,7 @@ const CrearCodigoReferido = ({ token, userId }) => {
                     text='Crear Código de Referido'
                   />
                 </div>
-              </form>
+              </Form>
             </Card.Body>
           </Card>
         </Col>

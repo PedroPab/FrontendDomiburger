@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import { Card, Container, Row, Col, Form } from 'react-bootstrap';
 import BuscadorCliente from './BuscadorCliente';
 import InputCodigoText from './InputCodigoText';
 import InputCantidadNumber from './InputCantidadNumber'; // Asumiendo que este es el nombre correcto del componente
@@ -76,7 +76,7 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
               <Card.Title>
                 <h1>Crear Código de Referido</h1>
               </Card.Title>
-              <form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
 
                 <BuscadorCliente
                   telefono={telefono}
@@ -110,7 +110,7 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
                     text='Crear Código de Referido'
                   />
                 </div>
-              </form>
+              </Form>
             </Card.Body>
           </Card>
         </Col>
