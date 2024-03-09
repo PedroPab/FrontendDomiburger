@@ -1,8 +1,12 @@
 import { Card, Col, Dropdown, } from 'react-bootstrap';
 import { FaUsers, FaAward, } from 'react-icons/fa';
 import InfoIcon from '../../InfoIcon';
+import { Link } from 'react-router-dom';
+import ModalDetallesCodigo from '../ModalDetallesCodigo';
+import { useState } from 'react';
 
 const CodigoReferidoCard = ({ codigo: referido }) => {
+  const [showMasDetalles, setShowMasDetalles] = useState(false)
   return (
     <Col xs={12} sm={6} md={4} lg={2} className="mt-2">
       <Card className="shadow h-100 position-relative">
@@ -22,13 +26,19 @@ const CodigoReferidoCard = ({ codigo: referido }) => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className=' w-100'>
-              <Dropdown.Item >Ver detalles</Dropdown.Item>
-              <Dropdown.Item >Ver cliente</Dropdown.Item>
+              <Dropdown.Item onClick={() => setShowMasDetalles(!showMasDetalles)} >Ver detalles</Dropdown.Item>
+              {/* ir al /clientes/id con router dom*/}
+              <Dropdown.Item as={Link} to={`/clientes/${referido.clientId}`}>Ver cliente</Dropdown.Item>
               <Dropdown.Item >Editar</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Card.Body>
       </Card>
+      <ModalDetallesCodigo
+        show={showMasDetalles}
+        handleClose={() => setShowMasDetalles(!showMasDetalles)}
+        data={referido}
+      />
     </Col>
   );
 };

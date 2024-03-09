@@ -3,6 +3,7 @@ import { findClientForPhone } from "../../../Utils/api/findClientPhone";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import './index.css'
+import { toast } from 'react-toastify';
 
 const BuscadorCliente = ({
   telefono,
@@ -16,8 +17,10 @@ const BuscadorCliente = ({
     const dataClient = await findClientForPhone(telefono, token);
     if (!dataClient) {
       setDataCliente(null);
+      toast.error('Cliente no encontrado')
     } else {
       setDataCliente(dataClient);
+      toast.success('Cliente encontrado')
     }
   };
 
