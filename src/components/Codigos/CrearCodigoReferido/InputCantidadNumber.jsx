@@ -1,6 +1,6 @@
 import { Form, ButtonGroup, Button } from 'react-bootstrap';
 
-const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '' }) => {
+const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '', objButton }) => {
   const handleChange = (e) => {
     let value = parseInt(e.target.value, 10);
     if (isNaN(value) || value < 0) {
@@ -33,7 +33,7 @@ const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '' }) => {
   return (
     <Form.Group controlId="formCantidadReferidos">
       <Form.Label>{textLabel}</Form.Label>
-      <div className="d-flex align-items-start">
+      <div className="d-flex align-items-start justify-content-between">
         <Form.Control
           type="number"
           value={cantidad}
@@ -42,12 +42,25 @@ const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '' }) => {
           className="me-2"
           style={{ maxWidth: '200px' }} // Puedes ajustar el ancho del input según necesites
         />
-        <ButtonGroup>
+        <ButtonGroup >
           <Button variant="outline-secondary" onClick={disminuir} style={roundButtonStyle}>-</Button>
+          {/* un espacio vació */}
           <Button variant="outline-secondary" onClick={incrementar} style={roundButtonStyle}>+</Button>
+
         </ButtonGroup>
-      </div>
-    </Form.Group>
+        {
+          objButton &&
+          <Button
+            variant={objButton?.variant || 'success'}
+            onClick={objButton?.onClick}
+            disabled={!objButton?.disabled || false}
+          >
+            {objButton?.text}
+          </Button>
+        }
+      </div >
+
+    </Form.Group >
   );
 };
 

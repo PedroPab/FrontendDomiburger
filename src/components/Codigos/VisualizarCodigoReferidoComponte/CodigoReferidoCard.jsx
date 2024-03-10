@@ -29,7 +29,7 @@ const CodigoReferidoCard = ({ codigo: referido }) => {
               <Dropdown.Item onClick={() => setShowMasDetalles(!showMasDetalles)} >Ver detalles</Dropdown.Item>
               {/* ir al /clientes/id con router dom*/}
               <Dropdown.Item as={Link} to={`/clientes/${referido.clientId}`}>Ver cliente</Dropdown.Item>
-              <Dropdown.Item >Editar</Dropdown.Item>
+              <Dropdown.Item as={Link} to={`/codigos/editar/${referido.id}`}>Editar {referido.id}</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Card.Body>
