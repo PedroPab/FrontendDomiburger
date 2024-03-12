@@ -40,7 +40,7 @@ export const ColsPedidos = ({ pedidos }) => {
             // ponemos una separación entre cada columna y un espacio de 10px arriba
             style={{
               padding: '10px',
-              height: '100%',
+              height: '90%',
               width: '30rem',
             }}
           >
