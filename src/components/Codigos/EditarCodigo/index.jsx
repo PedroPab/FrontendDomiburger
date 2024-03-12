@@ -36,10 +36,6 @@ const EditarCodigoReferido = ({ token, id }) => {
       })
   }, []);
 
-  const editarCantidadReferidos = async () => {
-    toast.info('Enviando datos');
-  }
-
   //cada vez que cambie el cliente
   useEffect(() => {
     if (!dataCliente) {
@@ -63,6 +59,39 @@ const EditarCodigoReferido = ({ token, id }) => {
     // }
   }
 
+
+  //referidos
+  const editarCantidadReferidos = async () => {
+    toast.info('Enviando datos');
+    // const rta = await modificarCodigo({idCliente: dataCliente.id, type: 'referidos'}, id, token);
+    // if (rta) {
+    //   toast.success('Se modifico el cliente');
+    // }
+    // else {
+    toast.error('No se pudo modificar el cliente dueño del codigo');
+    // }
+  }
+  const disabledCantidadReferidos = () => { return true }
+
+
+  //premios
+  const disabledCantidadPremios = () => {
+    const cantidadReferidosCodigo = codigo?.used?.length || 0
+    if (cantidadPremios * 3 > cantidadReferidosCodigo) {
+      return true;
+    }
+    return false;
+  }
+  const editarCantidadPremios = async () => {
+    toast.info('Enviando datos');
+    // const rta = await modificarCodigo({idCliente: dataCliente.id, type: 'referidos'}, id, token);
+    // if (rta) {
+    //   toast.success('Se modifico el cliente');
+    // }
+    // else {
+    toast.error('No se pudo modificar el cliente dueño del codigo');
+    // }
+  }
 
   return (
     <Container className="mt-4">
@@ -116,7 +145,8 @@ const EditarCodigoReferido = ({ token, id }) => {
                         objButton={{
                           variant: 'success',
                           text: 'enviar',
-                          onClick: editarCantidadReferidos
+                          onClick: editarCantidadReferidos,
+                          disabled: () => disabledCantidadReferidos()
 
                         }}
                       />
@@ -133,7 +163,9 @@ const EditarCodigoReferido = ({ token, id }) => {
                       objButton={{
                         variant: 'success',
                         text: 'enviar',
-                        onClick: editarCantidadReferidos
+                        onClick: editarCantidadPremios,
+                        disabled: disabledCantidadPremios()
+
                       }}
                     />
                   </Accordion.Body>

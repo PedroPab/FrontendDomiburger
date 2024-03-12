@@ -53,7 +53,7 @@ const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '', objButton 
           <Button
             variant={objButton?.variant || 'success'}
             onClick={objButton?.onClick}
-            disabled={!objButton?.disabled || false}
+            disabled={objButton?.disabled || false}
           >
             {objButton?.text}
           </Button>
