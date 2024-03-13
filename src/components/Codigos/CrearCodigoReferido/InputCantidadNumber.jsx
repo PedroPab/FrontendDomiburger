@@ -1,6 +1,6 @@
 import { Form, ButtonGroup, Button } from 'react-bootstrap';
 
-const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '', objButton }) => {
+const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '', buttonPrimary }) => {
   const handleChange = (e) => {
     let value = parseInt(e.target.value, 10);
     if (isNaN(value) || value < 0) {
@@ -48,16 +48,7 @@ const InputCantidadNumber = ({ cantidad, setCantidad, textLabel = '', objButton 
           <Button variant="outline-secondary" onClick={incrementar} style={roundButtonStyle}>+</Button>
 
         </ButtonGroup>
-        {
-          objButton &&
-          <Button
-            variant={objButton?.variant || 'success'}
-            onClick={objButton?.onClick}
-            disabled={objButton?.disabled || false}
-          >
-            {objButton?.text}
-          </Button>
-        }
+        {buttonPrimary}
       </div >
 
     </Form.Group >

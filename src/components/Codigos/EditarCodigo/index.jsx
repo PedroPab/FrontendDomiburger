@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import InputCantidadNumber from '../CrearCodigoReferido/InputCantidadNumber';
 import BuscadorCliente from '../CrearCodigoReferido/BuscadorCliente';
 import { findCodigo } from '../../../Utils/api/codigos/findCodigo';
+import { updateCodigo } from '../../../Utils/api/codigos/update';
 
 const EditarCodigoReferido = ({ token, id }) => {
   const [codigo, setCodigo] = useState(null);
@@ -19,6 +20,24 @@ const EditarCodigoReferido = ({ token, id }) => {
   //   'Asegúrate de tener el dato del codigo',
   //   'La cantidad de premios y referidos no coinciden, debe ser 1 premio por cada 3 referidos'
   // ]
+
+  const restaurarDatos = () => {
+    setTelefono('');
+    setDataCliente(null);
+    setValidCliente(false);
+    findCodigo(id, token)
+      .then(rta => {
+        rta = rta.body;
+        setCodigo(rta);
+        setCantidadReferidos(rta.used.length)
+        setCantidadPremios(rta.reward.length)
+      })
+      .catch(error => {
+        console.log(error);
+        toast.error('No se pudo encontrar el codigo');
+        // deberíamos mandar un mensaje de error de 404
+      })
+  }
 
   useEffect(() => {
     //buscamos le codigo
@@ -45,33 +64,42 @@ const EditarCodigoReferido = ({ token, id }) => {
   }, [dataCliente])
 
   const modificarIdCliente = async () => {
-    toast.info('Enviando datos');
-    //miramos si hay un cliente en dataCliente
-    if (!validCliente) return toast.error('Asegúrate de tener el cliente')
+    try {
+      toast.info('Enviando datos');
+      //miramos si hay un cliente en dataCliente
+      if (!validCliente) return toast.error('Asegúrate de tener el cliente')
 
-    //ejecutamos la función asíncrona de modificar el codigo y le pasamos el id del cliente
-    // const rta = await modificarCodigo({idCliente: dataCliente.id, type: 'referidos'}, id, token);
-    // if (rta) {
-    //   toast.success('Se modifico el cliente');
-    // }
-    // else {
-    toast.error('No se pudo modificar el cliente dueño del codigo');
-    // }
+      //ejecutamos la función asíncrona de modificar el codigo y le pasamos el id del cliente
+      const rta = await updateCodigo({ clientId: dataCliente.id, id }, 'Referido', token);
+      if (rta) {
+        toast.success('Se modifico el dueño del codigo');
+        restaurarDatos();
+        return
+      }
+      throw 'No se pudo modificar el dueño del codigo'
+    } catch (error) {
+      toast.error('No se pudo modificar no se pudo modificar el dueño del codigo');
+    }
   }
 
 
   //referidos
   const editarCantidadReferidos = async () => {
-    toast.info('Enviando datos');
-    // const rta = await modificarCodigo({idCliente: dataCliente.id, type: 'referidos'}, id, token);
-    // if (rta) {
-    //   toast.success('Se modifico el cliente');
-    // }
-    // else {
-    toast.error('No se pudo modificar el cliente dueño del codigo');
-    // }
+    try {
+      toast.info('Enviando datos');
+      const rta = await updateCodigo({ used: cantidadReferidos, id }, 'Referido', token);
+      if (rta) {
+        toast.success('Se modifico la cantidad de referidos');
+        restaurarDatos();
+        return
+      }
+      throw 'No se pudo modificar la cantidad de referidos'
+    } catch (error) {
+      toast.error('No se pudo modificar no se pudo modificar la cantidad de referidos');
+    }
   }
-  const disabledCantidadReferidos = () => { return true }
+
+  const disabledCantidadReferidos = () => { return false }
 
 
   //premios
@@ -83,14 +111,18 @@ const EditarCodigoReferido = ({ token, id }) => {
     return false;
   }
   const editarCantidadPremios = async () => {
-    toast.info('Enviando datos');
-    // const rta = await modificarCodigo({idCliente: dataCliente.id, type: 'referidos'}, id, token);
-    // if (rta) {
-    //   toast.success('Se modifico el cliente');
-    // }
-    // else {
-    toast.error('No se pudo modificar el cliente dueño del codigo');
-    // }
+    try {
+      toast.info(`Enviando datos, ${cantidadPremios}`);
+      const rta = await updateCodigo({ reward: cantidadPremios, id }, 'Referido', token);
+      if (rta) {
+        toast.success('Se modifico la cantidad de premios');
+        restaurarDatos();
+        return
+      }
+      throw 'No se pudo modificar la cantidad de premios'
+    } catch (error) {
+      toast.error('No se pudo modificar la cantidad de premios');
+    }
   }
 
   return (
@@ -142,13 +174,15 @@ const EditarCodigoReferido = ({ token, id }) => {
                         cantidad={cantidadReferidos}
                         setCantidad={setCantidadReferidos}
                         textLabel='Cantidad de referidos'
-                        objButton={{
-                          variant: 'success',
-                          text: 'enviar',
-                          onClick: editarCantidadReferidos,
-                          disabled: () => disabledCantidadReferidos()
-
-                        }}
+                        buttonPrimary={
+                          <Button
+                            variant='success'
+                            onClick={editarCantidadReferidos}
+                            disabled={disabledCantidadReferidos()}
+                          >
+                            enviar
+                          </Button>
+                        }
                       />
                     </Form.Group>
                   </Accordion.Body>
@@ -160,13 +194,15 @@ const EditarCodigoReferido = ({ token, id }) => {
                       cantidad={cantidadPremios}
                       setCantidad={setCantidadPremios}
                       textLabel='Cantidad de premios'
-                      objButton={{
-                        variant: 'success',
-                        text: 'enviar',
-                        onClick: editarCantidadPremios,
-                        disabled: disabledCantidadPremios()
-
-                      }}
+                      buttonPrimary={
+                        <Button
+                          variant='success'
+                          onClick={editarCantidadPremios}
+                          disabled={disabledCantidadPremios()}
+                        >
+                          enviar
+                        </Button>
+                      }
                     />
                   </Accordion.Body>
                 </Accordion.Item>
