@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
-import 'react-phone-number-input/style.css';
-import { Button, Alert, Row, InputGroup } from 'react-bootstrap';
+import { Button, Alert, Row, InputGroup, Form } from 'react-bootstrap';
 import { findClientForPhone } from '../../../../Utils/api/findClientPhone';
 import { toast } from 'react-toastify';
 import { BsXCircle } from 'react-icons/bs';
-import './index.css'
 
 const BuscadorTelefono = ({ setDataClient, token }) => {
   const [telefono, setTelefono] = useState('');
@@ -28,7 +26,12 @@ const BuscadorTelefono = ({ setDataClient, token }) => {
     setDataClient(null);
     setTelefono('')
   }
-
+  const handleKeyDown = (event) => {
+    // Cancela el evento de submit si la tecla presionada es Enter
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  };
   return (
     <>
       <Row className=" flex justify-content-center mb-4 mt-4">
@@ -39,8 +42,9 @@ const BuscadorTelefono = ({ setDataClient, token }) => {
               defaultCountry="CO"
               value={telefono}
               onChange={setTelefono}
-              className="mi-clase-personalizada-phone-input"
               containerClass="flex-grow-1" // Clase para hacer que el PhoneInput se expanda
+              inputComponent={Form.Control}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <Button onClick={buscarCliente} className="ms-2">Buscar</Button>

@@ -2,7 +2,7 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { findClientForPhone } from "../../../Utils/api/findClientPhone";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import './index.css'
+import { toast } from 'react-toastify';
 
 const BuscadorCliente = ({
   telefono,
@@ -16,15 +16,27 @@ const BuscadorCliente = ({
     const dataClient = await findClientForPhone(telefono, token);
     if (!dataClient) {
       setDataCliente(null);
+      toast.error('Cliente no encontrado')
     } else {
       setDataCliente(dataClient);
+      toast.success('Cliente encontrado')
     }
   };
-
+  const manejarEnvio = (event) => {
+    event.preventDefault();
+    // Aquí tu lógica de envío, por ejemplo, procesar los datos del formulario.
+  };
+  const handleKeyDown = (event) => {
+    // Cancela el evento de submit si la tecla presionada es Enter
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  };
   return (
     <>
       <h3>Buscar Cliente</h3>
-      <Form>
+      {/* nunca mandar info al hacer submit */}
+      <Form onSubmit={manejarEnvio} >
         <Form.Group controlId="formTelefono">
           <Row>
             <Form.Label>Teléfono:</Form.Label>
@@ -41,14 +53,16 @@ const BuscadorCliente = ({
                   // buttonClass="form-control"
                   country="CO"
                   defaultCountry="CO"
-                  className="mi-clase-personalizada-phone-input"
-
+                  // className="mi-clase-personalizada-phone-input"
+                  inputComponent={Form.Control}
+                  onKeyDown={handleKeyDown}
                 />
               </Col>
               <Col>
                 <Button variant="primary" onClick={() => buscarCliente()}>
                   Buscar Cliente
                 </Button>
+
               </Col>
             </Row>
           </Row>
