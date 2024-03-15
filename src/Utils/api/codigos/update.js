@@ -17,7 +17,7 @@ export const updateCodigo = async (data, type, token) => {
       body: raw,
     };
 
-    const response = await fetch(`${apiUrl}/${type}`, requestOptions);
+    const response = await fetch(`${apiUrl}/?type=${type}`, requestOptions);
     const result = await response.json();
 
     if (response.status !== 200 && response.status !== 201) {
