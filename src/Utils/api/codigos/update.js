@@ -3,8 +3,9 @@ export const updateCodigo = async (data, type, token) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const ENV = import.meta.env
-    const apiUrl = `${ENV.VITE_PROTOCOL_CODES}${ENV.VITE_HOST_CODES}:${ENV.VITE_PORT_CODES}/${ENV.VITE_UPDATE_CODE || 'edit'}`;
+    const apiUrl = `${ENV.VITE_HOST_CODES}/${ENV.VITE_UPDATE_CODE || 'edit'}`;
 
+    console.log("🚀 ~ updateCodigo ~ apiUrl:", apiUrl)
     const raw = JSON.stringify(data);
 
     const myHeaders = new Headers();

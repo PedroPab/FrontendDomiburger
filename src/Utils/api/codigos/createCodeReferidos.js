@@ -3,8 +3,9 @@ export const createCodeReferidos = async (data, token) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const ENV = import.meta.env
-    const apiUrl = `${ENV.VITE_PROTOCOL_CODES}${ENV.VITE_HOST_CODES}:${ENV.VITE_PORT_CODES}/${ENV.VITE_CREATE_CODE || ''}`;
+    const apiUrl = `${ENV.VITE_HOST_CODES}/${ENV.VITE_CREATE_CODE || ''}`;
 
+    console.log("🚀 ~ createCodeReferidos ~ apiUrl:", apiUrl)
     const raw = JSON.stringify(data);
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);

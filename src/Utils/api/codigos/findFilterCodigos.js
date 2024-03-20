@@ -3,8 +3,9 @@ export const findFilterCodigos = async (filter, token) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const ENV = import.meta.env
-    const apiUrl = `${ENV.VITE_PROTOCOL_CODES}${ENV.VITE_HOST_CODES}:${ENV.VITE_PORT_CODES}/${ENV.VITE_SEARCH_CODE || 'filter'}`;
+    const apiUrl = `${ENV.VITE_HOST_CODES}/${ENV.VITE_FILTER_CODE || 'filter'}`;
 
+    console.log("🚀 ~ findFilterCodigos ~ apiUrl:", apiUrl)
     const raw = JSON.stringify(filter);
 
     const myHeaders = new Headers();
