@@ -23,6 +23,7 @@ import Experimentos from "../Experimentos"
 import { VisualizarCodigoReferidos } from "../Codigo/VisualisarCodigosReferidos"
 import ClienteInfo from "../Clientes/ClientesInfo"
 import { EditarCodigo } from "../Codigo/EditarCodigo"
+import FormAdmin from "../FormAdmin"
 
 const AppRoutes = () => {
   return (
@@ -35,6 +36,9 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute users={[ROLES.admin, ROLES.recepcion]} redirectTo={'/login'} />} >
 
         <Route path="/recepcion" element={<Recepcion />} />
+
+        <Route path="/formAdmin" element={<FormAdmin />} />
+
         <Route path="/mapRecepcion" element={<MapRecepcion />} />
         <Route path="/contabilidad" element={<Contabilidad />} />
 

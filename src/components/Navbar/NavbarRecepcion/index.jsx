@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
-import { BiAccessibility, BiArrowFromBottom, BiHappy, BiLogIn, BiMobile, } from "react-icons/bi"
+import { BiAccessibility, BiArrowFromBottom, BiHappy, BiLogIn, BiMobile, BiTone, } from "react-icons/bi"
 import { RecepcionContexto } from '../../../Context/RecepcionContex';
 import { useContext } from 'react';
 import { GiSeaDragon } from 'react-icons/gi';
@@ -34,6 +34,8 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
           <Nav className="me-auto">
 
             <Nav.Link href="https://domiburguer.com/forAdmin" target="_blank"> <BiHappy /> Crear pedido</Nav.Link>
+
+            <Nav.Link as={Link} to="/formAdmin">  <BiTone /> Nuevo FormAdmin</Nav.Link>
 
             <Nav.Link as={Link} to="/recepcion">  <FaAngellist /> Domi Rastreo</Nav.Link>
             <Nav.Link as={Link} to="/mapRecepcion">  <FaMapMarkedAlt /> Map</Nav.Link>
