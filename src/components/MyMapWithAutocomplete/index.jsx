@@ -110,7 +110,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <>
+    <div className='m-3'>
       <Autocomplete
         onLoad={onLoad}
         onPlaceChanged={onPlaceChanged}
@@ -190,7 +190,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
         </ GoogleMap>
       }
 
-    </>
+    </div>
 
   );
 };

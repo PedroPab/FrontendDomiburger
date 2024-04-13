@@ -8,19 +8,21 @@ const NameInput = ({ name, setName }) => {
   };
 
   return (
-    <Form.Group controlId="formCodigo">
-      <Form.Label>Nombre:</Form.Label>
-      <Form.Control
-        type="text"
-        value={name}
-        onChange={handleChange}
-        placeholder="Nombre Completo"
-        aria-describedby="codigoHelpBlock"
-      />
-      <Form.Text id="codigoHelpBlock" muted>
-        Que bonito nombre.
-      </Form.Text>
-    </Form.Group>
+    <div className='m-3'>
+      <Form.Group controlId="formCodigo">
+        <Form.Label>Nombre:</Form.Label>
+        <Form.Control
+          type="text"
+          value={name}
+          onChange={handleChange}
+          placeholder="Nombre Completo"
+          aria-describedby="codigoHelpBlock"
+        />
+        <Form.Text id="codigoHelpBlock" muted>
+          Que bonito nombre.
+        </Form.Text>
+      </Form.Group>
+    </div>
   );
 };
 
