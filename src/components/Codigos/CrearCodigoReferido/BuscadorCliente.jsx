@@ -9,7 +9,8 @@ const BuscadorCliente = ({
   setTelefono,
   token,
   dataCliente,
-  setDataCliente
+  setDataCliente,
+  visibleDataClient = true
 }) => {
 
   const buscarCliente = async () => {
@@ -32,8 +33,28 @@ const BuscadorCliente = ({
       event.preventDefault();
     }
   };
+
+  const DataClient = () => {
+    return (
+      <>
+        {
+          dataCliente || visibleDataClient ?
+            <div>
+              <p>Nombre: {dataCliente?.name}</p>
+              <p>Teléfono: {dataCliente?.phone}</p>
+              <p>Id cliente: {dataCliente?.id}</p>
+              <p>Cantidad de pedidos: {dataCliente?.orders?.length}</p>
+            </div>
+            :
+            <div>
+              <p>Cliente no encontrado</p>
+            </div>}
+      </>
+    )
+  }
+
   return (
-    <>
+    <div className='m-3'>
       <h3>Buscar Cliente</h3>
       {/* nunca mandar info al hacer submit */}
       <Form onSubmit={manejarEnvio} >
@@ -68,22 +89,11 @@ const BuscadorCliente = ({
           </Row>
         </Form.Group>
       </Form>
-      <hr />
-      {
-        dataCliente ?
-          <div>
-            <p>Nombre: {dataCliente?.name}</p>
-            <p>Teléfono: {dataCliente?.phone}</p>
-            <p>Id cliente: {dataCliente?.id}</p>
-            <p>Cantidad de pedidos: {dataCliente?.orders?.length}</p>
-          </div>
-          :
-          <div>
-            <p>Cliente no encontrado</p>
-          </div>
+      {/* si visibleDataClient es true podemos mostrar lo demás */}
+      {visibleDataClient &&
+        <DataClient />
       }
-      <hr />
-    </>
+    </div>
   );
 };
 
