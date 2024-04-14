@@ -4,6 +4,10 @@ import BuscadorCliente from '../../components/Codigos/CrearCodigoReferido/Buscad
 import NameInput from '../../components/FormsInputs/NameInput';
 import MyMapWithAutocomplete from '../../components/MyMapWithAutocomplete';
 import CommentInput from '../../components/FormsInputs/CommentInput';
+import ProductsSection from '../../components/ProductsSection';
+import { PRODUCTS } from '../../Utils/constList';
+import { Combo, Hamburguesa } from '../../Utils/classProduct';
+
 const ENV = import.meta.env
 
 const FormContainerAdmin = ({ token, userId }) => {
@@ -25,6 +29,31 @@ const FormContainerAdmin = ({ token, userId }) => {
       setName(dataCliente.name)
     }
   }, [dataCliente])
+
+  const [listaProductosOrder, setListaProductosOrder] = useState([]);
+
+  const incrementCount = (product) => {
+    const productClass = {}
+    productClass[`${PRODUCTS.Hamburguesa}`] = Hamburguesa
+    productClass[`${PRODUCTS.Combo}`] = Combo
+
+    const listaProducts = [...listaProductosOrder]
+    const producto = new productClass[product]({})
+    listaProducts.push(producto)
+    setListaProductosOrder(listaProducts)
+  };
+
+  const decrementCount = (product) => {
+    //los reversamos para que saqeu el ultimo que se agrego
+    const listaProducts = [...listaProductosOrder.reverse()]
+    const indexProduct = listaProducts.findIndex(e => e.name === product)
+
+    if (indexProduct <= -1) return `no se encontro ningun prouduc que cumple con las condiciones de busqueda`
+
+    listaProducts.splice(indexProduct, 1)
+
+    setListaProductosOrder(listaProducts.reverse())
+  };
 
   return (
     <Container>
@@ -54,6 +83,16 @@ const FormContainerAdmin = ({ token, userId }) => {
         comment={comment}
         setComment={setComment}
       />
+
+
+      <ProductsSection
+        listaProductosOrder={listaProductosOrder}
+        incrementCount={incrementCount}
+        decrementCount={decrementCount}
+
+      />
+
+
 
 
     </Container>
