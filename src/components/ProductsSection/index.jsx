@@ -7,7 +7,7 @@ import { PRODUCTS } from '../../Utils/constList';
 
 function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }) {
   return (
-    <div>
+    <div className='m-3'>
 
       <section className="mb-3">
         <CardProduct

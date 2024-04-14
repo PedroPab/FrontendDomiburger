@@ -8,19 +8,21 @@ const InputCodigoText = ({ codigo, setCodigo }) => {
   };
 
   return (
-    <Form.Group controlId="formCodigo">
-      <Form.Label>Código:</Form.Label>
-      <Form.Control
-        type="text"
-        value={codigo}
-        onChange={handleChange}
-        placeholder="Introduce el código"
-        aria-describedby="codigoHelpBlock"
-      />
-      <Form.Text id="codigoHelpBlock" muted>
-        Introduce el código sin espacios.
-      </Form.Text>
-    </Form.Group>
+    <div className='m-3'>
+      <Form.Group controlId="formCodigo">
+        <Form.Label>Código:</Form.Label>
+        <Form.Control
+          type="text"
+          value={codigo}
+          onChange={handleChange}
+          placeholder="Introduce el código"
+          aria-describedby="codigoHelpBlock"
+        />
+        <Form.Text id="codigoHelpBlock" muted>
+          Introduce el código sin espacios.
+        </Form.Text>
+      </Form.Group>
+    </div>
   );
 };
 

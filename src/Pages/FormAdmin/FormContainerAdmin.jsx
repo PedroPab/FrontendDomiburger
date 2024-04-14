@@ -9,6 +9,7 @@ import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
 import ResumenProductosForm from '../../components/ResumenProductosForm';
 import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
+import InputCodigoText from '../../components/Codigos/CrearCodigoReferido/InputCodigoText';
 
 const ENV = import.meta.env
 
@@ -18,7 +19,9 @@ const FormContainerAdmin = ({ token, userId }) => {
   const [direccion, setDireccion] = useState({});
   const [comment, setComment] = useState('');
 
-  const [codigo, setCodigo] = useState('');
+  const [code, setCode] = useState('');
+  const [dataCode, setDataCode] = useState({});
+
   const [valid, setValid] = useState(false);
 
   const [dataCliente, setDataCliente] = useState(null);
@@ -106,6 +109,10 @@ const FormContainerAdmin = ({ token, userId }) => {
         setComment={setComment}
       />
 
+      <InputCodigoText
+        code={code}
+        setCode={setCode}
+      />
 
       <ProductsSection
         listaProductosOrder={listaProductosOrder}
