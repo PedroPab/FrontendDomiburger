@@ -12,6 +12,7 @@ import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
 import InputCodigoText from '../../components/Codigos/CrearCodigoReferido/InputCodigoText';
 import RegisterSaleButton from '../../components/RegisterSaleButton';
 import PaymentMethodInput from '../../components/FormsInputs/PaymentMethodInput';
+import SelectDomiciliario from '../../components/FormsInputs/SelectDomiciliario';
 
 const ENV = import.meta.env
 
@@ -20,6 +21,7 @@ const FormContainerAdmin = ({ token, userId }) => {
   const [name, setName] = useState('');
   const [direccion, setDireccion] = useState({});
   const [comment, setComment] = useState('');
+  const [selectDomiciliario, setSelectDomiciliario] = useState('');
 
   const [paymentMethod, setPaymentMethod] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [code, setCode] = useState('');
@@ -120,6 +122,10 @@ const FormContainerAdmin = ({ token, userId }) => {
       <InputCodigoText
         code={code}
         setCode={setCode}
+      />
+      <SelectDomiciliario
+        selectDomiciliario={selectDomiciliario}
+        setSelectDomiciliario={setSelectDomiciliario}
       />
 
       <ProductsSection
