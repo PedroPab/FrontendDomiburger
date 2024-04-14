@@ -11,6 +11,7 @@ import ResumenProductosForm from '../../components/ResumenProductosForm';
 import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
 import InputCodigoText from '../../components/Codigos/CrearCodigoReferido/InputCodigoText';
 import RegisterSaleButton from '../../components/RegisterSaleButton';
+import PaymentMethodInput from '../../components/FormsInputs/PaymentMethodInput';
 
 const ENV = import.meta.env
 
@@ -20,6 +21,7 @@ const FormContainerAdmin = ({ token, userId }) => {
   const [direccion, setDireccion] = useState({});
   const [comment, setComment] = useState('');
 
+  const [paymentMethod, setPaymentMethod] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [code, setCode] = useState('');
   const [dataCode, setDataCode] = useState({});
 
@@ -108,6 +110,11 @@ const FormContainerAdmin = ({ token, userId }) => {
       <CommentInput
         comment={comment}
         setComment={setComment}
+      />
+
+      <PaymentMethodInput
+        paymentMethod={paymentMethod}
+        setPaymentMethod={setPaymentMethod}
       />
 
       <InputCodigoText
