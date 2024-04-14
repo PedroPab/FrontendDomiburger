@@ -10,6 +10,7 @@ import { Combo, Hamburguesa } from '../../Utils/classProduct';
 import ResumenProductosForm from '../../components/ResumenProductosForm';
 import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
 import InputCodigoText from '../../components/Codigos/CrearCodigoReferido/InputCodigoText';
+import RegisterSaleButton from '../../components/RegisterSaleButton';
 
 const ENV = import.meta.env
 
@@ -126,6 +127,10 @@ const FormContainerAdmin = ({ token, userId }) => {
         listaProducto={listaProductosOrder}
         setListaProducto={setListaProductosOrder}
         dataDomicilio={dataDomicilio}
+      />
+
+      <RegisterSaleButton
+        onClick={() => console.log('Registrar Venta')}
       />
 
 
