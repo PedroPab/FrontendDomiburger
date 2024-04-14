@@ -13,6 +13,7 @@ import InputCodigoText from '../../components/Codigos/CrearCodigoReferido/InputC
 import RegisterSaleButton from '../../components/RegisterSaleButton';
 import PaymentMethodInput from '../../components/FormsInputs/PaymentMethodInput';
 import SelectDomiciliario from '../../components/FormsInputs/SelectDomiciliario';
+import InputCodigo from '../../components/FormsInputs/InputCodigo';
 
 const ENV = import.meta.env
 
@@ -24,8 +25,7 @@ const FormContainerAdmin = ({ token, userId }) => {
   const [selectDomiciliario, setSelectDomiciliario] = useState('');
 
   const [paymentMethod, setPaymentMethod] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
-  const [code, setCode] = useState('');
-  const [dataCode, setDataCode] = useState({});
+  const [dataCode, setDataCode] = useState(null);
 
   const [valid, setValid] = useState(false);
 
@@ -119,10 +119,11 @@ const FormContainerAdmin = ({ token, userId }) => {
         setPaymentMethod={setPaymentMethod}
       />
 
-      <InputCodigoText
-        code={code}
-        setCode={setCode}
+      <InputCodigo
+        dataCode={dataCode}
+        setDataCode={setDataCode}
       />
+
       <SelectDomiciliario
         selectDomiciliario={selectDomiciliario}
         setSelectDomiciliario={setSelectDomiciliario}
@@ -135,7 +136,6 @@ const FormContainerAdmin = ({ token, userId }) => {
 
       />
 
-
       <ResumenProductosForm
         listaProducto={listaProductosOrder}
         setListaProducto={setListaProductosOrder}
@@ -146,6 +146,8 @@ const FormContainerAdmin = ({ token, userId }) => {
         onClick={() => console.log('Registrar Venta')}
       />
 
+      {/* un espacio de separación */}
+      <hr />
 
     </Container>
   )

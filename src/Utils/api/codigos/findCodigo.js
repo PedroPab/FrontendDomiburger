@@ -4,7 +4,6 @@ export const findCodigo = async (codigo, token) => {
     const ENV = import.meta.env
     const apiUrl = `${ENV.VITE_HOST_CODES}/${ENV.VITE_SEARCH_CODE || ''}`;
 
-    console.log("🚀 ~ findCodigo ~ apiUrl:", apiUrl)
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
     myHeaders.append("Content-Type", "application/json");
@@ -14,7 +13,7 @@ export const findCodigo = async (codigo, token) => {
       headers: myHeaders,
     };
 
-    const response = await fetch(`${apiUrl}/?id=${codigo}`, requestOptions);
+    const response = await fetch(`${apiUrl}?id=${codigo}`, requestOptions);
     const result = await response.json();
 
     if (response.status !== 200 && response.status !== 201) {
