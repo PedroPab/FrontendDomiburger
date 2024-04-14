@@ -7,6 +7,8 @@ import CommentInput from '../../components/FormsInputs/CommentInput';
 import ProductsSection from '../../components/ProductsSection';
 import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
+import ResumenProductosForm from '../../components/ResumenProductosForm';
+import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
 
 const ENV = import.meta.env
 
@@ -31,6 +33,26 @@ const FormContainerAdmin = ({ token, userId }) => {
   }, [dataCliente])
 
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
+  const [dataDomicilio, setDataDomicilio] = useState({});
+
+  //para calcular las distancia y el costo del domicilio
+  useEffect(() => {
+
+    if (direccion?.dataMatrix?.status == 'OK') {
+      const timeText = calcularTiempo(direccion.dataMatrix.distance.value)
+      const price = calcularPrecio(direccion.dataMatrix.distance.value)
+      console.log({
+        matrixDistancia: timeText,
+        matrixTime: price
+      });
+
+      setDataDomicilio({
+        timeText,
+        price
+      })
+    }
+  }, [direccion])
+
 
   const incrementCount = (product) => {
     const productClass = {}
@@ -93,6 +115,11 @@ const FormContainerAdmin = ({ token, userId }) => {
       />
 
 
+      <ResumenProductosForm
+        listaProducto={listaProductosOrder}
+        setListaProducto={setListaProductosOrder}
+        dataDomicilio={dataDomicilio}
+      />
 
 
     </Container>
