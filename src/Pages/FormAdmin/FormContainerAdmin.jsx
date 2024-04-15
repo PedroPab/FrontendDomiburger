@@ -13,6 +13,9 @@ import RegisterSaleButton from '../../components/RegisterSaleButton';
 import PaymentMethodInput from '../../components/FormsInputs/PaymentMethodInput';
 import SelectDomiciliario from '../../components/FormsInputs/SelectDomiciliario';
 import InputCodigo from '../../components/FormsInputs/InputCodigo';
+import { toast } from 'react-toastify';
+import postOrder from '../../Utils/api/postOrder';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const ENV = import.meta.env
 
@@ -30,7 +33,7 @@ const FormContainerAdmin = ({ token, userId }) => {
   const [paymentMethod, setPaymentMethod] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [dataCode, setDataCode] = useState(null);
 
-  const [valid, setValid] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (telefono) {
@@ -42,8 +45,8 @@ const FormContainerAdmin = ({ token, userId }) => {
   useEffect(() => {
 
     if (dataCliente?.name) {
+      console.log(dataCliente.name, '<=dataCliente.name');
       setName(dataCliente.name)
-      setData({ ...data, name: dataCliente.name })
     }
     if (dataCliente?.address) {
       setDataAdrees(dataCliente.address)
@@ -61,6 +64,12 @@ const FormContainerAdmin = ({ token, userId }) => {
     }
 
   }, [dataCliente])
+
+  useEffect(() => {
+    if (name) {
+      setData({ ...data, name: name })
+    }
+  }, [name])
 
   useEffect(() => {
     if (paymentMethod) {
@@ -135,10 +144,42 @@ const FormContainerAdmin = ({ token, userId }) => {
     setListaProductosOrder(listaProducts.reverse())
   };
 
+  const sendOrder = async (data) => {
+    console.log(data?.name, '<=data');
+    let order = {
+      "fee": "Efectivo",
+      ...data,
+    }
+    //tenemos que transformar el dato de orden para que sea aceptado por el servidor
+    order.order = order?.order?.map(e => {
+      return {
+        id: e.id,
+        price: e.price,
+        modifique: e?.modifique?.map(e => { return { id: e.id, code: e?.code } }),
+        note: e.note,
+        code: e.code
+      }
+    })
+    try {
+      setLoading(true);
+      const rta = await postOrder(order, token, true)
+      if (rta.statusCode && (rta.statusCode !== 200 || rta.statusCode !== 200)) {
+        throw rta?.message
+      }
+      toast.success('Pedido Creado')
+    } catch (error) {
+      console.log(error, '<=error');
+      toast.error('Error al crear el pedido')
+      toast.error(error)
+    }
+    setLoading(false);
+
+  }
+
   return (
     <Container>
       {/* Aquí va el contenido del formulario */}
-
+      <LoadingSpinner isLoading={isLoading} />
       <BuscadorCliente
         telefono={telefono}
         setTelefono={setTelefono}
@@ -193,7 +234,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       />
 
       <RegisterSaleButton
-        onClick={() => console.log(data)}
+        onClick={() => sendOrder(data)}
       />
 
       {/* un espacio de separación */}
