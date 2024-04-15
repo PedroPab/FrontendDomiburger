@@ -9,7 +9,6 @@ import { PRODUCTS } from '../../Utils/constList';
 import { Combo, Hamburguesa } from '../../Utils/classProduct';
 import ResumenProductosForm from '../../components/ResumenProductosForm';
 import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
-import InputCodigoText from '../../components/Codigos/CrearCodigoReferido/InputCodigoText';
 import RegisterSaleButton from '../../components/RegisterSaleButton';
 import PaymentMethodInput from '../../components/FormsInputs/PaymentMethodInput';
 import SelectDomiciliario from '../../components/FormsInputs/SelectDomiciliario';
@@ -18,7 +17,11 @@ import InputCodigo from '../../components/FormsInputs/InputCodigo';
 const ENV = import.meta.env
 
 const FormContainerAdmin = ({ token, userId }) => {
-  const [telefono, setTelefono] = useState('');
+  // todos los datos que se envían al servidor
+  const [data, setData] = useState({});
+  const [dataCliente, setDataCliente] = useState(null);
+  const [dataAdrees, setDataAdrees] = useState({});//para guardar la direccion del cliente
+  const [telefono, setTelefono] = useState('+573054489598');
   const [name, setName] = useState('');
   const [direccion, setDireccion] = useState({});
   const [comment, setComment] = useState('');
@@ -29,23 +32,70 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   const [valid, setValid] = useState(false);
 
-  const [dataCliente, setDataCliente] = useState(null);
   useEffect(() => {
-    if (!dataCliente) {
-      setValid(false)
-      return
+    if (telefono) {
+      setData({ ...data, phone: telefono })
     }
-    if (dataCliente.name) {
+  }, [telefono])
+
+  //cada vez que cambie el dato del cliente (cuando lo busquemos)
+  useEffect(() => {
+
+    if (dataCliente?.name) {
       setName(dataCliente.name)
+      setData({ ...data, name: dataCliente.name })
     }
+    if (dataCliente?.address) {
+      setDataAdrees(dataCliente.address)
+      const newDireccion = {
+        address_complete: dataCliente?.address.direccionIput,
+        direccionIput: dataCliente?.address.direccionIput,
+        coordinates: dataCliente?.address?.coordinates,
+      }
+      setDataAdrees(newDireccion)
+      setDireccion(newDireccion)
+    }
+    if (dataCliente?.phone) {
+      setTelefono(dataCliente.phone)
+      setData({ ...data, phone: dataCliente.phone })
+    }
+
   }, [dataCliente])
+
+  useEffect(() => {
+    if (paymentMethod) {
+      setData({ ...data, fee: paymentMethod })
+    }
+  }, [paymentMethod])
+
+  useEffect(() => {
+    if (comment) {
+      setData({ ...data, note: comment })
+    }
+  }, [comment])
+
+
+  useEffect(() => {
+    if (dataAdrees) {
+      setData({ ...data, address: dataAdrees })
+    }
+  }, [dataAdrees])
+
+
 
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
   const [dataDomicilio, setDataDomicilio] = useState({});
 
+  useEffect(() => {
+    if (listaProductosOrder.length > 0) {
+
+      setData({ ...data, order: listaProductosOrder })
+    }
+
+  }, [listaProductosOrder])
+
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
-
     if (direccion?.dataMatrix?.status == 'OK') {
       const timeText = calcularTiempo(direccion.dataMatrix.distance.value)
       const price = calcularPrecio(direccion.dataMatrix.distance.value)
@@ -143,7 +193,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       />
 
       <RegisterSaleButton
-        onClick={() => console.log('Registrar Venta')}
+        onClick={() => console.log(data)}
       />
 
       {/* un espacio de separación */}

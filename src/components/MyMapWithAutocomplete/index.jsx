@@ -137,7 +137,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
               required
               type={'text'}
               placeholder={'Calle 103 # 74b 214'}
-              // value={objAdrees?.direccionIput || ''}
+              value={objAdrees?.direccionIput || ''}
               onChange={onChange}
               autoComplete
             />
