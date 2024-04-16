@@ -16,6 +16,7 @@ import InputCodigo from '../../components/FormsInputs/InputCodigo';
 import { toast } from 'react-toastify';
 import postOrder from '../../Utils/api/postOrder';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import id from 'faker/lib/locales/id_ID';
 
 const ENV = import.meta.env
 
@@ -43,7 +44,6 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   //cada vez que cambie el dato del cliente (cuando lo busquemos)
   useEffect(() => {
-    // Desestructuración para mayor claridad y para evitar repetir `dataCliente.`
     const { name, address, phone } = dataCliente || {};
 
     // Lógica condicional agrupada por tipo de dato
@@ -175,6 +175,11 @@ const FormContainerAdmin = ({ token, userId }) => {
     if (order.address.direccionInput) {
       delete order.address.direccionInput
     }
+
+    if (selectDomiciliario) {
+      order.domiciliario_asignado = { id: selectDomiciliario }
+    }
+
     try {
       setLoading(true);
       const rta = await postOrder(order, token, true)

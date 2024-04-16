@@ -7,6 +7,7 @@ const SelectDomiciliario = ({ selectDomiciliario, setSelectDomiciliario }) => {
   const OpcionesDomiciliarios = () => {
     return (
       <>
+        <option value="">Sin asignar</option>
         {contextRecepcion.listDomiciliarios.map(domiciliario => (
           <option
             key={domiciliario.id}
