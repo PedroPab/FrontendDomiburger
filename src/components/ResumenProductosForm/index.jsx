@@ -49,7 +49,6 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio }
     let total = 0
     if (listaProducto) {
       listaProducto.forEach(producto => {
-        console.log("🚀 ~ file: index.jsx:51 ~ totalProductos ~ producto:", producto)
         let totalProducto = producto.price;
         producto?.modifique.forEach(element => {
           totalProducto += element.price;

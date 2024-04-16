@@ -43,31 +43,39 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   //cada vez que cambie el dato del cliente (cuando lo busquemos)
   useEffect(() => {
+    // Desestructuración para mayor claridad y para evitar repetir `dataCliente.`
+    const { name, address, phone } = dataCliente || {};
 
-    if (dataCliente?.name) {
-      console.log(dataCliente.name, '<=dataCliente.name');
-      setName(dataCliente.name)
+    // Lógica condicional agrupada por tipo de dato
+    if (name) {
+      setName(name);
+      setData(prevData => ({ ...prevData, name }));
     }
-    if (dataCliente?.address) {
-      setDataAdrees(dataCliente.address)
+
+    if (address) {
+      const { address_complete, coordinates } = address;
       const newDireccion = {
-        address_complete: dataCliente?.address.direccionIput,
-        direccionIput: dataCliente?.address.direccionIput,
-        coordinates: dataCliente?.address?.coordinates,
-      }
-      setDataAdrees(newDireccion)
-      setDireccion(newDireccion)
-    }
-    if (dataCliente?.phone) {
-      setTelefono(dataCliente.phone)
-      setData({ ...data, phone: dataCliente.phone })
+        address_complete,
+        direccionInput: address_complete,
+        coordinates
+      };
+
+      // Actualizar el estado una sola vez en lugar de múltiples veces
+      setDataAdrees(newDireccion);
+      setDireccion(newDireccion);
     }
 
-  }, [dataCliente])
+    if (phone) {
+      setTelefono(phone);
+      setData(prevData => ({ ...prevData, phone }));
+    }
+  }, [dataCliente]);
 
   useEffect(() => {
+    console.log(name, '<=name');
     if (name) {
       setData({ ...data, name: name })
+      console.log(`cambiamos el nombre porque no da`, name);
     }
   }, [name])
 
@@ -83,13 +91,15 @@ const FormContainerAdmin = ({ token, userId }) => {
     }
   }, [comment])
 
-
   useEffect(() => {
     if (dataAdrees) {
       setData({ ...data, address: dataAdrees })
     }
   }, [dataAdrees])
 
+  useEffect(() => {
+    console.log(data, '<=data');
+  }, [data])
 
 
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
@@ -106,12 +116,13 @@ const FormContainerAdmin = ({ token, userId }) => {
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
     if (direccion?.dataMatrix?.status == 'OK') {
-      const timeText = calcularTiempo(direccion.dataMatrix.distance.value)
+      const timeText
+        = calcularTiempo(direccion.dataMatrix.distance.value)
       const price = calcularPrecio(direccion.dataMatrix.distance.value)
-      console.log({
-        matrixDistancia: timeText,
-        matrixTime: price
-      });
+      // console.log({
+      //   matrixDistancia: timeText,
+      //   matrixTime: price
+      // });
 
       setDataDomicilio({
         timeText,
@@ -144,11 +155,11 @@ const FormContainerAdmin = ({ token, userId }) => {
     setListaProductosOrder(listaProducts.reverse())
   };
 
-  const sendOrder = async (data) => {
-    console.log(data?.name, '<=data');
+  const sendOrder = async (dataOrder) => {
     let order = {
-      "fee": "Efectivo",
-      ...data,
+      "fee": paymentMethod,
+      note: comment,
+      ...dataOrder,
     }
     //tenemos que transformar el dato de orden para que sea aceptado por el servidor
     order.order = order?.order?.map(e => {
@@ -160,6 +171,10 @@ const FormContainerAdmin = ({ token, userId }) => {
         code: e.code
       }
     })
+
+    if (order.address.direccionInput) {
+      delete order.address.direccionInput
+    }
     try {
       setLoading(true);
       const rta = await postOrder(order, token, true)
@@ -167,6 +182,17 @@ const FormContainerAdmin = ({ token, userId }) => {
         throw rta?.message
       }
       toast.success('Pedido Creado')
+      //limpiamos los datos
+      setListaProductosOrder([])
+      setDataCliente(null)
+      setTelefono('+57')
+      setName('')
+      setDireccion({})
+      setComment('')
+      setPaymentMethod('Efectivo')
+      setSelectDomiciliario('')
+      setDataCode(null)
+
     } catch (error) {
       console.log(error, '<=error');
       toast.error('Error al crear el pedido')

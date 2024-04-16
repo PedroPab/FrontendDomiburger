@@ -91,9 +91,9 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
       let dataMatrix = await getDistanceMatrix(coordenadasInput);
       console.log("🚀 ~ file: index.jsx:92 ~ onPlaceChanged ~ dataMatrix:", dataMatrix)
 
-      setObjAdrees({ ...objAdrees, address_complete, type, valid, dataMatrix, coordinates: coordenadasInput, direccionIput: place.formatted_address })
+      setObjAdrees({ ...objAdrees, address_complete, type, valid, dataMatrix, coordinates: coordenadasInput, direccionInput: place.formatted_address })
 
-      //calculamos las metricas
+      //calculamos las métricas
 
 
     } else {
@@ -103,8 +103,8 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
 
   // eslint-disable-next-line no-unused-vars
   const onChange = (event) => {
-    // const nesValue = event.target.value
-    setObjAdrees({ ...objAdrees, valid: false })
+    const nesValue = event.target.value
+    setObjAdrees({ ...objAdrees, direccionInput: nesValue })
   }
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -137,7 +137,7 @@ const MyMapWithAutocomplete = ({ objAdrees, setObjAdrees, VITE_KEYMAPS }) => {
               required
               type={'text'}
               placeholder={'Calle 103 # 74b 214'}
-              value={objAdrees?.direccionIput || ''}
+              value={objAdrees?.direccionInput || ''}
               onChange={onChange}
               autoComplete
             />
