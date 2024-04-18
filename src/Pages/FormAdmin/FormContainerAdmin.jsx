@@ -25,7 +25,7 @@ const FormContainerAdmin = ({ token, userId }) => {
   const [data, setData] = useState({});
   const [dataCliente, setDataCliente] = useState(null);
   const [dataAdrees, setDataAdrees] = useState({});//para guardar la direccion del cliente
-  const [telefono, setTelefono] = useState('+573054489598');
+  const [telefono, setTelefono] = useState('+57');
   const [name, setName] = useState('');
   const [direccion, setDireccion] = useState({});
   const [comment, setComment] = useState('');
@@ -190,7 +190,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       //limpiamos los datos
       setListaProductosOrder([])
       setDataCliente(null)
-      setTelefono('+57')
+      setTelefono('')
       setName('')
       setDireccion({})
       setComment('')
@@ -204,6 +204,39 @@ const FormContainerAdmin = ({ token, userId }) => {
       toast.error(error)
     }
     setLoading(false);
+
+  }
+
+  const agregarCodigo = (dataCode) => {
+    //miramos la información del codigo y evaluamos si se agrega premio o como referido
+    console.log(dataCode, '<=dataCode');
+    const newListaProductosOrder = [...listaProductosOrder]
+    if (dataCode.type == 'Referido') {
+      toast.success('es codigo de referido ');
+      console.log("🚀 ~ agregarCodigo ~ dataCode.phone:", dataCode.phone, telefono)
+
+      if (dataCode.phone == telefono) {
+        //es un premio
+        toast.info('es un premio');
+
+      } else {
+        //es un referido
+        toast.info('es un referido');
+        //tenemos que mirar si hay una hamburguesa o combo a que agregar en la lista
+        const isProducto = newListaProductosOrder.findIndex(e => e.type == 'product')
+        if (isProducto >= 0) {
+          //si ya tiene un producto agregado no se puede agregar el referido
+          const adicion = dataCode.products[0]
+          newListaProductosOrder[isProducto].modifique.push(adicion)
+          setListaProductosOrder(newListaProductosOrder)
+
+          //si no la tiene hay que crearla
+        } else {
+          toast.error('no se encontró ningún producto para agregar el codigo');
+        }
+
+      }
+    }
 
   }
 
@@ -244,6 +277,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       <InputCodigo
         dataCode={dataCode}
         setDataCode={setDataCode}
+        agregarCodigo={agregarCodigo}
       />
 
       <SelectDomiciliario

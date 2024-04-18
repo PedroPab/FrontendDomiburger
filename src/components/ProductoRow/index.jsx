@@ -22,7 +22,7 @@ const ProductoRow = ({ producto, adiciones, onClicAdicion, onChangeSelectAdicion
                 key={modifique.idInter}
                 onClick={() => onClicAdicion(modifique.idInter, producto.idInter)}
               >
-                {modifique.name}
+                {modifique.code ? `CODE ${modifique.code} ` : ''}{modifique.name}
               </span>
             ))}
           </div>

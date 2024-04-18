@@ -6,15 +6,16 @@ import { MiContexto } from '../../../Context';
 import { toast } from 'react-toastify';
 import AlertInfoRedCodigo from '../../Codigos/AlertInfoRedCodigo';
 
-const InputCodigo = ({ dataCode, setDataCode }) => {
+const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
   const context = useContext(MiContexto)
   const token = context.tokenLogin.token
 
-  const [code, setCode] = useState('hola');
+  const [code, setCode] = useState('');
 
-  const agregarCodigo = () => {
-    toast.success('...Simulando Codigo agregado');
-  }
+  // const agregarCodigo = () => {
+  //   toast.success('...Simulando Codigo agregado');
+  //   agregarCodigo
+  // }
 
   const buscarCodigo = () => {
     findCodigo(code, token)
@@ -31,7 +32,7 @@ const InputCodigo = ({ dataCode, setDataCode }) => {
 
   const ButtonActionCode = () => {
     if (dataCode) {
-      return (<Button variant="success" onClick={agregarCodigo}>Agregar</Button>)
+      return (<Button variant="success" onClick={() => agregarCodigo(dataCode)}>Agregar</Button>)
     }
     return (<Button variant="primary" onClick={buscarCodigo}>Buscar</Button>)
   }
