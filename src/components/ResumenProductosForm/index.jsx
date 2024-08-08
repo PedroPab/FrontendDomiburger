@@ -9,7 +9,7 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio }
   const [adiciones, setAdiciones] = useState([]);
 
   useEffect(() => {
-    UtilsApi({ peticion: 'productos/filter?key=type&options===&value=Adicion', vervo: 'GET' })
+    UtilsApi({ url: 'productos/filter?key=type&options===&value=Adicion', method: 'GET' })
       .then(data => data.map(e => e.data))
       .then(data => setAdiciones(data))
       .catch(error => console.log(error));

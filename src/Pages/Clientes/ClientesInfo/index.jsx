@@ -1,4 +1,4 @@
-//crear un componente que muestre la informacion de un cliente y saque el id del url y haga una peticion a la api para obtener la informacion del cliente
+//crear un componente que muestre la informacion de un cliente y saque el id del url y haga una url a la api para obtener la informacion del cliente
 
 import { useContext, } from 'react';
 import { useParams } from 'react-router-dom';

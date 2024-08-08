@@ -23,6 +23,11 @@ const EstadisticasHome = () => {
               description: 'No esta disponible, pero mostrar las estadisticas de los nuevos clientes',
               path: 'clientes'
             },
+            {
+              title: 'Ventas del Mes',
+              description: 'Mostramos las ventas del mes en una gráfica de calendario',
+              path: 'ventasDelMes'
+            },
           ]}
         />
       </LayoutRecepcion>

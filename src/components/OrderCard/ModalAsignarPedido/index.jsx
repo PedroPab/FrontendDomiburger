@@ -29,11 +29,11 @@ const ModalAsignarPedido = ({ show, handleClose, nameDomiciliario, idPedido, dat
     const token = context.tokenLogin.token
 
     //asignamos al domiciliario
-    let urlPeticion = `domiciliarios/asignacion/?idDomiciliario=${domiciliarioSelect}&idPedido=${idPedido}`
+    let urlurl = `domiciliarios/asignacion/?idDomiciliario=${domiciliarioSelect}&idPedido=${idPedido}`
 
-    if (!data?.domiciliario_asignado) urlPeticion = `domiciliarios/reasignacion?idDomiciliario=${domiciliarioSelect}&idPedido=${idPedido}`
+    if (!data?.domiciliario_asignado) urlurl = `domiciliarios/reasignacion?idDomiciliario=${domiciliarioSelect}&idPedido=${idPedido}`
 
-    UtilsApi({ peticion: urlPeticion, token: token })
+    UtilsApi({ url: urlurl, token: token })
       .then(() => setConfirmar(false))
       .then(() => handleClose())//cerras el modal
 

@@ -37,7 +37,7 @@ const DomiciliarioHistory = () => {
     }]
 
     const filter = JSON.stringify({ filter: dataFilter })
-    UtilsApi({ peticion: `estados/filter`, token, vervo: `POST`, body: filter })
+    UtilsApi({ url: `estados/filter`, token, method: `POST`, body: filter })
       .then(data => {
         data = data.map(e => e.data)
         setPedidos(data)

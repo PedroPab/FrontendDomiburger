@@ -24,7 +24,7 @@ export const ContextProviderRecepcion = ({ children }) => {
   //miramos todo los domiciliarios en la api
   useEffect(() => {
     const token = context.tokenLogin.token
-    UtilsApi({ peticion: `domiciliarios`, token: token, vervo: `GET` })
+    UtilsApi({ url: `domiciliarios`, token: token, vervo: `GET` })
       .then(result => {
         setUsers(result)
       })

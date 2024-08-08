@@ -6,7 +6,7 @@ export const findClientForId = async (id, token) => {
 
     const url = `clientes/id?id=${id}`
     const res = await UtilsApi({
-      peticion: url, token, vervo: 'GET',
+      url: url, token, method: 'GET',
     })
 
     const dataCliente = res

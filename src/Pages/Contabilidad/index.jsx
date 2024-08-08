@@ -17,7 +17,7 @@ const Contabilidad = () => {
   const [pedidos, setPedidos] = useState([])
   //pedimos todos lo pedios del dia
   useEffect(() => {
-    UtilsApi({ peticion: `pedidos/historialDia`, token, vervo: `GET` })
+    UtilsApi({ url: `pedidos/historialDia`, token, method: `GET` })
       .then(data => {
         data = data.map(e => e.data)
         setPedidos(data)
@@ -32,7 +32,7 @@ const Contabilidad = () => {
     if (arrayFilter.length <= 0) return
 
     const filter = JSON.stringify({ filter: arrayFilter })
-    UtilsApi({ peticion: `estados/filter`, token, vervo: `POST`, body: filter })
+    UtilsApi({ url: `estados/filter`, token, method: `POST`, body: filter })
       .then(data => {
         data = data.map(e => e.data)
         setPedidos(data)

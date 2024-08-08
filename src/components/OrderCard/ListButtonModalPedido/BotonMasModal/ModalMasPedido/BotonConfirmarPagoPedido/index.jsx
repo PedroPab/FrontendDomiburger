@@ -15,7 +15,7 @@ const BotonConfirmarPagoPedido = ({ data, handleClose }) => {
     const token = context.tokenLogin.token
 
     const url = `pedidos/confirmarPago/?id=${data.id}`
-    UtilsApi({ peticion: url, token, vervo: 'POST' })
+    UtilsApi({ url: url, token, method: 'POST' })
       .then(() => handleClose())
 
     setConfirmar(false);

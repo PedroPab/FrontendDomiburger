@@ -3,8 +3,8 @@ import { UtilsApi } from "../utilsApi"
 const postOrder = async (order, token, isAdmin = false) => {
   try {
     const rta = await UtilsApi({
-      peticion: isAdmin ? 'pedidos/admin' : 'pedidos',
-      vervo: 'POST',
+      url: isAdmin ? 'pedidos/admin' : 'pedidos',
+      method: 'POST',
       body: JSON.stringify(order),
       token
     })

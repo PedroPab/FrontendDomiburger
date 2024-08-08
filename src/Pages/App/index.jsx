@@ -24,6 +24,7 @@ import { VisualizarCodigoReferidos } from "../Codigo/VisualisarCodigosReferidos"
 import ClienteInfo from "../Clientes/ClientesInfo"
 import { EditarCodigo } from "../Codigo/EditarCodigo"
 import FormAdmin from "../FormAdmin"
+import EstadisticasVentasDelMes from "../EstadisticasHome/EstadisticasVentasDelMes"
 
 const AppRoutes = () => {
   return (
@@ -46,6 +47,7 @@ const AppRoutes = () => {
         <Route path="/estadisticas/ventas/hoy" element={<EstadisticasVentasHoy />} />
         <Route path="/estadisticas/clientes" element={<EstadisticasClientes />} />
         <Route path="/estadisticas" element={<EstadisticasHome />} />
+        <Route path="/estadisticas/ventasDelMes" element={<EstadisticasVentasDelMes />} />
 
         <Route path="/codigos" element={<Codigos />} />
         <Route path="/codigos/crearCodigoReferido" element={<CrearCodigoReferido />} />

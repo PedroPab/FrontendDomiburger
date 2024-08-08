@@ -16,7 +16,7 @@ const EstadisticasDomiciliarios = () => {
   const [pedidos, setPedidos] = useState([])
   //pedimos todos lo pedios del dia
   useEffect(() => {
-    UtilsApi({ peticion: `pedidos/historialDia`, token, vervo: `GET` })
+    UtilsApi({ url: `pedidos/historialDia`, token, vervo: `GET` })
       .then(data => {
         data = data.map(e => e.data)
         setPedidos(data)

@@ -4,7 +4,7 @@ const crearPedido = async (data) => {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify(data)
 
-    UtilsApi({ peticion: 'pedidos', vervo: 'POST', body })
+    UtilsApi({ url: 'pedidos', method: 'POST', body })
       .then(response => {
         console.log(response);
         resolve(response)

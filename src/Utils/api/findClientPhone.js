@@ -15,7 +15,7 @@ export const findClientForPhone = async (telefono, token) => {
     }
     const url = `clientes/filter`
     const res = await UtilsApi({
-      peticion: url, token, vervo: 'POST', body: JSON.stringify(data)
+      url: url, token, method: 'POST', body: JSON.stringify(data)
     })
     if (!res[0]) {
       throw null

@@ -25,7 +25,7 @@ export const traladarPedidoDeEstado = async ({ id, estado, token }) => {
   })
 }
 
-export const UtilsApi = async ({ peticion, token, vervo = 'POST', body }) => {
+export const UtilsApi = async ({ url, token, method = 'POST', body }) => {
   const ENV = import.meta.env
   const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
 
@@ -33,7 +33,7 @@ export const UtilsApi = async ({ peticion, token, vervo = 'POST', body }) => {
   const headers = {}
   token ? headers.Authorization = TOKEN : undefined
   const options = {
-    method: vervo,
+    method: method,
     headers,
   }
   if (body) {
@@ -44,7 +44,7 @@ export const UtilsApi = async ({ peticion, token, vervo = 'POST', body }) => {
 
 
   return new Promise((resolve, reject) => {
-    fetch(`${apiUrl}/api/${peticion}`, options)
+    fetch(`${apiUrl}/api/${url}`, options)
       .then(response => response.json())
       .then(data => {
         if (!data.body) throw data

@@ -26,7 +26,7 @@ const EstadisticasClientes = () => {
 
   //pedimos todos lo pedios del dia
   useEffect(() => {
-    UtilsApi({ peticion: `pedidos/historialDia`, token, vervo: `GET` })
+    UtilsApi({ url: `pedidos/historialDia`, token, method: `GET` })
       .then(data => {
         data = data.map(e => e.data)
         setPedidos(data)
@@ -42,7 +42,7 @@ const EstadisticasClientes = () => {
       "value": fechaAyer
     }]
     UtilsApi({
-      peticion: `/estados/filter`, token, vervo: `POST`, body: JSON.stringify({ filter })
+      url: `/estados/filter`, token, method: `POST`, body: JSON.stringify({ filter })
     })
       .then(data => {
         data = data.map(e => e.data)

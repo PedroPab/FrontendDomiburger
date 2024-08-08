@@ -18,7 +18,7 @@ const CambiarMetodoPago = ({ data, handleClose }) => {
     const token = context.tokenLogin.token
 
     const url = `pedidos/cambiarFee?id=${data.id}&fee=${selectMetodoDePago.current.value}`
-    UtilsApi({ peticion: url, token, vervo: 'PATCH' })
+    UtilsApi({ url: url, token, method: 'PATCH' })
       .then(() => handleClose())
 
     setShowButtons(true);

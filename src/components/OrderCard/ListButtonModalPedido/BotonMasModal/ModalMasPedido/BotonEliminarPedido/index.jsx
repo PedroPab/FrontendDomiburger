@@ -12,7 +12,7 @@ const BotonEliminarPedido = ({ data, handleClose }) => {
     const token = context.tokenLogin.token
 
     const url = `estados/eliminados?idPedido=${data.id}`
-    UtilsApi({ peticion: url, token, vervo: 'DELETE' })
+    UtilsApi({ url: url, token, method: 'DELETE' })
       .then(() => handleClose())
     setConfirmar(false);
 
