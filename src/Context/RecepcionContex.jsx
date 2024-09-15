@@ -28,7 +28,7 @@ export const ContextProviderRecepcion = ({ children }) => {
       .then(result => {
         setUsers(result)
       })
-      .catch(error => console.log('error', error));
+      .catch(error => console.log('error 👿', error));
   }, [])
 
   //el modal para agrega los domiciliarios
