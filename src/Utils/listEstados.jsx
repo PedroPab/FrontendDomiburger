@@ -1,20 +1,20 @@
 import { ESTADOS, ROLES } from "./constList";
 
 export const listaEstados = [
-  {
-    name: ESTADOS.PendienteConfimacion,
-    color: ` #FFB6C1`,
-    estadoNext: `A calientes`,
-    rolesView: [
-      ROLES.admin,
-      ROLES.recepcion,
-      ROLES.domiciliario,
-    ],
-    rolesActions: [
-      ROLES.admin,
-      ROLES.recepcion,
-    ]
-  },
+  // {
+  //   name: ESTADOS.PendienteConfimacion,
+  //   color: ` #FFB6C1`,
+  //   estadoNext: `A calientes`,
+  //   rolesView: [
+  //     ROLES.admin,
+  //     ROLES.recepcion,
+  //     ROLES.domiciliario,
+  //   ],
+  //   rolesActions: [
+  //     ROLES.admin,
+  //     ROLES.recepcion,
+  //   ]
+  // },
   {
     name: ESTADOS.Calientes,
     color: `#87CEEB`,
