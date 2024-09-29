@@ -1,5 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker, Autocomplete } from "@react-google-maps/api";
+import FormField from "../../components/FormField";
+import { BiLogoGoogle } from "react-icons/bi";
+import { BsFillGeoAltFill } from "react-icons/bs";
+import { Button, Col, Row } from "react-bootstrap";
 
 const ENV = import.meta.env;
 
@@ -67,35 +71,46 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
           onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
           onPlaceChanged={onPlaceChanged}
         >
-          <input
+          <FormField
+            id="direccion"
+            label="Dirección"
             type="text"
+            icon={<BsFillGeoAltFill />}
             placeholder="Escribe la dirección..."
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginBottom: "10px",
-              boxSizing: "border-box",
-            }}
             value={direccion.address_complete}
             onChange={(e) => setDireccion({ ...direccion, address_complete: e.target.value })}
           />
 
         </Autocomplete>
-        <input
+        <FormField
+          id="iso"
+          label="Piso"
           type="text"
-          placeholder="Escribe tu piso..."
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "10px",
-            boxSizing: "border-box",
-          }}
+          icon={<BiLogoGoogle />}
+          placeholder="Escribe tu piso de la casa..."
           value={direccion.piso}
           onChange={(e) => setDireccion({ ...direccion, piso: e.target.value })}
         />
-        <button onClick={() => setManualSelect(!manualSelect)}>
-          {manualSelect ? "Desactivar selección manual" : "Seleccionar manualmente"}
-        </button>
+        {/* Usamos una fila y columnas para organizar el texto y el botón */}
+        <Row className="mb-3">
+          <Col xs={12} md={8}>
+            <p>
+              <strong>Instrucciones:</strong> Si no encuentras la dirección exacta usando el
+              autocompletado, puedes activar la <strong>selección manual</strong> para escoger
+              una ubicación directamente en el mapa. Arrastra el marcador para ajustarlo
+              según tus necesidades.
+            </p>
+          </Col>
+          <Col xs={12} md={4}>
+            <Button
+              variant={manualSelect ? "danger" : "primary"}
+              onClick={() => setManualSelect(!manualSelect)}
+              className="w-100"
+            >
+              {manualSelect ? "Desactivar selección manual" : "Seleccionar manualmente"}
+            </Button>
+          </Col>
+        </Row>
 
         <GoogleMap
           mapContainerStyle={{ width: "100%", height: "400px" }}
