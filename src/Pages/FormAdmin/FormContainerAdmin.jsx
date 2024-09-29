@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import BuscadorCliente from '../../components/Codigos/CrearCodigoReferido/BuscadorCliente';
 import NameInput from '../../components/FormsInputs/NameInput';
-import MyMapWithAutocomplete from '../../components/MyMapWithAutocomplete';
+import MyMapWithAutocomplete from '../../components/MyMapWithAutocompleteV2';
 import CommentInput from '../../components/FormsInputs/CommentInput';
 import ProductsSection from '../../components/ProductsSection';
 import { PRODUCTS } from '../../Utils/constList';
@@ -16,16 +16,17 @@ import InputCodigo from '../../components/FormsInputs/InputCodigo';
 import { toast } from 'react-toastify';
 import postOrder from '../../Utils/api/postOrder';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import id from 'faker/lib/locales/id_ID';
+import { Wrapper } from '@googlemaps/react-wrapper';
 
 const ENV = import.meta.env
 
 const FormContainerAdmin = ({ token, userId }) => {
-  // todos los datos que se envían al servidor
+  console.log(`[ ~userId`, userId)
+  // todos los dato que se envían al servidor
   const [data, setData] = useState({});
   const [dataCliente, setDataCliente] = useState(null);
   const [dataAdrees, setDataAdrees] = useState({});//para guardar la direccion del cliente
-  const [telefono, setTelefono] = useState('+57');
+  const [telefono, setTelefono] = useState('');
   const [name, setName] = useState('');
   const [direccion, setDireccion] = useState({});
   const [comment, setComment] = useState('');
@@ -72,10 +73,8 @@ const FormContainerAdmin = ({ token, userId }) => {
   }, [dataCliente]);
 
   useEffect(() => {
-    console.log(name, '<=name');
     if (name) {
       setData({ ...data, name: name })
-      console.log(`cambiamos el nombre porque no da`, name);
     }
   }, [name])
 
@@ -98,7 +97,6 @@ const FormContainerAdmin = ({ token, userId }) => {
   }, [dataAdrees])
 
   useEffect(() => {
-    console.log(data, '<=data');
   }, [data])
 
 
@@ -115,6 +113,7 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
+    console.log(direccion, '<=direccion');
     if (direccion?.dataMatrix?.status == 'OK') {
       const timeText
         = calcularTiempo(direccion.dataMatrix.distance.value)
@@ -257,12 +256,18 @@ const FormContainerAdmin = ({ token, userId }) => {
         name={name}
         setName={setName}
       />
-
+      {/* 
       <MyMapWithAutocomplete
         objAdrees={direccion}
         setObjAdrees={setDireccion}
         VITE_KEYMAPS={ENV.VITE_KEYMAPS}
-      />
+      /> */}
+      <Wrapper apiKey={ENV.VITE_KEYMAPS} libraries={['places']}> {/* Cargar la API con la clave y las bibliotecas */}
+        <MyMapWithAutocomplete
+          objAddress={direccion}
+          setObjAddress={setDireccion}
+        />
+      </Wrapper>
 
       <CommentInput
         comment={comment}
