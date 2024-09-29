@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker, Autocomplete } from "@react-google-maps/api";
-import FormField from "../../components/FormField"; // Suponiendo que FormField es un componente reutilizable
+import FormField from "../FormField"; // Suponiendo que FormField es un componente reutilizable
 import { BiLogoGoogle } from "react-icons/bi";
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { Button, Col, Row } from "react-bootstrap";
@@ -123,7 +123,8 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
           {coordinates.lat && (
             <Marker
               position={coordinates}
-              draggable={true}
+              // si está activa la selección manual, permitir arrastrar el marcador
+              draggable={manualSelect}
               onDragEnd={handleMarkerDragEnd}
             />
           )}

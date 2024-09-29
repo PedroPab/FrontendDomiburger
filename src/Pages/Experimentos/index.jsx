@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LayoutRecepcion from "../../Layout/Recepcion";
-import MapComponent from "./MapComponent";
+import MapComponent from "../../components/MapComponent/MapComponent";
 const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
 
 const Experimentos = () => {

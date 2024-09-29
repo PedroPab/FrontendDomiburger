@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import BuscadorCliente from '../../components/Codigos/CrearCodigoReferido/BuscadorCliente';
 import NameInput from '../../components/FormsInputs/NameInput';
-import MyMapWithAutocomplete from '../../components/MyMapWithAutocompleteV2';
 import CommentInput from '../../components/FormsInputs/CommentInput';
 import ProductsSection from '../../components/ProductsSection';
 import { PRODUCTS } from '../../Utils/constList';
@@ -16,19 +15,58 @@ import InputCodigo from '../../components/FormsInputs/InputCodigo';
 import { toast } from 'react-toastify';
 import postOrder from '../../Utils/api/postOrder';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { Wrapper } from '@googlemaps/react-wrapper';
+import MapComponent from '../../components/MapComponent/MapComponent';
+const ENV = import.meta.env;
+import { DistanceMatrixService } from "@react-google-maps/api";
 
-const ENV = import.meta.env
+/**
+ * Función para calcular la distancia y el tiempo con la API Distance Matrix de Google
+ * @param {Object} coordinates - Coordenadas de origen (cliente)
+ * @returns {Promise} - Retorna un objeto con los datos de la matriz de distancia
+ */
+const calcularDataMatrix = (coordinates, destination) => {
+  return new Promise((resolve, reject) => {
+    const service = new window.google.maps.DistanceMatrixService();
 
+    service.getDistanceMatrix(
+      {
+        origins: [{ lat: coordinates.lat, lng: coordinates.lng }], // Ubicación del cliente
+        destinations: [{ lat: destination.lat, lng: destination.lng }], // Ubicación destino (p.ej., tienda)
+        travelMode: window.google.maps.TravelMode.DRIVING, // Modo de transporte
+        unitSystem: window.google.maps.UnitSystem.METRIC, // Unidades en métrico
+      },
+      (response, status) => {
+        if (status === "OK") {
+          const result = response.rows[0].elements[0];
+          resolve({
+            distance: result.distance,
+            duration: result.duration,
+            status: response.status,
+          });
+        } else {
+          reject(`Error en el cálculo de la matriz: ${status}`);
+        }
+      }
+    );
+  });
+};
+
+const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
+
+// eslint-disable-next-line no-unused-vars
 const FormContainerAdmin = ({ token, userId }) => {
-  console.log(`[ ~userId`, userId)
+  const [coordinates, setCoordinates] = useState(centerOrigin);
+  const [inputDataDireccion, setInputDataDireccion] = useState({
+    address_complete: "",
+    piso: "",
+    valid: false,
+  });
   // todos los dato que se envían al servidor
   const [data, setData] = useState({});
   const [dataCliente, setDataCliente] = useState(null);
   const [dataAdrees, setDataAdrees] = useState({});//para guardar la direccion del cliente
   const [telefono, setTelefono] = useState('');
   const [name, setName] = useState('');
-  const [direccion, setDireccion] = useState({});
   const [comment, setComment] = useState('');
   const [selectDomiciliario, setSelectDomiciliario] = useState('');
 
@@ -111,13 +149,33 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   }, [listaProductosOrder])
 
+
+  const calcularDataMatrix = (coordinates) => {
+    const origin = `${coordinates.lat},${coordinates.lng}`
+    const destination = '6.3017314,-75.5743796'
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin}&destinations=${destination}&key=${ENV.VITE_KEYMAPS}`
+    const response = fetch(url)
+      .then(response => response.json())
+      .then(data => data)
+      .catch(error => console.error(error))
+
+    return response
+  }
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
-    console.log(direccion, '<=direccion');
-    if (direccion?.dataMatrix?.status == 'OK') {
+    //la logica para calcular el tiempo y el precio del domicilio segun las coordenadas y la direccion
+    //miramos si es valido el input de la direccion
+    if (!inputDataDireccion.valid) return
+
+    // miramos si hay coordenadas
+    if (!coordinates) return
+
+    const dataMatrix = calcularDataMatrix(coordinates)
+
+    if (dataMatrix?.status == 'OK') {
       const timeText
-        = calcularTiempo(direccion.dataMatrix.distance.value)
-      const price = calcularPrecio(direccion.dataMatrix.distance.value)
+        = calcularTiempo(dataMatrix.distance.value)
+      const price = calcularPrecio(dataMatrix.distance.value)
       // console.log({
       //   matrixDistancia: timeText,
       //   matrixTime: price
@@ -128,7 +186,7 @@ const FormContainerAdmin = ({ token, userId }) => {
         price
       })
     }
-  }, [direccion])
+  }, [inputDataDireccion])
 
 
   const incrementCount = (product) => {
@@ -256,18 +314,11 @@ const FormContainerAdmin = ({ token, userId }) => {
         name={name}
         setName={setName}
       />
-      {/* 
-      <MyMapWithAutocomplete
-        objAdrees={direccion}
-        setObjAdrees={setDireccion}
-        VITE_KEYMAPS={ENV.VITE_KEYMAPS}
-      /> */}
-      <Wrapper apiKey={ENV.VITE_KEYMAPS} libraries={['places']}> {/* Cargar la API con la clave y las bibliotecas */}
-        <MyMapWithAutocomplete
-          objAddress={direccion}
-          setObjAddress={setDireccion}
-        />
-      </Wrapper>
+      <MapComponent
+        coordinates={coordinates}
+        setCoordinates={setCoordinates}
+        stateDireccion={[inputDataDireccion, setInputDataDireccion]}
+      />
 
       <CommentInput
         comment={comment}
