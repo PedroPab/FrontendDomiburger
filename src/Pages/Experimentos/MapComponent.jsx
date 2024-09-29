@@ -1,11 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker, Autocomplete } from "@react-google-maps/api";
 
 const ENV = import.meta.env;
 
 const libraries = ["places"]; // Añadimos 'places' para habilitar el Autocomplete de Google
 
-const MapComponent = ({ coordinates, setCoordinates }) => {
+const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
+  const [direccion, setDireccion] = stateDireccion
   // const [coordinates, setCoordinates] = useState({ lat: 10, lng: -84 });
   const [manualSelect, setManualSelect] = useState(false);
   const autocompleteRef = useRef(null);
@@ -18,24 +19,46 @@ const MapComponent = ({ coordinates, setCoordinates }) => {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
       setCoordinates({ lat, lng });
+      setDireccion({
+        ...direccion,
+        address_complete: place.formatted_address,
+        valid: true,
+        type: 'autocompleted',
+
+      });
     }
   };
 
   const handleMapClick = (e) => {
     if (manualSelect) {
       setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+      if (!direccion.address_complete || direccion.address_complete === '') {
+        setDireccion({
+          ...direccion,
+          type: 'manual',
+          valid: false
+        });
+      } else {
+        setDireccion({
+          ...direccion,
+          type: 'manual',
+          valid: true
+        });
+      }
     }
   };
+
+  useEffect(() => {
+    if (direccion.address_complete === '') {
+      setDireccion({ ...direccion, valid: false });
+    }
+  }, [direccion.address_complete])
 
   const handleMarkerDragEnd = (e) => {
     const lat = e.latLng.lat();
     const lng = e.latLng.lng();
     setCoordinates({ lat, lng });
   };
-
-  useEffect(() => {
-    console.log("coordinates", coordinates);
-  }, [coordinates]);
 
   return (
     <div>
@@ -53,9 +76,23 @@ const MapComponent = ({ coordinates, setCoordinates }) => {
               marginBottom: "10px",
               boxSizing: "border-box",
             }}
+            value={direccion.address_complete}
+            onChange={(e) => setDireccion({ ...direccion, address_complete: e.target.value })}
           />
-        </Autocomplete>
 
+        </Autocomplete>
+        <input
+          type="text"
+          placeholder="Escribe tu piso..."
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "10px",
+            boxSizing: "border-box",
+          }}
+          value={direccion.piso}
+          onChange={(e) => setDireccion({ ...direccion, piso: e.target.value })}
+        />
         <button onClick={() => setManualSelect(!manualSelect)}>
           {manualSelect ? "Desactivar selección manual" : "Seleccionar manualmente"}
         </button>
@@ -76,15 +113,7 @@ const MapComponent = ({ coordinates, setCoordinates }) => {
           )}
         </GoogleMap>
       </LoadScript>
-
-      {coordinates.lat && (
-        <div>
-          <h3>Información de la ubicación seleccionada:</h3>
-          <p>Latitud: {coordinates.lat}</p>
-          <p>Longitud: {coordinates.lng}</p>
-        </div>
-      )}
-    </div>
+    </div >
   );
 };
 
