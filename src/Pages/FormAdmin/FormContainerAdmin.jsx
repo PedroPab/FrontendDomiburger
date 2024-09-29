@@ -16,44 +16,21 @@ import { toast } from 'react-toastify';
 import postOrder from '../../Utils/api/postOrder';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import MapComponent from '../../components/MapComponent/MapComponent';
+import { useLoadScript } from '@react-google-maps/api';
+import { obtenerDistancia } from './googleDistanceMatrix'; // Importar la función
+
 const ENV = import.meta.env;
-// import { DistanceMatrixService } from "@react-google-maps/api";
-
-const calcularDataMatrix = async (origen, destino) => {
-  return new Promise((resolve, reject) => {
-    // Instancia del servicio DistanceMatrix
-    const service = new google.maps.DistanceMatrixService();
-
-    const travelMode = google.maps.TravelMode.TWO_WHEELER; // Puedes cambiar esto a DRIVING, WALKING, etc.
-
-    service.getDistanceMatrix(
-      {
-        origins: [origen], // Coordenadas del origen
-        destinations: [destino], // Coordenadas del destino
-        travelMode: travelMode,
-        unitSystem: google.maps.UnitSystem.METRIC, // Sistema de unidades métrico
-        avoidHighways: false,
-        avoidTolls: false,
-        durationInTraffic: true, // Incluir tráfico en el cálculo si está disponible
-      },
-      (response, status) => {
-        if (status === "OK") {
-          const result = response.rows[0].elements[0];
-          resolve(result); // Retorna el resultado
-        } else {
-          console.error("Error con la API de Distance Matrix: " + status);
-          reject("Error con la API de Distance Matrix: " + status);
-        }
-      }
-    );
-  });
-};
-
 
 const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
+const libraries = ['places'];
 
 // eslint-disable-next-line no-unused-vars
 const FormContainerAdmin = ({ token, userId }) => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: ENV.VITE_KEYMAPS,
+    libraries,
+  });
+
   const [coordinates, setCoordinates] = useState(centerOrigin);
   const [inputDataDireccion, setInputDataDireccion] = useState({
     address_complete: "",
@@ -162,48 +139,38 @@ const FormContainerAdmin = ({ token, userId }) => {
   // }
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
-    const obtenerDataMatrix = async () => {
-      try {
-        const destino = { lat: 6.250000, lng: -75.580000 }; // Coordenadas del destino (ej. la tienda)
-        const resultadoMatrix = await calcularDataMatrix(coordinates, destino);
 
-        if (resultadoMatrix) {
-          const timeText = calcularTiempo(resultadoMatrix.distance.value);
-          const price = calcularPrecio(resultadoMatrix.distance.value);
-
-          setDataDomicilio({
-            timeText,
-            price,
-          });
-        }
-      } catch (error) {
-        console.error("Error al calcular la matriz de distancia:", error);
-      }
-    };
+    if (!isLoaded) {
+      console.log('Cargando Google Maps...')
+      return
+    }
     //la logica para calcular el tiempo y el precio del domicilio segun las coordenadas y la direccion
     //miramos si es valido el input de la direccion
+
     if (!inputDataDireccion.valid) return
 
     // miramos si hay coordenadas
     if (!coordinates) return
 
-    const dataMatrix = obtenerDataMatrix()
-    console.log(`[ ~ useEffect ~ dataMatrix]`, dataMatrix)
+    obtenerDistancia(centerOrigin, coordinates)
+      .then(dataMatrix => {
+        if (dataMatrix) {
+          const timeText
+            = calcularTiempo(dataMatrix.distance.value)
+          const price = calcularPrecio(dataMatrix.distance.value)
+          // console.log({
+          //   matrixDistancia: timeText,
+          //   matrixTime: price
+          // });
 
-    // if (dataMatrix?.status == 'OK') {
-    //   const timeText
-    //     = calcularTiempo(dataMatrix.distance.value)
-    //   const price = calcularPrecio(dataMatrix.distance.value)
-    //   // console.log({
-    //   //   matrixDistancia: timeText,
-    //   //   matrixTime: price
-    //   // });
+          setDataDomicilio({
+            timeText,
+            price
+          })
+        }
+      })
+      .catch(error => console.error(error))
 
-    //   setDataDomicilio({
-    //     timeText,
-    //     price
-    //   })
-    // }
   }, [inputDataDireccion])
 
 
@@ -332,11 +299,14 @@ const FormContainerAdmin = ({ token, userId }) => {
         name={name}
         setName={setName}
       />
-      <MapComponent
-        coordinates={coordinates}
-        setCoordinates={setCoordinates}
-        stateDireccion={[inputDataDireccion, setInputDataDireccion]}
-      />
+      {/* solo si isLoaded esta en true */}
+      {isLoaded &&
+        <MapComponent
+          coordinates={coordinates}
+          setCoordinates={setCoordinates}
+          stateDireccion={[inputDataDireccion, setInputDataDireccion]}
+        />
+      }
 
       <CommentInput
         comment={comment}
