@@ -17,39 +17,38 @@ import postOrder from '../../Utils/api/postOrder';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import MapComponent from '../../components/MapComponent/MapComponent';
 const ENV = import.meta.env;
-import { DistanceMatrixService } from "@react-google-maps/api";
+// import { DistanceMatrixService } from "@react-google-maps/api";
 
-/**
- * Función para calcular la distancia y el tiempo con la API Distance Matrix de Google
- * @param {Object} coordinates - Coordenadas de origen (cliente)
- * @returns {Promise} - Retorna un objeto con los datos de la matriz de distancia
- */
-const calcularDataMatrix = (coordinates, destination) => {
+const calcularDataMatrix = async (origen, destino) => {
   return new Promise((resolve, reject) => {
-    const service = new window.google.maps.DistanceMatrixService();
+    // Instancia del servicio DistanceMatrix
+    const service = new google.maps.DistanceMatrixService();
+
+    const travelMode = google.maps.TravelMode.TWO_WHEELER; // Puedes cambiar esto a DRIVING, WALKING, etc.
 
     service.getDistanceMatrix(
       {
-        origins: [{ lat: coordinates.lat, lng: coordinates.lng }], // Ubicación del cliente
-        destinations: [{ lat: destination.lat, lng: destination.lng }], // Ubicación destino (p.ej., tienda)
-        travelMode: window.google.maps.TravelMode.DRIVING, // Modo de transporte
-        unitSystem: window.google.maps.UnitSystem.METRIC, // Unidades en métrico
+        origins: [origen], // Coordenadas del origen
+        destinations: [destino], // Coordenadas del destino
+        travelMode: travelMode,
+        unitSystem: google.maps.UnitSystem.METRIC, // Sistema de unidades métrico
+        avoidHighways: false,
+        avoidTolls: false,
+        durationInTraffic: true, // Incluir tráfico en el cálculo si está disponible
       },
       (response, status) => {
         if (status === "OK") {
           const result = response.rows[0].elements[0];
-          resolve({
-            distance: result.distance,
-            duration: result.duration,
-            status: response.status,
-          });
+          resolve(result); // Retorna el resultado
         } else {
-          reject(`Error en el cálculo de la matriz: ${status}`);
+          console.error("Error con la API de Distance Matrix: " + status);
+          reject("Error con la API de Distance Matrix: " + status);
         }
       }
     );
   });
 };
+
 
 const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
 
@@ -101,7 +100,7 @@ const FormContainerAdmin = ({ token, userId }) => {
 
       // Actualizar el estado una sola vez en lugar de múltiples veces
       setDataAdrees(newDireccion);
-      setDireccion(newDireccion);
+      // setDireccion(newDireccion);
     }
 
     if (phone) {
@@ -150,19 +149,37 @@ const FormContainerAdmin = ({ token, userId }) => {
   }, [listaProductosOrder])
 
 
-  const calcularDataMatrix = (coordinates) => {
-    const origin = `${coordinates.lat},${coordinates.lng}`
-    const destination = '6.3017314,-75.5743796'
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin}&destinations=${destination}&key=${ENV.VITE_KEYMAPS}`
-    const response = fetch(url)
-      .then(response => response.json())
-      .then(data => data)
-      .catch(error => console.error(error))
+  // const calcularDataMatrix = (coordinates) => {
+  //   const origin = `${coordinates.lat},${coordinates.lng}`
+  //   const destination = '6.3017314,-75.5743796'
+  //   const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin}&destinations=${destination}&key=${ENV.VITE_KEYMAPS}`
+  //   const response = fetch(url)
+  //     .then(response => response.json())
+  //     .then(data => data)
+  //     .catch(error => console.error(error))
 
-    return response
-  }
+  //   return response
+  // }
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
+    const obtenerDataMatrix = async () => {
+      try {
+        const destino = { lat: 6.250000, lng: -75.580000 }; // Coordenadas del destino (ej. la tienda)
+        const resultadoMatrix = await calcularDataMatrix(coordinates, destino);
+
+        if (resultadoMatrix) {
+          const timeText = calcularTiempo(resultadoMatrix.distance.value);
+          const price = calcularPrecio(resultadoMatrix.distance.value);
+
+          setDataDomicilio({
+            timeText,
+            price,
+          });
+        }
+      } catch (error) {
+        console.error("Error al calcular la matriz de distancia:", error);
+      }
+    };
     //la logica para calcular el tiempo y el precio del domicilio segun las coordenadas y la direccion
     //miramos si es valido el input de la direccion
     if (!inputDataDireccion.valid) return
@@ -170,22 +187,23 @@ const FormContainerAdmin = ({ token, userId }) => {
     // miramos si hay coordenadas
     if (!coordinates) return
 
-    const dataMatrix = calcularDataMatrix(coordinates)
+    const dataMatrix = obtenerDataMatrix()
+    console.log(`[ ~ useEffect ~ dataMatrix]`, dataMatrix)
 
-    if (dataMatrix?.status == 'OK') {
-      const timeText
-        = calcularTiempo(dataMatrix.distance.value)
-      const price = calcularPrecio(dataMatrix.distance.value)
-      // console.log({
-      //   matrixDistancia: timeText,
-      //   matrixTime: price
-      // });
+    // if (dataMatrix?.status == 'OK') {
+    //   const timeText
+    //     = calcularTiempo(dataMatrix.distance.value)
+    //   const price = calcularPrecio(dataMatrix.distance.value)
+    //   // console.log({
+    //   //   matrixDistancia: timeText,
+    //   //   matrixTime: price
+    //   // });
 
-      setDataDomicilio({
-        timeText,
-        price
-      })
-    }
+    //   setDataDomicilio({
+    //     timeText,
+    //     price
+    //   })
+    // }
   }, [inputDataDireccion])
 
 
@@ -249,7 +267,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       setDataCliente(null)
       setTelefono('')
       setName('')
-      setDireccion({})
+      // setDireccion({})
       setComment('')
       setPaymentMethod('Efectivo')
       setSelectDomiciliario('')
