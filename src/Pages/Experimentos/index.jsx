@@ -1,17 +1,24 @@
+import { useState } from "react";
+import LayoutRecepcion from "../../Layout/Recepcion";
+import MapComponent from "./MapComponent";
+const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
+
 const Experimentos = () => {
+  const [coordinates, setCoordinates] = useState(centerOrigin);
+
   return (
     <>
-      <div
-        className="d-flex flex-nowrap">
-        <div
-          className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
+      <LayoutRecepcion>
+        <h1>Experimentos</h1>
 
-        </div>
-        <div
-          className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
+        <p>Esta es una página de experimentos</p>
+        <p>para crear el mapa de google maps con el autocompleted y el posicionamiento manual</p>
+        <MapComponent
+          coordinates={coordinates}
+          setCoordinates={setCoordinates}
+        />
 
-        </div>
-      </div>
+      </LayoutRecepcion>
     </>
   );
 };
