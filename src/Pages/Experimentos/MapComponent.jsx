@@ -1,63 +1,61 @@
 import { useState, useRef, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker, Autocomplete } from "@react-google-maps/api";
-import FormField from "../../components/FormField";
+import FormField from "../../components/FormField"; // Suponiendo que FormField es un componente reutilizable
 import { BiLogoGoogle } from "react-icons/bi";
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { Button, Col, Row } from "react-bootstrap";
 
 const ENV = import.meta.env;
 
-const libraries = ["places"]; // Añadimos 'places' para habilitar el Autocomplete de Google
+const libraries = ["places"];
 
 const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
-  const [direccion, setDireccion] = stateDireccion
-  // const [coordinates, setCoordinates] = useState({ lat: 10, lng: -84 });
+  const [direccion, setDireccion] = stateDireccion;
   const [manualSelect, setManualSelect] = useState(false);
   const autocompleteRef = useRef(null);
 
-  // Esta función se activa cuando el usuario selecciona una opción de autocompletado
+  // Maneja la selección de un lugar con autocompletado
   const onPlaceChanged = () => {
-    const place = autocompleteRef.current.getPlace();
-    if (!place.geometry) return
-    if (place.geometry) {
-      const lat = place.geometry.location.lat();
-      const lng = place.geometry.location.lng();
-      setCoordinates({ lat, lng });
-      setDireccion({
-        ...direccion,
-        address_complete: place.formatted_address,
-        valid: true,
-        type: 'autocompleted',
+    const place = autocompleteRef.current?.getPlace();
+    if (!place || !place.geometry) return;
 
-      });
-    }
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+    setCoordinates({ lat, lng });
+    setDireccion({
+      ...direccion,
+      address_complete: place.formatted_address,
+      valid: true,
+      type: 'autocompleted',
+    });
+
+    // Desactiva el modo de selección manual si se selecciona una dirección con autocompletado
+    setManualSelect(false);
   };
 
+  // Maneja el clic en el mapa para la selección manual
   const handleMapClick = (e) => {
-    if (manualSelect) {
-      setCoordinates({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-      if (!direccion.address_complete || direccion.address_complete === '') {
-        setDireccion({
-          ...direccion,
-          type: 'manual',
-          valid: false
-        });
-      } else {
-        setDireccion({
-          ...direccion,
-          type: 'manual',
-          valid: true
-        });
-      }
-    }
+    if (!manualSelect) return;
+
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
+    setCoordinates({ lat, lng });
+
+    setDireccion({
+      ...direccion,
+      type: 'manual',
+      valid: !!direccion.address_complete,
+    });
   };
 
+  // Actualiza la validez de la dirección cuando cambie el campo address_complete
   useEffect(() => {
-    if (direccion.address_complete === '') {
+    if (!direccion.address_complete) {
       setDireccion({ ...direccion, valid: false });
     }
-  }, [direccion.address_complete])
+  }, [direccion.address_complete]);
 
+  // Maneja el arrastre del marcador
   const handleMarkerDragEnd = (e) => {
     const lat = e.latLng.lat();
     const lng = e.latLng.lng();
@@ -67,10 +65,8 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
   return (
     <div>
       <LoadScript googleMapsApiKey={ENV.VITE_KEYMAPS} libraries={libraries}>
-        <Autocomplete
-          onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
-          onPlaceChanged={onPlaceChanged}
-        >
+        {/* Campo de autocompletado de dirección */}
+        <Autocomplete onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)} onPlaceChanged={onPlaceChanged}>
           <FormField
             id="direccion"
             label="Dirección"
@@ -80,10 +76,11 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
             value={direccion.address_complete}
             onChange={(e) => setDireccion({ ...direccion, address_complete: e.target.value })}
           />
-
         </Autocomplete>
+
+        {/* Campo de piso */}
         <FormField
-          id="iso"
+          id="piso"
           label="Piso"
           type="text"
           icon={<BiLogoGoogle />}
@@ -91,7 +88,8 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
           value={direccion.piso}
           onChange={(e) => setDireccion({ ...direccion, piso: e.target.value })}
         />
-        {/* Usamos una fila y columnas para organizar el texto y el botón */}
+
+        {/* Instrucciones y botón de selección manual */}
         <Row className="mb-3">
           <Col xs={12} md={8}>
             <p>
@@ -112,6 +110,7 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
           </Col>
         </Row>
 
+        {/* Mapa con marcador */}
         <GoogleMap
           mapContainerStyle={{ width: "100%", height: "400px" }}
           center={coordinates}
@@ -120,15 +119,14 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
         >
           {coordinates.lat && (
             <Marker
-              key={1}
               position={coordinates}
-              draggable={true} // Permite que el marcador sea arrastrado
-              onDragEnd={handleMarkerDragEnd} // Actualiza las coordenadas cuando se arrastra el marcador
+              draggable={true}
+              onDragEnd={handleMarkerDragEnd}
             />
           )}
         </GoogleMap>
       </LoadScript>
-    </div >
+    </div>
   );
 };
 
