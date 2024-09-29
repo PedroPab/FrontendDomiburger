@@ -73,6 +73,7 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
             type="text"
             icon={<BsFillGeoAltFill />}
             placeholder="Escribe la dirección..."
+            helpText="Escribe tu dirección para que podamos ubicarte mejor y selecciona una opción de la lista. Si no encuentras tu dirección, puedes seleccionarla manualmente mas abajo."
             value={direccion.address_complete}
             onChange={(e) => setDireccion({ ...direccion, address_complete: e.target.value })}
           />
@@ -83,9 +84,11 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
           id="piso"
           label="Piso"
           type="text"
+          required={false}
           icon={<BiLogoGoogle />}
           placeholder="Escribe tu piso de la casa..."
           value={direccion.piso}
+          helpText="Escribe el piso de tu casa para ser mas facil la entrega. Lo puedes omitir :)"
           onChange={(e) => setDireccion({ ...direccion, piso: e.target.value })}
         />
 
