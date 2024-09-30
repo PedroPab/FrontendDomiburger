@@ -1,7 +1,8 @@
-import { Button, Form, Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
+import { Button, Form, Row, Col, Spinner } from 'react-bootstrap';
 import { findClientForPhone } from "../../../Utils/api/findClientPhone";
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 import { toast } from 'react-toastify';
 
 const BuscadorCliente = ({
@@ -12,24 +13,36 @@ const BuscadorCliente = ({
   setDataCliente,
   visibleDataClient = true
 }) => {
+  const [isLoading, setIsLoading] = useState(false); // Para manejar el estado de carga
 
   const buscarCliente = async () => {
-    const dataClient = await findClientForPhone(telefono, token);
-    if (!dataClient) {
-      setDataCliente(null);
-      toast.error('Cliente no encontrado')
-    } else {
-      setDataCliente(dataClient);
-      console.log(dataClient)
-      toast.success('Cliente encontrado')
+    if (!telefono) {
+      toast.error("Por favor ingresa un número de teléfono válido.");
+      return;
+    }
+    setIsLoading(true); // Mostrar spinner
+    try {
+      const dataClient = await findClientForPhone(telefono, token);
+      if (!dataClient) {
+        setDataCliente(null);
+        toast.error('Cliente no encontrado');
+      } else {
+        setDataCliente(dataClient);
+        toast.success('Cliente encontrado');
+      }
+    } catch (error) {
+      toast.error("Error al buscar cliente.");
+    } finally {
+      setIsLoading(false); // Ocultar spinner
     }
   };
+
   const manejarEnvio = (event) => {
     event.preventDefault();
-    // Aquí tu lógica de envío, por ejemplo, procesar los datos del formulario.
+    // Lógica adicional para manejar el envío
   };
+
   const handleKeyDown = (event) => {
-    // Cancela el evento de submit si la tecla presionada es Enter
     if (event.key === 'Enter') {
       event.preventDefault();
     }
@@ -38,63 +51,60 @@ const BuscadorCliente = ({
   const DataClient = () => {
     return (
       <>
-        {
-          dataCliente || visibleDataClient ?
-            <div>
-              <p>Nombre: {dataCliente?.name}</p>
-              <p>Teléfono: {dataCliente?.phone}</p>
-              <p>Id cliente: {dataCliente?.id}</p>
-              <p>Cantidad de pedidos: {dataCliente?.orders?.length}</p>
-            </div>
-            :
-            <div>
-              <p>Cliente no encontrado</p>
-            </div>}
+        {dataCliente ? (
+          <div className="p-3 mt-3 border rounded bg-light">
+            <h5>Datos del Cliente</h5>
+            <p><strong>Nombre:</strong> {dataCliente?.name}</p>
+            <p><strong>Teléfono:</strong> {dataCliente?.phone}</p>
+            <p><strong>ID cliente:</strong> {dataCliente?.id}</p>
+            <p><strong>Cantidad de pedidos:</strong> {dataCliente?.orders?.length}</p>
+          </div>
+        ) : (
+          <div className="p-3 mt-3 border rounded bg-light">
+            <p>Cliente no encontrado</p>
+          </div>
+        )}
       </>
-    )
-  }
+    );
+  };
 
   return (
-    <div className='m-3'>
-      <h3>Buscar Cliente</h3>
-      {/* nunca mandar info al hacer submit */}
-      <Form onSubmit={manejarEnvio} >
+    <>
+      <h3 className="mb-4">Buscar Cliente</h3>
+      <Form onSubmit={manejarEnvio}>
         <Form.Group controlId="formTelefono">
           <Row>
             <Form.Label>Teléfono:</Form.Label>
-            {/* Alineamos de forma vertical el input y el botón */}
             <Row className="align-items-center">
-              <Col>
+              <Col xs={12} md={8}>
                 <PhoneInput
-                  placeholder="Enter phone number"
+                  placeholder="Ingresa el número de teléfono"
                   value={telefono}
                   onChange={setTelefono}
-                  // Añade aquí las clases de Bootstrap que necesites, por ejemplo:
-                  // className="form-control"
-                  // inputClass="form-control"
-                  // buttonClass="form-control"
                   country="CO"
                   defaultCountry="CO"
-                  // className="mi-clase-personalizada-phone-input"
                   inputComponent={Form.Control}
                   onKeyDown={handleKeyDown}
                 />
               </Col>
-              <Col>
-                <Button variant="primary" onClick={() => buscarCliente()}>
-                  Buscar Cliente
+              <Col xs={12} md={4}>
+                <Button
+                  variant="primary"
+                  onClick={buscarCliente}
+                  disabled={isLoading} // Deshabilitar mientras se carga
+                  className="w-100"
+                >
+                  {isLoading ? <Spinner animation="border" size="sm" /> : "Buscar Cliente"}
                 </Button>
-
               </Col>
             </Row>
           </Row>
         </Form.Group>
       </Form>
-      {/* si visibleDataClient es true podemos mostrar lo demás */}
-      {visibleDataClient &&
-        <DataClient />
-      }
-    </div>
+
+      {/* Mostrar los datos del cliente si visibleDataClient es true */}
+      {visibleDataClient && <DataClient />}
+    </>
   );
 };
 
