@@ -1,4 +1,5 @@
-import { Form } from 'react-bootstrap';
+import FormField from '../../FormField';
+import { IoTicketSharp } from "react-icons/io5";
 
 const InputCodigoText = ({ codigo, setCodigo, ButtonComponent }) => {
   const handleChange = (e) => {
@@ -8,26 +9,19 @@ const InputCodigoText = ({ codigo, setCodigo, ButtonComponent }) => {
   };
 
   return (
-    <div className='m-3'>
-      <Form.Group controlId="formCodigo">
-        <Form.Label>Código:</Form.Label>
-        <div className="d-flex align-items-center">
-          <Form.Control
-            type="text"
-            value={codigo}
-            onChange={handleChange}
-            placeholder="Introduce el código"
-            aria-describedby="codigoHelpBlock"
-            className="me-2" // Agrega un margen a la derecha
-          />
-          {ButtonComponent}
-        </div>
-        <Form.Text id="codigoHelpBlock" muted>
-          Introduce el código sin espacios.
-        </Form.Text>
-      </Form.Group>
-    </div>
-  );
+    <FormField
+      id="formCodigo"
+      label="Código"
+      type="text"
+      placeholder="Introduce el código"
+      value={codigo}
+      onChange={handleChange}
+      icon={<IoTicketSharp />}
+      helpText="Introduce el código sin espacios."
+      agregado2={ButtonComponent}
+    >
+    </FormField>
+  )
 };
 
 export default InputCodigoText;
