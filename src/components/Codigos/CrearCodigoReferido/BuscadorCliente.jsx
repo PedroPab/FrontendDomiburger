@@ -54,31 +54,29 @@ const BuscadorCliente = ({
       <h3 className="mb-4">Buscar Cliente</h3>
       <Form onSubmit={manejarEnvio} >
         <Form.Group controlId="formTelefono">
-          <Row>
-            <Form.Label>Teléfono:</Form.Label>
-            <Row className="align-items-center">
-              <Col xs={12} md={8}>
-                <PhoneInput
-                  placeholder="Ingresa el número de teléfono"
-                  value={telefono}
-                  onChange={setTelefono}
-                  country="CO"
-                  defaultCountry="CO"
-                  inputComponent={Form.Control}
-                  onKeyDown={handleKeyDown}
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button
-                  variant="primary"
-                  onClick={buscarCliente}
-                  disabled={isLoading} // Deshabilitar mientras se carga
-                  className="w-100"
-                >
-                  {isLoading ? <Spinner animation="border" size="sm" /> : "Buscar Cliente"}
-                </Button>
-              </Col>
-            </Row>
+          <Form.Label>Teléfono:</Form.Label>
+          <Row className="align-items-center">
+            <Col xs={12} md={8}>
+              <PhoneInput
+                placeholder="Ingresa el número de teléfono"
+                value={telefono}
+                onChange={setTelefono}
+                country="CO"
+                defaultCountry="CO"
+                inputComponent={Form.Control}
+                onKeyDown={handleKeyDown}
+              />
+            </Col>
+            <Col xs={12} md={4}>
+              <Button
+                variant="primary"
+                onClick={buscarCliente}
+                disabled={isLoading} // Deshabilitar mientras se carga
+                className="w-100"
+              >
+                {isLoading ? <Spinner animation="border" size="sm" /> : "Buscar Cliente"}
+              </Button>
+            </Col>
           </Row>
         </Form.Group>
       </Form>

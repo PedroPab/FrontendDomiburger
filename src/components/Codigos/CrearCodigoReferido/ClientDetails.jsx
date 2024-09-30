@@ -10,7 +10,7 @@ const ClientDetails = ({ cliente }) => {
   if (!cliente) return null;
 
   return (
-    <Accordion defaultActiveKey="0" className="mt-3">
+    <Accordion defaultActiveKey="0" className="mt-4 mb-4">
       <Accordion.Item eventKey="1">
         <Accordion.Header>Detalles del Cliente</Accordion.Header>
         <Accordion.Body>
@@ -18,13 +18,22 @@ const ClientDetails = ({ cliente }) => {
             {name && (
               <ListGroupItem>
                 <FaUser className="me-2" />
-                <strong>Nombre:</strong>
+                <strong>Nombre:</strong> {name}
               </ListGroupItem>
             )}
             {phone && (
               <ListGroupItem>
                 <FaPhone className="me-2" />
-                <strong>Teléfono:</strong> {phone}
+                <strong>Teléfono:</strong>
+                <a href={`tel:${phone}`} className="ms-2">{phone}</a>
+              </ListGroupItem>
+            )}
+            {/* enlace para whatsppa */}
+            {phone && (
+              <ListGroupItem>
+                <FaPhone className="me-2" />
+                <strong>Whatsapp:</strong>
+                <a href={`https://wa.me/${phone}`} target="_blank" className="ms-2" rel="noreferrer">{phone}</a>
               </ListGroupItem>
             )}
             {id && (
@@ -49,7 +58,7 @@ const ClientDetails = ({ cliente }) => {
             {/* Boton para ir al ver mas datos del cliente en otra pestaña */}
             {id && (
               <ListGroupItem>
-                <Link to={`/clientes/${id}`} className="btn btn-primary w-100">
+                <Link target="_blank" to={`/clientes/${id}`} className="btn btn-primary w-100">
                   Ver más detalles
                 </Link>
               </ListGroupItem>
