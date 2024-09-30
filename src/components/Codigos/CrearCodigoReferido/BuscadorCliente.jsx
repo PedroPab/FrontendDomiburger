@@ -4,6 +4,7 @@ import { findClientForPhone } from "../../../Utils/api/findClientPhone";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import { toast } from 'react-toastify';
+import ClientDetails from './ClientDetails';
 
 const BuscadorCliente = ({
   telefono,
@@ -48,30 +49,10 @@ const BuscadorCliente = ({
     }
   };
 
-  const DataClient = () => {
-    return (
-      <>
-        {dataCliente ? (
-          <div className="p-3 mt-3 border rounded bg-light">
-            <h5>Datos del Cliente</h5>
-            <p><strong>Nombre:</strong> {dataCliente?.name}</p>
-            <p><strong>Teléfono:</strong> {dataCliente?.phone}</p>
-            <p><strong>ID cliente:</strong> {dataCliente?.id}</p>
-            <p><strong>Cantidad de pedidos:</strong> {dataCliente?.orders?.length}</p>
-          </div>
-        ) : (
-          <div className="p-3 mt-3 border rounded bg-light">
-            <p>Cliente no encontrado</p>
-          </div>
-        )}
-      </>
-    );
-  };
-
   return (
     <>
       <h3 className="mb-4">Buscar Cliente</h3>
-      <Form onSubmit={manejarEnvio}>
+      <Form onSubmit={manejarEnvio} >
         <Form.Group controlId="formTelefono">
           <Row>
             <Form.Label>Teléfono:</Form.Label>
@@ -103,7 +84,9 @@ const BuscadorCliente = ({
       </Form>
 
       {/* Mostrar los datos del cliente si visibleDataClient es true */}
-      {visibleDataClient && <DataClient />}
+      {visibleDataClient &&
+        <ClientDetails cliente={dataCliente} />
+      }
     </>
   );
 };
