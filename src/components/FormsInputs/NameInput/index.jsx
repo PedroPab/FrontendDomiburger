@@ -1,4 +1,5 @@
-import { Form } from 'react-bootstrap';
+import FormField from '../../FormField';
+import { FaUser } from 'react-icons/fa';
 
 const NameInput = ({ name, setName }) => {
   const handleChange = (e) => {
@@ -8,22 +9,18 @@ const NameInput = ({ name, setName }) => {
   };
 
   return (
-    <div className='m-3'>
-      <Form.Group controlId="formCodigo">
-        <Form.Label>Nombre:</Form.Label>
-        <Form.Control
-          type="text"
-          value={name}
-          onChange={handleChange}
-          placeholder="Nombre Completo"
-          aria-describedby="codigoHelpBlock"
-        />
-        <Form.Text id="codigoHelpBlock" muted>
-          Que bonito nombre.
-        </Form.Text>
-      </Form.Group>
-    </div>
-  );
+    <FormField
+      id="formNombre"
+      label="Nombre"
+      type="text"
+      icon={<FaUser />}
+      placeholder="Nombre Completo"
+      value={name}
+      onChange={handleChange}
+      required
+      helpText="Que bonito nombre ❤"
+    />
+  )
 };
 
 export default NameInput;
