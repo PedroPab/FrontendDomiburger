@@ -8,22 +8,20 @@ const PaymentMethodInput = ({ paymentMethod, setPaymentMethod }) => {
   };
 
   return (
-    <div className='m-3'>
-      <Form.Group controlId="formCodigo">
-        <Form.Label>Metodo de pago:</Form.Label>
-        <Form.Control
-          as="select"
-          value={paymentMethod}
-          onChange={handleChange}
-        >
-          <option value="Efectivo">Efectivo</option>
-          <option value="Transferencia">Transferencia</option>
-        </Form.Control>
-        <Form.Text id="codigoHelpBlock" muted>
-          Si es transfrencia, la cuenta te llegara por un mensaje.
-        </Form.Text>
-      </Form.Group>
-    </div>
+    <Form.Group controlId="formCodigo">
+      <Form.Label>Metodo de pago</Form.Label>
+      <Form.Control
+        as="select"
+        value={paymentMethod}
+        onChange={handleChange}
+      >
+        <option value="Efectivo">Efectivo</option>
+        <option value="Transferencia">Transferencia</option>
+      </Form.Control>
+      <Form.Text id="codigoHelpBlock" muted>
+        Si es transfrencia, la cuenta te llegara por un mensaje.
+      </Form.Text>
+    </Form.Group>
   );
 };
 
