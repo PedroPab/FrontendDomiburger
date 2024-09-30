@@ -1,30 +1,40 @@
 import CardProduct from "../CardProduct";
-
 import imgHamburguesa from './../../assets/img/hamburguesa.png';
-import imgCombo from './../../assets/img/combo.png'
-
+import imgCombo from './../../assets/img/combo.png';
 import { PRODUCTS } from '../../Utils/constList';
 
 function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }) {
   return (
-    <div className='m-3'>
-
+    <>
+      <br />
+      <hr />
       <section className="mb-3">
-        <CardProduct
-          img={imgHamburguesa}
-          count={listaProductosOrder.filter(e => e.name == PRODUCTS.Hamburguesa).length}
-          incrementCount={() => (incrementCount(PRODUCTS.Hamburguesa))}
-          decrementCount={() => (decrementCount(PRODUCTS.Hamburguesa))}
-        />
+        <h3 className="text-center mb-4">Nuestros Productos</h3>
+        <div className="d-flex flex-column flex-md-row justify-content-around">
+          <div className="mb-4 mb-md-0">
+            <CardProduct
+              title="Hamburguesa Artesanal"
+              description="Deliciosa hamburguesa con ingredientes frescos y pan artesanal."
+              img={imgHamburguesa}
+              count={listaProductosOrder.filter(e => e.name === PRODUCTS.Hamburguesa).length}
+              incrementCount={() => incrementCount(PRODUCTS.Hamburguesa)}
+              decrementCount={() => decrementCount(PRODUCTS.Hamburguesa)}
+            />
+          </div>
+          <div className="mb-4 mb-md-0">
+            <CardProduct
+              title="Combo Especial"
+              description="Combo con hamburguesa, papas y bebida. ¡Perfecto para una comida completa!"
+              img={imgCombo}
+              count={listaProductosOrder.filter(e => e.name === PRODUCTS.Combo).length}
+              incrementCount={() => incrementCount(PRODUCTS.Combo)}
+              decrementCount={() => decrementCount(PRODUCTS.Combo)}
+            />
+          </div>
+        </div>
       </section>
-      <section className="mb-3">
-        <CardProduct
-          img={imgCombo}
-          count={listaProductosOrder.filter(e => e.name == PRODUCTS.Combo).length}
-          incrementCount={() => (incrementCount(PRODUCTS.Combo))}
-          decrementCount={() => (decrementCount(PRODUCTS.Combo))} />
-      </section>
-    </div>
-  )
+    </>
+  );
 }
+
 export default ProductsSection;

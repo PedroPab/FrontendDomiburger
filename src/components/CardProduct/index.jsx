@@ -1,38 +1,49 @@
 import { Card, Button, Image } from 'react-bootstrap';
-// import { BsPlus, BsDash } from 'react-icons/bs';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 
-const CardProduct = ({ img, count, incrementCount, decrementCount }) => {
-
+const CardProduct = ({ img, count, incrementCount, decrementCount, title, description }) => {
   return (
-    <Card className="  flex justify-between" style={{ width: '100%' }}>
-      <Card.Body style={{ width: '100%', padding: '10px' }} className="d-flex justify-content-between align-items-center">
+    <Card className="shadow-sm border-0" style={{ width: '100%', minHeight: '200px' }}>
+      <Card.Body className="d-flex align-items-center justify-content-between p-3 flex-column">
+        {/* Título y descripción del producto */}
+        <div className="text-center mb-3">
+          <h5>{title}</h5>
+          <p className="text-muted" style={{ fontSize: '0.9rem' }}>{description}</p>
+        </div>
+
+        {/* Imagen del producto */}
         <Image
           src={img}
-          alt="Burger"
+          alt={title}
+          className="product-image"
+          roundedCircle
           style={{
-            width: '5rem', height: '5rem'
+            width: '5rem',
+            height: '5rem',
+            objectFit: 'cover',
+            cursor: 'pointer',
+            transition: 'transform 0.2s ease',
           }}
           onClick={incrementCount}
         />
-        <div className="d-flex align-items-center justify-content-evenly" style={{ width: '100%' }}>
+
+        {/* Control de cantidad */}
+        <div className="d-flex align-items-center justify-content-between mt-3" style={{ width: '50%' }}>
           <Button
-            variant=""
-            style={{
-              borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '50px', height: '50px',
-            }} onClick={decrementCount}
-            className="rounded-button"
+            variant="outline-danger"
+            className="rounded-circle d-flex align-items-center justify-content-center"
+            style={{ width: '45px', height: '45px' }}
+            onClick={decrementCount}
+            disabled={count === 0} // Deshabilitar cuando count es 0
           >
             <FaMinus />
           </Button>
-          <span >{count}</span>
+          <span className="mx-3 font-weight-bold" style={{ fontSize: '1.2rem' }}>{count}</span>
           <Button
-            variant=""
-            style={{
-              borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '50px', height: '50px',
-            }}
+            variant="outline-success"
+            className="rounded-circle d-flex align-items-center justify-content-center"
+            style={{ width: '45px', height: '45px' }}
             onClick={incrementCount}
-            className="rounded-button"
           >
             <FaPlus />
           </Button>
