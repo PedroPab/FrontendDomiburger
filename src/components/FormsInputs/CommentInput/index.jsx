@@ -1,4 +1,5 @@
-import { Form } from 'react-bootstrap';
+import FormField from '../../FormField';
+import { FaComment } from 'react-icons/fa';
 
 const CommentInput = ({ comment, setComment }) => {
   const handleChange = (e) => {
@@ -8,21 +9,18 @@ const CommentInput = ({ comment, setComment }) => {
   };
 
   return (
-    <div className='m-3'>
-      <Form.Group controlId="formCodigo">
-        <Form.Label>Comentario:</Form.Label>
-        <Form.Control
-          as="textarea"
-          value={comment}
-          onChange={handleChange}
-          placeholder="Algún comentario del cliente"
-        />
-        <Form.Text id="codigoHelpBlock" muted>
-          La opinión del cliente es importante. xd
-        </Form.Text>
-      </Form.Group>
-    </div>
-  );
+    <FormField
+      id="formComentario"
+      label="Comentario"
+      type="text"
+      icon={<FaComment />}
+      placeholder="Algún comentario del cliente"
+      value={comment}
+      onChange={handleChange}
+      required
+      helpText="Un comentario para hacer tu pedido mas personalizado"
+    />
+  )
 };
 
 export default CommentInput;
