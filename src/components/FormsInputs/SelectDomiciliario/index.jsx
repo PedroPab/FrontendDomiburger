@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import { Form } from 'react-bootstrap';
 import { RecepcionContexto } from '../../../Context/RecepcionContex';
+import { MdDeliveryDining } from "react-icons/md";
+import FormField from '../../FormField';
 
 const SelectDomiciliario = ({ selectDomiciliario, setSelectDomiciliario }) => {
   const contextRecepcion = useContext(RecepcionContexto)
@@ -25,23 +26,17 @@ const SelectDomiciliario = ({ selectDomiciliario, setSelectDomiciliario }) => {
     setSelectDomiciliario(rta);
   };
 
-  return (
-    <div className='m-3'>
-      <Form.Group controlId="formCodigo">
-        <Form.Label>Seleccionar domiciliario:</Form.Label>
-        <Form.Control
-          as="select"
-          value={selectDomiciliario}
-          onChange={handleChange}
-        >
-          <OpcionesDomiciliarios />
-        </Form.Control>
-        <Form.Text id="codigoHelpBlock" muted>
-          para ahorrar tiempo, si ya sebes que domiciliario lo va a llevar.
-        </Form.Text>
-      </Form.Group>
-    </div>
-  );
+  return <FormField
+    as="select"
+    id="formDomiciliario"
+    label="Seleccionar domiciliario:"
+    value={selectDomiciliario}
+    onChange={handleChange}
+    helpText="para ahorrar tiempo, si ya sebes que domiciliario va a llevar el pedido."
+    icon={<MdDeliveryDining />}
+  >
+    <OpcionesDomiciliarios />
+  </FormField>
 };
 
 export default SelectDomiciliario;

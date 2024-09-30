@@ -1,7 +1,7 @@
 import { InputGroup, FormControl, Form } from 'react-bootstrap';
 
 const FormField = (props) => {
-  const { id, label, type, placeholder, value, onChange, icon, feedback, feedbackType, agregado, agregado2, required, helpText } = props;
+  const { as, id, label, type, placeholder, value, onChange, icon, feedback, feedbackType, agregado, agregado2, required, helpText } = props;
 
   return (
     <Form.Group className="mb-3">
@@ -12,6 +12,7 @@ const FormField = (props) => {
         </InputGroup.Text>
         {agregado}
         <FormControl
+          as={as}
           id={id}
           type={type}
           placeholder={placeholder}
