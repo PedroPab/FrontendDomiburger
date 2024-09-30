@@ -20,6 +20,7 @@ const BuscadorCliente = ({
       toast.error('Cliente no encontrado')
     } else {
       setDataCliente(dataClient);
+      console.log(dataClient)
       toast.success('Cliente encontrado')
     }
   };

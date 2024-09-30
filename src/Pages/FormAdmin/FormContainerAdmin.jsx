@@ -68,12 +68,20 @@ const FormContainerAdmin = ({ token, userId }) => {
     }
 
     if (address) {
+      console.log(`[ ~ useEffect ~ address]`, address)
       const { address_complete, coordinates } = address;
       const newDireccion = {
         address_complete,
         direccionInput: address_complete,
         coordinates
       };
+      setCoordinates(coordinates);
+      setInputDataDireccion({
+        ...inputDataDireccion,
+        address_complete,
+        valid: true,
+        type: 'autocompleted',
+      });
 
       // Actualizar el estado una sola vez en lugar de múltiples veces
       setDataAdrees(newDireccion);
@@ -126,17 +134,6 @@ const FormContainerAdmin = ({ token, userId }) => {
   }, [listaProductosOrder])
 
 
-  // const calcularDataMatrix = (coordinates) => {
-  //   const origin = `${coordinates.lat},${coordinates.lng}`
-  //   const destination = '6.3017314,-75.5743796'
-  //   const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin}&destinations=${destination}&key=${ENV.VITE_KEYMAPS}`
-  //   const response = fetch(url)
-  //     .then(response => response.json())
-  //     .then(data => data)
-  //     .catch(error => console.error(error))
-
-  //   return response
-  // }
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
 
@@ -292,7 +289,7 @@ const FormContainerAdmin = ({ token, userId }) => {
         dataCliente={dataCliente}
         setDataCliente={setDataCliente}
         token={token}
-        visibleDataClient={false}
+        visibleDataClient={true}
       />
 
       <NameInput
