@@ -6,8 +6,6 @@ import { PRODUCTS } from '../../Utils/constList';
 function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }) {
   return (
     <>
-      <br />
-      <hr />
       <section className="mb-3">
         <h3 className="text-center mb-4">Nuestros Productos</h3>
         <div className="d-flex flex-column flex-md-row justify-content-around">

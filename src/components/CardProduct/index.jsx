@@ -18,8 +18,8 @@ const CardProduct = ({ img, count, incrementCount, decrementCount, title, descri
           className="product-image"
           roundedCircle
           style={{
-            width: '5rem',
-            height: '5rem',
+            width: '9rem',
+            height: '9rem',
             objectFit: 'cover',
             cursor: 'pointer',
             transition: 'transform 0.2s ease',

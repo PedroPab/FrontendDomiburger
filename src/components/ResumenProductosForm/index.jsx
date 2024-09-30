@@ -69,47 +69,45 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio }
 
 
   return (
-    <div className='m-3'>
-      <Card.Body>
-        <Card.Title style={{ fontSize: '20px' }}>RESUMEN DE PEDIDO</Card.Title>
-        <div id="totalResumido">
-          <Table striped>
-            <thead>
+    <Card.Body>
+      <Card.Title style={{ fontSize: '20px' }}>RESUMEN DE PEDIDO</Card.Title>
+      <div id="totalResumido">
+        <Table striped>
+          <thead>
+            <tr>
+              <th>PRODUCTOS</th>
+              <th>MAS...</th>
+              <th>PRECIO</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listaProducto && listaProducto.map((producto, index) => (
+              <ProductoRow
+                key={index}
+                producto={producto}
+                adiciones={adiciones}
+                setListaProducto={setListaProducto}
+                onChangeSelectAdicion={onChangeSelectAdicion}
+                onClicAdicion={onClicAdicion}
+              />
+            ))}
+            {
+              dataDomicilio &&
               <tr>
-                <th>PRODUCTOS</th>
-                <th>MAS...</th>
-                <th>PRECIO</th>
+                <th>Domicilio</th>
+                <th>{dataDomicilio.timeText}</th>
+                <th>{dataDomicilio.price}</th>
               </tr>
-            </thead>
-            <tbody>
-              {listaProducto && listaProducto.map((producto, index) => (
-                <ProductoRow
-                  key={index}
-                  producto={producto}
-                  adiciones={adiciones}
-                  setListaProducto={setListaProducto}
-                  onChangeSelectAdicion={onChangeSelectAdicion}
-                  onClicAdicion={onClicAdicion}
-                />
-              ))}
-              {
-                dataDomicilio &&
-                <tr>
-                  <th>Domicilio</th>
-                  <th>{dataDomicilio.timeText}</th>
-                  <th>{dataDomicilio.price}</th>
-                </tr>
-              }
-            </tbody>
-            <tfoot>
-              <th>TOTAL</th>
-              <th></th>
-              <th>{formatearNumeroConPuntos(totalCompra)}</th>
-            </tfoot>
-          </Table>
-        </div>
-      </Card.Body>
-    </div>
+            }
+          </tbody>
+          <tfoot>
+            <th>TOTAL</th>
+            <th></th>
+            <th>{formatearNumeroConPuntos(totalCompra)}</th>
+          </tfoot>
+        </Table>
+      </div>
+    </Card.Body>
   );
 };
 
