@@ -38,9 +38,8 @@ const FormContainerAdmin = ({ token, userId }) => {
     valid: false,
   });
   // todos los dato que se envían al servidor
-  const [data, setData] = useState({});
   const [dataCliente, setDataCliente] = useState(null);
-  const [dataAdrees, setDataAdrees] = useState({});//para guardar la direccion del cliente
+  // const [dataAdrees, setDataAdrees] = useState({});//para guardar la direccion del cliente
   const [telefono, setTelefono] = useState('');
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
@@ -51,11 +50,6 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (telefono) {
-      setData({ ...data, phone: telefono })
-    }
-  }, [telefono])
 
   //cada vez que cambie el dato del cliente (cuando lo busquemos)
   useEffect(() => {
@@ -64,17 +58,17 @@ const FormContainerAdmin = ({ token, userId }) => {
     // Lógica condicional agrupada por tipo de dato
     if (name) {
       setName(name);
-      setData(prevData => ({ ...prevData, name }));
     }
 
     if (address) {
       console.log(`[ ~ useEffect ~ address]`, address)
       const { address_complete, coordinates } = address;
-      const newDireccion = {
-        address_complete,
-        direccionInput: address_complete,
-        coordinates
-      };
+      // const newDireccion = {
+      //   address_complete,
+      //   // direccionInput: address_complete,
+      //   coordinates,
+      //   // piso: address.piso,
+      // };
       setCoordinates(coordinates);
       setInputDataDireccion({
         ...inputDataDireccion,
@@ -84,55 +78,30 @@ const FormContainerAdmin = ({ token, userId }) => {
       });
 
       // Actualizar el estado una sola vez en lugar de múltiples veces
-      setDataAdrees(newDireccion);
       // setDireccion(newDireccion);
     }
 
     if (phone) {
       setTelefono(phone);
-      setData(prevData => ({ ...prevData, phone }));
     }
   }, [dataCliente]);
 
-  useEffect(() => {
-    if (name) {
-      setData({ ...data, name: name })
-    }
-  }, [name])
+
+
+
 
   useEffect(() => {
-    if (paymentMethod) {
-      setData({ ...data, fee: paymentMethod })
-    }
-  }, [paymentMethod])
-
-  useEffect(() => {
-    if (comment) {
-      setData({ ...data, note: comment })
-    }
-  }, [comment])
-
-  useEffect(() => {
-    if (dataAdrees) {
-      setData({ ...data, address: dataAdrees })
-    }
-  }, [dataAdrees])
-
-  useEffect(() => {
-  }, [data])
+    // //agragameos la direccion al objeto 
+    // const address = {
+    //   address_complete: inputDataDireccion.address_complete,
+    //   // piso: inputDataDireccion?.piso,
+    //   coordinates: coordinates
+    // }
+  }, [inputDataDireccion])
 
 
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
   const [dataDomicilio, setDataDomicilio] = useState({});
-
-  useEffect(() => {
-    if (listaProductosOrder.length > 0) {
-
-      setData({ ...data, order: listaProductosOrder })
-    }
-
-  }, [listaProductosOrder])
-
 
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
@@ -152,6 +121,7 @@ const FormContainerAdmin = ({ token, userId }) => {
     obtenerDistancia(centerOrigin, coordinates)
       .then(dataMatrix => {
         if (dataMatrix) {
+          toast.success('Distancia calculada')
           const timeText
             = calcularTiempo(dataMatrix.distance.value)
           const price = calcularPrecio(dataMatrix.distance.value)
@@ -166,7 +136,7 @@ const FormContainerAdmin = ({ token, userId }) => {
           })
         }
       })
-      .catch(error => console.error(error))
+      .catch(error => toast.error(error))
 
   }, [inputDataDireccion])
 
@@ -194,14 +164,17 @@ const FormContainerAdmin = ({ token, userId }) => {
     setListaProductosOrder(listaProducts.reverse())
   };
 
-  const sendOrder = async (dataOrder) => {
-    let order = {
-      "fee": paymentMethod,
-      note: comment,
-      ...dataOrder,
+  const sendOrder = async () => {
+    let dataOrder = {}
+    dataOrder.phone = telefono
+    dataOrder.name = name
+    dataOrder.address = {
+      address_complete: inputDataDireccion.address_complete,
+      coordinates: coordinates
     }
-    //tenemos que transformar el dato de orden para que sea aceptado por el servidor
-    order.order = order?.order?.map(e => {
+    dataOrder.fee = paymentMethod
+    dataOrder.note = comment
+    dataOrder.order = listaProductosOrder.map(e => {
       return {
         id: e.id,
         price: e.price,
@@ -211,17 +184,35 @@ const FormContainerAdmin = ({ token, userId }) => {
       }
     })
 
-    if (order.address.direccionInput) {
-      delete order.address.direccionInput
-    }
+    selectDomiciliario ? dataOrder.domiciliario_asignado = { id: selectDomiciliario } : null
 
-    if (selectDomiciliario) {
-      order.domiciliario_asignado = { id: selectDomiciliario }
-    }
+    // let order = {
+    //   "fee": paymentMethod,
+    //   note: comment,
+    //   ...dataOrder,
+    // }
+    //tenemos que transformar el dato de orden para que sea aceptado por el servidor
+    // order.order = order?.order?.map(e => {
+    //   return {
+    //     id: e.id,
+    //     price: e.price,
+    //     modifique: e?.modifique?.map(e => { return { id: e.id, code: e?.code } }),
+    //     note: e.note,
+    //     code: e.code
+    //   }
+    // })
+
+    // if (order.address.direccionInput) {
+    //   delete order.address.direccionInput
+    // }
+
+    // if (selectDomiciliario) {
+    //   order.domiciliario_asignado = { id: selectDomiciliario }
+    // }
 
     try {
       setLoading(true);
-      const rta = await postOrder(order, token, true)
+      const rta = await postOrder(dataOrder, token, true)
       if (rta.statusCode && (rta.statusCode !== 200 || rta.statusCode !== 200)) {
         throw rta?.message
       }
@@ -236,6 +227,12 @@ const FormContainerAdmin = ({ token, userId }) => {
       setPaymentMethod('Efectivo')
       setSelectDomiciliario('')
       setDataCode(null)
+      setCoordinates(centerOrigin)
+      setInputDataDireccion({
+        address_complete: "",
+        piso: "",
+        valid: false,
+      });
 
     } catch (error) {
       console.log(error, '<=error');
@@ -340,7 +337,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       />
 
       <RegisterSaleButton
-        onClick={() => sendOrder(data)}
+        onClick={() => sendOrder()}
       />
 
       {/* un espacio de separación */}
