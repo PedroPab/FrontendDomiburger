@@ -76,9 +76,6 @@ const FormContainerAdmin = ({ token, userId }) => {
         valid: true,
         type: 'autocompleted',
       });
-
-      // Actualizar el estado una sola vez en lugar de múltiples veces
-      // setDireccion(newDireccion);
     }
 
     if (phone) {
@@ -89,15 +86,6 @@ const FormContainerAdmin = ({ token, userId }) => {
 
 
 
-
-  useEffect(() => {
-    // //agragameos la direccion al objeto 
-    // const address = {
-    //   address_complete: inputDataDireccion.address_complete,
-    //   // piso: inputDataDireccion?.piso,
-    //   coordinates: coordinates
-    // }
-  }, [inputDataDireccion])
 
 
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
@@ -186,29 +174,6 @@ const FormContainerAdmin = ({ token, userId }) => {
 
     selectDomiciliario ? dataOrder.domiciliario_asignado = { id: selectDomiciliario } : null
 
-    // let order = {
-    //   "fee": paymentMethod,
-    //   note: comment,
-    //   ...dataOrder,
-    // }
-    //tenemos que transformar el dato de orden para que sea aceptado por el servidor
-    // order.order = order?.order?.map(e => {
-    //   return {
-    //     id: e.id,
-    //     price: e.price,
-    //     modifique: e?.modifique?.map(e => { return { id: e.id, code: e?.code } }),
-    //     note: e.note,
-    //     code: e.code
-    //   }
-    // })
-
-    // if (order.address.direccionInput) {
-    //   delete order.address.direccionInput
-    // }
-
-    // if (selectDomiciliario) {
-    //   order.domiciliario_asignado = { id: selectDomiciliario }
-    // }
 
     try {
       setLoading(true);
