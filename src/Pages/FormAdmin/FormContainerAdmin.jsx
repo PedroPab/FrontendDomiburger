@@ -86,8 +86,6 @@ const FormContainerAdmin = ({ token, userId }) => {
 
 
 
-
-
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
   const [dataDomicilio, setDataDomicilio] = useState({});
 
@@ -161,7 +159,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       coordinates: coordinates
     }
     dataOrder.fee = paymentMethod
-    dataOrder.note = comment
+    comment ? dataOrder.note = comment : null
     dataOrder.order = listaProductosOrder.map(e => {
       return {
         id: e.id,

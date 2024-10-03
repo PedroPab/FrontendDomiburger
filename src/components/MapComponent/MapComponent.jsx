@@ -50,9 +50,7 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
 
   // Actualiza la validez de la dirección cuando cambie el campo address_complete
   useEffect(() => {
-    if (!direccion.address_complete) {
-      setDireccion({ ...direccion, valid: false });
-    }
+    setDireccion({ ...direccion, valid: false });
   }, [direccion.address_complete]);
 
   // Maneja el arrastre del marcador
