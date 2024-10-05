@@ -49,7 +49,7 @@ const FormContainerAdmin = ({ token, userId }) => {
   const [dataCode, setDataCode] = useState(null);
 
   const [isLoading, setLoading] = useState(false);
-
+  const [precioDeliveryManual, setPrecioDeliveryManual] = useState(null);
 
   //cada vez que cambie el dato del cliente (cuando lo busquemos)
   useEffect(() => {
@@ -166,6 +166,7 @@ const FormContainerAdmin = ({ token, userId }) => {
         code: e.code
       }
     })
+    precioDeliveryManual ? dataOrder.addressPrice = precioDeliveryManual : null
 
     selectDomiciliario ? dataOrder.domiciliario_asignado = { id: selectDomiciliario } : null
 
@@ -187,7 +188,9 @@ const FormContainerAdmin = ({ token, userId }) => {
       setPaymentMethod('Efectivo')
       setSelectDomiciliario('')
       setDataCode(null)
-      setCoordinates(centerOrigin)
+      setCoordinates({})
+      setPrecioDeliveryManual(null)
+      setDataDomicilio({})
       setInputDataDireccion({
         address_complete: "",
         piso: "",
@@ -293,8 +296,8 @@ const FormContainerAdmin = ({ token, userId }) => {
       <ResumenProductosForm
         listaProducto={listaProductosOrder}
         setListaProducto={setListaProductosOrder}
-        dataDomicilio={dataDomicilio}
-        setDataDomicilio={setDataDomicilio}
+        domicilio={[dataDomicilio, setDataDomicilio]}
+        addressPrice={[precioDeliveryManual, setPrecioDeliveryManual]}
       />
 
       <RegisterSaleButton

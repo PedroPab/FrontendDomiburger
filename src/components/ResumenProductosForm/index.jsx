@@ -5,7 +5,9 @@ import { UtilsApi } from './../../Utils/utilsApi';
 import { makeid } from '../../Utils/makeId';
 import formatearNumeroConPuntos from '../../Utils/formatearNumeroConPuntos';
 
-const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio, setDataDomicilio }) => {
+const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addressPrice }) => {
+  const [dataDomicilio, setDataDomicilio] = domicilio
+  const [precioDeliveryManual, setPrecioDeliveryManual] = addressPrice
   const [adiciones, setAdiciones] = useState([]);
 
   useEffect(() => {
@@ -48,14 +50,16 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio, 
       });
     }
 
-    if (dataDomicilio.price) {
+    if (typeof (precioDeliveryManual) === 'number') {
+      total += precioDeliveryManual
+    } else if (dataDomicilio.price >= 0) {
       total += dataDomicilio.price;
     }
 
     return total;
   };
 
-  const totalCompra = totalProductos();
+
 
   return (
     <Card.Body>
@@ -82,19 +86,30 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio, 
             ))}
             {
               dataDomicilio &&
+              dataDomicilio.timeText &&
               <tr>
                 <th>Domicilio</th>
-                <th>{dataDomicilio.timeText}</th>
+                <th>{dataDomicilio.timeText} kl:???</th>
                 <th>
                   <input
                     type="number"
                     min="0"
                     step="500"
-                    value={dataDomicilio.price}
-                    onChange={(e) => setDataDomicilio({ ...dataDomicilio, price: parseInt(e.target.value) })}
+                    value={precioDeliveryManual ?? dataDomicilio.price}
+                    onChange={(e) => {
+                      setPrecioDeliveryManual(parseInt(e.target.value) || 0);
+                    }
+                    }
                     className="form-control form-control-sm text-center"  // Aplicar estilos Bootstrap
                     style={{ width: '100px', display: 'inline-block' }}  // Ajustar el tamaño y alineación
                   />
+                  {/* boton para restablecer el precio */}
+                  <button
+                    className="btn btn-sm btn-primary"
+                    onClick={() => {
+                      setPrecioDeliveryManual(null)
+                    }}
+                  >Reset</button>
                 </th>
               </tr>
             }
@@ -102,7 +117,7 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio, 
           <tfoot>
             <th>TOTAL</th>
             <th></th>
-            <th>{formatearNumeroConPuntos(totalCompra)}</th>
+            <th>{formatearNumeroConPuntos(totalProductos())}</th>
           </tfoot>
         </Table>
       </div>
