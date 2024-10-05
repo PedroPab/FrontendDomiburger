@@ -5,14 +5,12 @@ import { BiLogoGoogle } from "react-icons/bi";
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { Button, Col, Row } from "react-bootstrap";
 
-// const ENV = import.meta.env;
-
-// const libraries = ["places"];
-
 const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
   const [direccion, setDireccion] = stateDireccion;
   const [manualSelect, setManualSelect] = useState(false);
   const autocompleteRef = useRef(null);
+
+  const center = { lat: coordinates.lat || 4.711, lng: coordinates.lng || -74.0721 }; // Coordenadas de Bogotá por defecto
 
   // Maneja la selección de un lugar con autocompletado
   const onPlaceChanged = () => {
@@ -29,7 +27,6 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
       type: 'autocompleted',
     });
 
-    // Desactiva el modo de selección manual si se selecciona una dirección con autocompletado
     setManualSelect(false);
   };
 
@@ -62,9 +59,23 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
 
   return (
     <div>
-      {/* <LoadScript googleMapsApiKey={ENV.VITE_KEYMAPS} libraries={libraries}> */}
-      {/* Campo de autocompletado de dirección */}
-      <Autocomplete onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)} onPlaceChanged={onPlaceChanged}>
+      <Autocomplete
+        onLoad={(autocomplete) => {
+          autocompleteRef.current = autocomplete;
+          autocomplete.setOptions({
+            bounds: {
+              north: center.lat + 1,
+              south: center.lat - 1,
+              east: center.lng + 1,
+              west: center.lng - 1,
+            },
+            componentRestrictions: { country: ["CO"] },
+            fields: ["geometry", "name", "formatted_address", "address_components", "types"],
+            // strictBounds: true, // Activa esto si solo quieres lugares dentro del área definida
+          });
+        }}
+        onPlaceChanged={onPlaceChanged}
+      >
         <FormField
           id="direccion"
           label="Dirección"
@@ -77,7 +88,6 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
         />
       </Autocomplete>
 
-      {/* Campo de piso */}
       <FormField
         id="piso"
         label="Piso"
@@ -90,7 +100,6 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
         onChange={(e) => setDireccion({ ...direccion, piso: e.target.value })}
       />
 
-      {/* Instrucciones y botón de selección manual */}
       <Row className="mb-3">
         <Col xs={12} md={8}>
           <p>
@@ -111,23 +120,40 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
         </Col>
       </Row>
 
-      {/* Mapa con marcador */}
       <GoogleMap
         mapContainerStyle={{ width: "100%", height: "400px" }}
-        center={coordinates}
-        zoom={coordinates.lat ? 15 : 6}
+        center={coordinates.lat ? coordinates : center}
+        zoom={14}
         onClick={handleMapClick}
+        streetView={false}
+        options={{
+          mapTypeControlOptions: {
+            style: window.google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: window.google.maps.ControlPosition.TOP_LEFT,
+          },
+          streetViewControl: false,
+        }}
+        mapTypeControlOptions={{
+          mapTypeIds: ["roadmap", "terrain"],
+        }}
+        restriction={{
+          latLngBounds: {
+            north: center.lat + 0.5,
+            south: center.lat - 0.5,
+            east: center.lng + 0.5,
+            west: center.lng - 1,
+          },
+          strictBounds: false,
+        }}
       >
         {coordinates.lat && (
           <Marker
             position={coordinates}
-            // si está activa la selección manual, permitir arrastrar el marcador
             draggable={manualSelect}
             onDragEnd={handleMarkerDragEnd}
           />
         )}
       </GoogleMap>
-      {/* </LoadScript> */}
     </div>
   );
 };
