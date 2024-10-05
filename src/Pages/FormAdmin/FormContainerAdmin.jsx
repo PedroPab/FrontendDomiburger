@@ -294,6 +294,7 @@ const FormContainerAdmin = ({ token, userId }) => {
         listaProducto={listaProductosOrder}
         setListaProducto={setListaProductosOrder}
         dataDomicilio={dataDomicilio}
+        setDataDomicilio={setDataDomicilio}
       />
 
       <RegisterSaleButton

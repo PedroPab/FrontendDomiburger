@@ -5,7 +5,7 @@ import { UtilsApi } from './../../Utils/utilsApi';
 import { makeid } from '../../Utils/makeId';
 import formatearNumeroConPuntos from '../../Utils/formatearNumeroConPuntos';
 
-const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio }) => {
+const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio, setDataDomicilio }) => {
   const [adiciones, setAdiciones] = useState([]);
 
   useEffect(() => {
@@ -16,57 +16,46 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio }
   }, []);
 
   const onChangeSelectAdicion = (idAdicion, idProducto) => {
-    //buscamos la adcion
-    const indexAdicion = adiciones.findIndex(e => e.id == idAdicion)
-    const dataAdicion = adiciones[indexAdicion]
-    //le ponemo un id unico
-    dataAdicion.idInter = makeid()
-    //buscamo le prouducto
-    const indexProducto = listaProducto.findIndex(e => e.idInter == idProducto)
-    const dataProducto = listaProducto[indexProducto]
-    //le agregamos la adcion
-    dataProducto.anadirModifique(dataAdicion)
-    //remplasamo por el nuevo objeto de proudco y actualisamos el estado de los productos
-    const newData = [...listaProducto]
-    newData[indexProducto] = dataProducto
-    setListaProducto(newData)
-  }
-  const onClicAdicion = (idInterAdicion, idInterProducto) => {
-    //le ponemo un id unico
-    //buscamo le prouducto
-    const indexProducto = listaProducto.findIndex(e => e.idInter == idInterProducto)
-    const dataProducto = listaProducto[indexProducto]
-    //le agregamos la adcion
-    dataProducto.retirarModifique(idInterAdicion)
-    //remplasamo por el nuevo objeto de proudco y actualisamos el estado de los productos
-    const newData = [...listaProducto]
-    newData[indexProducto] = dataProducto
-    setListaProducto(newData)
+    const indexAdicion = adiciones.findIndex(e => e.id == idAdicion);
+    const dataAdicion = adiciones[indexAdicion];
+    dataAdicion.idInter = makeid();
+    const indexProducto = listaProducto.findIndex(e => e.idInter == idProducto);
+    const dataProducto = listaProducto[indexProducto];
+    dataProducto.anadirModifique(dataAdicion);
+    const newData = [...listaProducto];
+    newData[indexProducto] = dataProducto;
+    setListaProducto(newData);
+  };
 
-  }
+  const onClicAdicion = (idInterAdicion, idInterProducto) => {
+    const indexProducto = listaProducto.findIndex(e => e.idInter == idInterProducto);
+    const dataProducto = listaProducto[indexProducto];
+    dataProducto.retirarModifique(idInterAdicion);
+    const newData = [...listaProducto];
+    newData[indexProducto] = dataProducto;
+    setListaProducto(newData);
+  };
 
   const totalProductos = () => {
-    let total = 0
+    let total = 0;
     if (listaProducto) {
       listaProducto.forEach(producto => {
         let totalProducto = producto.price;
         producto?.modifique.forEach(element => {
           totalProducto += element.price;
         });
-        total += totalProducto
-      })
+        total += totalProducto;
+      });
     }
 
     if (dataDomicilio.price) {
-      total += dataDomicilio.price
+      total += dataDomicilio.price;
     }
 
+    return total;
+  };
 
-    return total
-  }
-
-  const totalCompra = totalProductos()
-
+  const totalCompra = totalProductos();
 
   return (
     <Card.Body>
@@ -96,7 +85,17 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, dataDomicilio }
               <tr>
                 <th>Domicilio</th>
                 <th>{dataDomicilio.timeText}</th>
-                <th>{dataDomicilio.price}</th>
+                <th>
+                  <input
+                    type="number"
+                    min="0"
+                    step="500"
+                    value={dataDomicilio.price}
+                    onChange={(e) => setDataDomicilio({ ...dataDomicilio, price: parseInt(e.target.value) })}
+                    className="form-control form-control-sm text-center"  // Aplicar estilos Bootstrap
+                    style={{ width: '100px', display: 'inline-block' }}  // Ajustar el tamaño y alineación
+                  />
+                </th>
               </tr>
             }
           </tbody>
