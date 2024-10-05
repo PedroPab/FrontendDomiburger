@@ -12,7 +12,6 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
   const [manualSelect, setManualSelect] = useState(false);
   const autocompleteRef = useRef(null);
 
-  // const center = { lat: coordinates.lat || 4.711, lng: coordinates.lng || -74.0721 }; // Coordenadas de Bogotá por defecto
 
   // Maneja la selección de un lugar con autocompletado
   const onPlaceChanged = () => {
@@ -62,6 +61,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
   return (
     <div>
       <Autocomplete
+        onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
         bounds={{
           north: center.lat + 1.5,
           south: center.lat - 1.5,

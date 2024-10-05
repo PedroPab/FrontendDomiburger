@@ -61,14 +61,8 @@ const FormContainerAdmin = ({ token, userId }) => {
     }
 
     if (address) {
-      console.log(`[ ~ useEffect ~ address]`, address)
       const { address_complete, coordinates } = address;
-      // const newDireccion = {
-      //   address_complete,
-      //   // direccionInput: address_complete,
-      //   coordinates,
-      //   // piso: address.piso,
-      // };
+
       setCoordinates(coordinates);
       setInputDataDireccion({
         ...inputDataDireccion,
@@ -89,9 +83,9 @@ const FormContainerAdmin = ({ token, userId }) => {
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
   const [dataDomicilio, setDataDomicilio] = useState({});
 
+  const [prevCoordinates, setPrevCoordinates] = useState(null);
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
-
     if (!isLoaded) {
       console.log('Cargando Google Maps...')
       return
@@ -104,17 +98,20 @@ const FormContainerAdmin = ({ token, userId }) => {
     // miramos si hay coordenadas
     if (!coordinates) return
 
+    //miramos si las coordenadas son las mismas
+    if (prevCoordinates && prevCoordinates.lat === coordinates.lat && prevCoordinates.lng === coordinates.lng) return
+    setPrevCoordinates(coordinates)
+
     obtenerDistancia(centerOrigin, coordinates)
       .then(dataMatrix => {
         if (dataMatrix) {
-          toast.success('Distancia calculada')
           const timeText
             = calcularTiempo(dataMatrix.distance.value)
           const price = calcularPrecio(dataMatrix.distance.value)
-          // console.log({
-          //   matrixDistancia: timeText,
-          //   matrixTime: price
-          // });
+
+          if (!timeText || !price) return toast.error('No se pudo calcular el precio del domicilio')
+
+          toast.success(`El domicilio tiene un costo de $${price} y tardará ${timeText}`)
 
           setDataDomicilio({
             timeText,
