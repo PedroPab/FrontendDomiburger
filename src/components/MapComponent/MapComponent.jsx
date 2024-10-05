@@ -5,12 +5,14 @@ import { BiLogoGoogle } from "react-icons/bi";
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { Button, Col, Row } from "react-bootstrap";
 
-const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
+const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
+
+  const [coordinates, setCoordinates] = stateCoordenadas;
   const [direccion, setDireccion] = stateDireccion;
   const [manualSelect, setManualSelect] = useState(false);
   const autocompleteRef = useRef(null);
 
-  const center = { lat: coordinates.lat || 4.711, lng: coordinates.lng || -74.0721 }; // Coordenadas de Bogotá por defecto
+  // const center = { lat: coordinates.lat || 4.711, lng: coordinates.lng || -74.0721 }; // Coordenadas de Bogotá por defecto
 
   // Maneja la selección de un lugar con autocompletado
   const onPlaceChanged = () => {
@@ -148,6 +150,9 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
             position={coordinates}
             draggable={manualSelect}
             onDragEnd={handleMarkerDragEnd}
+            //poner mensaje en el marcador que diga "estoy aqui"
+            label={":)"}
+
           />
         )}
       </GoogleMap>

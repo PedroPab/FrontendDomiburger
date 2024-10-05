@@ -31,7 +31,7 @@ const FormContainerAdmin = ({ token, userId }) => {
     libraries,
   });
 
-  const [coordinates, setCoordinates] = useState(centerOrigin);
+  const [coordinates, setCoordinates] = useState({});
   const [inputDataDireccion, setInputDataDireccion] = useState({
     address_complete: "",
     piso: "",
@@ -259,8 +259,8 @@ const FormContainerAdmin = ({ token, userId }) => {
       {/* solo si isLoaded esta en true */}
       {isLoaded &&
         <MapComponent
-          coordinates={coordinates}
-          setCoordinates={setCoordinates}
+          center={centerOrigin}
+          stateCoordenadas={[coordinates, setCoordinates]}
           stateDireccion={[inputDataDireccion, setInputDataDireccion]}
         />
       }
