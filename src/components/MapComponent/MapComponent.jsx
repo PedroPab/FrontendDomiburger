@@ -60,19 +60,16 @@ const MapComponent = ({ coordinates, setCoordinates, stateDireccion }) => {
   return (
     <div>
       <Autocomplete
-        onLoad={(autocomplete) => {
-          autocompleteRef.current = autocomplete;
-          autocomplete.setOptions({
-            bounds: {
-              north: center.lat + 1,
-              south: center.lat - 1,
-              east: center.lng + 1,
-              west: center.lng - 1,
-            },
-            componentRestrictions: { country: ["CO"] },
-            fields: ["geometry", "name", "formatted_address", "address_components", "types"],
-            // strictBounds: true, // Activa esto si solo quieres lugares dentro del área definida
-          });
+        bounds={{
+          north: center.lat + 1.5,
+          south: center.lat - 1.5,
+          east: center.lng + 1.5,
+          west: center.lng - 1.5,
+        }}
+        fields={["geometry", "name", "formatted_address", "address_components", "types"]}
+        options={{
+          componentRestrictions: { country: ["CO"] },
+          strictBounds: true,
         }}
         onPlaceChanged={onPlaceChanged}
       >
