@@ -19,7 +19,7 @@ const PaymentMethodInput = ({ paymentMethod, setPaymentMethod }) => {
         <option value="Transferencia">Transferencia</option>
       </Form.Control>
       <Form.Text id="codigoHelpBlock" muted>
-        Si es transfrencia, la cuenta te llegara por un mensaje.
+        {/* Si es transferencia, la cuenta te llegara por un mensaje. */}
       </Form.Text>
     </Form.Group>
   );

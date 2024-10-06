@@ -12,7 +12,7 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
           <div className="mb-4 mb-md-0">
             <CardProduct
               title="Hamburguesa Artesanal"
-              description="Deliciosa hamburguesa con ingredientes frescos y pan artesanal."
+              // description="Deliciosa hamburguesa con ingredientes frescos y pan artesanal."
               img={imgHamburguesa}
               count={listaProductosOrder.filter(e => e.name === PRODUCTS.Hamburguesa).length}
               incrementCount={() => incrementCount(PRODUCTS.Hamburguesa)}
@@ -22,7 +22,7 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
           <div className="mb-4 mb-md-0">
             <CardProduct
               title="Combo Especial"
-              description="Combo con hamburguesa, papas y bebida. ¡Perfecto para una comida completa!"
+              description="Hamburguesa + Papas fritas risadas"
               img={imgCombo}
               count={listaProductosOrder.filter(e => e.name === PRODUCTS.Combo).length}
               incrementCount={() => incrementCount(PRODUCTS.Combo)}

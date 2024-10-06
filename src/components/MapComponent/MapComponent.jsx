@@ -80,7 +80,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
           label="Dirección"
           type="text"
           icon={<BsFillGeoAltFill />}
-          placeholder="Escribe la dirección..."
+          placeholder="Ejemplo: Calle 103d # 76 12"
           helpText="Escribe tu dirección para que podamos ubicarte mejor y selecciona una opción de la lista. Si no encuentras tu dirección, puedes seleccionarla manualmente mas abajo."
           value={direccion.address_complete}
           onChange={(e) => setDireccion({ ...direccion, address_complete: e.target.value })}
@@ -89,23 +89,20 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
 
       <FormField
         id="piso"
-        label="Piso"
+        label="Piso y comentarios"
         type="text"
         required={false}
         icon={<BiLogoGoogle />}
-        placeholder="Escribe tu piso de la casa..."
+        placeholder="Ejemplo: Piso 2, puerta de la izquierda / Apt 301 frente al colegio"
         value={direccion.piso}
-        helpText="Escribe el piso de tu casa para ser mas facil la entrega. Lo puedes omitir :)"
+        helpText="Escribe el piso de tu casa para ser mas fácil la entrega. Lo puedes omitir :)"
         onChange={(e) => setDireccion({ ...direccion, piso: e.target.value })}
       />
 
       <Row className="mb-3">
         <Col xs={12} md={8}>
           <p>
-            <strong>Instrucciones:</strong> Si no encuentras la dirección exacta usando el
-            autocompletado, puedes activar la <strong>selección manual</strong> para escoger
-            una ubicación directamente en el mapa. Arrastra el marcador para ajustarlo
-            según tus necesidades.
+            <strong>Instrucciones:</strong> Si tines problemas con la direccion ponla en el mapa.
           </p>
         </Col>
         <Col xs={12} md={4}>
