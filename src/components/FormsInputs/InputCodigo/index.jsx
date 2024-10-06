@@ -5,6 +5,8 @@ import { findCodigo } from '../../../Utils/api/codigos/findCodigo';
 import { MiContexto } from '../../../Context';
 import { toast } from 'react-toastify';
 import AlertInfoRedCodigo from '../../Codigos/AlertInfoRedCodigo';
+import CardCodigo from '../../Codigos/CardCodigo';
+import CodeCard from '../../Codigos/CodeCard';
 
 const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
   const context = useContext(MiContexto)
@@ -36,7 +38,10 @@ const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
     }
     return (<Button variant="primary" onClick={buscarCodigo}>Buscar</Button>)
   }
-
+  const eliminarCodigo = () => {
+    //si llegarmos a tener una lista de codigos se eliminaria de la lista
+    setDataCode(null)
+  }
   return (
     <>
       <InputCodigoText
@@ -45,7 +50,12 @@ const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
         ButtonComponent={<ButtonActionCode />}
       />
       {/* mostramos los datos de codigo  */}
-      {dataCode && <AlertInfoRedCodigo dataCodigo={dataCode} />}
+      {/* {dataCode && <AlertInfoRedCodigo dataCodigo={dataCode} />} */}
+      {dataCode &&
+        <CodeCard
+          deleteCode={eliminarCodigo}
+          code={dataCode}
+        />}
     </>
   );
 };
