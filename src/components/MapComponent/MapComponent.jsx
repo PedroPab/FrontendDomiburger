@@ -81,7 +81,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
           type="text"
           icon={<BsFillGeoAltFill />}
           placeholder="Ejemplo: Calle 103d # 76 12"
-          helpText="Escribe tu dirección para que podamos ubicarte mejor y selecciona una opción de la lista. Si no encuentras tu dirección, puedes seleccionarla manualmente mas abajo."
+          // helpText="Escribe tu dirección para que podamos ubicarte mejor y selecciona una opción de la lista. Si no encuentras tu dirección, puedes seleccionarla manualmente mas abajo."
           value={direccion.address_complete}
           onChange={(e) => setDireccion({ ...direccion, address_complete: e.target.value })}
         />
@@ -95,7 +95,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
         icon={<BiLogoGoogle />}
         placeholder="Ejemplo: Piso 2, puerta de la izquierda / Apt 301 frente al colegio"
         value={direccion.piso}
-        helpText="Escribe el piso de tu casa para ser mas fácil la entrega. Lo puedes omitir :)"
+        // helpText="Escribe el piso de tu casa para ser mas fácil la entrega. Lo puedes omitir :)"
         onChange={(e) => setDireccion({ ...direccion, piso: e.target.value })}
       />
 
