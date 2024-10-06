@@ -1,14 +1,12 @@
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import InputCodigoText from '../../Codigos/CrearCodigoReferido/InputCodigoText';
 import { useContext, useState } from 'react';
 import { findCodigo } from '../../../Utils/api/codigos/findCodigo';
 import { MiContexto } from '../../../Context';
 import { toast } from 'react-toastify';
-import AlertInfoRedCodigo from '../../Codigos/AlertInfoRedCodigo';
-import CardCodigo from '../../Codigos/CardCodigo';
 import CodeCard from '../../Codigos/CodeCard';
 
-const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
+const InputCodigo = ({ dataCode, setDataCode, agregarCodigo, retirarCodigo }) => {
   const context = useContext(MiContexto)
   const token = context.tokenLogin.token
 
@@ -42,6 +40,9 @@ const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
     //si llegarmos a tener una lista de codigos se eliminaria de la lista
     setDataCode(null)
   }
+  const eliminarProducto = (code) => {
+    retirarCodigo(code)
+  }
   return (
     <>
       <InputCodigoText
@@ -54,6 +55,8 @@ const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
       {dataCode &&
         <CodeCard
           deleteCode={eliminarCodigo}
+          addProducts={agregarCodigo}
+          deleteProducts={eliminarProducto}
           code={dataCode}
         />}
     </>

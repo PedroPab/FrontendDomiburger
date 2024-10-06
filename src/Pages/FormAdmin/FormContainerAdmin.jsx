@@ -238,6 +238,12 @@ const FormContainerAdmin = ({ token, userId }) => {
     }
 
   }
+  const retirarCodigo = (dataCode) => {
+    //miramos la información del codigo y evaluamos si se agrega premio o como referido
+    console.log(dataCode, '<=dataCode');
+
+  }
+
 
   return (
     <Container>
@@ -279,6 +285,7 @@ const FormContainerAdmin = ({ token, userId }) => {
         dataCode={dataCode}
         setDataCode={setDataCode}
         agregarCodigo={agregarCodigo}
+        retirarCodigo={retirarCodigo}
       />
 
       <SelectDomiciliario

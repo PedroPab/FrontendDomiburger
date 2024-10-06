@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { Card, Button, Collapse, ListGroup } from 'react-bootstrap';
-import { FaTimes, FaCheck } from 'react-icons/fa';
+import { FaTimes, FaCheck, FaUsers, FaAward } from 'react-icons/fa';
 import dayjs from 'dayjs';
+import InfoIcon from '../../InfoIcon';
 
-const CodeCard = ({ code, deleteCode }) => {
+const CodeCard = ({ code, deleteCode, addProducts, deleteProducts }) => {
   const [isAdded, setIsAdded] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleToggleAdd = () => {
+    addProducts(code)
     setIsAdded(!isAdded);
   };
-
+  const handleToggleDelete = () => {
+    deleteProducts(code)
+    setIsAdded(!isAdded);
+  }
   const handleToggleDetails = () => {
     setOpen(!open);
   };
@@ -78,15 +83,28 @@ const CodeCard = ({ code, deleteCode }) => {
           </div>
         </Collapse>
 
+        <hr />
         <Button
           variant={isAdded ? 'danger' : 'primary'}
-          onClick={handleToggleAdd}
+          onClick={isAdded ? handleToggleDelete : handleToggleAdd}
           style={{ marginRight: '10px' }}
         >
           {isAdded ? 'Retirar' : 'Agregar'}
         </Button>
 
-        {isAdded && <FaCheck style={{ color: 'green', fontSize: '24px' }} />}
+        <div>debemos de poner el cliente primero , al menos el telefono</div>
+        <div>si el cliente es el dueño vamos poner el premio en vez del referido</div>
+        <div>si el cliente es nuevo vamos a poner el producto del referido </div>
+        <div>si los productos son adiciones debe de tener productos</div>
+        <div
+          className="mt-3 d-flex justify-content-around "
+        >
+          <InfoIcon Icon={FaUsers} title="" number={code?.used?.length} />
+          <InfoIcon Icon={FaAward} title="" number={code?.reward?.length} />
+          {isAdded && <FaCheck style={{ color: 'green', fontSize: '24px' }} />}
+
+        </div>
+
       </Card.Body>
     </Card>
   );
