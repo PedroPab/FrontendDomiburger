@@ -5,10 +5,12 @@ import FormField from '../../FormField';
 
 const SelectDomiciliario = ({ selectDomiciliario, setSelectDomiciliario }) => {
   const contextRecepcion = useContext(RecepcionContexto)
+
   const OpcionesDomiciliarios = () => {
     return (
       <>
         <option value="">Sin asignar</option>
+        <option value="otros">Otros...</option>
         {contextRecepcion.listDomiciliarios.map(domiciliario => (
           <option
             key={domiciliario.id}
@@ -23,6 +25,12 @@ const SelectDomiciliario = ({ selectDomiciliario, setSelectDomiciliario }) => {
   const handleChange = (e) => {
     //solo debe permitir letras y espacios y números
     const rta = e.target.value.replace(/[^a-zA-Z0-9\s]/g, '')
+    if (rta === 'otros') {
+      // abrimos el modal para agregar domiciliarios
+      contextRecepcion.openCloseModalAgregarDo()
+      setSelectDomiciliario('')
+      return
+    }
     setSelectDomiciliario(rta);
   };
 

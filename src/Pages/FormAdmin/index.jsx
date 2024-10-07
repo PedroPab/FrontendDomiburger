@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { MiContexto } from '../../Context';
 import FormContainerAdmin from './FormContainerAdmin';
 import LayoutRecepcion from '../../Layout/Recepcion';
+import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
 
 
 const FormAdmin = () => {
@@ -20,6 +21,7 @@ const FormAdmin = () => {
           token={token}
           userId={userId}
         />
+        <SelectListDomiciliarios />
 
       </LayoutRecepcion>
     </>
