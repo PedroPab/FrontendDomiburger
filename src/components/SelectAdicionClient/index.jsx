@@ -5,7 +5,11 @@ const SelectAdicionClient = ({ producto, adiciones, onChangeSelect }) => {
     <>
       <Col sm={7}>
         <Form.Select
-          onChange={(e) => onChangeSelect(e.target.value, producto.idInter)}
+          onChange={(e) => {
+            onChangeSelect(e.target.value, producto.idInter)
+            // establecer el el valor del select en default
+            e.target.value = 'Seleccionar Adicion'
+          }}
         >
           <option value="Seleccionar Adicion">Seleccionar Adicion</option>
           {
