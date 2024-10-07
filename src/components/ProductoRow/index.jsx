@@ -15,16 +15,19 @@ const ProductoRow = ({ producto, adiciones, onClicAdicion, onChangeSelectAdicion
         <small>
           {producto.name}
           <div>
-            {producto?.modifique && producto.modifique.map(modifique => (
-              <span
-                className='badge'
-                style={{ backgroundColor: modifique.colorPrimary }}
-                key={modifique.idInter}
-                onClick={() => onClicAdicion(modifique.idInter, producto.idInter)}
-              >
-                {modifique.code ? `CODE ${modifique.code} ` : ''}{modifique.name}
-              </span>
-            ))}
+            {producto?.modifique && producto.modifique.map(modifique => {
+              console.log(modifique);
+              return (
+                <span
+                  className='badge'
+                  style={{ backgroundColor: modifique.colorPrimary }}
+                  key={modifique.idInter}
+                  onClick={() => onClicAdicion(modifique.idInter, producto.idInter)}
+                >
+                  {modifique.code ? `CODE ${modifique.code} ` : ''}{modifique.name}
+                </span>
+              )
+            })}
           </div>
         </small>
       </td>

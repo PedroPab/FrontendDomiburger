@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Card, Table } from 'react-bootstrap';
 import ProductoRow from './../../components/ProductoRow'; // Nuevo componente
 import { UtilsApi } from './../../Utils/utilsApi';
-import { makeid } from '../../Utils/makeId';
 import formatearNumeroConPuntos from '../../Utils/formatearNumeroConPuntos';
+import { Adiciones } from '../../Utils/classProduct';
 
 const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addressPrice }) => {
   const [dataDomicilio, setDataDomicilio] = domicilio
@@ -19,8 +19,8 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
 
   const onChangeSelectAdicion = (idAdicion, idProducto) => {
     const indexAdicion = adiciones.findIndex(e => e.id == idAdicion);
-    const dataAdicion = adiciones[indexAdicion];
-    dataAdicion.idInter = makeid();
+    const dataAdicion = new Adiciones(adiciones[indexAdicion]);
+    // dataAdicion.idInter = makeid();
     const indexProducto = listaProducto.findIndex(e => e.idInter == idProducto);
     const dataProducto = listaProducto[indexProducto];
     dataProducto.anadirModifique(dataAdicion);

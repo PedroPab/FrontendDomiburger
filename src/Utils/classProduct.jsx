@@ -43,6 +43,34 @@ class Producto {
   }
 }
 
+class Adiciones {
+  constructor({
+    name,
+    id,
+    price,
+    colorPrimary,
+    colorSecondary,
+    code,
+    description,
+    idCodigo,
+    imagen,
+    type,
+
+  }) {
+    this.name = name
+    this.id = id
+    this.price = price
+    this.colorPrimary = colorPrimary
+    this.colorSecondary = colorSecondary
+    this.idInter = makeid(5)
+    code ? this.code = code : null
+    this.description = description
+    idCodigo ? this.idCodigo = idCodigo : null
+    this.imagen = imagen
+    this.type = type
+  }
+}
+
 class Hamburguesa extends Producto {
   constructor(props) {
     super(props)
@@ -65,4 +93,5 @@ export {
   Producto,
   Hamburguesa,
   Combo,
+  Adiciones
 }

@@ -10,11 +10,9 @@ const CodeCard = ({ code, deleteCode, addProducts, deleteProducts }) => {
 
   const handleToggleAdd = () => {
     addProducts(code)
-    setIsAdded(!isAdded);
   };
   const handleToggleDelete = () => {
     deleteProducts(code)
-    setIsAdded(!isAdded);
   }
   const handleToggleDetails = () => {
     setOpen(!open);
