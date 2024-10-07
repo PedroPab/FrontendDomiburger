@@ -287,10 +287,10 @@ const FormContainerAdmin = ({ token, userId }) => {
         retirarCodigo={retirarCodigo}
       />
 
-      {/* <SelectDomiciliario
+      <SelectDomiciliario
         selectDomiciliario={selectDomiciliario}
         setSelectDomiciliario={setSelectDomiciliario}
-      /> */}
+      />
 
       <ProductsSection
         listaProductosOrder={listaProductosOrder}
