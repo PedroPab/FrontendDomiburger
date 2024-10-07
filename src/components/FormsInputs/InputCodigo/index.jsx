@@ -1,12 +1,12 @@
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import InputCodigoText from '../../Codigos/CrearCodigoReferido/InputCodigoText';
 import { useContext, useState } from 'react';
 import { findCodigo } from '../../../Utils/api/codigos/findCodigo';
 import { MiContexto } from '../../../Context';
 import { toast } from 'react-toastify';
-import AlertInfoRedCodigo from '../../Codigos/AlertInfoRedCodigo';
+import CodeCard from '../../Codigos/CodeCard';
 
-const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
+const InputCodigo = ({ dataCode, setDataCode, agregarCodigo, retirarCodigo }) => {
   const context = useContext(MiContexto)
   const token = context.tokenLogin.token
 
@@ -36,7 +36,13 @@ const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
     }
     return (<Button variant="primary" onClick={buscarCodigo}>Buscar</Button>)
   }
-
+  const eliminarCodigo = () => {
+    //si llegarmos a tener una lista de codigos se eliminaria de la lista
+    setDataCode(null)
+  }
+  const eliminarProducto = (code) => {
+    retirarCodigo(code)
+  }
   return (
     <>
       <InputCodigoText
@@ -45,7 +51,14 @@ const InputCodigo = ({ dataCode, setDataCode, agregarCodigo }) => {
         ButtonComponent={<ButtonActionCode />}
       />
       {/* mostramos los datos de codigo  */}
-      {dataCode && <AlertInfoRedCodigo dataCodigo={dataCode} />}
+      {/* {dataCode && <AlertInfoRedCodigo dataCodigo={dataCode} />} */}
+      {dataCode &&
+        <CodeCard
+          deleteCode={eliminarCodigo}
+          addProducts={agregarCodigo}
+          deleteProducts={eliminarProducto}
+          code={dataCode}
+        />}
     </>
   );
 };

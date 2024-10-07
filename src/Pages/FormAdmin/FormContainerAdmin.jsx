@@ -5,7 +5,7 @@ import NameInput from '../../components/FormsInputs/NameInput';
 import CommentInput from '../../components/FormsInputs/CommentInput';
 import ProductsSection from '../../components/ProductsSection';
 import { PRODUCTS } from '../../Utils/constList';
-import { Combo, Hamburguesa } from '../../Utils/classProduct';
+import { Adiciones, Combo, Hamburguesa } from '../../Utils/classProduct';
 import ResumenProductosForm from '../../components/ResumenProductosForm';
 import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
 import RegisterSaleButton from '../../components/RegisterSaleButton';
@@ -211,33 +211,38 @@ const FormContainerAdmin = ({ token, userId }) => {
     console.log(dataCode, '<=dataCode');
     const newListaProductosOrder = [...listaProductosOrder]
     if (dataCode.type == 'Referido') {
-      toast.success('es codigo de referido ');
-      console.log("🚀 ~ agregarCodigo ~ dataCode.phone:", dataCode.phone, telefono)
 
       if (dataCode.phone == telefono) {
         //es un premio
-        toast.info('es un premio');
+        toast.error('no tenemos soporte para agregar el premio');
 
       } else {
         //es un referido
-        toast.info('es un referido');
         //tenemos que mirar si hay una hamburguesa o combo a que agregar en la lista
         const isProducto = newListaProductosOrder.findIndex(e => e.type == 'product')
-        if (isProducto >= 0) {
-          //si ya tiene un producto agregado no se puede agregar el referido
-          const adicion = dataCode.products[0]
-          newListaProductosOrder[isProducto].modifique.push(adicion)
-          setListaProductosOrder(newListaProductosOrder)
 
-          //si no la tiene hay que crearla
-        } else {
+        if (isProducto == -1) {
           toast.error('no se encontró ningún producto para agregar el codigo');
+          return
         }
 
+        const adicion = new Adiciones(dataCode.products[0])
+        newListaProductosOrder[isProducto].modifique.push(adicion)
+        setListaProductosOrder(newListaProductosOrder)
+
       }
+    } else {
+      toast.error('no tenemos soporte para este tipo de codigo :(');
     }
 
   }
+
+  const retirarCodigo = (dataCode) => {
+    //miramos la información del codigo y evaluamos si se agrega premio o como referido
+    console.log(dataCode, '<=dataCode');
+
+  }
+
 
   return (
     <Container>
@@ -279,6 +284,7 @@ const FormContainerAdmin = ({ token, userId }) => {
         dataCode={dataCode}
         setDataCode={setDataCode}
         agregarCodigo={agregarCodigo}
+        retirarCodigo={retirarCodigo}
       />
 
       <SelectDomiciliario
