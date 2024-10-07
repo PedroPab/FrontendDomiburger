@@ -97,7 +97,7 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
                     step="500"
                     value={precioDeliveryManual ?? dataDomicilio.price}
                     onChange={(e) => {
-                      setPrecioDeliveryManual(parseInt(e.target.value) || 0);
+                      setPrecioDeliveryManual(parseInt(e.target.value) ?? 0);
                     }
                     }
                     className="form-control form-control-sm text-center"  // Aplicar estilos Bootstrap
