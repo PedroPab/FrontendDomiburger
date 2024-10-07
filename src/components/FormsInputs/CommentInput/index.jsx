@@ -4,7 +4,8 @@ import { FaComment } from 'react-icons/fa';
 const CommentInput = ({ comment, setComment }) => {
   const handleChange = (e) => {
     //solo debe permitir letras y espacios y números
-    const rta = e.target.value.replace(/[^a-zA-Z0-9\s]/g, '')
+    // const rta = e.target.value.replace(/[^a-zA-Z0-9\s]/g, '')
+    const rta = e.target.value
     setComment(rta);
   };
 
