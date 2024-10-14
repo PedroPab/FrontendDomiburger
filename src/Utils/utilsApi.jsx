@@ -16,7 +16,6 @@ export const traladarPedidoDeEstado = async ({ id, estado, token }) => {
     fetch(`${apiUrl}/api/estados/${estado}?idPedido=${id}`, options)
       .then(response => response.json())
       .then(data => {
-        console.log(data, '<=data');
         if (!data.body) throw data
         return data
       })

@@ -24,7 +24,6 @@ const ModalAsignarPedido = ({ show, handleClose, nameDomiciliario, idPedido, dat
   const handleConfirmar = () => {
     // Lógica para confirmar el pedido
     //si ya esta asignado un domiciliario se debe reasignar
-    console.log(domiciliarioSelect);
     if (!domiciliarioSelect) return
     const token = context.tokenLogin.token
 

@@ -16,7 +16,6 @@ const ProductoRow = ({ producto, adiciones, onClicAdicion, onChangeSelectAdicion
           {producto.name}
           <div>
             {producto?.modifique && producto.modifique.map(modifique => {
-              console.log(modifique);
               return (
                 <span
                   className='badge'

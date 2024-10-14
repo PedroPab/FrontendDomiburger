@@ -207,9 +207,34 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   }
 
+
   const agregarCodigo = (dataCode) => {
+    const checkIfAdicionExists = (newListaProductosOrder, dataCode) => {
+      const isAdicion = newListaProductosOrder.find(e => {
+        let o = false;
+        // Verifica si existe la propiedad 'modifique' y si contiene el código que estamos buscando
+        if (e?.modifique) {
+          o = e.modifique.find(modificado => modificado.code == dataCode.id);
+        }
+        // Retorna true si el código actual o el código modificado coincide con el que estamos buscando
+        if (e?.code == dataCode.id || o) {
+          return true;
+        }
+        return false;
+      });
+
+      // Si ya existe en la lista de productos, muestra el error y retorna true
+      if (isAdicion) {
+        toast.error('Ya tienes este código en tu pedido');
+        return true;
+      }
+
+      // Si no existe, retorna false
+      return false;
+    }
+
     //miramos la información del codigo y evaluamos si se agrega premio o como referido
-    const newListaProductosOrder = [...listaProductosOrder]
+    let newListaProductosOrder = [...listaProductosOrder]
     if (dataCode.type == 'Referido') {
 
       if (dataCode?.clientId == dataCliente?.id) {
@@ -217,9 +242,10 @@ const FormContainerAdmin = ({ token, userId }) => {
         const premios = dataCode.productsReward
         const productReward = new Producto(premios[0])
 
+        if (checkIfAdicionExists(newListaProductosOrder, dataCode)) return
+
         newListaProductosOrder.push(productReward)
         setListaProductosOrder(newListaProductosOrder)
-        toast.error('no tenemos soporte para agregar el premio');
 
       } else {
         //es un referido
@@ -232,6 +258,9 @@ const FormContainerAdmin = ({ token, userId }) => {
         }
 
         const adicion = new Adiciones(dataCode.products[0])
+        //miramos que no tenga ya el codigo
+        if (checkIfAdicionExists(newListaProductosOrder, dataCode)) return
+
         newListaProductosOrder[isProducto].modifique.push(adicion)
         setListaProductosOrder(newListaProductosOrder)
 
