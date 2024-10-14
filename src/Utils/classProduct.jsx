@@ -1,4 +1,4 @@
-import { makeid } from './makeId'
+import { makeId } from './makeId'
 import { PRODUCTS } from './constList';
 
 class Producto {
@@ -17,7 +17,7 @@ class Producto {
     this.price = price
     this.modifique = modifique
     this.type = type
-    this.idInter = makeid(5)
+    this.idInter = makeId(5)
     this.colorPrimary = colorPrimary
     this.colorSecondary = colorSecondary
     code ? this.code = code : null
@@ -64,7 +64,7 @@ class Adiciones {
     this.price = price
     this.colorPrimary = colorPrimary
     this.colorSecondary = colorSecondary
-    this.idInter = makeid(5)
+    this.idInter = makeId(5)
     code ? this.code = code : null
     this.description = description
     idCodigo ? this.idCodigo = idCodigo : null

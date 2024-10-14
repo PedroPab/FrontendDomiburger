@@ -20,7 +20,7 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
   const onChangeSelectAdicion = (idAdicion, idProducto) => {
     const indexAdicion = adiciones.findIndex(e => e.id == idAdicion);
     const dataAdicion = new Adiciones(adiciones[indexAdicion]);
-    // dataAdicion.idInter = makeid();
+    // dataAdicion.idInter = makeId();
     const indexProducto = listaProducto.findIndex(e => e.idInter == idProducto);
     const dataProducto = listaProducto[indexProducto];
     dataProducto.anadirModifique(dataAdicion);

@@ -5,7 +5,7 @@ import { MiContexto } from '../../../../Context'
 import { traladarPedidoDeEstado } from '../../../../Utils/utilsApi'
 import { listaEstados } from '../../../../Utils/listEstados';
 import { agregarAlerta, retirarAlerta } from '../../../../Utils/alert';
-import { makeid } from '../../../../Utils/makeId';
+import { makeId } from '../../../../Utils/makeId';
 import { filtrarPedidos } from '../../../../Utils/filtrarPedidos';
 
 
@@ -83,7 +83,7 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
       const newAlert = {
         type: 'danger',
         message: error.message,
-        id: makeid(5),
+        id: makeId(5),
       }
       agregarAlerta({ itemsAlerts: context.alerts, setItesmAlert: context.setAlerts, newAlert })
       setTimeout(() => {
