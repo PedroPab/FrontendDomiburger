@@ -6,11 +6,12 @@ import { MiContexto } from '../../../Context';
 import { toast } from 'react-toastify';
 import CodeCard from '../../Codigos/CodeCard';
 
-const InputCodigo = ({ dataCode, setDataCode, agregarCodigo, retirarCodigo }) => {
+const InputCodigo = ({ client, dataCode, setDataCode, agregarCodigo, retirarCodigo }) => {
   const context = useContext(MiContexto)
   const token = context.tokenLogin.token
 
   const [code, setCode] = useState('');
+  const [dataClient, setDataClient] = client
 
   // const agregarCodigo = () => {
   //   toast.success('...Simulando Codigo agregado');
@@ -32,7 +33,7 @@ const InputCodigo = ({ dataCode, setDataCode, agregarCodigo, retirarCodigo }) =>
 
   const ButtonActionCode = () => {
     if (dataCode) {
-      return (<Button variant="success" onClick={() => agregarCodigo(dataCode)}>Agregar</Button>)
+      return ('')
     }
     return (<Button variant="primary" onClick={buscarCodigo}>Buscar</Button>)
   }

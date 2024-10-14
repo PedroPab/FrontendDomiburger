@@ -9,7 +9,8 @@ class Producto {
     modifique = [],
     type,
     colorPrimary,
-    colorSecondary
+    colorSecondary,
+    code,
   }) {
     this.name = name
     this.id = id
@@ -19,6 +20,7 @@ class Producto {
     this.idInter = makeid(5)
     this.colorPrimary = colorPrimary
     this.colorSecondary = colorSecondary
+    code ? this.code = code : null
 
   }
   anadirModifique(modifique) {

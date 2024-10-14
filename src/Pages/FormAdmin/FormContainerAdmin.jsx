@@ -5,7 +5,7 @@ import NameInput from '../../components/FormsInputs/NameInput';
 import CommentInput from '../../components/FormsInputs/CommentInput';
 import ProductsSection from '../../components/ProductsSection';
 import { PRODUCTS } from '../../Utils/constList';
-import { Adiciones, Combo, Hamburguesa } from '../../Utils/classProduct';
+import { Adiciones, Combo, Hamburguesa, Producto } from '../../Utils/classProduct';
 import ResumenProductosForm from '../../components/ResumenProductosForm';
 import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
 import RegisterSaleButton from '../../components/RegisterSaleButton';
@@ -209,12 +209,16 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   const agregarCodigo = (dataCode) => {
     //miramos la información del codigo y evaluamos si se agrega premio o como referido
-    console.log(dataCode, '<=dataCode');
     const newListaProductosOrder = [...listaProductosOrder]
     if (dataCode.type == 'Referido') {
 
-      if (dataCode.phone == telefono) {
+      if (dataCode?.clientId == dataCliente?.id) {
         //es un premio
+        const premios = dataCode.productsReward
+        const productReward = new Producto(premios[0])
+
+        newListaProductosOrder.push(productReward)
+        setListaProductosOrder(newListaProductosOrder)
         toast.error('no tenemos soporte para agregar el premio');
 
       } else {
@@ -235,7 +239,6 @@ const FormContainerAdmin = ({ token, userId }) => {
     } else {
       toast.error('no tenemos soporte para este tipo de codigo :(');
     }
-
   }
 
   const retirarCodigo = (dataCode) => {
@@ -282,6 +285,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       />
 
       <InputCodigo
+        client={[dataCliente, setDataCliente]}
         dataCode={dataCode}
         setDataCode={setDataCode}
         agregarCodigo={agregarCodigo}
