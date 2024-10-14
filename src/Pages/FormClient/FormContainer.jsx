@@ -260,7 +260,8 @@ const FormContainer = () => {
         <ResumenProductosForm
           listaProducto={listaProdutosOrder}
           setListaProducto={setListaProdutosOrder}
-          dataDomicilio={dataDomicilio}
+          domicilio={[dataDomicilio, setDataDomicilio]}
+          addressPrice={[dataDomicilio.price, setDataDomicilio]}
         />
 
         <div className='text-center mt-3 mb-2'>

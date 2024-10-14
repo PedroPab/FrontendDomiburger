@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import { MiContexto } from '../../Context';
-import LayoudCliente from '../../Layout/LayoutCliente';
+import LayoutCliente from '../../Layout/LayoutCliente';
 import FormContainer from './FormContainer';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 
@@ -12,7 +12,7 @@ const FormClient = () => {
 
   return (
     <>
-      <LayoudCliente>
+      <LayoutCliente>
 
         <NavbarCliente
           modoOscuro={context.modoOscuro}
@@ -20,7 +20,7 @@ const FormClient = () => {
         />
         <FormContainer />
 
-      </LayoudCliente>
+      </LayoutCliente>
     </>
   )
 }
