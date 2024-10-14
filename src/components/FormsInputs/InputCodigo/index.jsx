@@ -33,7 +33,8 @@ const InputCodigo = ({ client, dataCode, setDataCode, agregarCodigo, retirarCodi
 
   const ButtonActionCode = () => {
     if (dataCode) {
-      return ('')
+      //boton para eliminar el codigo
+      return (<Button variant="danger" onClick={eliminarCodigo}>Eliminar</Button>)
     }
     return (<Button variant="primary" onClick={buscarCodigo}>Buscar</Button>)
   }
@@ -59,6 +60,7 @@ const InputCodigo = ({ client, dataCode, setDataCode, agregarCodigo, retirarCodi
           addProducts={agregarCodigo}
           deleteProducts={eliminarProducto}
           code={dataCode}
+          client={dataClient}
         />}
     </>
   );
