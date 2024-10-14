@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { Card, Button, ListGroup, Row, Col, Badge, Tooltip, OverlayTrigger, Collapse } from 'react-bootstrap';
 import { FaCheck, FaUsers, FaAward, FaInfoCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import InfoIcon from '../../InfoIcon';
+import './CodeCard.css'; // Importamos archivo CSS adicional
 
-const CodeCard = ({ code, addProducts, deleteProducts, client }) => {
+const CodeCard = ({ code, addProducts, client }) => {
   const [open, setOpen] = useState(false); // Estado para el acordeón
+  const [showFullInstructions, setShowFullInstructions] = useState(false); // Estado para expandir/collapse instrucciones
 
   const handleToggleAdd = () => addProducts(code);
-  const handleToggleDelete = () => deleteProducts(code);
+  // const handleToggleDelete = () => deleteProducts(code);
   const handleToggleDetails = () => setOpen(!open); // Toggle para acordeón
 
   const isClaimConditionValid = () => {
@@ -24,6 +25,7 @@ const CodeCard = ({ code, addProducts, deleteProducts, client }) => {
   return (
     <Card className="shadow-lg mb-4 border-0" style={{ borderRadius: '15px', padding: '20px' }}>
       <Card.Body>
+
         {/* Título y tipo del código, hace toggle del acordeón al hacer click */}
         <Card.Title
           className="mb-3 d-flex justify-content-between align-items-center"
@@ -101,8 +103,9 @@ const CodeCard = ({ code, addProducts, deleteProducts, client }) => {
           </div>
         </Collapse>
 
-        {/* Botones de acción con animación hover */}
-        <div className="d-flex justify-content-end mt-3">
+        {/* Contenedor de instrucciones y botón alineados horizontalmente */}
+        <div className="d-flex align-items-center mb-3 mt-4">
+          {/* Botón de acción */}
           {client?.id === code.clientId ? (
             <Button
               variant="info"
@@ -117,12 +120,28 @@ const CodeCard = ({ code, addProducts, deleteProducts, client }) => {
             <Button
               variant="primary"
               onClick={handleToggleAdd}
-              className="btn"
+              className="me-2"
               style={{ transition: 'background-color 0.3s ease' }}
             >
               Agregar adición
             </Button>
           )}
+
+          {/* Instrucciones que se expanden al pasar el mouse o hacer click */}
+          <div
+            className={`instructions-text ${showFullInstructions ? 'expanded' : ''}`}
+            onMouseEnter={() => setShowFullInstructions(true)}
+            onMouseLeave={() => setShowFullInstructions(false)}
+            onClick={() => setShowFullInstructions(!showFullInstructions)}
+          >
+            {showFullInstructions ? (
+              <span>
+                Para asignar un código de referido, debes haber seleccionado un producto, y este será el último producto que seleccionaste. Si deseas agregar un premio, asegúrate de que el dueño del premio coincida con el cliente que vas a seleccionar.
+              </span>
+            ) : (
+              <span>Instrucciones...</span>
+            )}
+          </div>
         </div>
       </Card.Body>
     </Card>
