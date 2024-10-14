@@ -114,7 +114,7 @@ const CodeCard = ({ code, addProducts, client }) => {
               disabled={!isClaimConditionValid()}
               style={{ transition: 'background-color 0.3s ease' }}
             >
-              Agregar premio
+              Agregar premio {isClaimConditionValid() ? '' : '(No se puede)'}
             </Button>
           ) : (
             <Button

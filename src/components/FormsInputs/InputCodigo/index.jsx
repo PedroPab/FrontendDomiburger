@@ -50,7 +50,7 @@ const InputCodigo = ({ client, dataCode, setDataCode, agregarCodigo, retirarCodi
       <InputCodigoText
         codigo={code}
         setCodigo={setCode}
-        ButtonComponent={<ButtonActionCode />}
+        ButtonComponent={code.length ? <ButtonActionCode /> : null}
       />
       {/* mostramos los datos de codigo  */}
       {/* {dataCode && <AlertInfoRedCodigo dataCodigo={dataCode} />} */}
