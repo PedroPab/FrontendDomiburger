@@ -30,9 +30,6 @@ const ListMarker = ({ pedidos, mapRef }) => {
             map: mapRef.current.map,
             shouldFocus: false,
           });
-
-          const pedidoIndex = context.items.findIndex((e) => e.id == pedido.id);
-          context.setIndexItems(pedidoIndex === -1 ? null : pedidoIndex);
         };
 
 
