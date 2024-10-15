@@ -4,6 +4,7 @@ import Domiciliario from "../Domiciliario"
 import NotFoundPage from "../NotFoundPage"
 import Login from "../Login"
 import Recepcion from "../Recepcion"
+import Recepcion2 from "../Recepcion/optimice"
 import ProtectedRoute from "../../components/ProtectedRoute/inde"
 import { ROLES } from "../../Utils/constList"
 import MapRecepcion from "../MapRecepcion"
@@ -36,6 +37,7 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute users={[ROLES.admin, ROLES.recepcion]} redirectTo={'/login'} />} >
 
         <Route path="/recepcion" element={<Recepcion />} />
+        <Route path="/recepcion2" element={<Recepcion2 />} />
 
         <Route path="/formAdmin" element={<FormAdmin />} />
 
