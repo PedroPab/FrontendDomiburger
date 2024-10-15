@@ -10,16 +10,17 @@ const ProductoList = ({ productos }) => {
         let priceProductoTotal = producto.price
         return (
           <ListGroup.Item key={key} className=" d-flex justify-content-between align-items-center" >
-            <span>{producto.name}</span>
+            <span>{producto.name}{`${producto?.code ? ` - Codigo => ${producto.code}` : ''}`}</span>
             <div className=" me-auto text-center">
               {
                 producto.modifique !== undefined ? producto.modifique.map((adicion, iAdicion) => {
                   const keyAdicion = `${iAdicion}${adicion.id}`
                   priceProductoTotal += adicion.price
+                  console.table(adicion)
                   return (
                     <ProductoBadge
                       key={keyAdicion}
-                      name={adicion.name}
+                      name={adicion.type == 'AdicionCodigo' ? `${adicion.name}, Codigo ${adicion.code}` : adicion.name}
                       cantidad={adicion.cuanty}
                       colorSecondary={adicion.colorSecondary}
                     />
