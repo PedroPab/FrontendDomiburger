@@ -14,13 +14,15 @@ const Total = ({ totalPrecio, fee, yaPago }) => {
       return (<><GiCancel /></>)
     }
   }
+  console.log(totalPrecio)
+
   return (
     <>
       {
         fee == `Transferencia` ?
 
-          (<div className="text-decoration-line-through">{formatearNumeroConPuntos(totalPrecio)}<PagadoIcon /></div>) :
-          (<div>{formatearNumeroConPuntos(totalPrecio)}</div>)
+          (<div className="text-decoration-line-through">{formatearNumeroConPuntos(totalPrecio || 0)}<PagadoIcon /></div>) :
+          (<div>{formatearNumeroConPuntos(totalPrecio || 0)}</div>)
       }
     </>
   )

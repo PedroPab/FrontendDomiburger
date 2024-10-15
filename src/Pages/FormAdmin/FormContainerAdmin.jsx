@@ -250,7 +250,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       } else {
         //es un referido
         //tenemos que mirar si hay una hamburguesa o combo a que agregar en la lista
-        const isProducto = newListaProductosOrder.findIndex(e => e.type == 'product')
+        const isProducto = newListaProductosOrder.reverse().findIndex(e => e.type == 'product')
 
         if (isProducto == -1) {
           toast.error('no se encontró ningún producto para agregar el codigo');
@@ -262,7 +262,7 @@ const FormContainerAdmin = ({ token, userId }) => {
         if (checkIfAdicionExists(newListaProductosOrder, dataCode)) return
 
         newListaProductosOrder[isProducto].modifique.push(adicion)
-        setListaProductosOrder(newListaProductosOrder)
+        setListaProductosOrder(newListaProductosOrder.reverse())
 
       }
     } else {
