@@ -24,6 +24,7 @@ import { VisualizarCodigoReferidos } from "../Codigo/VisualisarCodigosReferidos"
 import ClienteInfo from "../Clientes/ClientesInfo"
 import { EditarCodigo } from "../Codigo/EditarCodigo"
 import FormAdmin from "../FormAdmin"
+import { Cliente } from "../Clientes"
 
 const AppRoutes = () => {
   return (
@@ -55,6 +56,7 @@ const AppRoutes = () => {
 
         {/* clientes */}
         <Route path="/clientes/:id" element={<ClienteInfo />} />
+        <Route path="/clientes" element={<Cliente />} />
 
 
       </Route>
