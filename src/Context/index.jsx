@@ -20,11 +20,9 @@ export const ContextProvider = ({ children }) => {
   let initDarkMode = false
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     // El usuario ha establecido su sistema para usar un tema oscuro
-    console.log('Tema oscuro preferido');
     initDarkMode = true
   } else {
     // El usuario ha establecido su sistema para usar un tema claro
-    console.log('Tema claro preferido');
     initDarkMode = false
   }
   const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: initDarkMode })
@@ -76,7 +74,6 @@ export const ContextProvider = ({ children }) => {
     })
 
     socket.on('pedidos/added', (pedido) => {
-      // console.log(`se creo un nuevo pedido`);
       manejarAccion()
       // console.log(`los pedios actuales son :`, items);
       setItems(itemsPrevios => {

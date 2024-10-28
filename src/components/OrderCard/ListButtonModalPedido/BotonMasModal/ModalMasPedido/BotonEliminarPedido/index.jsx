@@ -13,7 +13,10 @@ const BotonEliminarPedido = ({ data, handleClose }) => {
 
     const url = `estados/eliminados?idPedido=${data.id}`
     UtilsApi({ peticion: url, token, vervo: 'DELETE' })
-      .then(() => handleClose())
+      .then((response) => {
+        console.log('Pedido eliminado', response)
+        handleClose()
+      })
     setConfirmar(false);
 
   };

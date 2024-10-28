@@ -56,7 +56,7 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
   const estadoAEnviar = listaEstados[listaEstados.findIndex(e => e.name == estado) + 1].name
   //ejecutamos el trapaso
   traladarPedidoDeEstado({ id, estado: estadoAEnviar, token: context.tokenLogin.token })
-    .then(data => { console.log(`la data del botonn `, data); return data })
+    // .then(data => { console.log(`la data del botonn `, data); return data })
     .then(data => {
       //remplazamos el pedido de nuetra lista de pedidos
       // const mapItems = new Map

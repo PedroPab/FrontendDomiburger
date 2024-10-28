@@ -16,7 +16,6 @@ const ProductoList = ({ productos }) => {
                 producto.modifique !== undefined ? producto.modifique.map((adicion, iAdicion) => {
                   const keyAdicion = `${iAdicion}${adicion.id}`
                   priceProductoTotal += adicion.price
-                  console.table(adicion)
                   return (
                     <ProductoBadge
                       key={keyAdicion}

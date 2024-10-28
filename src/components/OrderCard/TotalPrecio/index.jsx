@@ -14,7 +14,6 @@ const Total = ({ totalPrecio, fee, yaPago }) => {
       return (<><GiCancel /></>)
     }
   }
-  console.log(totalPrecio)
 
   return (
     <>
