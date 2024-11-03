@@ -39,6 +39,7 @@ const Domiciliario = () => {
           modoOscuro={context.modoOscuro}
           alternarModo={context.alternarModo}
           pedidos={context.items}
+        // recargarOrdenes={context.recargarOrdenes}
         />
         <Container fluid  >
           <Row className='mb-3'>

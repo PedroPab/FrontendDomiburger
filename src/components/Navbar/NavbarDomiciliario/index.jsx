@@ -7,7 +7,7 @@ import { BiLogIn } from "react-icons/bi"
 import { FaHome, FaHistory } from "react-icons/fa"
 import { GiSeaDragon } from 'react-icons/gi';
 
-const NavbarDomiciliario = ({ modoOscuro, alternarModo, pedidos }) => {
+const NavbarDomiciliario = ({ modoOscuro, alternarModo, pedidos, recargarOrdenes }) => {
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'} >
       <Container>
@@ -23,6 +23,11 @@ const NavbarDomiciliario = ({ modoOscuro, alternarModo, pedidos }) => {
         <Nav>
           <span><GiSeaDragon />: {pedidos?.length || 0}</span>
         </Nav>
+
+        {/* Boton para recargar los pedidos */}
+        {/* <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (recargarOrdenes())}>
+          <GiSeaDragon />
+        </Button> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

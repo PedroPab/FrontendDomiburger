@@ -18,14 +18,14 @@ export const ContextProvider = ({ children }) => {
   const alternarModo = () => {
     setModoOscuro(!modoOscuro);
   };
-
+  const socket = socketApp({
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000,
+  });
   useEffect(() => {
     // Inicializa el socket con reconexión automática habilitada
-    const socket = socketApp({
-      reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-    });
+
 
     socket.on('connect', () => {
       console.log(`Socket conectado 🏁, ID: ${socket.id}`);
@@ -45,6 +45,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('pedidosIniciales', (pedido) => {
+      console.log('Pedidos iniciales:', pedido?.length);
       setItems(filtrarPedidos(pedido, tokenLogin.user.role));
     });
 
@@ -77,6 +78,18 @@ export const ContextProvider = ({ children }) => {
     };
   }, [tokenLogin]);
 
+  // const recargarOrdenes = () => {
+  //   console.log('Recargando pedidos...');
+  //   const ROLE = tokenLogin?.user?.role;
+  //   const ID = tokenLogin?.user?.id;
+  //   socket.emit('api/v2/pedidos/reload', ROLE, ID);
+  //   socket.on('pedidosIniciales', (pedido) => {
+  //     console.log('Pedidos iniciales:', pedido?.length);
+  //     console.log('id Socket:', socket.id);
+  //     setItems(filtrarPedidos(pedido, tokenLogin.user.role));
+  //   });
+  // }
+
   return (
     <MiContexto.Provider
       value={{
@@ -86,6 +99,7 @@ export const ContextProvider = ({ children }) => {
         alternarModo,
         items,
         setItems,
+        // recargarOrdenes,
         alerts,
         setAlerts,
         indexItems,
