@@ -1,10 +1,10 @@
+// context/OrdersContext.js
 import { createContext, useEffect, useState } from 'react';
 import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
 import { io } from 'socket.io-client';
 
-// Inicializamos el socket fuera del componente
 const socket = io('http://localhost:8087');
 
 export const MiContexto = createContext();
@@ -24,6 +24,13 @@ export const ContextProvider = ({ children }) => {
   const ROLE = tokenLogin?.user?.role;
   const ID = tokenLogin?.user?.id;
 
+  const reconnectSocket = () => {
+    if (!isConnected) {
+      socket.connect();
+      console.log("Intentando reconectar...");
+    }
+  };
+
   useEffect(() => {
     // Manejamos la conexión inicial
     socket.on("connect", () => {
@@ -40,17 +47,14 @@ export const ContextProvider = ({ children }) => {
       setIsConnected(false); // Indicamos que el socket está desconectado
     });
 
-    // Evento de mensajes
     socket.on("message", (newMessage) => {
       console.log(newMessage);
     });
 
-    // Recibir pedidos iniciales
     socket.on('pedidosIniciales', (pedido) => {
       setItems(filtrarPedidos(pedido, tokenLogin.user.role));
     });
 
-    // Actualizaciones de pedidos
     socket.on('pedidos/added', (pedido) => {
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
@@ -67,7 +71,6 @@ export const ContextProvider = ({ children }) => {
       });
     });
 
-    // Limpieza de listeners al desmontar
     return () => {
       socket.off("connect");
       socket.off("disconnect");
@@ -97,6 +100,7 @@ export const ContextProvider = ({ children }) => {
         alertaActiva,
         setAlertaActiva,
         isConnected, // Exportamos el estado de conexión
+        reconnectSocket // Exportamos la función de reconexión
       }}
     >
       <CambiarTema />
