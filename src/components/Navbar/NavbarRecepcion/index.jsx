@@ -6,16 +6,13 @@ import logo from './../../../assets/logo.png';
 import { BiAccessibility, BiArrowFromBottom, BiHappy, BiLogIn, BiMobile, BiTone } from "react-icons/bi";
 import { RecepcionContexto } from '../../../Context/RecepcionContex';
 import { useContext } from 'react';
-import { GiSeaDragon } from 'react-icons/gi';
 import { FaAngellist, FaMapMarkedAlt } from 'react-icons/fa';
-import { MiContexto } from '../../../Context';
+import { ReconnectButton } from '../ReconnectButton';
+import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
+import { OrderCountIndicator } from '../OrderCountIndicator';
 
 const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto);
-  const context = useContext(MiContexto);
-
-  const isConnected = context?.isConnected;
-  const reconnectSocket = context?.reconnectSocket;
 
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'}>
@@ -30,30 +27,9 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
           Domiburguer
         </Navbar.Brand>
 
-        {/* Indicador de estado de conexión */}
-        <div style={{
-          display: 'inline-block',
-          width: '10px',
-          height: '10px',
-          borderRadius: '50%',
-          backgroundColor: isConnected ? 'green' : 'red',
-          marginLeft: '10px'
-        }} title={isConnected ? 'Conectado' : 'Desconectado'}></div>
-
-        <Nav>
-          <span><GiSeaDragon />: {context?.items?.length || 0}</span>
-        </Nav>
-
-        {/* Botón de reconexión manual si el socket está desconectado */}
-        {!isConnected && (
-          <Button
-            variant="warning"
-            onClick={reconnectSocket}
-            className="ms-2"
-          >
-            Reconectar
-          </Button>
-        )}
+        <ConnectionStatusIndicator />
+        <ReconnectButton />
+        <OrderCountIndicator />
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

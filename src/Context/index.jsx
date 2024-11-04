@@ -52,6 +52,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('pedidosIniciales', (pedido) => {
+      console.log('cantidad de pedidos iniciales:', pedido.length);
       setItems(filtrarPedidos(pedido, tokenLogin.user.role));
     });
 
@@ -78,7 +79,6 @@ export const ContextProvider = ({ children }) => {
       socket.off('pedidosIniciales');
       socket.off('pedidos/added');
       socket.off('pedidos/modified');
-      console.log('Socket desconectado y eventos limpiados');
     };
   }, [ROLE, ID, tokenLogin]);
 

@@ -4,10 +4,12 @@ import { BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { BiLogIn } from "react-icons/bi"
-import { GiSeaDragon } from 'react-icons/gi';
 import { FaHome, FaMapMarkedAlt } from 'react-icons/fa';
+import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
+import { ReconnectButton } from '../ReconnectButton';
+import { OrderCountIndicator } from '../OrderCountIndicator';
 
-const NavbarCocinero = ({ modoOscuro, alternarModo, pedidos }) => {
+const NavbarCocinero = ({ modoOscuro, alternarModo }) => {
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'} >
       <Container>
@@ -20,9 +22,11 @@ const NavbarCocinero = ({ modoOscuro, alternarModo, pedidos }) => {
           />
           Domiburguer
         </Navbar.Brand>
-        <Nav>
-          <span><GiSeaDragon />: {pedidos?.length || 0}</span>
-        </Nav>
+
+        <ConnectionStatusIndicator />
+        <ReconnectButton />
+        <OrderCountIndicator />
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

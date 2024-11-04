@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { BiLogIn } from "react-icons/bi"
 import { FaHome, FaHistory } from "react-icons/fa"
-import { GiSeaDragon } from 'react-icons/gi';
+import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
+import { ReconnectButton } from '../ReconnectButton';
+import { OrderCountIndicator } from '../OrderCountIndicator';
 
-const NavbarDomiciliario = ({ modoOscuro, alternarModo, pedidos, recargarOrdenes }) => {
+const NavbarDomiciliario = ({ modoOscuro, alternarModo }) => {
   return (
     <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'} >
       <Container>
@@ -20,9 +22,10 @@ const NavbarDomiciliario = ({ modoOscuro, alternarModo, pedidos, recargarOrdenes
           />
           Domiburguer
         </Navbar.Brand>
-        <Nav>
-          <span><GiSeaDragon />: {pedidos?.length || 0}</span>
-        </Nav>
+
+        <ConnectionStatusIndicator />
+        <ReconnectButton />
+        <OrderCountIndicator />
 
         {/* Boton para recargar los pedidos */}
         {/* <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (recargarOrdenes())}>
