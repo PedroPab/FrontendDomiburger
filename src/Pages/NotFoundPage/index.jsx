@@ -1,4 +1,5 @@
 import { Container, Button } from 'react-bootstrap';
+import Chat from '../../components/Chat';
 
 const NotFoundPage = () => {
   return (
@@ -12,6 +13,7 @@ const NotFoundPage = () => {
       />
       <p>Te recomendamos no esperar a que los extraterrestres te traigan de vuelta. ¡Mejor intenta con otra página!</p>
       <Button href="/" variant="primary">Regresar a Casa</Button>
+      <Chat />
     </Container>
   );
 };

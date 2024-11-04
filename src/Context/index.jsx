@@ -2,7 +2,10 @@ import { createContext, useEffect, useState } from 'react';
 import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
-import socketApp from '../Utils/socket';
+import { io } from 'socket.io-client';
+
+// Inicializamos el socket fuera del componente
+const socket = io('http://localhost:8087');
 
 export const MiContexto = createContext();
 
@@ -14,37 +17,40 @@ export const ContextProvider = ({ children }) => {
   const [indexItems, setIndexItems] = useState(null);
   const [zoomMaps, setZoomMaps] = useState(15);
   const [alertaActiva, setAlertaActiva] = useState(false);
+  const [isConnected, setIsConnected] = useState(false); // Nuevo estado para indicar si está conectado
 
   const alternarModo = () => setModoOscuro(!modoOscuro);
 
-  const socket = socketApp({
-    reconnection: true,
-    reconnectionAttempts: 5,
-    reconnectionDelay: 1000,
-  });
+  const ROLE = tokenLogin?.user?.role;
+  const ID = tokenLogin?.user?.id;
 
   useEffect(() => {
-    socket.on('connect', () => {
+    // Manejamos la conexión inicial
+    socket.on("connect", () => {
       console.log(`Socket conectado 🏁, ID: ${socket.id}`);
-      const ROLE = tokenLogin?.user?.role;
-      const ID = tokenLogin?.user?.id;
+      setIsConnected(true); // Indicamos que el socket está conectado
       if (ROLE && ID) {
         socket.emit('api/v2/pedidos/role', ROLE, ID);
       }
     });
 
+    // Manejo de desconexión
     socket.on('disconnect', (reason) => {
       console.log(`Socket desconectado 🥊, razón: ${reason}`);
+      setIsConnected(false); // Indicamos que el socket está desconectado
     });
 
-    socket.on('countConnection', (data) => {
-      console.log('Conexiones activas:', data);
+    // Evento de mensajes
+    socket.on("message", (newMessage) => {
+      console.log(newMessage);
     });
 
+    // Recibir pedidos iniciales
     socket.on('pedidosIniciales', (pedido) => {
       setItems(filtrarPedidos(pedido, tokenLogin.user.role));
     });
 
+    // Actualizaciones de pedidos
     socket.on('pedidos/added', (pedido) => {
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
@@ -61,18 +67,17 @@ export const ContextProvider = ({ children }) => {
       });
     });
 
-    // Limpieza al desmontar el componente
+    // Limpieza de listeners al desmontar
     return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('countConnection');
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("message");
       socket.off('pedidosIniciales');
       socket.off('pedidos/added');
       socket.off('pedidos/modified');
-      socket.disconnect();
       console.log('Socket desconectado y eventos limpiados');
     };
-  }, [tokenLogin]);
+  }, [ROLE, ID, tokenLogin]);
 
   return (
     <MiContexto.Provider
@@ -91,6 +96,7 @@ export const ContextProvider = ({ children }) => {
         setZoomMaps,
         alertaActiva,
         setAlertaActiva,
+        isConnected, // Exportamos el estado de conexión
       }}
     >
       <CambiarTema />
