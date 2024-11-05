@@ -4,6 +4,7 @@ const ENV = import.meta.env
 
 const apiUrl = `${ENV.VITE_HOST_WEB_SOCKET}`
 
-const socket = () => { return io(apiUrl) }; // Reemplaza con la URL de tu servidor Socket.IO
+console.log(`[ ~ apiUrl]`, apiUrl)
+const socket = io(apiUrl);
 
-export default socket;
+export { socket };

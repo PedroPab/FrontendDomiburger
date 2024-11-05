@@ -3,9 +3,8 @@ import { createContext, useEffect, useState } from 'react';
 import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
-import { io } from 'socket.io-client';
+import { socket } from '../Utils/socket';
 
-const socket = io('http://localhost:8087');
 
 export const MiContexto = createContext();
 
@@ -32,6 +31,8 @@ export const ContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    console.log('intentando conectar socket');
+    socket.connect();
     // Manejamos la conexión inicial
     socket.on("connect", () => {
       console.log(`Socket conectado 🏁, ID: ${socket.id}`);
@@ -52,6 +53,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('pedidosIniciales', (pedido) => {
+      console.log(`[ ~ socket.on ~ pedido]`, pedido)
       console.log('cantidad de pedidos iniciales:', pedido.length);
       setItems(filtrarPedidos(pedido, tokenLogin.user.role));
     });
@@ -80,7 +82,7 @@ export const ContextProvider = ({ children }) => {
       socket.off('pedidos/added');
       socket.off('pedidos/modified');
     };
-  }, [ROLE, ID, tokenLogin]);
+  }, []);
 
   return (
     <MiContexto.Provider
