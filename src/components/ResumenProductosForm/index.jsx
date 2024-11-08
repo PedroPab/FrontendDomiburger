@@ -30,9 +30,10 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
   };
 
   const onClicAdicion = (idInterAdicion, idInterProducto) => {
+    console.log(idInterAdicion, idInterProducto);
     const indexProducto = listaProducto.findIndex(e => e.idInter == idInterProducto);
     const dataProducto = listaProducto[indexProducto];
-    dataProducto.retirarModifique(idInterAdicion);
+    dataProducto.retirarModifique({ idInter: idInterAdicion });
     const newData = [...listaProducto];
     newData[indexProducto] = dataProducto;
     setListaProducto(newData);
