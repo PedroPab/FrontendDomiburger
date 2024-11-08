@@ -27,7 +27,6 @@ class Producto {
     this.modifique.push(modifique)
   }
   retirarModifique({ name, index, id, idInter }) {
-    console.log(`[ ~ Producto ~ retirarModifique ~ { name, index, id, idInter }]`, { name, index, id, idInter })
     let indexProducto
     if (name !== undefined) {
       indexProducto = this.modifique.findIndex(producto => producto.name == name)

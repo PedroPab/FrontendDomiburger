@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, Autocomplete } from "@react-google-maps/api";
-import FormField from "../FormField"; // Suponiendo que FormField es un componente reutilizable
+import FormField from "../FormField";
 import { BiLogoGoogle } from "react-icons/bi";
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { Button, Col, Row } from "react-bootstrap";
@@ -12,8 +12,6 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
   const [manualSelect, setManualSelect] = useState(false);
   const autocompleteRef = useRef(null);
 
-
-  // Maneja la selección de un lugar con autocompletado
   const onPlaceChanged = () => {
     const place = autocompleteRef.current?.getPlace();
     if (!place || !place.geometry) return;
@@ -31,7 +29,6 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
     setManualSelect(false);
   };
 
-  // Maneja el clic en el mapa para la selección manual
   const handleMapClick = (e) => {
     if (!manualSelect) return;
 
@@ -46,12 +43,10 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
     });
   };
 
-  // Actualiza la validez de la dirección cuando cambie el campo address_complete
   useEffect(() => {
     setDireccion({ ...direccion, valid: false });
   }, [direccion.address_complete]);
 
-  // Maneja el arrastre del marcador
   const handleMarkerDragEnd = (e) => {
     const lat = e.latLng.lat();
     const lng = e.latLng.lng();
@@ -81,7 +76,6 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
           type="text"
           icon={<BsFillGeoAltFill />}
           placeholder="Ejemplo: Calle 103d # 76 12"
-          // helpText="Escribe tu dirección para que podamos ubicarte mejor y selecciona una opción de la lista. Si no encuentras tu dirección, puedes seleccionarla manualmente mas abajo."
           value={direccion.address_complete}
           onChange={(e) => setDireccion({ ...direccion, address_complete: e.target.value })}
         />
@@ -95,14 +89,13 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
         icon={<BiLogoGoogle />}
         placeholder="Ejemplo: Piso 2, puerta de la izquierda / Apt 301 frente al colegio"
         value={direccion.piso}
-        // helpText="Escribe el piso de tu casa para ser mas fácil la entrega. Lo puedes omitir :)"
         onChange={(e) => setDireccion({ ...direccion, piso: e.target.value })}
       />
 
       <Row className="mb-3">
         <Col xs={12} md={8}>
           <p>
-            <strong>Instrucciones:</strong> Si tines problemas con la direccion ponla en el mapa.
+            <strong>Instrucciones:</strong> Si tienes problemas con la dirección, selecciónala en el mapa.
           </p>
         </Col>
         <Col xs={12} md={4}>
@@ -121,25 +114,22 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
         center={coordinates.lat ? coordinates : center}
         zoom={14}
         onClick={handleMapClick}
-        streetView={false}
         options={{
           mapTypeControlOptions: {
             style: window.google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
             position: window.google.maps.ControlPosition.TOP_LEFT,
+            mapTypeIds: ["roadmap", "terrain"],
           },
-          streetViewControl: false,
-        }}
-        mapTypeControlOptions={{
-          mapTypeIds: ["roadmap", "terrain"],
-        }}
-        restriction={{
-          latLngBounds: {
-            north: center.lat + 0.5,
-            south: center.lat - 0.5,
-            east: center.lng + 0.5,
-            west: center.lng - 1,
+          streetViewControl: false, // Desactiva el control de Street View
+          restriction: {
+            latLngBounds: {
+              north: center.lat + 0.5,
+              south: center.lat - 0.5,
+              east: center.lng + 0.5,
+              west: center.lng - 1,
+            },
+            strictBounds: false,
           },
-          strictBounds: false,
         }}
       >
         {coordinates.lat && (
@@ -147,9 +137,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
             position={coordinates}
             draggable={manualSelect}
             onDragEnd={handleMarkerDragEnd}
-            //poner mensaje en el marcador que diga "estoy aqui"
             label={":)"}
-
           />
         )}
       </GoogleMap>
