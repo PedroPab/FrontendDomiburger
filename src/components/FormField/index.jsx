@@ -1,7 +1,7 @@
 import { InputGroup, FormControl, Form } from 'react-bootstrap';
 
 const FormField = (props) => {
-  const { as, id, label, type, placeholder, value, onChange, icon, feedback, feedbackType, agregado, agregado2, required, helpText } = props;
+  const { as, id, label, type, placeholder, value, onChange, icon, feedback, feedbackType, agregado, agregado2, required, helptext } = props;
 
   return (
     <Form.Group className="mb-3">
@@ -25,7 +25,7 @@ const FormField = (props) => {
         {agregado2}
         {feedback && <Form.Control.Feedback type={feedbackType}>{feedback}</Form.Control.Feedback>}
       </InputGroup>
-      {helpText && <Form.Text className="text-muted">{helpText}</Form.Text>}  {/* Aquí está el texto de ayuda */}
+      {helptext && <Form.Text className="text-muted">{helptext}</Form.Text>}  {/* Aquí está el texto de ayuda */}
     </Form.Group>
   );
 };

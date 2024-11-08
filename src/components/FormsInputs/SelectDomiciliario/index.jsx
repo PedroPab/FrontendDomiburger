@@ -40,7 +40,7 @@ const SelectDomiciliario = ({ selectDomiciliario, setSelectDomiciliario }) => {
     label="Seleccionar domiciliario:"
     value={selectDomiciliario}
     onChange={handleChange}
-    // helpText="para ahorrar tiempo, si ya sebes que domiciliario va a llevar el pedido."
+    // helptext="para ahorrar tiempo, si ya sebes que domiciliario va a llevar el pedido."
     icon={<MdDeliveryDining />}
   >
     <OpcionesDomiciliarios />

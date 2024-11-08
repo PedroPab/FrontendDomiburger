@@ -30,7 +30,6 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
   };
 
   const onClicAdicion = (idInterAdicion, idInterProducto) => {
-    console.log(idInterAdicion, idInterProducto);
     const indexProducto = listaProducto.findIndex(e => e.idInter == idInterProducto);
     const dataProducto = listaProducto[indexProducto];
     dataProducto.retirarModifique({ idInter: idInterAdicion });
@@ -90,7 +89,7 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
               dataDomicilio.timeText &&
               <tr>
                 <th>Domicilio</th>
-                <th>{dataDomicilio.timeText} kl:???</th>
+                <th>{dataDomicilio.timeText}</th>
                 <th>
                   <input
                     type="number"
@@ -99,30 +98,32 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
                     value={precioDeliveryManual ?? dataDomicilio.price}
                     onChange={(e) => {
                       setPrecioDeliveryManual(parseInt(e.target.value) ?? 0);
-                    }
-                    }
-                    className="form-control form-control-sm text-center"  // Aplicar estilos Bootstrap
-                    style={{ width: '100px', display: 'inline-block' }}  // Ajustar el tamaño y alineación
+                    }}
+                    className="form-control form-control-sm text-center"
+                    style={{ width: '100px', display: 'inline-block' }}
                   />
-                  {/* boton para restablecer el precio */}
                   <button
                     className="btn btn-sm btn-primary"
                     onClick={() => {
                       setPrecioDeliveryManual(null)
                     }}
-                  >Reset</button>
+                  >
+                    Reset
+                  </button>
                 </th>
               </tr>
             }
           </tbody>
           <tfoot>
-            <th>TOTAL</th>
-            <th></th>
-            <th>{formatearNumeroConPuntos(totalProductos())}</th>
+            <tr>
+              <th colSpan="2">TOTAL</th>
+              <th>{formatearNumeroConPuntos(totalProductos())}</th>
+            </tr>
           </tfoot>
         </Table>
       </div>
     </Card.Body>
+
   );
 };
 

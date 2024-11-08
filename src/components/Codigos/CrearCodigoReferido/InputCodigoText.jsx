@@ -17,7 +17,7 @@ const InputCodigoText = ({ codigo, setCodigo, ButtonComponent }) => {
       value={codigo}
       onChange={handleChange}
       icon={<IoTicketSharp />}
-      helpText="Introduce el código sin espacios."
+      helptext="Introduce el código sin espacios."
       agregado2={ButtonComponent}
     >
     </FormField>

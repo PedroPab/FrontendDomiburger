@@ -19,7 +19,7 @@ const CommentInput = ({ comment, setComment }) => {
       value={comment}
       onChange={handleChange}
       required
-      helpText="Un comentario para hacer tu pedido mas personalizado"
+      helptext="Un comentario para hacer tu pedido mas personalizado"
     />
   )
 };

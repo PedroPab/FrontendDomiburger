@@ -18,7 +18,7 @@ const NameInput = ({ name, setName }) => {
       value={name}
       onChange={handleChange}
       required
-      helpText="Que bonito nombre ❤"
+      helptext="Que bonito nombre ❤"
     />
   )
 };
