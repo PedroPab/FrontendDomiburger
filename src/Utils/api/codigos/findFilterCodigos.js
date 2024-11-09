@@ -1,21 +1,20 @@
 // eslint-disable-next-line no-unused-vars
-export const findFilterCodigos = async (filter, token) => {
+export const findFilterCodigos = async (params, token) => {
   // eslint-disable-next-line no-useless-catch
   try {
+    const queryString = buildQuery(params);
     const ENV = import.meta.env
-    const apiUrl = `${ENV.VITE_HOST_CODES}/${ENV.VITE_FILTER_CODE || 'filter'}`;
+    const apiUrl = `${ENV.VITE_HOST_CODES}/filter${queryString}
+`;
 
-    console.log("🚀 ~ findFilterCodigos ~ apiUrl:", apiUrl)
-    const raw = JSON.stringify(filter);
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     //convert el objeto filter en un query params
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: myHeaders,
-      body: raw,
     };
 
     const response = await fetch(`${apiUrl}`, requestOptions);
@@ -29,4 +28,16 @@ export const findFilterCodigos = async (filter, token) => {
   } catch (error) {
     throw error
   }
+}
+
+function buildQuery(params) {
+  // Mapea los parámetros y construye cada par clave-valor
+  const rta = params.map(param => {
+    // Codifica tanto el nombre como el valor del parámetro para evitar errores en la URL
+    const key = encodeURIComponent(param.key);
+    const value = encodeURIComponent(param.value);
+    return `${key}=${value}`;
+  }).join('&')
+
+  return `?${rta}`; // Une los pares con '&' para formar la query completa
 }
