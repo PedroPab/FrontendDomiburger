@@ -41,13 +41,30 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
 
   useEffect(() => {
     if (!busquedaDataClient) return setIdClient('');
+    //buscamos todo los codigos que tengan el id del cliente po la api
+    const params = [
+      { key: 'page', value: 1 },
+      { key: 'orderBy', value: 'dateCreate' },
+      { key: 'limit', value: 12 },
+      { key: 'key', value: 'clientId' },
+      { key: 'options', value: '==' },
+      { key: 'value', value: busquedaDataClient.id },
+    ];
+
+    findFilterCodigos(params, token)
+      .then(rtaCodesReferidos => {
+        setCodesReferidos(rtaCodesReferidos.body);
+      });
+
     setIdClient(busquedaDataClient.id);
-  }, [busquedaDataClient]);
+
+  }, [busquedaDataClient, token]);
 
   let codigosFiltrados = codesReferidos &&
     codesReferidos
       .filter(codigo => codigo.data.id.includes(busqueda))
       .filter(codigo => codigo.data.clientId.includes(idClient));
+  console.log(`[ ~ VisualizarCodigoReferidoComponente ~ codesReferidos]`, codesReferidos)
 
   // Manejo de cambio de página
   const handlePageChange = (newPage) => {
