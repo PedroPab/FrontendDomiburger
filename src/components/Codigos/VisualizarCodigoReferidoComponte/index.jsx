@@ -10,6 +10,7 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
   const [codesReferidos, setCodesReferidos] = useState([]);
   const [busqueda, setBusqueda] = useState('');
   const [busquedaDataClient, setBusquedaDataClient] = useState('');
+  const [preCodigos, setPreCodigos] = useState([]);
   const [idClient, setIdClient] = useState('');
   const [pageList, setPageList] = useState([1, 2, 3, 4, 5]); // Lista de páginas
   const [page, setPage] = useState(1); // Página actual
@@ -29,6 +30,7 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
     findFilterCodigos(params, token)
       .then(rtaCodesReferidos => {
         setCodesReferidos(rtaCodesReferidos.body);
+        setPreCodigos(rtaCodesReferidos.body);
       });
   }, [token, userId, page]);
 
@@ -64,17 +66,34 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
     codesReferidos
       .filter(codigo => codigo.data.id.includes(busqueda))
       .filter(codigo => codigo.data.clientId.includes(idClient));
-  console.log(`[ ~ VisualizarCodigoReferidoComponente ~ codesReferidos]`, codesReferidos)
 
   // Manejo de cambio de página
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
 
+  const buscarCodigo = () => {
+    //miramo el id del codigo y lo buscamos por la api
+    const params = [
+      { key: 'page', value: 1 },
+      { key: 'orderBy', value: 'dateCreate' },
+      { key: 'limit', value: 12 },
+      { key: 'key', value: 'id' },
+      { key: 'options', value: '==' },
+      { key: 'value', value: busqueda },
+    ];
+    findFilterCodigos(params, token)
+      .then(rtaCodesReferidos => {
+        setCodesReferidos(rtaCodesReferidos.body);
+      });
+
+  }
+
   return (
     <>
       <Container >
         <Buscador
+          buscarCodigo={buscarCodigo}
           busqueda={busqueda}
           setBusqueda={setBusqueda}
           textPlaceholder="Buscar por codigo"
@@ -94,6 +113,8 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
                 setBusqueda('');
                 setBusquedaDataClient(null);
                 page != 1 ? setPage(1) : null
+                //init codes
+                setCodesReferidos(preCodigos);
 
               }}
             />

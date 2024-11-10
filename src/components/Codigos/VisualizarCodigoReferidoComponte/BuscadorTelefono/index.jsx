@@ -45,7 +45,6 @@ const BuscadorTelefono = ({ setDataClient, token }) => {
               defaultCountry="CO"
               value={telefono}
               onChange={setTelefono}
-              containerClass="flex-grow-1"
               inputComponent={Form.Control}
               onKeyDown={handleKeyDown}
               className="flex-grow-1"

@@ -1,7 +1,7 @@
 import { Row, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { BsXCircle } from 'react-icons/bs'; // Para el ícono de la X, usando react-icons
 
-const Buscador = ({ setBusqueda, busqueda, textPlaceholder = '' }) => {
+const Buscador = ({ setBusqueda, busqueda, textPlaceholder = '', buscarCodigo }) => {
 
   const limpiarBusqueda = () => setBusqueda('');
 
@@ -14,6 +14,7 @@ const Buscador = ({ setBusqueda, busqueda, textPlaceholder = '' }) => {
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
         />
+        <Button onClick={buscarCodigo} className="mx-1 buscar-btn">Buscar</Button>
         <Button variant="outline-danger" onClick={limpiarBusqueda} title="Limpiar búsqueda">
           <BsXCircle />
         </Button>
