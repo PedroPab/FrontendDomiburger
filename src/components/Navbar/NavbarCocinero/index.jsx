@@ -1,50 +1,67 @@
 /* eslint-disable react/prop-types */
-import { Container, Navbar, Nav, Button } from 'react-bootstrap';
-import { BsMoonStars } from 'react-icons/bs';
+import { Container, Navbar, Nav, NavDropdown, Col, Row, Button } from 'react-bootstrap';
+import { BsFillPersonFill, BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
-import { BiLogIn } from "react-icons/bi"
 import { FaHome, FaMapMarkedAlt } from 'react-icons/fa';
+import { BiLogIn } from "react-icons/bi";
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
+import { MdOutlineSettings } from 'react-icons/md';
 
 const NavbarCocinero = ({ modoOscuro, alternarModo }) => {
   return (
-    <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'} >
-      <Container>
-        <Navbar.Brand as={Link} to="/">
-          <img
-            src={logo}  // Reemplaza con la ruta de tu logo
-            alt="Logo"
-            height="30"
-            className="d-inline-block align-top"
-          />
-          Domiburguer
-        </Navbar.Brand>
+    <Navbar expand="lg" className="sticky-top" bg={modoOscuro ? 'dark' : 'light'}>
+      <Container fluid className="m-1">
+        <Row className="w-100 align-items-center justify-content-between">
+          {/* 1. Logo */}
+          <Col xs="auto">
+            <Navbar.Brand as={Link} to="/">
+              <img
+                src={logo}
+                alt="Domiburguer"
+                height="30"
+                className="d-inline-block align-top"
+              />
+            </Navbar.Brand>
+          </Col>
 
-        <ConnectionStatusIndicator />
-        <OrderCountIndicator />
+          {/* 2. Indicador de Conexión */}
+          <Col xs="auto">
+            <ConnectionStatusIndicator />
+          </Col>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          {/* 3. Conteo de Pedidos (solo visible en pantallas medianas y grandes) */}
+          <Col xs="auto">
+            <OrderCountIndicator />
+          </Col>
+
+
+          {/* 4. Navbar Toggle */}
+          <Col xs="auto" className="text-end d-lg-none">
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          </Col>
+          {/* Espacio en blanco */}
+          <Col xs="auto">
+            <div style={{ width: '50px' }}></div>
+          </Col>
+        </Row>
+
+        {/* 5. Navbar Collapse (Menú de Navegación) */}
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-
-            <Nav.Link as={Link} to="/cocina">  <FaHome /> Home</Nav.Link>
-
-            <Nav.Link as={Link} to="/mapCocina">  <FaMapMarkedAlt /> Map</Nav.Link>
-            <Nav.Link as={Link} to="/login">  <BiLogIn /> Login</Nav.Link>
+          <Nav className="ms-auto">
 
 
-            {/* <Nav.Link as={Link} to="/historial">  <FaHistory /> Historial</Nav.Link> */}
-
-
-            <Nav.Item>
-              <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (alternarModo())}>
-                <BsMoonStars />
-              </Button>
-            </Nav.Item>
+            {/* Sección de Ajustes */}
+            <NavDropdown title={<><MdOutlineSettings className="me-2" />Ajustes</>} id="nav-dropdown-ajustes">
+              <NavDropdown.Item as={Link} to="/login">
+                <BsFillPersonFill className="me-2" /> Login
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={() => alternarModo()}>
+                <BsMoonStars className="me-2" /> Cambiar Tema
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
-
         </Navbar.Collapse>
       </Container>
     </Navbar>
