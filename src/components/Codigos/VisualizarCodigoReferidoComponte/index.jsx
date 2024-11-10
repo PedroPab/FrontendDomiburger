@@ -11,6 +11,7 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
   const [busqueda, setBusqueda] = useState('');
   const [busquedaDataClient, setBusquedaDataClient] = useState('');
   const [idClient, setIdClient] = useState('');
+  const [pageList, setPageList] = useState([1, 2, 3, 4, 5]); // Lista de páginas
   const [page, setPage] = useState(1); // Página actual
   const [startPage, setStartPage] = useState(1); // Página inicial del rango
 
@@ -29,9 +30,15 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
     findFilterCodigos(params, token)
       .then(rtaCodesReferidos => {
         setCodesReferidos(rtaCodesReferidos.body);
-        console.log(`[ ~ useEffect ~ rtaCodesReferidos]`, rtaCodesReferidos);
       });
   }, [token, userId, page]);
+
+  useEffect(() => {
+    // Actualiza `pageList` cuando cambia la página actual
+    const start = Math.max(1, page - 2);
+    const newPageList = Array.from({ length: 5 }, (_, i) => start + i);
+    setPageList(newPageList);
+  }, [page]);
 
   useEffect(() => {
     if (!busquedaDataClient) return setIdClient('');
@@ -46,11 +53,6 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
   // Manejo de cambio de página
   const handlePageChange = (newPage) => {
     setPage(newPage);
-    if (newPage >= startPage + 5) {
-      setStartPage(startPage + 5);
-    } else if (newPage < startPage) {
-      setStartPage(startPage - 5);
-    }
   };
 
   return (
@@ -81,6 +83,7 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
         </Row>
 
         {/* Componente de Paginación */}
+        {/* Componente de Paginación */}
         <Row className="justify-content-center mt-4">
           <Col xs="auto">
             <Pagination>
@@ -88,13 +91,13 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
                 onClick={() => handlePageChange(Math.max(1, page - 1))}
                 disabled={page === 1}
               />
-              {[...Array(5).keys()].map(i => (
+              {pageList.map((pageNum) => (
                 <Pagination.Item
-                  key={startPage + i}
-                  active={page === startPage + i}
-                  onClick={() => handlePageChange(startPage + i)}
+                  key={pageNum}
+                  active={page === pageNum}
+                  onClick={() => handlePageChange(pageNum)}
                 >
-                  {startPage + i}
+                  {pageNum}
                 </Pagination.Item>
               ))}
               <Pagination.Next onClick={() => handlePageChange(page + 1)} />
