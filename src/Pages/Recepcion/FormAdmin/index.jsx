@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import { MiContexto } from '../../Context';
+import { MiContexto } from '../../../Context';
 import FormContainerAdmin from './FormContainerAdmin';
-import LayoutRecepcion from '../../Layout/Recepcion';
-import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
+import LayoutRecepcion from '../../../Layout/Recepcion';
+import SelectListDomiciliarios from '../../../components/SelectListDomiciliarios';
 
 
 const FormAdmin = () => {

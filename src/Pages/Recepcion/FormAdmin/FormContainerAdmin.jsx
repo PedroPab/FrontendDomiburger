@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import BuscadorCliente from '../../components/Codigos/CrearCodigoReferido/BuscadorCliente';
-import NameInput from '../../components/FormsInputs/NameInput';
-import CommentInput from '../../components/FormsInputs/CommentInput';
-import ProductsSection from '../../components/ProductsSection';
-import { PRODUCTS } from '../../Utils/constList';
-import { Adiciones, Combo, Hamburguesa, Producto } from '../../Utils/classProduct';
-import ResumenProductosForm from '../../components/ResumenProductosForm';
-import { calcularPrecio, calcularTiempo } from '../../Utils/matrixCalculate';
-import RegisterSaleButton from '../../components/RegisterSaleButton';
-import PaymentMethodInput from '../../components/FormsInputs/PaymentMethodInput';
-import SelectDomiciliario from '../../components/FormsInputs/SelectDomiciliario';
-import InputCodigo from '../../components/FormsInputs/InputCodigo';
+import BuscadorCliente from '../../../components/Codigos/CrearCodigoReferido/BuscadorCliente';
+import NameInput from '../../../components/FormsInputs/NameInput';
+import CommentInput from '../../../components/FormsInputs/CommentInput';
+import ProductsSection from '../../../components/ProductsSection';
+import { PRODUCTS } from '../../../Utils/constList';
+import { Adiciones, Combo, Hamburguesa, Producto } from '../../../Utils/classProduct';
+import ResumenProductosForm from '../../../components/ResumenProductosForm';
+import { calcularPrecio, calcularTiempo } from '../../../Utils/matrixCalculate';
+import RegisterSaleButton from '../../../components/RegisterSaleButton';
+import PaymentMethodInput from '../../../components/FormsInputs/PaymentMethodInput';
+import SelectDomiciliario from '../../../components/FormsInputs/SelectDomiciliario';
+import InputCodigo from '../../../components/FormsInputs/InputCodigo';
 import { toast } from 'react-toastify';
-import postOrder from '../../Utils/api/postOrder';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import MapComponent from '../../components/MapComponent/MapComponent';
+import postOrder from '../../../Utils/api/postOrder';
+import LoadingSpinner from '../../../components/LoadingSpinner';
+import MapComponent from '../../../components/MapComponent/MapComponent';
 import { useLoadScript } from '@react-google-maps/api';
 import { obtenerDistancia } from './googleDistanceMatrix'; // Importar la función
 
