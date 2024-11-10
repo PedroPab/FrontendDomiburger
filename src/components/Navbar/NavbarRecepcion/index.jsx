@@ -28,7 +28,6 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
         </Navbar.Brand>
 
         <ConnectionStatusIndicator />
-        <ReconnectButton />
         <OrderCountIndicator />
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
