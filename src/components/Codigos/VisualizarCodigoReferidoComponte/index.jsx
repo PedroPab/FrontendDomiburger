@@ -13,7 +13,6 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
   const [idClient, setIdClient] = useState('');
   const [pageList, setPageList] = useState([1, 2, 3, 4, 5]); // Lista de páginas
   const [page, setPage] = useState(1); // Página actual
-  const [startPage, setStartPage] = useState(1); // Página inicial del rango
 
   useEffect(() => {
     if (!token && !userId) return;
@@ -74,15 +73,16 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
             ))
           ) : (
             <MensajeSinCodigos
-              filtros={busqueda} limpiarFiltros={() => {
+              limpiarFiltros={() => {
                 setBusqueda('');
                 setBusquedaDataClient(null);
+                page != 1 ? setPage(1) : null
+
               }}
             />
           )}
         </Row>
 
-        {/* Componente de Paginación */}
         {/* Componente de Paginación */}
         <Row className="justify-content-center mt-4">
           <Col xs="auto">
