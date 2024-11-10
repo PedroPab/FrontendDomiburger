@@ -56,7 +56,7 @@ const VisualizarCodigoReferidoComponente = ({ token, userId }) => {
 
   return (
     <>
-      <Container fluid>
+      <Container >
         <Buscador
           busqueda={busqueda}
           setBusqueda={setBusqueda}

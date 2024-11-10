@@ -1,0 +1,11 @@
+.input-group-custom {
+  flex-wrap: nowrap;
+}
+
+.buscar-btn, .borrar-btn {
+  flex-shrink: 0;
+}
+
+.borrar-btn {
+  padding: 0.375rem 0.75rem;
+}

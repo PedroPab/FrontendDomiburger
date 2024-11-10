@@ -7,7 +7,7 @@ const Buscador = ({ setBusqueda, busqueda, textPlaceholder = '' }) => {
 
   return (
     <Row className="justify-content-center mb-4 mt-4">
-      <InputGroup className="w-50">
+      <InputGroup >
         <FormControl
           placeholder={`${textPlaceholder}...`}
           aria-label={`${textPlaceholder}`}
