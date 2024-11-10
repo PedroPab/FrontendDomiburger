@@ -6,7 +6,6 @@ import logo from './../../../assets/logo.png';
 import { BiLogIn } from "react-icons/bi"
 import { FaHome, FaMapMarkedAlt } from 'react-icons/fa';
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
-import { ReconnectButton } from '../ReconnectButton';
 import { OrderCountIndicator } from '../OrderCountIndicator';
 
 const NavbarCocinero = ({ modoOscuro, alternarModo }) => {
@@ -24,7 +23,6 @@ const NavbarCocinero = ({ modoOscuro, alternarModo }) => {
         </Navbar.Brand>
 
         <ConnectionStatusIndicator />
-        <ReconnectButton />
         <OrderCountIndicator />
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

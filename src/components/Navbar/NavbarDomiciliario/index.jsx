@@ -24,7 +24,6 @@ const NavbarDomiciliario = ({ modoOscuro, alternarModo }) => {
         </Navbar.Brand>
 
         <ConnectionStatusIndicator />
-        <ReconnectButton />
         <OrderCountIndicator />
 
         {/* Boton para recargar los pedidos */}
