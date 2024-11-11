@@ -7,7 +7,6 @@ export const findFilterCodigos = async (params, token) => {
     const queryString = buildQuery(params);
     const apiUrl = `${getUrlCodigos()}/filter${queryString}`
 
-
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -36,8 +35,8 @@ function buildQuery(params) {
     // Codifica tanto el nombre como el valor del parámetro para evitar errores en la URL
     const key = encodeURIComponent(param.key);
     const value = encodeURIComponent(param.value);
-    return `${key}=${value} `;
+    return `${key}=${value}`;
   }).join('&')
 
-  return `? ${rta} `; // Une los pares con '&' para formar la query completa
+  return `?${rta}`; // Une los pares con '&' para formar la query completa
 }

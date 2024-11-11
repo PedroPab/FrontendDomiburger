@@ -27,7 +27,7 @@ class UrlManager {
 
   static modifyUrl(url) {
     const currentHost = this.getCurrentHost();
-    if (this.isLocalhost(url)) {
+    if (!this.isLocalhost(url)) {
       return url;
     }
     return this.createCompatibleUrl(url, currentHost);

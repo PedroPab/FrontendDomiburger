@@ -15,7 +15,7 @@ export const findCodigo = async (codigo, token) => {
       headers: myHeaders,
     };
 
-    const response = await fetch(`${apiUrlCode}?id=${codigo}`, requestOptions);
+    const response = await fetch(`${apiUrlCode}/id/${codigo}`, requestOptions);
     const result = await response.json();
 
     if (response.status !== 200 && response.status !== 201) {
