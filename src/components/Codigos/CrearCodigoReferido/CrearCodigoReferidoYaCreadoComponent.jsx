@@ -63,6 +63,7 @@ const CrearCodigoReferidoYaCreadoComponent = ({ token, userId }) => {
       setCantidadPremios(0);
       setCantidadReferidos(0)
     } catch (error) {
+      toast.error(error);
       toast.error(error?.body);
     }
   };

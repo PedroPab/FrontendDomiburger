@@ -1,11 +1,11 @@
+import { getUrlCodigos } from "../../getUrlApiByOriginPath";
+
 // eslint-disable-next-line no-unused-vars
 export const findFilterCodigos = async (params, token) => {
   // eslint-disable-next-line no-useless-catch
   try {
     const queryString = buildQuery(params);
-    const ENV = import.meta.env
-    const apiUrl = `${ENV.VITE_HOST_CODES}/filter${queryString}
-`;
+    const apiUrl = `${getUrlCodigos()}/filter${queryString}`
 
 
     const myHeaders = new Headers();
@@ -36,8 +36,8 @@ function buildQuery(params) {
     // Codifica tanto el nombre como el valor del parámetro para evitar errores en la URL
     const key = encodeURIComponent(param.key);
     const value = encodeURIComponent(param.value);
-    return `${key}=${value}`;
+    return `${key}=${value} `;
   }).join('&')
 
-  return `?${rta}`; // Une los pares con '&' para formar la query completa
+  return `? ${rta} `; // Une los pares con '&' para formar la query completa
 }

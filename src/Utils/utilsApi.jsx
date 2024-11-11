@@ -1,7 +1,8 @@
+import { getUrlBackend } from "./getUrlApiByOriginPath";
 
 export const traladarPedidoDeEstado = async ({ id, estado, token }) => {
-  const ENV = import.meta.env
-  const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
+  const apiUrl = getUrlBackend();
+  // const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
 
   const TOKEN = `Bearer ${token}`
 
@@ -25,8 +26,10 @@ export const traladarPedidoDeEstado = async ({ id, estado, token }) => {
 }
 
 export const UtilsApi = async ({ peticion, token, vervo = 'POST', body }) => {
-  const ENV = import.meta.env
-  const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
+  // const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
+  const apiUrl = getUrlBackend();
+
+
 
   const TOKEN = `Bearer ${token}`
   const headers = {}

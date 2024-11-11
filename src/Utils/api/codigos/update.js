@@ -1,11 +1,11 @@
+import { getUrlCodigos } from "../../getUrlApiByOriginPath";
 
 export const updateCodigo = async (data, type, token) => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const ENV = import.meta.env
-    const apiUrl = `${ENV.VITE_HOST_CODES}/${ENV.VITE_UPDATE_CODE || 'edit'}`;
+    // const apiUrl = `${ENV.VITE_HOST_CODES}/${ENV.VITE_UPDATE_CODE || 'edit'}`;
+    const apiUrlCode = getUrlCodigos()
 
-    console.log("🚀 ~ updateCodigo ~ apiUrl:", apiUrl)
     const raw = JSON.stringify(data);
 
     const myHeaders = new Headers();
@@ -18,7 +18,7 @@ export const updateCodigo = async (data, type, token) => {
       body: raw,
     };
 
-    const response = await fetch(`${apiUrl}/?type=${type}`, requestOptions);
+    const response = await fetch(`${apiUrlCode}/?type=${type}`, requestOptions);
     const result = await response.json();
 
     if (response.status !== 200 && response.status !== 201) {

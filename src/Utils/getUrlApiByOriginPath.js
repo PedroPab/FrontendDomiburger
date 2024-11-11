@@ -6,24 +6,31 @@ class UrlManager {
   }
 
   static getCurrentHost() {
-    return window.location.host;
+    return window.location.origin;
+
   }
-  static createCompatibleUrl(urlApiBackend, path) {
-    const protocol = urlApiBackend.startsWith('https') ? 'https' : 'http';
-    const port = new URL(urlApiBackend).port;
-    const path_sin_port = path.replace(/:\d+/, '');
-    return urlApiBackend.replace(/(http|https):\/\/[^]+/, `${protocol}://${path_sin_port}${port ? `:${port}` : ''}`);
+  static createCompatibleUrl(apiUrl, dominioActual) {
+    // Crear objetos URL a partir de las URLs proporcionadas
+    const urlApi = new URL(apiUrl);
+    const portApi = urlApi.port;
+    const protocoloApi = urlApi.protocol;
+    const pathApi = urlApi.pathname;
+
+    const urlDominio = new URL(dominioActual);
+    const hostNameDominioActual = urlDominio.hostname;
+    // Combinar el dominio con el puerto y el path de la API
+    const nuevaUrl = `${protocoloApi}//${hostNameDominioActual}:${portApi}${pathApi}`;
+
+    // Quitar el '/' del final si lo trae
+    return nuevaUrl.endsWith('/') ? nuevaUrl.slice(0, -1) : nuevaUrl;
   }
 
   static modifyUrl(url) {
     const currentHost = this.getCurrentHost();
-    const isLocalPath = this.isLocalhost(currentHost);
-
     if (this.isLocalhost(url)) {
-      return isLocalPath ? url : this.createCompatibleUrl(url, currentHost);
+      return url;
     }
-
-    return url;
+    return this.createCompatibleUrl(url, currentHost);
   }
 
   static getBackendUrl() {

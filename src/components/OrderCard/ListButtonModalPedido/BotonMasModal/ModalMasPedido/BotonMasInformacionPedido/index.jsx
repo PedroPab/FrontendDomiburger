@@ -1,8 +1,10 @@
 import { Button } from 'react-bootstrap';
-const ENV = import.meta.env
+import { getUrlBackend } from '../../../../../../Utils/getUrlApiByOriginPath';
 
 const BotonMasInformacionPedido = ({ data }) => {
-  const urlInfoPedido = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}/api/pedidos/id/?id=${data.id}`
+  const apiUrl = getUrlBackend();
+
+  const urlInfoPedido = `${apiUrl}/api/pedidos/id/?id=${data.id}`
 
   return (
     <div>

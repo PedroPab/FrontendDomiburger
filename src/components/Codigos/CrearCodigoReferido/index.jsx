@@ -40,6 +40,7 @@ const CrearCodigoReferido = ({ token, userId }) => {
       setCodigo('');
       setDataCliente(null);
     } catch (error) {
+      alert(error);
       toast.error(error.message)
     }
   };
