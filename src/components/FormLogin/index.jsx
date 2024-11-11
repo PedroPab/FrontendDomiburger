@@ -3,10 +3,10 @@ import { FloatingLabel, Alert } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-const ENV = import.meta.env
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
 import { Navigate } from "react-router-dom";
+import { getUrlBackend } from '../../Utils/getUrlApiByOriginPath.js';
 
 
 function FormLogin() {
@@ -14,7 +14,9 @@ function FormLogin() {
   const [redireccionar, setRedireccionar] = useState({ ok: false, to: `` });
   const [messageErrorLogin, setMessageErrorLogin] = useState(null);
   const context = useContext(MiContexto)
-  const apiUrl = `${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}`;
+
+  const apiUrl = getUrlBackend()
+  console.log(`[ ~ FormLogin ~ apiUrl]`, apiUrl)
 
   //al entrar al login , borramos el token que tengamos guardado
   // context.saveToken({})

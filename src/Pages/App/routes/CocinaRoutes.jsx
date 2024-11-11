@@ -8,7 +8,7 @@ const CocinaRoutes = () => {
     <Route
       element={
         <ProtectedRoute
-          users={[ROLES.admin, ROLES.recepcion]}
+          users={[ROLES.admin, ROLES.recepcion, ROLES.cocina, "cocinero"]}
           redirectTo="/login" />
       }>
       <Route key="Cocina" path="/cocina" element={< Cocina />} />

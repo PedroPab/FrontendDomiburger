@@ -1,10 +1,12 @@
 import extraerColorEstado from "../../Utils/extraeColorEstado";
 import { formatTimeString } from "../../Utils/formatTime";
 import formatearNumeroConPuntos from "../../Utils/formatearNumeroConPuntos";
+import { getUrlBackend } from "../../Utils/getUrlApiByOriginPath";
 import { ProductoBadge } from "../OrderCard/ProductoBadge";
 const ENV = import.meta.env
 
 const FilaPedidos = ({ pedidos }) => {
+  const hostApi = getUrlBackend();
   const crearBadgeProductos = (order) => {
     // Implementa la lógica de esta función según sea necesario
     // Debería retornar un JSX o un string para el badge
@@ -57,7 +59,7 @@ const FilaPedidos = ({ pedidos }) => {
               <td>{formatearNumeroConPuntos(element.priceTotal.priceTotal)}</td>
               <td>{element.fee}</td>
               <td>{yaPagoBadge}</td>
-              <td><a href={`${ENV.VITE_PROTOCOL}${ENV.VITE_HOST}:${ENV.VITE_PORT}/api/pedidos/id/?id=${element.id}`}>{idRecortado}</a></td>
+              <td><a href={`${hostApi}/api/pedidos/id/?id=${element.id}`}>{idRecortado}</a></td>
             </tr>
           );
         })}
