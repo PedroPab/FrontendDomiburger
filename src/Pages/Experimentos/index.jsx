@@ -1,7 +1,20 @@
 import LayoutRecepcion from "../../Layout/Recepcion";
 import { getUrlBackend, getUrlCodigos, getUrlSocket } from "../../Utils/getUrlApiByOriginPath";
+import { getIdToken } from 'firebase/auth';
+import { FirebaseAuth } from '../../firebase/config';
+import { useEffect, useState } from "react";
 
 const Experimentos = () => {
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    const getToken = async () => {
+      const getToken = await getIdToken(FirebaseAuth.currentUser);
+      console.log('Token:', getToken);
+      setToken(getToken);
+    };
+    getToken();
+  }, []);
+
   const apiUrl = getUrlBackend();
   const urlSocket = getUrlSocket();
   const urlCodigo = getUrlCodigos()
@@ -23,6 +36,10 @@ const Experimentos = () => {
 
         <div className="alert alert-info">
           <strong>Códigos URL:</strong> {urlCodigo}
+        </div>
+
+        <div className="alert alert-info">
+          <strong>Token:</strong> {token}
         </div>
 
 
