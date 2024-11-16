@@ -86,6 +86,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
         label="Piso y comentarios"
         type="text"
         required={false}
+        disable={true}
         icon={<BiLogoGoogle />}
         placeholder="Ejemplo: Piso 2, puerta de la izquierda / Apt 301 frente al colegio"
         value={direccion.piso}

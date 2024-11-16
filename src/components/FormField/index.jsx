@@ -20,6 +20,7 @@ const FormField = (props) => {
           onChange={onChange}
           autoComplete="true"
           required={required}
+          disabled={props?.disable}
           {...props}
         />
         {agregado2}
