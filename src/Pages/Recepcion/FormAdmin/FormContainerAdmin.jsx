@@ -303,16 +303,6 @@ const FormContainerAdmin = ({ token, userId }) => {
         />
       }
 
-      <CommentInput
-        comment={comment}
-        setComment={setComment}
-      />
-
-      <PaymentMethodInput
-        paymentMethod={paymentMethod}
-        setPaymentMethod={setPaymentMethod}
-      />
-
       <InputCodigo
         client={[dataCliente, setDataCliente]}
         dataCode={dataCode}
@@ -321,9 +311,19 @@ const FormContainerAdmin = ({ token, userId }) => {
         retirarCodigo={retirarCodigo}
       />
 
+      <CommentInput
+        comment={comment}
+        setComment={setComment}
+      />
+
       <SelectDomiciliario
         selectDomiciliario={selectDomiciliario}
         setSelectDomiciliario={setSelectDomiciliario}
+      />
+
+      <PaymentMethodInput
+        paymentMethod={paymentMethod}
+        setPaymentMethod={setPaymentMethod}
       />
 
       <ProductsSection
