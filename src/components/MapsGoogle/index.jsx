@@ -1,11 +1,14 @@
 
-import { useRef } from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 const ENV = import.meta.env
 
-function Mapa({ center, containerStyle, zoom, setZoomMaps, children, setCenter, modoOscuro }) {
-  const mapRef = useRef(null); // Crea una referencia usando useRef
+function Mapa({ mapRef, center, containerStyle, zoom, setZoomMaps, children, setCenter, modoOscuro }) {
+  //si no tiene un mapRef se crea uno
+  if (!mapRef) {
+    mapRef = useRef(null);
+  }
+  // const mapRef = useRef(null); // Crea una referencia usando useRef
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script-domiburguer',

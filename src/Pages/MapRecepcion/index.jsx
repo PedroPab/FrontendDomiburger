@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { MiContexto } from '../../Context'
 import { Container } from 'react-bootstrap';
 import { NavbarRecepcion } from "../../components/Navbar/NavbarRecepcion";
@@ -27,7 +27,7 @@ const MapRecepcion = () => {
   const indexPedido = context?.indexItems || 0
 
   const pedidoSelecionado = context?.items != null ? context?.items[indexPedido] : false
-
+  const mapRef = useRef(null); // Crea una referencia usando useRef
 
   return (
     <>
@@ -40,6 +40,7 @@ const MapRecepcion = () => {
           />
           <Container fluid  >
             <Mapa
+              mapRef={mapRef}
               zoom={context.zoomMaps}
               setZoomMaps={context.setZoomMaps}
               modoOscuro={context.modoOscuro}
@@ -48,9 +49,12 @@ const MapRecepcion = () => {
               containerStyle={containerStyle}
             >
               {
-                context.items ? (<ListMarker
-                  pedidos={context.items}
-                />) : (<></>)
+                context.items ?
+                  (<ListMarker
+                    mapRef={mapRef}
+                    pedidos={context.items}
+                  />) :
+                  (<></>)
               }
             </Mapa>
           </Container>
