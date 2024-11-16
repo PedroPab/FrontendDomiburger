@@ -167,7 +167,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       }
     })
 
-    precioDeliveryManual >= 0 && precioDeliveryManual ? dataOrder.addressPrice = precioDeliveryManual : null
+    precioDeliveryManual >= 0 ? dataOrder.addressPrice = precioDeliveryManual : null
 
     selectDomiciliario ? dataOrder.domiciliario_asignado = { id: selectDomiciliario } : null
 
