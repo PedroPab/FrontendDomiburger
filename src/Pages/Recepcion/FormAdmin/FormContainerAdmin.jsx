@@ -169,6 +169,8 @@ const FormContainerAdmin = ({ token, userId }) => {
 
     precioDeliveryManual >= 0 ? dataOrder.addressPrice = precioDeliveryManual : null
     if (!dataDomicilio.price) delete dataOrder.addressPrice
+    //si dataOrder.addressPrice no es de tipo number lo eliminamos
+    if (typeof dataOrder.addressPrice !== 'number') delete dataOrder.addressPrice
 
     selectDomiciliario ? dataOrder.domiciliario_asignado = { id: selectDomiciliario } : null
 
