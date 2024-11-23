@@ -1,19 +1,19 @@
-import { UtilsApi } from "../utilsApi"
+import { UtilsApiV2 } from "../utilsApi"
 
 const postOrder = async (order, token, isAdmin = false) => {
-  try {
-    const rta = await UtilsApi({
-      peticion: isAdmin ? 'pedidos/admin' : 'pedidos',
-      vervo: 'POST',
-      body: JSON.stringify(order),
-      token
-    })
+  const rta = await UtilsApiV2({
+    path: isAdmin ? 'pedidos/admin' : 'pedidos',
+    method: 'POST',
+    body: JSON.stringify(order),
+    token
+  })
+  const body = rta?.body?.body
 
-    return rta
-
-  } catch (error) {
-    return error
+  if (rta?.response?.status != 201 && rta?.response?.status != 200) {
+    throw body
   }
+
+  return body
 }
 
 export default postOrder

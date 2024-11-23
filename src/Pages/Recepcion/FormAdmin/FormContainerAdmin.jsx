@@ -167,7 +167,9 @@ const FormContainerAdmin = ({ token, userId }) => {
       }
     })
 
+
     precioDeliveryManual >= 0 ? dataOrder.addressPrice = precioDeliveryManual : null
+    if (!dataDomicilio.price) delete dataOrder.addressPrice
 
     selectDomiciliario ? dataOrder.domiciliario_asignado = { id: selectDomiciliario } : null
 
@@ -175,10 +177,10 @@ const FormContainerAdmin = ({ token, userId }) => {
     try {
       setLoading(true);
       const rta = await postOrder(dataOrder, token, true)
-      if (rta.statusCode && (rta.statusCode !== 200 || rta.statusCode !== 200)) {
-        throw rta?.message
-      }
-      toast.success('Pedido Creado')
+      const { priceTotal } = rta
+      console.log(rta, '<=rta');
+
+      toast.success(`Pedido Creado con un precio de ${priceTotal.COP}`)
       //limpiamos los datos
       setListaProductosOrder([])
       setDataCliente(null)
