@@ -104,14 +104,11 @@ const FormContainerAdmin = ({ token, userId }) => {
 
     obtenerDistancia(centerOrigin, coordinates)
       .then(dataMatrix => {
-        console.log(centerOrigin, coordinates, 'dataMatrix');
-        console.table(dataMatrix)
         if (dataMatrix) {
           const timeText
             = calcularTiempo(dataMatrix.distance.value)
           const price = calcularPrecio(dataMatrix.distance.value)
-
-          if (!timeText || !price) return toast.error('No se pudo calcular el precio del domicilio')
+          if (!timeText || (!price && price !== 0)) return toast.error('No se pudo calcular el precio del domicilio')
 
           toast.success(`El domicilio tiene un costo de $${price} y tardará ${timeText}`)
 
