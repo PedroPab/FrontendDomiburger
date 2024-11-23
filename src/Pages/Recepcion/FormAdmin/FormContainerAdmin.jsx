@@ -104,6 +104,8 @@ const FormContainerAdmin = ({ token, userId }) => {
 
     obtenerDistancia(centerOrigin, coordinates)
       .then(dataMatrix => {
+        console.log(centerOrigin, coordinates, 'dataMatrix');
+        console.table(dataMatrix)
         if (dataMatrix) {
           const timeText
             = calcularTiempo(dataMatrix.distance.value)
