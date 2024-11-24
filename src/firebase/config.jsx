@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, connectAuthEmulator } from 'firebase/auth';
+
 
 // TOD o: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -8,18 +9,23 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyD8F6oYTMnQWwyMLwcl87-rg_DUJYD3CUg",
-  authDomain: "domiburguer.firebaseapp.com",
-  projectId: "domiburguer",
-  storageBucket: "domiburguer.firebasestorage.app",
-  messagingSenderId: "722900966985",
-  appId: "1:722900966985:web:246f27525da4df0845e998",
-  measurementId: "G-8JZ2VTN087"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const FirebaseAuth = getAuth(app)
+
+// Conecta con los emuladores si estás en desarrollo
+if (location.hostname === "localhost") {
+  connectAuthEmulator(FirebaseAuth, "http://localhost:9099");
+}
 
 export {
   FirebaseAuth,
