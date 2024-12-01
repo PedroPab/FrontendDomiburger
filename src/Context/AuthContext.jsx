@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import { auth } from '../firebase/config';
+import { FirebaseAuth } from '../firebase/config';
 import { onAuthStateChanged, getIdToken } from 'firebase/auth';
 
 export const AuthContext = createContext();
@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(FirebaseAuth, async (user) => {
       setUsuarioActual(user);
       if (user) {
         const fetchedToken = await getIdToken(user);

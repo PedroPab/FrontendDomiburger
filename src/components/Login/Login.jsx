@@ -18,26 +18,26 @@ const Login1 = () => {
   // Determinar la ruta de redirección (si existe)
   const from = location.state?.from?.pathname || '/home';
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   setError('');
-  //   try {
-  //     const ho = await signInWithEmailAndPassword(FirebaseAuth, email, password);
-  //     setSuccess('¡Inicio de sesión exitoso!');
-  //     setTimeout(() => {
-  //       navigate(from, { replace: true });
-  //     }, 1000);
-  //   } catch (error) {
-  //     console.error('Error al iniciar sesión:', error);
-  //     if (error.code === 'auth/wrong-password') {
-  //       setError('La contraseña es incorrecta. Inténtalo de nuevo.');
-  //     } else if (error.code === 'auth/user-not-found') {
-  //       setError('No se encontró una cuenta con este correo electrónico.');
-  //     } else {
-  //       setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
-  //     }
-  //   }
-  // };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const ho = await signInWithEmailAndPassword(FirebaseAuth, email, password);
+      setSuccess('¡Inicio de sesión exitoso!');
+      setTimeout(() => {
+        navigate(from, { replace: true });
+      }, 1000);
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      if (error.code === 'auth/wrong-password') {
+        setError('La contraseña es incorrecta. Inténtalo de nuevo.');
+      } else if (error.code === 'auth/user-not-found') {
+        setError('No se encontró una cuenta con este correo electrónico.');
+      } else {
+        setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
+      }
+    }
+  };
 
   const handleGoogleLogin = async () => {
     setError('');
@@ -67,7 +67,7 @@ const Login1 = () => {
             <h2 className="text-center mb-4">Inicio de Sesión</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
-            {/* <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin}>
               <div className="mb-3">
                 <label className="form-label">Correo Electrónico</label>
                 <input
@@ -95,7 +95,7 @@ const Login1 = () => {
               <button type="submit" className="btn btn-primary w-100">
                 Iniciar Sesión
               </button>
-            </form> */}
+            </form>
             <hr />
             <button type="button" className="btn btn-outline-dark w-100" onClick={handleGoogleLogin}>
               <img
