@@ -79,7 +79,7 @@ class Hamburguesa extends Producto {
     this.name = PRODUCTS.Hamburguesa
     this.id = `2`
     this.type = 'product'
-    this.price = 17500
+    this.price = 18900
   }
 }
 class Combo extends Producto {
@@ -88,7 +88,7 @@ class Combo extends Producto {
     this.name = PRODUCTS.Combo
     this.id = `1`
     this.type = 'product'
-    this.price = 21000
+    this.price = 22900
   }
 }
 export {
