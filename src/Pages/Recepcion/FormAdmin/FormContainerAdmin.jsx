@@ -18,6 +18,7 @@ import LoadingSpinner from '../../../components/LoadingSpinner';
 import MapComponent from '../../../components/MapComponent/MapComponent';
 import { useLoadScript } from '@react-google-maps/api';
 import { obtenerDistancia } from './googleDistanceMatrix'; // Importar la función
+import NoteClientInput from '../../../components/FormsInputs/NoteClientInput';
 
 const ENV = import.meta.env;
 
@@ -42,6 +43,7 @@ const FormContainerAdmin = ({ token, userId }) => {
   // const [dataAdrees, setDataAdrees] = useState({});//para guardar la direccion del cliente
   const [telefono, setTelefono] = useState('');
   const [name, setName] = useState('');
+  const [clientNote, setNoteClient] = useState('');
   const [comment, setComment] = useState('');
   const [selectDomiciliario, setSelectDomiciliario] = useState('');
 
@@ -53,11 +55,15 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   //cada vez que cambie el dato del cliente (cuando lo busquemos)
   useEffect(() => {
-    const { name, address, phone } = dataCliente || {};
+    const { name, address, phone, clientNote } = dataCliente || {};
 
     // Lógica condicional agrupada por tipo de dato
     if (name) {
       setName(name);
+    }
+
+    if (clientNote !== '') {
+      setComment(clientNote)
     }
 
     if (address) {
@@ -174,6 +180,12 @@ const FormContainerAdmin = ({ token, userId }) => {
 
     selectDomiciliario ? dataOrder.domiciliario_asignado = { id: selectDomiciliario } : null
 
+    //miramos si la nota del cliente cambio
+    if ((typeof (clientNote) == 'string') &&
+      (clientNote !== '') &&
+      dataCliente?.clientNote !== clientNote) {
+      dataOrder.clientNote = clientNote
+    }
 
     try {
       setLoading(true);
@@ -296,6 +308,12 @@ const FormContainerAdmin = ({ token, userId }) => {
       <NameInput
         name={name}
         setName={setName}
+      />
+
+      {/* nota del cliente */}
+      <NoteClientInput
+        note={clientNote}
+        setNote={setNoteClient}
       />
       {/* solo si isLoaded esta en true */}
       {isLoaded &&
