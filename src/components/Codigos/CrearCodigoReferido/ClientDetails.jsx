@@ -1,10 +1,10 @@
 import { Accordion, Badge, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { FaClipboardList, FaEnvelope, FaIdBadge, FaPhone, FaStar, FaStarHalfAlt, FaRegStar, FaUser, FaWhatsapp, FaRobot } from 'react-icons/fa';
+import { FaClipboardList, FaEnvelope, FaIdBadge, FaPhone, FaStar, FaStarHalfAlt, FaRegStar, FaUser, FaWhatsapp, FaRobot, FaNotesMedical } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const ClientDetails = ({ cliente }) => {
   // Desestructurar los datos del cliente
-  const { name, phone, id, email, orders } = cliente || {};
+  const { name, phone, id, email, orders, clientNote } = cliente || {};
 
   // Si no hay datos del cliente, no se muestra nada
   if (!cliente) return null;
@@ -38,6 +38,13 @@ const ClientDetails = ({ cliente }) => {
               <ListGroupItem>
                 <FaUser className="me-2" />
                 <strong>Nombre:</strong> {name}
+              </ListGroupItem>
+            )}
+            {/* note */}
+            {clientNote && (
+              <ListGroupItem>
+                <FaNotesMedical className="me-2" />
+                <strong>Nota:</strong> {clientNote}
               </ListGroupItem>
             )}
             {/* calificación */}
