@@ -56,6 +56,7 @@ const FormContainerAdmin = ({ token, userId }) => {
   //cada vez que cambie el dato del cliente (cuando lo busquemos)
   useEffect(() => {
     const { name, address, phone, clientNote } = dataCliente || {};
+    console.log(`[ ~ useEffect ~ dataCliente]`, dataCliente)
 
     // Lógica condicional agrupada por tipo de dato
     if (name) {
@@ -63,7 +64,7 @@ const FormContainerAdmin = ({ token, userId }) => {
     }
 
     if (clientNote !== '') {
-      setComment(clientNote)
+      setNoteClient(clientNote)
     }
 
     if (address) {
@@ -182,7 +183,7 @@ const FormContainerAdmin = ({ token, userId }) => {
 
     //miramos si la nota del cliente cambio
     if ((typeof (clientNote) == 'string') &&
-      (clientNote !== '') &&
+      !(dataCliente?.clientNote == undefined && clientNote == '') &&
       dataCliente?.clientNote !== clientNote) {
       dataOrder.clientNote = clientNote
     }
@@ -199,6 +200,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       setDataCliente(null)
       setTelefono('')
       setName('')
+      setNoteClient('')
       // setDireccion({})
       setComment('')
       setPaymentMethod('Efectivo')
