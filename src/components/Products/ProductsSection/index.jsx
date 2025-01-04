@@ -1,7 +1,7 @@
-import CardProduct from "../CardProduct";
-import imgHamburguesa from './../../assets/img/hamburguesa.png';
-import imgCombo from './../../assets/img/combo.png';
-import { PRODUCTS } from '../../Utils/constList';
+import CardProduct from "../../CardProduct";
+import imgHamburguesa from './../../../assets/img/hamburguesa.png';
+import imgCombo from './../../../assets/img/combo.png';
+import { PRODUCTS } from '../../../Utils/constList';
 
 function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }) {
   return (

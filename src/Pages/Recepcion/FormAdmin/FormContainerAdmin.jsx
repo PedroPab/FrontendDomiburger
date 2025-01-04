@@ -3,10 +3,8 @@ import { Container } from 'react-bootstrap';
 import BuscadorCliente from '../../../components/Codigos/CrearCodigoReferido/BuscadorCliente';
 import NameInput from '../../../components/FormsInputs/NameInput';
 import CommentInput from '../../../components/FormsInputs/CommentInput';
-import ProductsSection from '../../../components/ProductsSection';
 import { PRODUCTS } from '../../../Utils/constList';
 import { Adiciones, Combo, Hamburguesa, Producto } from '../../../Utils/classProduct';
-import ResumenProductosForm from '../../../components/ResumenProductosForm';
 import { calcularPrecio, calcularTiempo } from '../../../Utils/matrixCalculate';
 import RegisterSaleButton from '../../../components/RegisterSaleButton';
 import PaymentMethodInput from '../../../components/FormsInputs/PaymentMethodInput';
@@ -19,6 +17,7 @@ import MapComponent from '../../../components/MapComponent/MapComponent';
 import { useLoadScript } from '@react-google-maps/api';
 import { obtenerDistancia } from './googleDistanceMatrix'; // Importar la función
 import NoteClientInput from '../../../components/FormsInputs/NoteClientInput';
+import DashboardProducts from '../../../components/Products/Dashboard/Dashboard';
 
 const ENV = import.meta.env;
 
@@ -128,30 +127,6 @@ const FormContainerAdmin = ({ token, userId }) => {
       .catch(error => toast.error(error))
 
   }, [inputDataDireccion])
-
-
-  const incrementCount = (product) => {
-    const productClass = {}
-    productClass[`${PRODUCTS.Hamburguesa}`] = Hamburguesa
-    productClass[`${PRODUCTS.Combo}`] = Combo
-
-    const listaProducts = [...listaProductosOrder]
-    const producto = new productClass[product]({})
-    listaProducts.push(producto)
-    setListaProductosOrder(listaProducts)
-  };
-
-  const decrementCount = (product) => {
-    //los reversamos para que saqeu el ultimo que se agrego
-    const listaProducts = [...listaProductosOrder.reverse()]
-    const indexProduct = listaProducts.findIndex(e => e.name === product)
-
-    if (indexProduct <= -1) return `no se encontro ningun prouduc que cumple con las condiciones de busqueda`
-
-    listaProducts.splice(indexProduct, 1)
-
-    setListaProductosOrder(listaProducts.reverse())
-  };
 
   const sendOrder = async () => {
     let dataOrder = {}
@@ -349,20 +324,14 @@ const FormContainerAdmin = ({ token, userId }) => {
         setPaymentMethod={setPaymentMethod}
       />
 
-      <ProductsSection
+      <DashboardProducts
         listaProductosOrder={listaProductosOrder}
-        incrementCount={incrementCount}
-        decrementCount={decrementCount}
-
+        setListaProductosOrder={setListaProductosOrder}
+        dataDomicilio={dataDomicilio}
+        setDataDomicilio={setDataDomicilio}
+        precioDeliveryManual={precioDeliveryManual}
+        setPrecioDeliveryManual={setPrecioDeliveryManual}
       />
-
-      <ResumenProductosForm
-        listaProducto={listaProductosOrder}
-        setListaProducto={setListaProductosOrder}
-        domicilio={[dataDomicilio, setDataDomicilio]}
-        addressPrice={[precioDeliveryManual, setPrecioDeliveryManual]}
-      />
-
       <RegisterSaleButton
         onClick={() => sendOrder()}
       />

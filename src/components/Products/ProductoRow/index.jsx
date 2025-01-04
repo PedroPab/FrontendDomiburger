@@ -1,5 +1,5 @@
-import { SelectAdicionClient } from '../SelectAdicionClient';
-import formatearNumeroConPuntos from './../../Utils/formatearNumeroConPuntos';
+import { SelectAdicionClient } from '../../SelectAdicionClient';
+import formatearNumeroConPuntos from './../../../Utils/formatearNumeroConPuntos';
 
 const ProductoRow = ({ producto, adiciones, onClicAdicion, onChangeSelectAdicion }) => {
   // Define las funciones onChangeSelectAdicion y onClicAdicion aquí

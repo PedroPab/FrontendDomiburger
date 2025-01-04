@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Card, Table } from 'react-bootstrap';
-import ProductoRow from './../../components/ProductoRow'; // Nuevo componente
+import ProductoRow from './../../components//Products/ProductoRow'; // Nuevo componente
 import { UtilsApi } from './../../Utils/utilsApi';
 import formatearNumeroConPuntos from '../../Utils/formatearNumeroConPuntos';
 import { Adiciones } from '../../Utils/classProduct';
