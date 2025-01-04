@@ -13,6 +13,7 @@ import { calculateDeliveryDetails } from '../../Utils/maps/calculateDeliveryDeta
 import RegisterSaleButton from '../../components/RegisterSaleButton';
 import postOrder from '../../Utils/api/postOrder';
 import { useNavigate } from 'react-router-dom';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const ENV = import.meta.env
 
@@ -44,6 +45,7 @@ const FormContainer = () => {
   const [comment, setComment] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
+  const [storedOrder, setStoredOrder] = useLocalStorage('order', {});
 
 
   //para calcular las distancia y el costo del domicilio
@@ -105,27 +107,30 @@ const FormContainer = () => {
 
     try {
       const rta = await postOrder(dataOrder)
-      console.log(rta, '<=rta');
+      console.log(`⭐⭐⭐ data del pedido ⭐⭐⭐`, rta)
+      const idPedido = rta?.id
+
 
       // toast.success(`Pedido Creado con un precio de ${priceTotal.COP}`)
       //limpiamos los datos
-      setListaProductosOrder([])
-      setPhone('')
-      setName('')
-      // setDireccion({})
-      setComment('')
-      setPaymentMethod('Efectivo')
-      setCoordinates({})
-      setPrecioDeliveryManual(null)
-      setDataDomicilio({})
-      setInputDataDireccion({
-        address_complete: "",
-        piso: "",
-        valid: false,
-      });
+      // setListaProductosOrder([])
+      // setPhone('')
+      // setName('')
+      // // setDireccion({})
+      // setComment('')
+      // setPaymentMethod('Efectivo')
+      // setCoordinates({})
+      // setPrecioDeliveryManual(null)
+      // setDataDomicilio({})
+      // setInputDataDireccion({
+      //   address_complete: "",
+      //   piso: "",
+      //   valid: false,
+      // });
 
       //los mandamos a la pagina de gracias con el el id del pedido
-      const idPedido = rta?.body?.id
+
+      setStoredOrder({ ...dataOrder, id: idPedido })
       navigate(`/gracias?id=${idPedido}`)
 
     } catch (error) {
