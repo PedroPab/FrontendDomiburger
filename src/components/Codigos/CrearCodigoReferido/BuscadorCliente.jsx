@@ -51,12 +51,12 @@ const BuscadorCliente = ({
 
   return (
     <>
-      <h3 className="mb-4">Buscar Cliente</h3>
-      <Form onSubmit={manejarEnvio} >
+      <h3 className="mb-2">Buscar Cliente</h3>
+      <Form onSubmit={manejarEnvio} className="mb-4">
         <Form.Group controlId="formTelefono">
-          <Form.Label>Teléfono:</Form.Label>
-          <Row className="align-items-center">
-            <Col xs={12} md={8}>
+          <Form.Label>Teléfono</Form.Label>
+          <Row className="align-items-center mb-3">
+            <Col xs={12} md={8} className="mb-2 mb-md-0">
               <PhoneInput
                 placeholder="Ingresa el número de teléfono"
                 value={telefono}
@@ -83,7 +83,7 @@ const BuscadorCliente = ({
 
       {/* Mostrar los datos del cliente si visibleDataClient es true */}
       {visibleDataClient &&
-        <ClientDetails cliente={dataCliente} />
+        <ClientDetails cliente={dataCliente} className="mt-4" />
       }
     </>
   );
