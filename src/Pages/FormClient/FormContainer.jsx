@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Form, } from 'react-bootstrap';
 import NameInput from '../../components/FormsInputs/NameInput';
 import PhoneInputComponent from '../../components/FormsInputs/PhoneInput';
@@ -7,6 +7,7 @@ import MapComponent from '../../components/MapComponent/MapComponent';
 import CommentInput from '../../components/FormsInputs/CommentInput';
 import PaymentMethodInput from '../../components/FormsInputs/PaymentMethodInput';
 import DashboardProducts from '../../components/Products/Dashboard/Dashboard';
+import { calculateDeliveryDetails } from '../../Utils/maps/calculateDeliveryDetails';
 
 const ENV = import.meta.env
 
@@ -14,6 +15,8 @@ const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
 const libraries = ['places'];
 
 const FormContainer = () => {
+  const [precioDeliveryManual, setPrecioDeliveryManual] = useState(null);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: ENV.VITE_KEYMAPS,
     libraries,
@@ -24,6 +27,10 @@ const FormContainer = () => {
     piso: "",
     valid: false,
   });
+
+  const [dataDomicilio, setDataDomicilio] = useState({});
+  const [prevCoordinates, setPrevCoordinates] = useState(null);
+
   //estados del los datos del formulario
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -32,6 +39,37 @@ const FormContainer = () => {
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
 
 
+  //para calcular las distancia y el costo del domicilio
+  useEffect(() => {
+    if (!isLoaded) {
+      console.log('Cargando Google Maps...')
+      return
+    }
+    //la logica para calcular el tiempo y el precio del domicilio segun las coordenadas y la direccion
+    //miramos si es valido el input de la direccion
+
+    if (!inputDataDireccion.valid) return
+
+    // miramos si hay coordenadas
+    if (!coordinates) return
+
+    //miramos si las coordenadas son las mismas
+    if (prevCoordinates &&
+      prevCoordinates.lat === coordinates.lat &&
+      prevCoordinates.lng === coordinates.lng) return
+
+    setPrevCoordinates(coordinates)
+    calculateDeliveryDetails(centerOrigin, coordinates)
+      .then((data) => {
+        console.log('Domicilio calculado');
+        setDataDomicilio(data);
+        // toast.success(`Domicilio calculado con éxito: ${data.timeText} y un costo de $${data.price}`);
+      })
+      .catch((error) => {
+        // toast.error(`No se pudo calcular el precio del domicilio ${error}`);
+      });
+
+  }, [inputDataDireccion])
 
   return (
     <Container>
@@ -73,11 +111,12 @@ const FormContainer = () => {
         <DashboardProducts
           listaProductosOrder={listaProductosOrder}
           setListaProductosOrder={setListaProductosOrder}
-          dataDomicilio={inputDataDireccion}
-          setDataDomicilio={setInputDataDireccion}
-          precioDeliveryManual={null}
-          setPrecioDeliveryManual={null}
+          dataDomicilio={dataDomicilio}
+          setDataDomicilio={setDataDomicilio}
+          precioDeliveryManual={precioDeliveryManual}
+          setPrecioDeliveryManual={setPrecioDeliveryManual}
         />
+
 
 
       </Form>

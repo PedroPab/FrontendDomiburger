@@ -3,8 +3,7 @@ import { Container } from 'react-bootstrap';
 import BuscadorCliente from '../../../components/Codigos/CrearCodigoReferido/BuscadorCliente';
 import NameInput from '../../../components/FormsInputs/NameInput';
 import CommentInput from '../../../components/FormsInputs/CommentInput';
-import { PRODUCTS } from '../../../Utils/constList';
-import { Adiciones, Combo, Hamburguesa, Producto } from '../../../Utils/classProduct';
+import { Adiciones, Producto } from '../../../Utils/classProduct';
 import { calcularPrecio, calcularTiempo } from '../../../Utils/matrixCalculate';
 import RegisterSaleButton from '../../../components/RegisterSaleButton';
 import PaymentMethodInput from '../../../components/FormsInputs/PaymentMethodInput';
@@ -18,6 +17,7 @@ import { useLoadScript } from '@react-google-maps/api';
 import { obtenerDistancia } from './googleDistanceMatrix'; // Importar la función
 import NoteClientInput from '../../../components/FormsInputs/NoteClientInput';
 import DashboardProducts from '../../../components/Products/Dashboard/Dashboard';
+import { calculateDeliveryDetails } from '../../../Utils/maps/calculateDeliveryDetails';
 
 const ENV = import.meta.env;
 
@@ -83,13 +83,11 @@ const FormContainerAdmin = ({ token, userId }) => {
     }
   }, [dataCliente]);
 
-
-
-
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
   const [dataDomicilio, setDataDomicilio] = useState({});
 
   const [prevCoordinates, setPrevCoordinates] = useState(null);
+
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
     if (!isLoaded) {
@@ -105,26 +103,20 @@ const FormContainerAdmin = ({ token, userId }) => {
     if (!coordinates) return
 
     //miramos si las coordenadas son las mismas
-    if (prevCoordinates && prevCoordinates.lat === coordinates.lat && prevCoordinates.lng === coordinates.lng) return
+    if (prevCoordinates &&
+      prevCoordinates.lat === coordinates.lat &&
+      prevCoordinates.lng === coordinates.lng) return
+
     setPrevCoordinates(coordinates)
-
-    obtenerDistancia(centerOrigin, coordinates)
-      .then(dataMatrix => {
-        if (dataMatrix) {
-          const timeText
-            = calcularTiempo(dataMatrix.distance.value)
-          const price = calcularPrecio(dataMatrix.distance.value)
-          if (!timeText || (!price && price !== 0)) return toast.error('No se pudo calcular el precio del domicilio')
-
-          toast.success(`El domicilio tiene un costo de $${price} y tardará ${timeText}`)
-
-          setDataDomicilio({
-            timeText,
-            price
-          })
-        }
+    calculateDeliveryDetails(centerOrigin, coordinates)
+      .then((data) => {
+        console.log('Domicilio calculado');
+        setDataDomicilio(data);
+        toast.success(`Domicilio calculado con éxito: ${data.timeText} y un costo de $${data.price}`);
       })
-      .catch(error => toast.error(error))
+      .catch((error) => {
+        toast.error(`No se pudo calcular el precio del domicilio ${error}`);
+      });
 
   }, [inputDataDireccion])
 
@@ -199,7 +191,6 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   }
 
-
   const agregarCodigo = (dataCode) => {
     const checkIfAdicionExists = (newListaProductosOrder, dataCode) => {
       const isAdicion = newListaProductosOrder.find(e => {
@@ -267,7 +258,6 @@ const FormContainerAdmin = ({ token, userId }) => {
     console.log(dataCode, '<=dataCode');
 
   }
-
 
   return (
     <Container>
