@@ -321,6 +321,7 @@ const FormContainerAdmin = ({ token, userId }) => {
         setDataDomicilio={setDataDomicilio}
         precioDeliveryManual={precioDeliveryManual}
         setPrecioDeliveryManual={setPrecioDeliveryManual}
+        isAdmin={true}
       />
       <RegisterSaleButton
         onClick={() => sendOrder()}

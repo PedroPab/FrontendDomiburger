@@ -5,8 +5,8 @@ import { UtilsApi } from './../../Utils/utilsApi';
 import formatearNumeroConPuntos from '../../Utils/formatearNumeroConPuntos';
 import { Adiciones } from '../../Utils/classProduct';
 
-const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addressPrice }) => {
-  const [dataDomicilio, setDataDomicilio] = domicilio
+const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addressPrice, isAdmin = false }) => {
+  const [dataDomicilio] = domicilio
   const [precioDeliveryManual, setPrecioDeliveryManual] = addressPrice
   const [adiciones, setAdiciones] = useState([]);
 
@@ -91,25 +91,31 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
                 <th>Domicilio</th>
                 <th>{dataDomicilio.timeText}</th>
                 <th>
-                  <input
-                    type="number"
-                    min="0"
-                    step="500"
-                    value={precioDeliveryManual ?? dataDomicilio.price}
-                    onChange={(e) => {
-                      setPrecioDeliveryManual(parseInt(e.target.value) ?? 0);
-                    }}
-                    className="form-control form-control-sm text-center"
-                    style={{ width: '100px', display: 'inline-block' }}
-                  />
-                  <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => {
-                      setPrecioDeliveryManual(null)
-                    }}
-                  >
-                    Reset
-                  </button>
+                  {isAdmin ? (
+                    <>
+                      <input
+                        type="number"
+                        min="0"
+                        step="500"
+                        value={precioDeliveryManual ?? dataDomicilio.price}
+                        onChange={(e) => {
+                          setPrecioDeliveryManual(parseInt(e.target.value) ?? 0);
+                        }}
+                        className="form-control form-control-sm text-center"
+                        style={{ width: '100px', display: 'inline-block' }}
+                      />
+                      <button
+                        className="btn btn-sm btn-primary"
+                        onClick={() => {
+                          setPrecioDeliveryManual(null)
+                        }}
+                      >
+                        Reset
+                      </button>
+                    </>
+                  ) : (
+                    <span>{formatearNumeroConPuntos(precioDeliveryManual ?? dataDomicilio.price)}</span>
+                  )}
                 </th>
               </tr>
             }

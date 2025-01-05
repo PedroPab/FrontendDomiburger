@@ -7,7 +7,8 @@ import ProductsSection from "../ProductsSection";
 const DashboardProducts = ({
   listaProductosOrder, setListaProductosOrder,
   dataDomicilio, setDataDomicilio,
-  precioDeliveryManual, setPrecioDeliveryManual
+  precioDeliveryManual, setPrecioDeliveryManual,
+  isAdmin = false
 }) => {
   // const [listaProductosOrder, setListaProductosOrder] = useState([]);
   // const [dataDomicilio, setDataDomicilio] = useState({});
@@ -51,6 +52,7 @@ const DashboardProducts = ({
         setListaProducto={setListaProductosOrder}
         domicilio={[dataDomicilio, setDataDomicilio]}
         addressPrice={[precioDeliveryManual, setPrecioDeliveryManual]}
+        isAdmin={isAdmin}
       />
     </>
   );
