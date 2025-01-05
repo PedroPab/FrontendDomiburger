@@ -130,7 +130,7 @@ const FormContainer = () => {
 
       //los mandamos a la pagina de gracias con el el id del pedido
 
-      setStoredOrder({ ...dataOrder, id: idPedido })
+      setStoredOrder({ ...rta })
       navigate(`/gracias?id=${idPedido}`)
 
     } catch (error) {
