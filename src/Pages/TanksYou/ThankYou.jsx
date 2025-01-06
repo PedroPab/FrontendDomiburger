@@ -5,10 +5,11 @@ import LayoutCliente from '../../Layout/LayoutCliente';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import Confetti from '../../components/Confetti';
 import imgGracias from '../../assets/img/catWithHeart.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const ThankYou = () => {
   const context = useContext(MiContexto);
-
+  const navigate = useNavigate()
 
   return (
     <>
@@ -43,6 +44,9 @@ const ThankYou = () => {
           <div className="d-flex justify-content-center gap-3 mt-4">
             <button
               className="btn btn-primary btn-lg shadow"
+              onClick={() =>
+                navigate(`/mi-pedido`)
+              }
             >
               Ver detalles del pedido
             </button>
