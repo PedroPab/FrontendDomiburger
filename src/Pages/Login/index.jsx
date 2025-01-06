@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
 import { Container, Row, Card } from 'react-bootstrap'
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import Layout from "../../components/Layout";
 import FormLogin from '../../components/FormLogin';
 import imagenLogin from './../../assets/img/catLoginDomi.png';
