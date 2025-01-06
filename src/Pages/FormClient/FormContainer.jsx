@@ -81,6 +81,27 @@ const FormContainer = () => {
   }, [inputDataDireccion])
 
   const sendOrder = async () => {
+    if (!name) {
+      toast.error('Por favor complete el campo de nombre');
+      document.getElementById('formNombre').focus();
+      return;
+    }
+    if (!phone) {
+      toast.error('Por favor complete el campo de teléfono');
+      document.getElementById('formTelefono').focus();
+      return;
+    }
+    if (!inputDataDireccion.address_complete) {
+      toast.error('Por favor complete el campo de dirección');
+      document.getElementById('formDireccion').focus();
+      return;
+    }
+    if (!listaProductosOrder.length) {
+      toast.error('Por favor agregue productos a la orden');
+      document.getElementById('formProductos').focus();
+      return;
+    }
+
     let dataOrder = {}
     dataOrder.phone = phone
     dataOrder.name = name
@@ -134,9 +155,9 @@ const FormContainer = () => {
       navigate(`/gracias?id=${idPedido}`)
 
     } catch (error) {
-      console.log(error, '<=error');
+      console.log(error, '<=errosr');
       toast.error('Error al crear el pedido')
-      toast.error(error)
+      toast.error(error.message)
     }
   }
 

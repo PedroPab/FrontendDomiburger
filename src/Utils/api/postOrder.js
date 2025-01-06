@@ -7,9 +7,12 @@ const postOrder = async (order, token, isAdmin = false) => {
     body: JSON.stringify(order),
     token
   })
-  const body = rta?.body?.body
+  const body = rta?.body?.body || rta?.body
 
   if (rta?.response?.status != 201 && rta?.response?.status != 200) {
+    //es un error
+    console.error(`error al crear el pedido ${rta?.response?.status}`)
+    console.log(body)
     throw body
   }
 
