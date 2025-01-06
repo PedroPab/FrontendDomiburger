@@ -9,6 +9,7 @@ import { EstadisticasRoutes } from './routes/EstadisticasRoutes';
 import { CodigoRoutes } from './routes/CodigoRoutes';
 import { ClientesRoutes } from './routes/ClientesRoutes';
 import { DomiciliarioRoutes } from './routes/DomiciliarioRoutes';
+import { HelmetProvider } from 'react-helmet-async';
 
 const AppRoutes = () => {
   return (
