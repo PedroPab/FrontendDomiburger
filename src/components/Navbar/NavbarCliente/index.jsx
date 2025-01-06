@@ -3,36 +3,74 @@ import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
-import { FaHome, } from 'react-icons/fa';
+import { FaHome, FaShoppingCart } from 'react-icons/fa';
 
-const NavbarCliente = ({ modoOscuro, alternarModo, }) => {
+const NavbarCliente = ({ modoOscuro, alternarModo }) => {
   return (
-    <Navbar expand="lg" className='sticky-top' bg={modoOscuro ? 'dark' : 'light'} >
+    <Navbar
+      expand="lg"
+      bg={modoOscuro ? 'dark' : 'light'}
+      variant={modoOscuro ? 'dark' : 'light'}
+      className="sticky-top shadow-sm"
+      role="navigation"
+      aria-label="Navegación principal"
+    >
       <Container>
-        <Navbar.Brand as={Link} to="/" className='flex flex-items'>
+        {/* Logo y Título */}
+        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
           <img
-            src={logo}  // Reemplaza con la ruta de tu logo
-            alt="Logo"
+            src={logo}
+            alt="Logotipo de Domiburguer"
             height="30"
             className="d-inline-block align-top"
           />
+          <span className="ms-2 fw-bold fs-4" aria-hidden="true">
+            Domiburguer
+          </span>
         </Navbar.Brand>
-        <Nav>
-          <h1>Domiburguer</h1>
-        </Nav>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
 
-            <Nav.Link as={Link} to="/">  <FaHome /> Home</Nav.Link>
+        {/* Toggle para móvil */}
+        <Navbar.Toggle
+          aria-controls="navbar-client-nav"
+          aria-expanded="false"
+          aria-label="Abrir menú de navegación"
+        />
 
+        {/* Menú de Navegación */}
+        <Navbar.Collapse id="navbar-client-nav">
+          <Nav className="ms-auto ">
+            {/* Inicio */}
+            <Nav.Link
+              as={Link}
+              to="/"
+              aria-label="Ir a la página de inicio"
+              className="text-decoration-none"
+            >
+              <FaHome className="me-1" aria-hidden="true" /> Inicio
+            </Nav.Link>
+
+            {/* mi pedido */}
+            <Nav.Link
+              as={Link}
+              to="/mi-pedido"
+              aria-label="Ir a la página de mi pedido"
+              className="text-decoration-none"
+            >
+              <FaShoppingCart className="me-1" aria-hidden="true" />  Mi Pedido
+
+            </Nav.Link>
+            {/* Botón Cambiar Tema */}
             <Nav.Item>
-              <Button variant={modoOscuro ? 'outline-light' : 'outline-dark'} onClick={() => (alternarModo())}>
-                <BsMoonStars />
+              <Button
+                variant={modoOscuro ? 'outline-light' : 'outline-dark'}
+                onClick={alternarModo}
+                className="mt-2 mt-lg-0"
+                aria-label={`Activar ${modoOscuro ? 'tema claro' : 'tema oscuro'}`}
+              >
+                <BsMoonStars aria-hidden="true" />
               </Button>
             </Nav.Item>
           </Nav>
-
         </Navbar.Collapse>
       </Container>
     </Navbar>

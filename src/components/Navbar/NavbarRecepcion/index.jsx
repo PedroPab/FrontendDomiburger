@@ -36,7 +36,7 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
           </Col>
 
           {/* 3. Conteo de Pedidos (solo visible en pantallas medianas y grandes) */}
-          <Col xs="auto" className="d-none d-md-block">
+          <Col xs="auto" className="">
             <OrderCountIndicator />
           </Col>
 
