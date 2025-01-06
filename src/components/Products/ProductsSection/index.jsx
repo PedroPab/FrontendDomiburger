@@ -1,37 +1,51 @@
 import CardProduct from "../../CardProduct";
-import imgHamburguesa from './../../../assets/img/hamburguesa.png';
-import imgCombo from './../../../assets/img/combo.png';
-import { PRODUCTS } from '../../../Utils/constList';
+import imgHamburguesa from "./../../../assets/img/hamburguesa.png";
+import imgCombo from "./../../../assets/img/combo.png";
+import { PRODUCTS } from "../../../Utils/constList";
 
 function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }) {
+  // Lista de productos
+  const productList = [
+    {
+      name: PRODUCTS.Hamburguesa,
+      title: "Hamburguesa Artesanal",
+      description: "Deliciosa hamburguesa.",
+      img: imgHamburguesa,
+    },
+    {
+      name: PRODUCTS.Combo,
+      title: "Combo",
+      description: "Hamburguesa + Papas fritas risadas.",
+      img: imgCombo,
+    },
+  ];
+
   return (
-    <>
-      <section className="mb-3">
-        <h3 className="text-center mb-4">Nuestros Productos</h3>
-        <div className="d-flex flex-column flex-md-row justify-content-around">
-          <div className="mb-4 mb-md-0">
-            <CardProduct
-              title="Hamburguesa Artesanal"
-              // description="Deliciosa hamburguesa con ingredientes frescos y pan artesanal."
-              img={imgHamburguesa}
-              count={listaProductosOrder.filter(e => e.name === PRODUCTS.Hamburguesa).length}
-              incrementCount={() => incrementCount(PRODUCTS.Hamburguesa)}
-              decrementCount={() => decrementCount(PRODUCTS.Hamburguesa)}
-            />
-          </div>
-          <div className="mb-4 mb-md-0">
-            <CardProduct
-              title="Combo Especial"
-              description="Hamburguesa + Papas fritas risadas"
-              img={imgCombo}
-              count={listaProductosOrder.filter(e => e.name === PRODUCTS.Combo).length}
-              incrementCount={() => incrementCount(PRODUCTS.Combo)}
-              decrementCount={() => decrementCount(PRODUCTS.Combo)}
-            />
-          </div>
+    <section className="products-section py-5">
+      <div className="container">
+        <h2 className="text-center mb-4">Nuestros Productos</h2>
+        <div className="row g-4">
+          {productList.map((product, index) => (
+            <article
+              key={index}
+              className="col-12 col-md-6 d-flex justify-content-center"
+              aria-label={`Producto: ${product.title}`}
+            >
+              <CardProduct
+                title={product.title}
+                description={product.description}
+                img={product.img}
+                alt={`Imagen de ${product.title}`}
+                count={listaProductosOrder.filter((e) => e.name === product.name).length}
+                incrementCount={() => incrementCount(product.name)}
+                decrementCount={() => decrementCount(product.name)}
+                aria-live="polite"
+              />
+            </article>
+          ))}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
