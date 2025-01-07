@@ -1,5 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
-import { MiContexto } from '../../Context';
+import { useState, useEffect } from 'react';
 import LayoutCliente from '../../Layout/LayoutCliente';
 import FormContainer from './FormContainer';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
@@ -7,7 +6,6 @@ import { HelmetClientHome } from './HelmetClientHome';
 import ClosedNotice from './ClosedNotice';
 
 const FormClient = () => {
-  const context = useContext(MiContexto);
 
   const horarioApertura = { hora: 16, minuto: 0 }; // 4:00 pm
   const horarioCierre = { hora: 20, minuto: 0 }; // 10:00 pm
@@ -45,10 +43,7 @@ const FormClient = () => {
       <LayoutCliente>
         <HelmetClientHome />
 
-        <NavbarCliente
-          modoOscuro={context.modoOscuro}
-          alternarModo={context.alternarModo}
-        />
+        <NavbarCliente />
 
         {cerrado && <ClosedNotice proximaApertura={proximaApertura} />}
 

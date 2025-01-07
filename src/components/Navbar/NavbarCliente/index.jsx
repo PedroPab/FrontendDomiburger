@@ -3,9 +3,15 @@ import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
-import { FaHome, FaShoppingCart } from 'react-icons/fa';
+import { FaHome, FaInfoCircle, FaShoppingCart } from 'react-icons/fa';
+import { useContext } from 'react';
+import { MiContexto } from '../../../Context';
 
-const NavbarCliente = ({ modoOscuro, alternarModo }) => {
+const NavbarCliente = () => {
+  const context = useContext(MiContexto);
+  const modoOscuro = context.modoOscuro;
+  const alternarModo = context.alternarModo;
+
   return (
     <Navbar
       expand="lg"
@@ -58,6 +64,15 @@ const NavbarCliente = ({ modoOscuro, alternarModo }) => {
             >
               <FaShoppingCart className="me-1" aria-hidden="true" />  Mi Pedido
 
+            </Nav.Link>
+            {/* Nosotros */}
+            <Nav.Link
+              as={Link}
+              to="/nosotros"
+              aria-label="Conocer más sobre nosotros"
+              className="text-decoration-none"
+            >
+              <FaInfoCircle className="me-1" aria-hidden="true" /> Nosotros
             </Nav.Link>
             {/* Botón Cambiar Tema */}
             <Nav.Item>

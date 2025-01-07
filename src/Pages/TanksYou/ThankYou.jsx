@@ -1,6 +1,3 @@
-import { useContext } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { MiContexto } from '../../Context';
 import LayoutCliente from '../../Layout/LayoutCliente';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import Confetti from '../../components/Confetti';
@@ -8,17 +5,12 @@ import imgGracias from '../../assets/img/catWithHeart.jpg';
 import { useNavigate } from 'react-router-dom';
 
 const ThankYou = () => {
-  const context = useContext(MiContexto);
   const navigate = useNavigate()
 
   return (
     <>
       <LayoutCliente>
-        {/* Navbar */}
-        <NavbarCliente
-          modoOscuro={context.modoOscuro}
-          alternarModo={context.alternarModo}
-        />
+        <NavbarCliente />
 
         {/* Contenido Principal */}
         <div className="container text-center my-5">

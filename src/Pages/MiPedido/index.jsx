@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-import { MiContexto } from '../../Context';
 import LayoutCliente from '../../Layout/LayoutCliente';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -9,7 +7,6 @@ import { Link } from 'react-router-dom';
 import img from '../../assets/img/Wtf.jpg'
 
 const MiPedido = () => {
-  const context = useContext(MiContexto);
   const [storedOrder] = useLocalStorage('order', {});
   console.log(`[ ~ MiPedido ~ storedOrder]`, storedOrder);
 
@@ -17,11 +14,7 @@ const MiPedido = () => {
 
   return (
     <LayoutCliente>
-      <NavbarCliente
-        modoOscuro={context.modoOscuro}
-        alternarModo={context.alternarModo}
-      />
-
+      <NavbarCliente />
       <div className="container my-5">
         {/* Encabezado */}
         <div className="text-center mb-4">
