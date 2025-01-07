@@ -13,14 +13,14 @@ const Nosotros = () => {
     const fetchPosts = async () => {
       try {
         const posts = await postInstagram.getPosts(3);
+        console.log('posts', posts);
         setPosts(posts);
       } catch (error) {
         console.error('Error fetching posts:', error);
       }
     };
     fetchPosts();
-  }
-    , []);
+  }, []);
 
   return (
     <LayoutCliente>
@@ -46,6 +46,18 @@ const Nosotros = () => {
             </p>
             <div className="text-center my-4">
               <img src="ruta/a/tu/imagen.jpg" alt="Imagen de Domiburguer" className="img-fluid rounded" />
+            </div>
+            <div className="row">
+              {posts.map(post => (
+                <div key={post.id} className="col-md-4 mb-4">
+                  <div className="card">
+                    <img src={post.media_url} alt={post.caption} className="card-img-top" />
+                    <div className="card-body">
+                      <p className="card-text">{post.caption}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
             <h2 className="card-title text-primary">¿Cómo Trabajamos?</h2>
             <p className="card-text">
