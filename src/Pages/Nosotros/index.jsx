@@ -3,6 +3,7 @@ import LayoutCliente from '../../Layout/LayoutCliente';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import TimeElapsed from '../../components/TimeElapsed';
 import { postInstagram } from '../../apis/postInstagram/getPost';
+import Footer from '../../components/Footer/Footer'; // Importar el nuevo componente Footer
 
 const YEAR_START = new Date(2016, 6, 1);
 
@@ -69,6 +70,7 @@ const Nosotros = () => {
           </div>
         </div>
       </div>
+      <Footer /> {/* Usar el nuevo componente Footer */}
     </LayoutCliente>
   );
 };
