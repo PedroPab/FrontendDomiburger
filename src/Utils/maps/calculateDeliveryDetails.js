@@ -7,7 +7,7 @@ const calculateDeliveryDetails = async (centerOrigin, coordinates) => {
   console.log(dataMatrix, '<=dataMatrix');
 
   if (dataMatrix) {
-    const timeText = calcularTiempo(dataMatrix.distance.value);
+    const timeText = calcularTiempo(dataMatrix.duration.value);
     const price = calcularPrecio(dataMatrix.distance.value);
     console.log(timeText, price, '<=timeText', '<=price');
     if (!timeText || (!price && price !== 0)) {
