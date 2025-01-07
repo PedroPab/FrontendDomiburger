@@ -1,10 +1,27 @@
+import { useEffect, useState } from 'react';
 import LayoutCliente from '../../Layout/LayoutCliente';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import TimeElapsed from '../../components/TimeElapsed';
+import { postInstagram } from '../../apis/postInstagram/getPost';
 
 const YEAR_START = new Date(2016, 6, 1);
 
 const Nosotros = () => {
+  //podemos cargar una imagenes desde la api de postInstagram
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const posts = await postInstagram.getPosts(3);
+        setPosts(posts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+    fetchPosts();
+  }
+    , []);
+
   return (
     <LayoutCliente>
       <NavbarCliente />
@@ -27,6 +44,9 @@ const Nosotros = () => {
             <p className="card-text">
               Nuestro propósito en la vida es entregar felicidad hasta tu casa; las hamburguesas son secundarias.
             </p>
+            <div className="text-center my-4">
+              <img src="ruta/a/tu/imagen.jpg" alt="Imagen de Domiburguer" className="img-fluid rounded" />
+            </div>
             <h2 className="card-title text-primary">¿Cómo Trabajamos?</h2>
             <p className="card-text">
               Creamos obras maestras culinarias que deleitan los sentidos y satisfacen los antojos más exigentes. Nos encargamos de conseguir los ingredientes más frescos y de mejor calidad, lavamos y procesamos todo nosotros mismos, el pan, la carne, la salsa de la casa (mayonesa), pepino, cebolla, la papa, etc. Además de eso, también manejamos nuestra propia flota de mensajeros, un equipo dedicado y una logística eficiente, podemos asegurar que su pedido llegue caliente y fresco, listo para ser disfrutado.
