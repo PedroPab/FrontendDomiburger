@@ -14,18 +14,6 @@ const Login = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Login</title>
-        <meta name="description" content="Ingresa tu usuario, contraseña y rol" />
-
-        {/* Open Graph / Facebook Meta Tags */}
-        {/* <meta property="og:url" content="https://tu-sitio-web.com/mi-pagina" /> */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="App Domiburguer Login" />
-        <meta property="og:description" content="Ingresa tu usuario, contraseña y rol" />
-        <meta property="og:image" content={imagenLogin} />
-
-      </Helmet>
       <Layout>
 
         <NavbarRecepcion
