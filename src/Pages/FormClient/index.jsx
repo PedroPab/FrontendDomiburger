@@ -7,8 +7,8 @@ import ClosedNotice from './ClosedNotice';
 
 const FormClient = () => {
 
-  const horarioApertura = { hora: 16, minuto: 0 }; // 4:00 pm
-  const horarioCierre = { hora: 20, minuto: 0 }; // 10:00 pm
+  const horarioApertura = { hora: 16, minuto: 30 }; // 4:30 pm
+  const horarioCierre = { hora: 22, minuto: 0 }; // 10:00 pm
 
   const [cerrado, setCerrado] = useState(false);
   const [proximaApertura, setProximaApertura] = useState(null);

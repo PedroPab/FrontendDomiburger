@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import NameInput from '../../components/FormsInputs/NameInput';
@@ -14,6 +14,7 @@ import RegisterSaleButton from '../../components/RegisterSaleButton';
 import postOrder from '../../Utils/api/postOrder';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const ENV = import.meta.env
 
@@ -24,6 +25,7 @@ const FormContainer = () => {
   const navigate = useNavigate()
 
   const [precioDeliveryManual, setPrecioDeliveryManual] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: ENV.VITE_KEYMAPS,
@@ -81,24 +83,29 @@ const FormContainer = () => {
   }, [inputDataDireccion])
 
   const sendOrder = async () => {
+    setLoading(true);
     if (!name) {
       toast.error('Por favor complete el campo de nombre');
       document.getElementById('formNombre').focus();
+      setLoading(false);
       return;
     }
     if (!phone) {
       toast.error('Por favor complete el campo de teléfono');
       document.getElementById('formTelefono').focus();
+      setLoading(false);
       return;
     }
     if (!inputDataDireccion.address_complete) {
       toast.error('Por favor complete el campo de dirección');
       document.getElementById('formDireccion').focus();
+      setLoading(false);
       return;
     }
     if (!listaProductosOrder.length) {
       toast.error('Por favor agregue productos a la orden');
       document.getElementById('formProductos').focus();
+      setLoading(false);
       return;
     }
 
@@ -158,6 +165,8 @@ const FormContainer = () => {
       console.log(error, '<=errosr');
       toast.error('Error al crear el pedido')
       toast.error(error.message)
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -206,7 +215,10 @@ const FormContainer = () => {
 
       <RegisterSaleButton
         onClick={() => sendOrder()}
+        disabled={loading}
       />
+
+      <LoadingSpinner isLoading={loading} />
 
       <hr />
 
