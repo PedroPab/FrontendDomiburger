@@ -1,12 +1,12 @@
 import { Container, } from "react-bootstrap";
 import PaginationComponent from "../Pagination";
 import { useEffect, useState } from "react";
-import BuscadorTelefono from "../Codigos/VisualizarCodigoReferidoComponte/BuscadorTelefono";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import clientService from "../../apis/client/ClientService";
 import ClientList from "./ClientList";
 import { toast } from "react-toastify";
 import BuscadorCliente from "../Codigos/CrearCodigoReferido/BuscadorCliente";
+import BuscadorClientePorNombre from "../Codigos/CrearCodigoReferido/BuscadorClientePorNombre";
 
 
 const VisualizarClientesComponente = ({ token }) => {
@@ -20,7 +20,7 @@ const VisualizarClientesComponente = ({ token }) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1', 10);
-  const [, setBusquedaDataClient] = useState('');
+
 
   const navigate = useNavigate();
 
@@ -59,10 +59,6 @@ const VisualizarClientesComponente = ({ token }) => {
   return (
     <Container >
 
-      {/* <BuscadorTelefono
-        setDataClient={setBusquedaDataClient}
-        token={token}
-      /> */}
       <BuscadorCliente
         telefono={telefono}
         setTelefono={setTelefono}
@@ -70,6 +66,12 @@ const VisualizarClientesComponente = ({ token }) => {
         setDataCliente={setDataCliente}
         token={token}
         visibleDataClient={true}
+      />
+
+      {/* buscar por nombre */}
+      <BuscadorClientePorNombre
+        token={token}
+        setClients={setClients}
       />
 
       {/* ver card de cada cliente */}
