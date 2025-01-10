@@ -5,6 +5,7 @@ import Contabilidad from "../../Contabilidad";
 import MapRecepcion from "../../MapRecepcion";
 import FormAdmin from "../../Recepcion/FormAdmin";
 import { ROLES } from "../../../Utils/constList";
+import Pedidos from "../../Pedidos";
 
 const RecepcionRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const RecepcionRoutes = () => {
       <Route path="/contabilidad" element={<Contabilidad />} />
       <Route path="/mapRecepcion" element={<MapRecepcion />} />
       <Route path="/formAdmin" element={<FormAdmin />} />
+      <Route path="/pedidos" element={<Pedidos />} />
     </Route>
   );
 };

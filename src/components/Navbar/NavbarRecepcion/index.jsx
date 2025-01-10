@@ -87,6 +87,10 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
               <NavDropdown.Item as={Link} to="/clientes">
                 <BsFillPersonFill className="me-2" /> Clientes
               </NavDropdown.Item>
+              {/* Pedidos */}
+              <NavDropdown.Item as={Link} to="/pedidos">
+                <MdOutlineReceipt className="me-2" /> Pedidos
+              </NavDropdown.Item>
             </NavDropdown>
 
             {/* Sección de Ajustes */}
