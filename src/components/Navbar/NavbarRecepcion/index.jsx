@@ -83,6 +83,10 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
               <NavDropdown.Item as={Link} to="/codigos">
                 <FiList className="me-2" /> Códigos
               </NavDropdown.Item>
+              {/* clientes */}
+              <NavDropdown.Item as={Link} to="/clientes">
+                <BsFillPersonFill className="me-2" /> Clientes
+              </NavDropdown.Item>
             </NavDropdown>
 
             {/* Sección de Ajustes */}
