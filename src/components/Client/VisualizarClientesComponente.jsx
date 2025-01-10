@@ -1,0 +1,88 @@
+import { Container, } from "react-bootstrap";
+import PaginationComponent from "../Pagination";
+import { useEffect, useState } from "react";
+import BuscadorTelefono from "../Codigos/VisualizarCodigoReferidoComponte/BuscadorTelefono";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import clientService from "../../apis/client/ClientService";
+import ClientList from "./ClientList";
+import { toast } from "react-toastify";
+import BuscadorCliente from "../Codigos/CrearCodigoReferido/BuscadorCliente";
+
+
+const VisualizarClientesComponente = ({ token }) => {
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [telefono, setTelefono] = useState('');
+  const [dataCliente, setDataCliente] = useState(null);
+
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = parseInt(searchParams.get('page') || '1', 10);
+  const [, setBusquedaDataClient] = useState('');
+
+  const navigate = useNavigate();
+
+  const handlePageChange = (newPage) => {
+    setSearchParams({ page: newPage });
+  }
+
+
+  useEffect(() => {
+    const fetchFocus = async () => {
+      try {
+        const limit = 10;
+
+        const data = await clientService.getAll({ page, limit });
+        setClients(data?.body);
+      } catch (error) {
+        console.log('Error fetching clientes:', error);
+        setError('Error fetching clientes');
+        toast.error('Error al cargar los clientes');
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFocus();
+  }, [page]);
+
+  const handleCardCreateClientClick = () => {
+    console.log('showCreateClientModal');
+    toast.success('showCreateClientModal');
+    //los mandamos a la pagina de crear cliente con react router
+    navigate('/client/create');
+  }
+
+  return (
+    <Container >
+
+      {/* <BuscadorTelefono
+        setDataClient={setBusquedaDataClient}
+        token={token}
+      /> */}
+      <BuscadorCliente
+        telefono={telefono}
+        setTelefono={setTelefono}
+        dataCliente={dataCliente}
+        setDataCliente={setDataCliente}
+        token={token}
+        visibleDataClient={true}
+      />
+
+      {/* ver card de cada cliente */}
+      <ClientList clients={clients} handleCardCreateClientClick={handleCardCreateClientClick} />
+
+      <PaginationComponent
+        page={page}
+        handlePageChange={handlePageChange}
+      />
+      {/* modal para crear a un cliente */}
+
+    </Container>
+  );
+}
+
+export { VisualizarClientesComponente };
