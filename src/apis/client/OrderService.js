@@ -18,6 +18,19 @@ const orderService = {
       throw error;
     }
   },
+  getId: async (id, token) => {
+    try {
+      const response = await apiClient.get(`/pedidos/id/?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching :', error);
+      throw error;
+    }
+  }
 };
 
 export default orderService;

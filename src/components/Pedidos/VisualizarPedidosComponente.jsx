@@ -31,9 +31,8 @@ const VisualizarPedidosComponente = ({ token }) => {
         const data = await orderService.getAll({ page, limit }, token);
         setOrders(data?.body);
       } catch (error) {
-        console.log('Error fetching clientes:', error);
-        setError('Error fetching clientes');
-        toast.error('Error al cargar los clientes');
+        setError('Error fetching orders');
+        toast.error('Error al cargar los pedidos');
         toast.error(error.message);
       } finally {
         setLoading(false);

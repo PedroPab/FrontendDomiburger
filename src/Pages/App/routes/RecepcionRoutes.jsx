@@ -6,6 +6,7 @@ import MapRecepcion from "../../MapRecepcion";
 import FormAdmin from "../../Recepcion/FormAdmin";
 import { ROLES } from "../../../Utils/constList";
 import Pedidos from "../../Pedidos";
+import PedidosDetails from "../../Pedidos/PedidosDetails";
 
 const RecepcionRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const RecepcionRoutes = () => {
       <Route path="/mapRecepcion" element={<MapRecepcion />} />
       <Route path="/formAdmin" element={<FormAdmin />} />
       <Route path="/pedidos" element={<Pedidos />} />
+      <Route path="/pedidos/:id" element={<PedidosDetails />} />
     </Route>
   );
 };
