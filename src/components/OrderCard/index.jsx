@@ -39,7 +39,7 @@ const OrderCard = ({ dataPedido }) => {
           orden={dataPedido?.numeroDeOrdenDelDia}
           horaCreate={formatTimeString(dataPedido?.date)}
           horaPronostico={formatTimeString({
-            ...dataPedido?.date, _seconds: dataPedido?.date._seconds + (dataPedido?.duracionEstimada?.value * 60)
+            ...dataPedido?.date, _seconds: dataPedido?.date._seconds + (dataPedido?.duracionEstimada?.value * 60 || 0)
           })}
           urlMap={`https://www.google.com/maps/dir/?api=1&destination=${urlAdress}`}
           urlPhone={`tel:${dataPedido?.phone}`}

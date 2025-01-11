@@ -1,4 +1,5 @@
 function formatTimeString(timestamp) {
+  if (!timestamp) return '';
   // Convertir el timestamp a milisegundos y crear un objeto Date
   const date = new Date(timestamp._seconds * 1000);
 
