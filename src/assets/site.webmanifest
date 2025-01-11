@@ -1,8 +1,20 @@
 {
   "name": "Domiburguer App",
   "short_name": "Domiburguer",
+  "lang": "es",
+  "categories": [
+    "food",
+    "lifestyle",
+    "shopping"
+  ],
+  "launch_handler": {
+    "client_mode": [
+      "focus-existing",
+      "auto"
+    ]
+  },
   "description": "¡Haz tu pedido de hamburguesas , creamos nuestro porpio sabor!",
-  "orientation": "any",
+  "orientation": "natural",
   "start_url": "/",
   "display": "fullscreen",
   "background_color": "#ffffff",
