@@ -15,12 +15,12 @@ import CopiableText from './CopiableText';
 const OrderCard = ({ dataPedido }) => {
   const context = useContext(MiContexto)
   const role = context.tokenLogin?.user?.role
-  const indexEstado = listaEstados.findIndex(e => e.name == dataPedido.estado)
+  const indexEstado = listaEstados.findIndex(e => e.name == dataPedido?.estado)
   const objEstado = listaEstados[indexEstado]
   const colorEstado = objEstado?.color
-  const urlAdress = encodeURIComponent(dataPedido.address.address_complete);
+  const urlAdress = encodeURIComponent(dataPedido?.address.address_complete);
 
-  const origin = dataPedido.origin
+  const origin = dataPedido?.origin
   let colorCard = false
   if (origin?.name == 'formClient') {
     colorCard = `alert alert-warning`
@@ -35,39 +35,39 @@ const OrderCard = ({ dataPedido }) => {
     >
       <CardBody>
         <CardHeader
-          title={dataPedido.name}
-          orden={dataPedido.numeroDeOrdenDelDia}
-          horaCreate={formatTimeString(dataPedido.date)}
+          title={dataPedido?.name}
+          orden={dataPedido?.numeroDeOrdenDelDia}
+          horaCreate={formatTimeString(dataPedido?.date)}
           horaPronostico={formatTimeString({
-            ...dataPedido.date, _seconds: dataPedido.date._seconds + (dataPedido.duracionEstimada.value * 60)
+            ...dataPedido?.date, _seconds: dataPedido?.date._seconds + (dataPedido?.duracionEstimada?.value * 60)
           })}
           urlMap={`https://www.google.com/maps/dir/?api=1&destination=${urlAdress}`}
-          urlPhone={`tel:${dataPedido.phone}`}
+          urlPhone={`tel:${dataPedido?.phone}`}
         />
         <CardSubtitle
           className='mb-3'
         >
-          <CopiableText text={dataPedido.address.direccionIput || dataPedido.address.address_complete} />
+          <CopiableText text={dataPedido?.address.direccionIput || dataPedido?.address.address_complete} />
 
         </CardSubtitle>
         <CardSubtitle
           className='mb-3'
         >
-          {dataPedido.note}
+          {dataPedido?.note}
         </CardSubtitle>
         {/* lita de resmen de productos */}
         <ResumenProductos
-          listProducts={dataPedido.order}
+          listProducts={dataPedido?.order}
         />
         {/*resumen de pruductos  */}
         <ProductoList
-          productos={dataPedido.order}
+          productos={dataPedido?.order}
         />
         {/* totalPrecio */}
         <TotalPrecio
-          listProducts={dataPedido.orden}
-          totalPrecio={dataPedido.priceTotal.priceTotal}
-          fee={dataPedido.fee}
+          listProducts={dataPedido?.orden}
+          totalPrecio={dataPedido?.priceTotal.priceTotal}
+          fee={dataPedido?.fee}
           yaPago={dataPedido?.pagoConfirmado?.confirmado}
         />
         <CardFooter>
@@ -80,7 +80,7 @@ const OrderCard = ({ dataPedido }) => {
           'color': 'black'
         }}
         className={`position-absolute top-100 start-50 translate-middle badge rounded-pill`}>
-        {dataPedido.estado}
+        {dataPedido?.estado}
       </span>
     </Card >
 
