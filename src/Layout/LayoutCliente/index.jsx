@@ -1,6 +1,7 @@
 import { ToastContainer } from 'react-toastify';
 import { ContextProviderClient, } from '../../Context/ClientContex';
 import { HelmetProvider, } from 'react-helmet-async'; // Importamos Helmet
+import Footer from './Footer';
 
 // eslint-disable-next-line react/prop-types
 const Layout = ({ children }) => {
@@ -11,6 +12,7 @@ const Layout = ({ children }) => {
           {children}
         </ContextProviderClient>
         <ToastContainer />
+        <Footer />
       </HelmetProvider>
     </>
   )
