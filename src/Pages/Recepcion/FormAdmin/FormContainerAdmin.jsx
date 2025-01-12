@@ -4,7 +4,6 @@ import BuscadorCliente from '../../../components/Codigos/CrearCodigoReferido/Bus
 import NameInput from '../../../components/FormsInputs/NameInput';
 import CommentInput from '../../../components/FormsInputs/CommentInput';
 import { Adiciones, Producto } from '../../../Utils/classProduct';
-import { calcularPrecio, calcularTiempo } from '../../../Utils/matrixCalculate';
 import RegisterSaleButton from '../../../components/RegisterSaleButton';
 import PaymentMethodInput from '../../../components/FormsInputs/PaymentMethodInput';
 import SelectDomiciliario from '../../../components/FormsInputs/SelectDomiciliario';
@@ -14,7 +13,6 @@ import postOrder from '../../../Utils/api/postOrder';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import MapComponent from '../../../components/MapComponent/MapComponent';
 import { useLoadScript } from '@react-google-maps/api';
-import { obtenerDistancia } from './googleDistanceMatrix'; // Importar la función
 import NoteClientInput from '../../../components/FormsInputs/NoteClientInput';
 import DashboardProducts from '../../../components/Products/Dashboard/Dashboard';
 import { calculateDeliveryDetails } from '../../../Utils/maps/calculateDeliveryDetails';
