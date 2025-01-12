@@ -55,7 +55,6 @@ const FormContainerAdmin = ({ token, userId }) => {
   //cada vez que cambie el dato del cliente (cuando lo busquemos)
   useEffect(() => {
     const { name, address, phone, clientNote } = dataCliente || {};
-    console.log(`[ ~ useEffect ~ dataCliente]`, dataCliente)
 
     // Lógica condicional agrupada por tipo de dato
     if (name) {
@@ -67,6 +66,7 @@ const FormContainerAdmin = ({ token, userId }) => {
     }
 
     if (address) {
+      console.log('%cEstamos estableciendo la dirección', 'color: purple;')
       const { address_complete, coordinates } = address;
 
       setCoordinates(coordinates);
@@ -90,6 +90,7 @@ const FormContainerAdmin = ({ token, userId }) => {
 
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {
+    console.log('%cCambio el estado de la direccion de google', 'color: yellow;')
     if (!isLoaded) {
       console.log('Cargando Google Maps...')
       return
@@ -103,9 +104,9 @@ const FormContainerAdmin = ({ token, userId }) => {
     if (!coordinates) return
 
     //miramos si las coordenadas son las mismas
-    if (prevCoordinates &&
-      prevCoordinates.lat === coordinates.lat &&
-      prevCoordinates.lng === coordinates.lng) return
+    // if (prevCoordinates &&
+    //   prevCoordinates.lat === coordinates.lat &&
+    //   prevCoordinates.lng === coordinates.lng ) return
 
     setPrevCoordinates(coordinates)
     calculateDeliveryDetails(centerOrigin, coordinates)
@@ -116,7 +117,7 @@ const FormContainerAdmin = ({ token, userId }) => {
       })
       .catch((error) => {
         toast.error(`No se pudo calcular el precio del domicilio ${error}`);
-      });
+      })
 
   }, [inputDataDireccion])
 
