@@ -1,17 +1,11 @@
 
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
-
 import { Marker } from "@react-google-maps/api"
-// import logo from './../../assets/logo.svg';
+import { iconMarker } from './iconMarker'
 
 const ListMarker = ({ pedidos }) => {
   const context = useContext(MiContexto)
-  // const iconMarker = {
-  //   url: logo, // URL o path de tu icono personalizado
-  //   scaledSize: new window.google.maps.Size(50, 50) // Tamaño del icono
-  // };
-
 
   return (
     <>
@@ -23,7 +17,7 @@ const ListMarker = ({ pedidos }) => {
           animation='DROP'
           label={`${pedido.numeroDeOrdenDelDia}`}
           clickable={true}
-          // icon={iconMarker}
+          icon={iconMarker(pedido.estado)}
           visible={true}
           onClick={() => {
             const index = context.items.findIndex(e => e.id == pedido.id)
