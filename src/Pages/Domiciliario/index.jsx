@@ -19,6 +19,8 @@ const Domiciliario = () => {
   useEffect(() => {
     //cando cambie el index del pedido elegido se cambiara el center del mapa
     if (context.indexItems !== null) {
+      console.log(`hola como estas`)
+      console.log(context.items)
       setCenterMaps({
         lat: context.items[context.indexItems].address.coordinates.lat,
         lng: context.items[context.indexItems].address.coordinates.lng

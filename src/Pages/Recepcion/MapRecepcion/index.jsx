@@ -24,6 +24,8 @@ const MapRecepcion = () => {
     height: '90vh', // Establece la altura al 100% de la altura de la ventana
   };
 
+  console.log(`creo que esto es antes del erro`)
+  console.log(context.indexItems)
   const indexPedido = context?.indexItems || 0
 
   const pedidoSelecionado = context?.items != null ? context?.items[indexPedido] : false
