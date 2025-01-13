@@ -16,7 +16,6 @@ const Sidebar = () => {
       contextRecepcion.setDomiciliarioIdFilter(null)
       return
     }
-
     contextRecepcion.setDomiciliarioIdFilter(section)
   };
 
@@ -36,6 +35,14 @@ const Sidebar = () => {
             />
           ))
         }
+
+        <SidebarElementDelivery
+          handleToggle={handleToggle}
+          openSection={openSection}
+          title={'Ninguno'}
+          eventKey={'ninguno'}
+          imageUrl={`https://i.pravatar.cc/150?img=${100}`}
+        />
 
         {/* agrega un boton para poner mas domiciliarios */}
         <li>

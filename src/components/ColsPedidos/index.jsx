@@ -14,7 +14,9 @@ export const ColsPedidos = ({ pedidos }) => {
   useEffect(() => {
     console.log('domiciliarioIdFilter', domiciliarioIdFilter);
     // si es un id valido filtramos los pedidos que tengan ese domiciliario
-    if (domiciliarioIdFilter) {
+    if (domiciliarioIdFilter === 'ninguno') {
+      setFilteredPedidos(pedidos.filter(pedido => !pedido?.domiciliario_asignado))
+    } else if (domiciliarioIdFilter) {
       setFilteredPedidos(pedidos.filter(pedido => pedido?.domiciliario_asignado?.id === domiciliarioIdFilter))
     } else {
       setFilteredPedidos(pedidos)
