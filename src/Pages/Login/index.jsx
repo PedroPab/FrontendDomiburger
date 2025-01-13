@@ -1,41 +1,56 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { MiContexto } from '../../Context'
-import { Container, Row, Card } from 'react-bootstrap'
+import { Container, Row, Col, Card, Modal, Button } from 'react-bootstrap'
 import Layout from "../../components/Layout";
 import FormLogin from '../../components/FormLogin';
 import { NavbarRecepcion } from '../../components/Navbar/NavbarRecepcion';
 
-
-
 const Login = () => {
   const context = useContext(MiContexto)
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   return (
     <>
       <Layout>
-
         <NavbarRecepcion
           modoOscuro={context.modoOscuro}
           alternarModo={context.alternarModo}
         />
-
-        <Container >
-
-          <Row>
-
-            <Card className='mt-3'>
-              <FormLogin />
-            </Card>
-
+        <Container className="login-container">
+          <Row className="justify-content-center">
+            <Col md={6}>
+              <Card className="login-card mt-3">
+                <Card.Header className="text-center">
+                  <h2>Iniciar Sesión</h2>
+                </Card.Header>
+                <Card.Body>
+                  <FormLogin />
+                </Card.Body>
+                <Card.Footer className="text-center">
+                  <a href="#" onClick={handleShowModal}>¿No tienes una cuenta? Regístrate</a>
+                </Card.Footer>
+              </Card>
+            </Col>
           </Row>
-
-
         </Container>
 
-      </Layout >
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Registro</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>No hay manera de registrarse, habla con el administrador.</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </Layout>
     </>
   );
-
 };
 
 export default Login;

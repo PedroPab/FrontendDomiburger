@@ -101,7 +101,7 @@ function FormLogin() {
   ]
   return (
     <Form noValidate validated={validated} onSubmit={(e) => handleSubmit(e)} className='mt-3'>
-      <Row className="mb-3">
+      <Row className="mb-2">
 
         <Form.Group className="mb-3">
           <FloatingLabel
@@ -165,8 +165,7 @@ function FormLogin() {
         }
       </Row>
 
-      <Button type="submit" className='mb-3'>Enviar</Button>
-
+      <Button variant="primary" type="submit" className="w-100 ">Ingresar</Button>
 
       {/* se encarga  de redireccionar a la url del rol */}
       {redireccionar.ok && <Navigate to={redireccionar.to} />}
