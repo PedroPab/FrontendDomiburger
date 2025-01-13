@@ -2,10 +2,24 @@
 import { Col } from "react-bootstrap"
 import { listaEstados } from "../../Utils/listEstados"
 import { OrderCard } from "../../components/OrderCard"
+import { useContext, useEffect, useState } from "react"
+import { RecepcionContexto } from "../../Context/RecepcionContex"
 
 
 export const ColsPedidos = ({ pedidos }) => {
-  // dejamos solo la data
+  //miramos los cambios de domiciliarioIdFilter del contexto
+  const { domiciliarioIdFilter } = useContext(RecepcionContexto)
+  const [filteredPedidos, setFilteredPedidos] = useState(pedidos)
+
+  useEffect(() => {
+    console.log('domiciliarioIdFilter', domiciliarioIdFilter);
+    // si es un id valido filtramos los pedidos que tengan ese domiciliario
+    if (domiciliarioIdFilter) {
+      setFilteredPedidos(pedidos.filter(pedido => pedido?.domiciliario_asignado?.id === domiciliarioIdFilter))
+    } else {
+      setFilteredPedidos(pedidos)
+    }
+  }, [domiciliarioIdFilter, pedidos])
 
   //el orden de los estados
   const listPedidosEstados = listaEstados.map(estado => {
@@ -17,7 +31,7 @@ export const ColsPedidos = ({ pedidos }) => {
   })
 
   //ponemos los pedido en el estado que le corresponde
-  pedidos.forEach(pedido => {
+  filteredPedidos.forEach(pedido => {
     const estado = listPedidosEstados[listPedidosEstados.findIndex(e => e.name == pedido.estado)]
 
     if (!estado) {

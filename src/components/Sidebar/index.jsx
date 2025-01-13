@@ -10,6 +10,14 @@ const Sidebar = () => {
 
   const handleToggle = (section) => {
     setOpenSection(openSection === section ? '' : section);
+    // establecer el domiciliarioIdFilter segun el id del domiciliario
+    //si es el mismo que el que esta selecion lo quitamos y ponemos ''
+    if (openSection === section) {
+      contextRecepcion.setDomiciliarioIdFilter(null)
+      return
+    }
+
+    contextRecepcion.setDomiciliarioIdFilter(section)
   };
 
   return (
@@ -28,6 +36,16 @@ const Sidebar = () => {
             />
           ))
         }
+
+        {/* agrega un boton para poner mas domiciliarios */}
+        <li>
+          <button
+            className="btn btn-primary"
+            onClick={() => contextRecepcion.openCloseModalAgregarDo()}
+          >
+            Agregar domiciliario
+          </button>
+        </li>
 
       </ul>
     </Col>

@@ -36,6 +36,8 @@ export const ContextProviderRecepcion = ({ children }) => {
   const openCloseModalAgregarDo = () => setShowModalAgregarDomiciliarios(!showModalAgregarDomiciliarios);
 
 
+  //el filtro para buscar los domiciliarios
+  const [domiciliarioIdFilter, setDomiciliarioIdFilter] = useState(null)
 
   return (
     <RecepcionContexto.Provider value={
@@ -48,6 +50,8 @@ export const ContextProviderRecepcion = ({ children }) => {
 
         domiciliariosSeleccionados, setDomiciliariosSeleccionados,
         estadoSeleccionado, setEstadoSeleccionado,
+
+        domiciliarioIdFilter, setDomiciliarioIdFilter,
       }
     }>
       {children}

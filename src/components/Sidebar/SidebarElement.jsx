@@ -1,6 +1,6 @@
 import { Button, Collapse } from "react-bootstrap";
 
-const SidebarElement = ({ handleToggle, openSection, title, eventKey, imageUrl }) => {
+const SidebarElementDelivery = ({ handleToggle, openSection, title, eventKey, imageUrl }) => {
   return (
     <li className="mb-3">
       <Button
@@ -30,9 +30,9 @@ const SidebarElement = ({ handleToggle, openSection, title, eventKey, imageUrl }
       <Collapse in={openSection === eventKey}>
         <div id={`${eventKey}-collapse`}>
           <ul className="list-unstyled">
-            <li><a href="#" className="text-decoration-none">Overview</a></li>
-            <li><a href="#" className="text-decoration-none">Updates</a></li>
-            <li><a href="#" className="text-decoration-none">Reports</a></li>
+            {/* <li>Costo de pedido</li>
+            <li>estado: entregando</li>
+            <li>2 pedidos asignados</li> */}
           </ul>
         </div>
       </Collapse>
@@ -40,4 +40,4 @@ const SidebarElement = ({ handleToggle, openSection, title, eventKey, imageUrl }
   );
 }
 
-export default SidebarElement;
+export default SidebarElementDelivery;
