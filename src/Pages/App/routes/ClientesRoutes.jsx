@@ -1,7 +1,6 @@
 import { Route } from "react-router-dom";
 import ProtectedRoute from "../../../components/ProtectedRoute";
 import Clientes from "../../Clientes/Clientes";
-import ClienteInfo from "../../Clientes/ClientesInfo";
 import { ROLES } from "../../../Utils/constList";
 
 const ClientesRoutes = () => {
@@ -13,7 +12,6 @@ const ClientesRoutes = () => {
           redirectTo="/login" />
       }>
       <Route path="/clientes" element={<Clientes />} />
-      <Route path="/clientes/:id" element={<ClienteInfo />} />
     </Route>
   );
 };
