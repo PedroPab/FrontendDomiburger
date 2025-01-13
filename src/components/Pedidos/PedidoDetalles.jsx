@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import orderService from "../../apis/client/OrderService";
 import { useParams } from "react-router-dom";
+import OrderCard from "../OrderCard";
 
 
 const PedidoDetalles = ({ token }) => {
@@ -41,14 +42,8 @@ const PedidoDetalles = ({ token }) => {
       {loading && <p>Cargando...</p>}
       {error && <p>{error}</p>}
       {order && (
-        <div>
-          <p>Id: {order.id}</p>
-          <p>Fecha: {order.fecha}</p>
-          <p>Estado: {order.estado}</p>
-          <p>Productos: {order.productos}</p>
-          <p>Cliente: {order.cliente}</p>
-          <p>Total: {order.total}</p>
-        </div>
+        <OrderCard dataPedido={order.data} />
+
       )}
 
     </Container>
