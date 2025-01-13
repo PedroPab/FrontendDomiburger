@@ -13,7 +13,7 @@ export const ContextProvider = ({ children }) => {
   const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} });
   const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: false });
   const [alerts, setAlerts] = useState([]);
-  const [indexItems, setIndexItems] = useState(null);
+  const [idItemSelect, setIdItemSelect] = useState(null);
   const [zoomMaps, setZoomMaps] = useState(15);
   const [alertaActiva, setAlertaActiva] = useState(false);
   const [isConnected, setIsConnected] = useState(false); // Nuevo estado para indicar si está conectado
@@ -95,8 +95,8 @@ export const ContextProvider = ({ children }) => {
         setItems,
         alerts,
         setAlerts,
-        indexItems,
-        setIndexItems,
+        idItemSelect,
+        setIdItemSelect,
         zoomMaps,
         setZoomMaps,
         alertaActiva,

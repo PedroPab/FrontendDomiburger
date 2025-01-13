@@ -48,7 +48,7 @@ const MapClient = ({ coordinates }) => {
               visible={true}
             // onClick={() => {
             //   const index = context.items.findIndex(e => e.id == pedido.id)
-            //   context.setIndexItems(index == -1 ? null : index)
+            //   context.setIdItemSelect(index == -1 ? null : index)
             // }}
             />
           }

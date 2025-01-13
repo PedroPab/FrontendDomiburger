@@ -12,8 +12,8 @@ const CarouselListCards = ({ data }) => {
   const sliderRef = useRef(null); // Crea una referencia para el Slider
   //cada vez que se camien el index se cambian mualmente el
   useEffect(() => {
-    sliderRef.current.slickGoTo(context.indexItems);
-  }, [context.indexItems])
+    sliderRef.current.slickGoTo(context.idItemSelect);
+  }, [context.idItemSelect])
 
   const settings = {
     infinite: false,
@@ -26,7 +26,7 @@ const CarouselListCards = ({ data }) => {
     <>
       <Slider {...settings}
         ref={sliderRef}
-        afterChange={(index) => context.setIndexItems(index)}
+        afterChange={(index) => context.setIdItemSelect(index)}
       >
         {
           (data && data.length > 0) ?

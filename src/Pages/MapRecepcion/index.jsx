@@ -6,7 +6,6 @@ import Layout from "../../components/Layout";
 import Mapa from "../../components/MapsGoogle"
 import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
-import ListMarker from '../../components/ListMarker';
 import StickyCard from '../../components/StickyCard';
 import OrderCard from '../../components/OrderCard';
 import Sidebar from '../../components/Sidebar';
@@ -25,11 +24,6 @@ const MapRecepcion = () => {
     width: '100%', // Establece el ancho al 100% del contenedor padre
     height: '90vh', // Establece la altura al 100% de la altura de la ventana
   };
-
-  const indexPedido = context?.indexItems || 0
-
-  const pedidoSelecionado = context?.items != null ? context?.items[indexPedido] : false
-
 
   return (
     <>
@@ -63,13 +57,12 @@ const MapRecepcion = () => {
           </Container>
 
           {
-            pedidoSelecionado &&
+            context.idItemSelect &&
             (<StickyCard
               show={true}
+              pedidos={context?.items}
             >
-              <OrderCard
-                dataPedido={pedidoSelecionado}
-              />
+
             </StickyCard>)
           }
 

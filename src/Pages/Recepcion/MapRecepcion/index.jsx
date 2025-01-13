@@ -25,8 +25,8 @@ const MapRecepcion = () => {
   };
 
   console.log(`creo que esto es antes del erro`)
-  console.log(context.indexItems)
-  const indexPedido = context?.indexItems || 0
+  console.log(context.idItemSelect)
+  const indexPedido = context?.idItemSelect || 0
 
   const pedidoSelecionado = context?.items != null ? context?.items[indexPedido] : false
 

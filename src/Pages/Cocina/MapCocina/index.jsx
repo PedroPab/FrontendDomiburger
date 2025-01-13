@@ -24,7 +24,7 @@ const MapCocina = () => {
     height: '90vh', // Establece la altura al 100% de la altura de la ventana
   };
 
-  const indexPedido = context?.indexItems || 0
+  const indexPedido = context?.idItemSelect || null
 
   const pedidoSelecionado = context?.items != null ? context?.items[indexPedido] : false
 

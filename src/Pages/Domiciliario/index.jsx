@@ -18,16 +18,16 @@ const Domiciliario = () => {
 
   useEffect(() => {
     //cando cambie el index del pedido elegido se cambiara el center del mapa
-    if (context.indexItems !== null) {
+    if (context.idItemSelect !== null) {
       console.log(`hola como estas`)
       console.log(context.items)
       setCenterMaps({
-        lat: context.items[context.indexItems].address.coordinates.lat,
-        lng: context.items[context.indexItems].address.coordinates.lng
+        lat: context.items[context.idItemSelect].address.coordinates.lat,
+        lng: context.items[context.idItemSelect].address.coordinates.lng
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [context.indexItems])
+  }, [context.idItemSelect])
 
   const containerStyle = {
     width: '100%', // Establece el ancho al 100% del contenedor padre
