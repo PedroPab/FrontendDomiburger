@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { MiContexto } from '../../Context'
-import { Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { NavbarRecepcion } from "../../components/Navbar/NavbarRecepcion";
 import Layout from "../../components/Layout";
 import Mapa from "../../components/MapsGoogle"
@@ -9,6 +9,8 @@ import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
 import ListMarker from '../../components/ListMarker';
 import StickyCard from '../../components/StickyCard';
 import OrderCard from '../../components/OrderCard';
+import Sidebar from '../../components/Sidebar';
+import ListOrder from './ListOrder';
 
 const MapRecepcion = () => {
 
@@ -39,20 +41,25 @@ const MapRecepcion = () => {
             alternarModo={context.alternarModo}
           />
           <Container fluid  >
-            <Mapa
-              zoom={context.zoomMaps}
-              setZoomMaps={context.setZoomMaps}
-              modoOscuro={context.modoOscuro}
-              center={centerMaps}
-              setCenter={setCenterMaps}
-              containerStyle={containerStyle}
-            >
-              {
-                context.items ? (<ListMarker
-                  pedidos={context.items}
-                />) : (<></>)
-              }
-            </Mapa>
+            <Row>
+              <Sidebar />
+              <Col xs={9} md={10}>
+                <Mapa
+                  zoom={context.zoomMaps}
+                  setZoomMaps={context.setZoomMaps}
+                  modoOscuro={context.modoOscuro}
+                  center={centerMaps}
+                  setCenter={setCenterMaps}
+                  containerStyle={containerStyle}
+                >
+                  <ListOrder
+                    items={context.items || []}
+                  />
+
+
+                </Mapa>
+              </Col>
+            </Row>
           </Container>
 
           {
