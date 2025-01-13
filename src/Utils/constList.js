@@ -10,6 +10,7 @@ const ESTADOS = {
   Eliminados: 'Eliminados',
   PendieteTransferencia: 'PendieteTransferencia',
   Indefinido: "Indefinido",
+  ErrorCodigo: "ErrorCodigo",
 }
 
 const COLLECTIONS = {

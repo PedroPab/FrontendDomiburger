@@ -12,17 +12,24 @@ const generateSvgColor = (color) => {
 }
 const iconMarker = (estado) => {
   //cambia el color del marker (svg) según  el estado
-  const markerColorStates = {}
+  const markerColorStates = (estate) => {
+    const markerColorStates = {}
 
-  for (const key in listaEstados) {
-    if (Object.prototype.hasOwnProperty.call(listaEstados, key)) {
-      const element = listaEstados[key];
-      markerColorStates[element.name] = generateSvgColor(element.color)
-
+    for (const key in listaEstados) {
+      if (Object.prototype.hasOwnProperty.call(listaEstados, key)) {
+        const element = listaEstados[key];
+        markerColorStates[element.name] = generateSvgColor(element.color)
+      }
     }
+
+    if (markerColorStates === undefined) {
+      return generateSvgColor(`#b82100`)
+    }
+
+    return markerColorStates[estate]
   }
 
-  const icon = markerColorStates[estado]
+  const icon = markerColorStates(estado)
   return icon
 }
 
