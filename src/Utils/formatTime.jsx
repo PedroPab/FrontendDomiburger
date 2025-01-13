@@ -23,7 +23,6 @@ function formatTimeString(timestamp) {
 const convertirFecha = (fechaInput) => {
   var dateInput = fechaInput
   var fechaLocal = new Date(dateInput + "T00:00:00");
-
   // Ajustar la diferencia horaria a la hora internacional
   fechaLocal.setHours(fechaLocal.getHours());
 
