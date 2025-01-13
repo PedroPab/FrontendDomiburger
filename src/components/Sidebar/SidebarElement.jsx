@@ -1,17 +1,20 @@
 import { Button, Collapse } from "react-bootstrap";
 
 const SidebarElementDelivery = ({ handleToggle, openSection, title, eventKey, imageUrl }) => {
+  const isSelected = openSection === eventKey;
+
   return (
     <li className="mb-3">
       <Button
         onClick={() => handleToggle(eventKey)}
         aria-controls={`${eventKey}-collapse`}
-        aria-expanded={openSection === eventKey}
+        aria-expanded={isSelected}
         className="d-flex align-items-center"
         style={{
           border: 'none',
           background: 'none',
-          padding: 0
+          padding: 0,
+          color: isSelected ? 'red' : 'inherit'
         }}
       >
         <img
@@ -21,13 +24,13 @@ const SidebarElementDelivery = ({ handleToggle, openSection, title, eventKey, im
             width: '50px',
             height: '50px',
             borderRadius: '50%',
-            border: '2px solid #007bff',
+            border: isSelected ? '2px solid red' : '2px solid #007bff',
             marginRight: '10px'
           }}
         />
         <span>{title}</span>
       </Button>
-      <Collapse in={openSection === eventKey}>
+      <Collapse in={isSelected}>
         <div id={`${eventKey}-collapse`}>
           <ul className="list-unstyled">
             {/* <li>Costo de pedido</li>
