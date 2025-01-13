@@ -14,6 +14,7 @@ function FormLogin() {
   const [redireccionar, setRedireccionar] = useState({ ok: false, to: `` });
   const [messageErrorLogin, setMessageErrorLogin] = useState(null);
   const context = useContext(MiContexto)
+  const [showPassword, setShowPassword] = useState(false);
 
   const apiUrl = getUrlBackend()
   console.log(`[ ~ FormLogin ~ apiUrl]`, apiUrl)
@@ -87,6 +88,9 @@ function FormLogin() {
     return enviarFormualario();
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const listRoles = [
     { rol: 'admin', url: `recepcion` },
@@ -112,22 +116,19 @@ function FormLogin() {
               name='usernameInput'
             />
           </FloatingLabel>
-          <FloatingLabel
-            controlId="floatingPassword"
-            label="Contraseña"
-            className="mb-3"
-
-          >
+          <div className="d-flex mb-3">
             <Form.Control
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               feedback="Genial"
-              required
+              requiredz
               name="passwordInput"
-
+              className="flex-grow-1"
             />
-
-          </FloatingLabel>
+            <Button variant="secondary" onClick={togglePasswordVisibility} className="ms-2">
+              {showPassword ? "Ocultar" : "Mostrar"}
+            </Button>
+          </div>
           <Form.Select
             aria-label="Default select example"
             name="roleSelect"
