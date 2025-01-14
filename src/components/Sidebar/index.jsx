@@ -21,6 +21,7 @@ const Sidebar = () => {
 
   return (
     <Col xs={3} md={2} className="vh-90 p-3 border-end">
+      <h3 className="text-center  border-bottom pb-2 mb-3">Filtrar por domiciliario</h3>
       <ul className="list-unstyled">
 
         {
