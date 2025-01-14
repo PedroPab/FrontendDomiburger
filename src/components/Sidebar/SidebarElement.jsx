@@ -9,7 +9,7 @@ const SidebarElementDelivery = ({ handleToggle, openSection, title, eventKey, im
         onClick={() => handleToggle(eventKey)}
         aria-controls={`${eventKey}-collapse`}
         aria-expanded={isSelected}
-        className={`d-flex align-items-center w-100 px-3 py-2 ${isSelected ? "bg-danger text-white" : "bg-transparent text-dark"}`}
+        className={`d-flex align-items-center w-100 px-3 py-2 ${isSelected ? "bg-danger" : ""}`}
         style={{
           border: "none",
           borderRadius: "0.5rem",
@@ -21,7 +21,7 @@ const SidebarElementDelivery = ({ handleToggle, openSection, title, eventKey, im
           style={{
             width: "50px",
             height: "50px",
-            border: `2px solid ${isSelected ? "white" : "#007bff"}`,
+            border: `2px solid ${isSelected ? "" : "#007bff"}`,
             marginRight: "10px",
             flexShrink: 0,
           }}

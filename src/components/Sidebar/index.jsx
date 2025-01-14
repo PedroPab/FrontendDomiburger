@@ -2,6 +2,7 @@ import { Col } from 'react-bootstrap';
 import { useContext, useState } from 'react';
 import SidebarElementDelivery from './SidebarElement';
 import { RecepcionContexto } from '../../Context/RecepcionContex';
+import InfoButton from '../InfoButton';
 
 const Sidebar = () => {
   const contextRecepcion = useContext(RecepcionContexto)
@@ -21,7 +22,14 @@ const Sidebar = () => {
 
   return (
     <Col xs={3} md={2} className="vh-90 p-3 border-end">
-      <h3 className="text-center  border-bottom pb-2 mb-3">Filtrar por domiciliario</h3>
+
+      <div className="position-relative">
+        <h3 className="text-center border-bottom pb-2 mb-3">
+          Filtrar por domiciliario
+        </h3>
+        <InfoButton textInfo={'Selecciona un domiciliario para ver sus pedidos'} />
+      </div>
+
       <ul className="list-unstyled">
 
         {
