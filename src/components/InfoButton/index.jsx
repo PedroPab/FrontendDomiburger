@@ -1,28 +1,17 @@
-import React from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { InfoCircle } from "react-bootstrap-icons";
 
-const InfoButton = ({ textInfo }) => {
+const InfoButton = ({ textInfo, color = "primary" }) => {
   return (
     <OverlayTrigger
       placement="top"
-      overlay={
-        <Tooltip>
-          {textInfo}
-        </Tooltip>
-      }
+      overlay={<Tooltip>{textInfo}</Tooltip>}
     >
       <button
-        className="btn btn-link p-0 position-absolute"
-        style={{
-          top: "0",
-          right: "0",
-          fontSize: "1.2rem",
-          color: "#007bff",
-        }}
+        className={`btn btn-link p-0 position-absolute top-0 end-0 text-${color}`}
         aria-label="Información"
       >
-        <InfoCircle />
+        <InfoCircle className="fs-5" />
       </button>
     </OverlayTrigger>
   );

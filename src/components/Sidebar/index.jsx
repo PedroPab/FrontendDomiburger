@@ -50,17 +50,23 @@ const Sidebar = () => {
           openSection={openSection}
           title={'Ninguno'}
           eventKey={'ninguno'}
-          imageUrl={`https://i.pravatar.cc/150?img=${100}`}
+          imageUrl={`https://i.pravatar.cc/150?img=${10}`}
         />
 
-        {/* agrega un boton para poner mas domiciliarios */}
-        <li>
-          <button
-            className="btn btn-primary"
-            onClick={() => contextRecepcion.openCloseModalAgregarDo()}
-          >
-            Agregar domiciliario
-          </button>
+        {/* agrega un botón para poner mas domiciliarios */}
+        <li className="mt-3">
+          <div className="position-relative">
+            <button
+              className="btn btn-success w-100"
+              onClick={() => contextRecepcion.openCloseModalAgregarDo()}
+            >
+              Agregar domiciliario
+            </button>
+            <InfoButton
+              color="muted"
+              textInfo="Es posible que no tengas todos los domiciliarios que trabajan hoy. Agregados manualmente."
+            />
+          </div>
         </li>
 
       </ul>
