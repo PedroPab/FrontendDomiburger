@@ -27,11 +27,11 @@ export const ColsPedidos = ({ pedidos }) => {
 
   useEffect(() => {
     // Inicializar las columnas como colapsadas si no tienen pedidos
-    const initialStates = listaEstados.map(estado => {
+    const initialStates = listaEstados.map((estado, index) => {
       const pedidosEnEstado = filteredPedidos.filter(
         pedido => pedido.estado === estado.name
       );
-      return pedidosEnEstado.length === 0; // Colapsar si no hay pedidos
+      return collapsedStates[index] || pedidosEnEstado.length === 0; // Mantener colapsado si ya estaba colapsado o no hay pedidos
     });
     setCollapsedStates(initialStates);
   }, [filteredPedidos]);
