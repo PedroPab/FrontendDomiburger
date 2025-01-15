@@ -118,10 +118,11 @@ export const ColsPedidos = ({ pedidos }) => {
 
             {/* Contenido */}
             <div
-              className="d-flex flex-column align-items-center justify-content-center"
+              className="d-flex flex-column align-items-center"
               style={{
                 height: isCollapsed ? "100px" : "auto",
                 overflow: isCollapsed ? "hidden" : "auto",
+                width: "100%", // Asegurar que el ancho sea 100%
               }}
             >
               {isCollapsed ? (

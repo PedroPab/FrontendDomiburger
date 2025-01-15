@@ -12,7 +12,7 @@ const CardHeader = ({ title, orden, horaCreate, horaPronostico, urlMap, urlPhone
         <small className="text-muted">{horaPronostico}</small>
       </div>
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <Badge bg="secondary">{orden}</Badge>
+        <Badge className='fs-6' bg="secondary">{orden}</Badge>
         <CardTitle>{title}</CardTitle>
         <ButtonGroup >
           <a href={urlPhone} target="_blank" rel="noreferrer" >
