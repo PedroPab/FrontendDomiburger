@@ -47,7 +47,8 @@ export const ColsPedidos = ({ pedidos }) => {
           >
             {/* Título */}
             <div
-              className="d-flex justify-content-between align-items-center w-100"
+              className={`d-flex ${isCollapsed ? "flex-column text-center" : "justify-content-between"
+                } align-items-center w-100`}
               style={{
                 cursor: "pointer",
                 borderBottom: "1px solid #ddd",
@@ -56,22 +57,34 @@ export const ColsPedidos = ({ pedidos }) => {
               onClick={() => toggleCollapse(index)}
             >
               {/* Ícono */}
-              <span style={{ fontSize: "1.5rem" }}>{estado.icon}</span>
+              <span
+                style={{
+                  fontSize: "1.5rem",
+                  marginBottom: isCollapsed ? "5px" : "0",
+                }}
+              >
+                {estado.icon}
+              </span>
 
-              {/* Nombre y cantidad */}
+              {/* Nombre del estado */}
               {!isCollapsed && (
                 <span
-                  className="text-center "
-                  style={{ fontWeight: "bold", fontSize: "1rem" }}
+                  className="text-center"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "1rem",
+                  }}
                 >
                   {estado.name}
                 </span>
               )}
+
+              {/* Cantidad de pedidos */}
               <span
-                className={`badge  ${badgeColor}`}
+                className={`badge ${badgeColor}`}
                 style={{
-                  // backgroundColor: badgeColor,
                   fontSize: "0.9rem",
+                  marginTop: isCollapsed ? "5px" : "0",
                 }}
               >
                 {pedidosCount}
@@ -89,7 +102,7 @@ export const ColsPedidos = ({ pedidos }) => {
               {isCollapsed ? (
                 <FaExpand
                   size={30}
-                  style={{ cursor: "pointer", }}
+                  style={{ cursor: "pointer" }}
                   onClick={() => toggleCollapse(index)}
                 />
               ) : (
