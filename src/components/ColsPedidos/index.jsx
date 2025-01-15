@@ -4,7 +4,7 @@ import { Col } from "react-bootstrap";
 import { listaEstados } from "../../Utils/listEstados";
 import { OrderCard } from "../../components/OrderCard";
 import { BsInbox } from "react-icons/bs";
-import { FaExpand, FaCompress } from "react-icons/fa";
+import { FaExpand } from "react-icons/fa";
 
 export const ColsPedidos = ({ pedidos }) => {
   const [collapsedStates, setCollapsedStates] = useState(
@@ -27,6 +27,13 @@ export const ColsPedidos = ({ pedidos }) => {
     <>
       {estadosPedidos.map((estado, index) => {
         const isCollapsed = collapsedStates[index];
+        const pedidosCount = estado.pedidos.length;
+
+        // Determinación de colores
+        let badgeColor = "bg-secondary"; // Default color (sin pedidos)
+        if (pedidosCount > 0) {
+          badgeColor = isCollapsed ? "bg-warning" : "bg-success"; // Amarillo si está colapsada, verde si expandida
+        }
 
         return (
           <Col
@@ -54,14 +61,20 @@ export const ColsPedidos = ({ pedidos }) => {
               {/* Nombre y cantidad */}
               {!isCollapsed && (
                 <span
-                  className="text-center flex-grow-1"
+                  className="text-center "
                   style={{ fontWeight: "bold", fontSize: "1rem" }}
                 >
                   {estado.name}
                 </span>
               )}
-              <span className="badge rounded-pill bg-secondary text-light">
-                {estado.pedidos.length}
+              <span
+                className={`badge  ${badgeColor}`}
+                style={{
+                  // backgroundColor: badgeColor,
+                  fontSize: "0.9rem",
+                }}
+              >
+                {pedidosCount}
               </span>
             </div>
 
@@ -75,8 +88,8 @@ export const ColsPedidos = ({ pedidos }) => {
             >
               {isCollapsed ? (
                 <FaExpand
-                  size={40}
-                  style={{ cursor: "pointer", color: "#6c757d" }}
+                  size={30}
+                  style={{ cursor: "pointer", }}
                   onClick={() => toggleCollapse(index)}
                 />
               ) : (
