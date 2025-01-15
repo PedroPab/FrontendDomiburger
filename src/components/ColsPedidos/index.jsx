@@ -1,92 +1,93 @@
 /* eslint-disable react/prop-types */
-import { Col } from "react-bootstrap"
-import { listaEstados } from "../../Utils/listEstados"
-import { OrderCard } from "../../components/OrderCard"
-import { useContext, useEffect, useState } from "react"
-import { RecepcionContexto } from "../../Context/RecepcionContex"
-
+import React, { useState } from "react";
+import { Col } from "react-bootstrap";
+import { listaEstados } from "../../Utils/listEstados";
+import { OrderCard } from "../../components/OrderCard";
+import { BsInbox } from "react-icons/bs";
+import { FaExpand, FaCompress } from "react-icons/fa";
 
 export const ColsPedidos = ({ pedidos }) => {
-  //miramos los cambios de domiciliarioIdFilter del contexto
-  const { domiciliarioIdFilter } = useContext(RecepcionContexto)
-  const [filteredPedidos, setFilteredPedidos] = useState(pedidos)
+  const [collapsedStates, setCollapsedStates] = useState(
+    listaEstados.map(() => false) // Todas las columnas empiezan expandidas
+  );
 
-  useEffect(() => {
-    console.log('domiciliarioIdFilter', domiciliarioIdFilter);
-    // si es un id valido filtramos los pedidos que tengan ese domiciliario
-    if (domiciliarioIdFilter === 'ninguno') {
-      setFilteredPedidos(pedidos.filter(pedido => !pedido?.domiciliario_asignado))
-    } else if (domiciliarioIdFilter) {
-      setFilteredPedidos(pedidos.filter(pedido => pedido?.domiciliario_asignado?.id === domiciliarioIdFilter))
-    } else {
-      setFilteredPedidos(pedidos)
-    }
-  }, [domiciliarioIdFilter, pedidos])
+  const toggleCollapse = index => {
+    setCollapsedStates(prev =>
+      prev.map((isCollapsed, i) => (i === index ? !isCollapsed : isCollapsed))
+    );
+  };
 
-  //el orden de los estados
-  const listPedidosEstados = listaEstados.map(estado => {
-
-    return {
-      name: estado.name,
-      pedidos: []
-    }
-  })
-
-  //ponemos los pedido en el estado que le corresponde
-  filteredPedidos.forEach(pedido => {
-    const estado = listPedidosEstados[listPedidosEstados.findIndex(e => e.name == pedido.estado)]
-
-    if (!estado) {
-      console.log(`no es un estado valido ${pedido}`);
-      return
-    }
-    estado.pedidos.push(pedido)
-    return
-  });
+  const estadosPedidos = listaEstados.map(estado => ({
+    name: estado.name,
+    pedidos: pedidos.filter(pedido => pedido.estado === estado.name),
+    icon: estado.icon || <BsInbox />,
+  }));
 
   return (
     <>
-      {listPedidosEstados.map((estado, i) => {
+      {estadosPedidos.map((estado, index) => {
+        const isCollapsed = collapsedStates[index];
+
         return (
           <Col
-            key={i}
-            //tendrá un ancho fijo de 30 rm  en todo los tamaños
-            className="col-11"
-
-            // ponemos una separación entre cada columna y un espacio de 10px arriba
+            key={index}
+            className="d-flex flex-column align-items-center"
             style={{
-              padding: '10px',
-              height: '90%',
-              width: '30rem',
+              width: isCollapsed ? "10rem" : "30rem",
+              transition: "all 0.3s ease",
+              padding: "10px",
             }}
           >
-            {/* centramos el titulo  y lo ponemos de forma fija en la pantalla*/}
-            <h3 className=" text-center">
-              {estado.name}
-              {/* mostramos en una un badge redondo pequeño como una notificación  en el titulo y con color de cuantos pedidos hay en ese estado  */}
-              <span className="badge rounded-pill bg-warning text-dark  m-2">
+            {/* Título */}
+            <div
+              className="d-flex justify-content-between align-items-center w-100"
+              style={{
+                cursor: "pointer",
+                borderBottom: "1px solid #ddd",
+                padding: "10px 0",
+              }}
+              onClick={() => toggleCollapse(index)}
+            >
+              {/* Ícono */}
+              <span style={{ fontSize: "1.5rem" }}>{estado.icon}</span>
+
+              {/* Nombre y cantidad */}
+              {!isCollapsed && (
+                <span
+                  className="text-center flex-grow-1"
+                  style={{ fontWeight: "bold", fontSize: "1rem" }}
+                >
+                  {estado.name}
+                </span>
+              )}
+              <span className="badge rounded-pill bg-secondary text-light">
                 {estado.pedidos.length}
               </span>
-            </h3>
-            {/* creamos un contenedor para contener la lista de pedidos centrada horizontalmente pero no verticalmente , que sigan estando una debajo de la otra */}
-            <div className="d-flex flex-column align-items-center "
+            </div>
+
+            {/* Contenido */}
+            <div
+              className="d-flex flex-column align-items-center justify-content-center"
               style={{
-                height: '100%',
-                overflow: 'auto'
-              }}>
-              {
-                estado?.pedidos.map((pedido, i) => (
-                  <OrderCard
-                    key={i}
-                    dataPedido={pedido}
-                  />
+                height: isCollapsed ? "100px" : "auto",
+                overflow: isCollapsed ? "hidden" : "auto",
+              }}
+            >
+              {isCollapsed ? (
+                <FaExpand
+                  size={40}
+                  style={{ cursor: "pointer", color: "#6c757d" }}
+                  onClick={() => toggleCollapse(index)}
+                />
+              ) : (
+                estado.pedidos.map((pedido, i) => (
+                  <OrderCard key={i} dataPedido={pedido} />
                 ))
-              }
+              )}
             </div>
           </Col>
-        )
+        );
       })}
     </>
-
-  )
-}
+  );
+};

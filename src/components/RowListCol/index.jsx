@@ -11,7 +11,7 @@ const RowListCol = ({ children }) => {
         className="flex-nowrap overflow-auto "
         style={{
           "height": "90vh",
-          "width": "100vw"
+          "width": "100%"
         }}
       >
         {children}
