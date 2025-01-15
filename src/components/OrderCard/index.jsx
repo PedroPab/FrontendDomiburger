@@ -1,95 +1,98 @@
 /* eslint-disable react/prop-types */
 // OrderCard.js
-import { useContext } from 'react'
-import { Card, CardBody, CardSubtitle, CardFooter } from 'react-bootstrap';
-import { CardHeader } from './CardHeader';
-import { ResumenProductos } from './ResumenProductos';
-import { ProductoList } from './ProductoList';
-import { TotalPrecio } from './TotalPrecio';
-import { ListButtonModalPedido } from './ListButtonModalPedido';
-import { MiContexto } from '../../Context'
-import { listaEstados } from '../../Utils/listEstados';
-import { formatTimeString } from '../../Utils/formatTime';
-import CopiableText from './CopiableText';
+import { useContext } from "react";
+import { Card, Badge } from "react-bootstrap";
+import { CardHeader } from "./CardHeader";
+import { ResumenProductos } from "./ResumenProductos";
+import { ProductoList } from "./ProductoList";
+import { TotalPrecio } from "./TotalPrecio";
+import { ListButtonModalPedido } from "./ListButtonModalPedido";
+import { MiContexto } from "../../Context";
+import { listaEstados } from "../../Utils/listEstados";
+import { formatTimeString } from "../../Utils/formatTime";
+import CopiableText from "./CopiableText";
 
 const OrderCard = ({ dataPedido }) => {
-  const context = useContext(MiContexto)
-  const role = context.tokenLogin?.user?.role
-  const indexEstado = listaEstados.findIndex(e => e.name == dataPedido?.estado)
-  const objEstado = listaEstados[indexEstado]
-  const colorEstado = objEstado?.color
-  const urlAdress = encodeURIComponent(dataPedido?.address.address_complete);
+  const context = useContext(MiContexto);
+  const role = context.tokenLogin?.user?.role;
 
-  const origin = dataPedido?.origin
-  let colorCard = false
-  if (origin?.name == 'formClient') {
-    colorCard = `alert alert-warning`
-  }
+  const indexEstado = listaEstados.findIndex(e => e.name === dataPedido?.estado);
+  const objEstado = listaEstados[indexEstado];
+  const colorEstado = objEstado?.color;
+  console.log(`[ ~ OrderCard ~ colorEstado]`, colorEstado)
+  const urlAdress = encodeURIComponent(dataPedido?.address.address_complete);
 
   return (
     <Card
-      className={`mb-3 ${colorCard}`}
+      className="mb-3 shadow-sm"
       style={{
-        width: '25rem',
+        width: "100%",
+        border: "1px solid #e0e0e0",
+        borderRadius: "8px",
       }}
     >
-      <CardBody>
+      <Card.Body style={{ padding: "16px 20px" }}>
         <CardHeader
           title={dataPedido?.name}
           orden={dataPedido?.numeroDeOrdenDelDia}
           horaCreate={formatTimeString(dataPedido?.date)}
           horaPronostico={formatTimeString({
-            ...dataPedido?.date, _seconds: dataPedido?.date._seconds + (dataPedido?.duracionEstimada?.value * 60 || 0)
+            ...dataPedido?.date,
+            _seconds:
+              dataPedido?.date._seconds +
+              (dataPedido?.duracionEstimada?.value * 60 || 0),
           })}
           urlMap={`https://www.google.com/maps/dir/?api=1&destination=${urlAdress}`}
           urlPhone={`tel:${dataPedido?.phone}`}
         />
-        <CardSubtitle
-          className='mb-3'
-        >
-          <CopiableText text={dataPedido?.address.direccionIput || dataPedido?.address.address_complete} />
-
-        </CardSubtitle>
-        <CardSubtitle
-          className='mb-3'
-        >
-          {dataPedido?.note}
-        </CardSubtitle>
-        {/* lita de resmen de productos */}
-        <ResumenProductos
-          listProducts={dataPedido?.order}
-        />
-        {/*resumen de pruductos  */}
-        <ProductoList
-          productos={dataPedido?.order}
-        />
-        {/* totalPrecio */}
+        <hr className="my-3" style={{ borderColor: "#e0e0e0" }} />
+        <div className="mb-3">
+          <CopiableText
+            text={
+              dataPedido?.address.direccionIput ||
+              dataPedido?.address.address_complete
+            }
+          />
+        </div>
+        {dataPedido?.note && (
+          <div className="mb-3 text-muted" style={{ fontSize: "0.9rem" }}>
+            {dataPedido?.note}
+          </div>
+        )}
+        <ResumenProductos listProducts={dataPedido?.order} />
+        <ProductoList productos={dataPedido?.order} />
         <TotalPrecio
           listProducts={dataPedido?.orden}
           totalPrecio={dataPedido?.priceTotal.priceTotal}
           fee={dataPedido?.fee}
           yaPago={dataPedido?.pagoConfirmado?.confirmado}
         />
-        <CardFooter>
-          <ListButtonModalPedido dataPedido={dataPedido} role={role} />
-        </CardFooter>
-      </CardBody>
-      <span
+      </Card.Body>
+      <Card.Footer
+        className=""
         style={{
-          backgroundColor: `${colorEstado}`,
-          'color': 'black'
+          borderTop: "1px solid #e0e0e0",
+          padding: "10px 20px",
         }}
-        className={`position-absolute top-100 start-50 translate-middle badge rounded-pill`}>
+      >
+        <ListButtonModalPedido dataPedido={dataPedido} role={role} />
+      </Card.Footer>
+      <Badge
+        pill
+        bg=""
+        className="position-absolute top-0 start-50 translate-middle"
+        style={{
+          backgroundColor: colorEstado,
+          color: "#000",
+          fontSize: "0.85rem",
+          padding: "5px 10px",
+        }}
+      >
         {dataPedido?.estado}
-      </span>
-    </Card >
-
+      </Badge>
+    </Card>
   );
-}
-
-
+};
 
 export default OrderCard;
-
-
-export { OrderCard }
+export { OrderCard };
