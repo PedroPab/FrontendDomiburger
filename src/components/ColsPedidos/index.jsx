@@ -1,15 +1,40 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Col } from "react-bootstrap";
 import { listaEstados } from "../../Utils/listEstados";
 import { OrderCard } from "../../components/OrderCard";
+import { RecepcionContexto } from "../../Context/RecepcionContex";
 import { BsInbox } from "react-icons/bs";
 import { FaExpand } from "react-icons/fa";
 
 export const ColsPedidos = ({ pedidos }) => {
-  const [collapsedStates, setCollapsedStates] = useState(
-    listaEstados.map(() => false) // Todas las columnas empiezan expandidas
-  );
+  const { domiciliarioIdFilter } = useContext(RecepcionContexto);
+  const [filteredPedidos, setFilteredPedidos] = useState(pedidos);
+  const [collapsedStates, setCollapsedStates] = useState([]);
+
+  useEffect(() => {
+    // Filtrar los pedidos según el filtro del contexto
+    if (domiciliarioIdFilter === "ninguno") {
+      setFilteredPedidos(pedidos.filter(pedido => !pedido?.domiciliario_asignado));
+    } else if (domiciliarioIdFilter) {
+      setFilteredPedidos(
+        pedidos.filter(pedido => pedido?.domiciliario_asignado?.id === domiciliarioIdFilter)
+      );
+    } else {
+      setFilteredPedidos(pedidos);
+    }
+  }, [domiciliarioIdFilter, pedidos]);
+
+  useEffect(() => {
+    // Inicializar las columnas como colapsadas si no tienen pedidos
+    const initialStates = listaEstados.map(estado => {
+      const pedidosEnEstado = filteredPedidos.filter(
+        pedido => pedido.estado === estado.name
+      );
+      return pedidosEnEstado.length === 0; // Colapsar si no hay pedidos
+    });
+    setCollapsedStates(initialStates);
+  }, [filteredPedidos]);
 
   const toggleCollapse = index => {
     setCollapsedStates(prev =>
@@ -19,7 +44,7 @@ export const ColsPedidos = ({ pedidos }) => {
 
   const estadosPedidos = listaEstados.map(estado => ({
     name: estado.name,
-    pedidos: pedidos.filter(pedido => pedido.estado === estado.name),
+    pedidos: filteredPedidos.filter(pedido => pedido.estado === estado.name),
     icon: estado.icon || <BsInbox />,
   }));
 
