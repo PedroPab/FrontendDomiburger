@@ -98,10 +98,17 @@ const FormContainer = () => {
     }
     if (!inputDataDireccion.address_complete) {
       toast.error('Por favor complete el campo de dirección');
-      document.getElementById('formDireccion').focus();
+      document.getElementById('direccion').focus();
       setLoading(false);
       return;
     }
+    if (!coordinates.lan || !coordinates.lng) {
+      toast.error('Por favor seleccione la dirección en el mapa');
+      document.getElementById('direccion').focus();
+      setLoading(false);
+      return;
+    }
+
     if (!listaProductosOrder.length) {
       toast.error('Por favor agregue productos a la orden');
       document.getElementById('formProductos').focus();
