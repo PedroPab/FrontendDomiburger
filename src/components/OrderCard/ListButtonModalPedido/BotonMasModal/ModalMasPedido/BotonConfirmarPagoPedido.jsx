@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { MiContexto } from '../../../../../../Context';
-import { UtilsApi } from '../../../../../../Utils/utilsApi';
+import { MiContexto } from '../../../../../Context';
+import { UtilsApi } from '../../../../../Utils/utilsApi';
 
 // eslint-disable-next-line no-unused-vars
 const BotonConfirmarPagoPedido = ({ idOrder, handleClose }) => {
@@ -27,9 +27,9 @@ const BotonConfirmarPagoPedido = ({ idOrder, handleClose }) => {
   };
 
   return (
-    <div>
+    <div className="boton-confirmar-pago-pedido">
       {confirmar ? (
-        <div>
+        <div className="confirmar-cancelar-buttons">
           <Button variant="outline-success" onClick={handleConfirmar}>Confirmar</Button>
           <Button variant="outline-danger" onClick={handleCancelar}>Cancelar</Button>
         </div>

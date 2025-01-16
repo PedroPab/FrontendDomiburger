@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { UtilsApi } from '../../../../../../Utils/utilsApi';
-import { MiContexto } from '../../../../../../Context';
+import { UtilsApi } from '../../../../../Utils/utilsApi';
+import { MiContexto } from '../../../../../Context';
 
 const CambiarMetodoPago = ({ idOrder, handleClose }) => {
   const context = useContext(MiContexto)

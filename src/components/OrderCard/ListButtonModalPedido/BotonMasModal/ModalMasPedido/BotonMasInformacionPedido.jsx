@@ -1,5 +1,5 @@
 import { Button } from 'react-bootstrap';
-import { getUrlBackend } from '../../../../../../Utils/getUrlApiByOriginPath';
+import { getUrlBackend } from '../../../../../Utils/getUrlApiByOriginPath';
 
 const BotonMasInformacionPedido = ({ idOrder }) => {
   const apiUrl = getUrlBackend();

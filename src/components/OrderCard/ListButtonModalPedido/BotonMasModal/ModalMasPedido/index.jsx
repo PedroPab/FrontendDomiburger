@@ -19,17 +19,19 @@ const ModalMasPedido = ({ show, handleClose, data }) => {
           <EstadoPago pagado={data?.pagoConfirmado?.confirmado} />
           <MetodoDePago metodo={data.fee} />
         </Row>
+
+
         <Row className='m-3 '>
-          <BotonEliminarPedido idOrder handleClose={handleClose} />
+          <BotonEliminarPedido idOrder={idOrder} handleClose={handleClose} />
         </Row>
         <Row className='m-3 '>
-          <BotonMasInformacionPedido idOrder handleClose={handleClose} />
+          <BotonMasInformacionPedido idOrder={idOrder} handleClose={handleClose} />
         </Row>
         <Row className='m-3 '>
-          <CambiarMetodoPago idOrder handleClose={handleClose} />
+          <CambiarMetodoPago idOrder={idOrder} handleClose={handleClose} />
         </Row>
         <Row className='m-3 '>
-          <BotonConfirmarPagoPedido idOrder handleClose={handleClose} />
+          <BotonConfirmarPagoPedido idOrder={idOrder} handleClose={handleClose} />
         </Row>
 
       </Modal.Body>
