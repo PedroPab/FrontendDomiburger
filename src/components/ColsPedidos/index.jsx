@@ -42,17 +42,22 @@ export const ColsPedidos = ({ pedidos }) => {
     );
   };
 
-  const estadosPedidos = listaEstados.map(estado => ({
-    name: estado.name,
-    pedidos: filteredPedidos.filter(pedido => pedido.estado === estado.name),
-    icon: estado.icon || <BsInbox />,
-  }));
+  const estadosPedidos = listaEstados.map(estado => {
+    const icon = estado.icon
+      ? React.cloneElement(estado.icon, { style: { color: estado.color } })
+      : <BsInbox style={{ color: estado.color }} />;
+
+    return {
+      name: estado.name,
+      pedidos: filteredPedidos.filter(pedido => pedido.estado === estado.name),
+      icon: icon
+    };
+  });
 
   return (
     <>
       {estadosPedidos.map((estado, index) => {
         const isCollapsed = collapsedStates[index];
-        console.log(`[ ~ {estadosPedidos.map ~ isCollapsed]`, isCollapsed)
 
         const pedidosCount = estado.pedidos.length;
 
