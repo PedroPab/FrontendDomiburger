@@ -1,20 +1,7 @@
 import { ESTADOS, ROLES } from "./constList";
+import { FaHourglassStart, FaFire, FaUtensils, FaClock, FaTruck, FaCheckCircle, FaReceipt, FaMoneyCheckAlt } from "react-icons/fa"; // Ejemplo de íconos de react-icons
 
 export const listaEstados = [
-  // {
-  //   name: ESTADOS.PendienteConfimacion,
-  //   color: ` #FFB6C1`,
-  //   estadoNext: `A calientes`,
-  //   rolesView: [
-  //     ROLES.admin,
-  //     ROLES.recepcion,
-  //     ROLES.domiciliario,
-  //   ],
-  //   rolesActions: [
-  //     ROLES.admin,
-  //     ROLES.recepcion,
-  //   ]
-  // },
   {
     name: ESTADOS.Calientes,
     color: `#87CEEB`,
@@ -29,7 +16,8 @@ export const listaEstados = [
       ROLES.admin,
       ROLES.recepcion,
       ROLES.cocinero,
-    ]
+    ],
+    icon: <FaFire /> // Ícono de "caliente"
   },
   {
     name: ESTADOS.Preparando,
@@ -45,7 +33,8 @@ export const listaEstados = [
       ROLES.admin,
       ROLES.recepcion,
       ROLES.cocinero,
-    ]
+    ],
+    icon: <FaUtensils /> // Ícono de "preparación"
   },
   {
     name: ESTADOS.Espera,
@@ -60,7 +49,8 @@ export const listaEstados = [
       ROLES.admin,
       ROLES.recepcion,
       ROLES.domiciliario,
-    ]
+    ],
+    icon: <FaClock /> // Ícono de "espera"
   },
   {
     name: ESTADOS.Despachados,
@@ -75,7 +65,8 @@ export const listaEstados = [
       ROLES.admin,
       ROLES.recepcion,
       ROLES.domiciliario,
-    ]
+    ],
+    icon: <FaTruck /> // Ícono de "despacho"
   },
   {
     name: ESTADOS.Entregados,
@@ -89,7 +80,8 @@ export const listaEstados = [
     rolesActions: [
       ROLES.admin,
       ROLES.recepcion,
-    ]
+    ],
+    icon: <FaCheckCircle /> // Ícono de "entregado"
   },
   {
     name: ESTADOS.Facturados,
@@ -103,7 +95,8 @@ export const listaEstados = [
     rolesActions: [
       ROLES.admin,
       ROLES.recepcion,
-    ]
+    ],
+    icon: <FaReceipt /> // Ícono de "factura"
   },
   {
     name: ESTADOS.PendieteTransferencia,
@@ -113,8 +106,7 @@ export const listaEstados = [
       ROLES.admin,
       ROLES.recepcion,
     ],
-    rolesActions: [
-
-    ]
+    rolesActions: [],
+    icon: <FaMoneyCheckAlt /> // Ícono de "transferencia pendiente"
   },
-]
+];
