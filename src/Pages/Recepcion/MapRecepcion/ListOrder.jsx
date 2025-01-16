@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { RecepcionContexto } from "../../Context/RecepcionContex";
-import ListMarker from "../../components/ListMarker";
+import { RecepcionContexto } from "../../../Context/RecepcionContex";
+import ListMarker from "../../../components/ListMarker";
 
 const ListOrder = ({ items }) => {
   //miramos los cambios de domiciliarioIdFilter del contexto

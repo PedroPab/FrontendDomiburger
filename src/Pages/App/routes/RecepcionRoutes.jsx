@@ -2,7 +2,7 @@ import { Route } from "react-router-dom";
 import ProtectedRoute from "../../../components/ProtectedRoute";
 import Recepcion from "../../Recepcion";
 import Contabilidad from "../../Contabilidad";
-import MapRecepcion from "../../MapRecepcion";
+import MapRecepcion from "../../Recepcion/MapRecepcion";
 import FormAdmin from "../../Recepcion/FormAdmin";
 import { ROLES } from "../../../Utils/constList";
 import Pedidos from "../../Pedidos";

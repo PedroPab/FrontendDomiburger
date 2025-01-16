@@ -27,11 +27,11 @@ export const ColsPedidos = ({ pedidos }) => {
 
   useEffect(() => {
     // Inicializar las columnas como colapsadas si no tienen pedidos
-    const initialStates = listaEstados.map((estado, index) => {
+    const initialStates = listaEstados.map((estado) => {
       const pedidosEnEstado = filteredPedidos.filter(
         pedido => pedido.estado === estado.name
       );
-      return collapsedStates[index] || pedidosEnEstado.length === 0; // Mantener colapsado si ya estaba colapsado o no hay pedidos
+      return pedidosEnEstado.length === 0; // Mantener colapsado si ya estaba colapsado o no hay pedidos
     });
     setCollapsedStates(initialStates);
   }, [filteredPedidos]);
@@ -52,6 +52,8 @@ export const ColsPedidos = ({ pedidos }) => {
     <>
       {estadosPedidos.map((estado, index) => {
         const isCollapsed = collapsedStates[index];
+        console.log(`[ ~ {estadosPedidos.map ~ isCollapsed]`, isCollapsed)
+
         const pedidosCount = estado.pedidos.length;
 
         // Determinación de colores
