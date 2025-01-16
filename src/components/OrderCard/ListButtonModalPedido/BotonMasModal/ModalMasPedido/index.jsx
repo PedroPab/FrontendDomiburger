@@ -7,6 +7,7 @@ import CambiarMetodoPago from './CambiarMetodoPago';
 import BotonConfirmarPagoPedido from './BotonConfirmarPagoPedido';
 
 const ModalMasPedido = ({ show, handleClose, data }) => {
+  const idOrder = data.id
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -15,20 +16,20 @@ const ModalMasPedido = ({ show, handleClose, data }) => {
       <Modal.Body>
 
         <Row className='m-3 '>
-          <EstadoPago pagado={data.pagoConfirmado.confirmado} />
+          <EstadoPago pagado={data?.pagoConfirmado?.confirmado} />
           <MetodoDePago metodo={data.fee} />
         </Row>
         <Row className='m-3 '>
-          <BotonEliminarPedido data={data} handleClose={handleClose} />
+          <BotonEliminarPedido idOrder handleClose={handleClose} />
         </Row>
         <Row className='m-3 '>
-          <BotonMasInformacionPedido data={data} handleClose={handleClose} />
+          <BotonMasInformacionPedido idOrder handleClose={handleClose} />
         </Row>
         <Row className='m-3 '>
-          <CambiarMetodoPago data={data} handleClose={handleClose} />
+          <CambiarMetodoPago idOrder handleClose={handleClose} />
         </Row>
         <Row className='m-3 '>
-          <BotonConfirmarPagoPedido data={data} handleClose={handleClose} />
+          <BotonConfirmarPagoPedido idOrder handleClose={handleClose} />
         </Row>
 
       </Modal.Body>

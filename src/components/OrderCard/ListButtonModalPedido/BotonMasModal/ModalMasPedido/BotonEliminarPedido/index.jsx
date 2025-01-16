@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { UtilsApi } from '../../../../../../Utils/utilsApi';
 import { MiContexto } from '../../../../../../Context';
 
-const BotonEliminarPedido = ({ data, handleClose }) => {
+const BotonEliminarPedido = ({ idOrder, handleClose }) => {
   const [confirmar, setConfirmar] = useState(false);
   const context = useContext(MiContexto)
 
@@ -11,7 +11,7 @@ const BotonEliminarPedido = ({ data, handleClose }) => {
     // Lógica para confirmar el pedido
     const token = context.tokenLogin.token
 
-    const url = `estados/eliminados?idPedido=${data.id}`
+    const url = `estados/eliminados?idPedido=${idOrder}`
     UtilsApi({ peticion: url, token, vervo: 'DELETE' })
       .then((response) => {
         console.log('Pedido eliminado', response)

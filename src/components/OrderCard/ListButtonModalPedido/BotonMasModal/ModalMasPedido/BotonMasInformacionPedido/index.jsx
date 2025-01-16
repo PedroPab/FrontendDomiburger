@@ -1,10 +1,10 @@
 import { Button } from 'react-bootstrap';
 import { getUrlBackend } from '../../../../../../Utils/getUrlApiByOriginPath';
 
-const BotonMasInformacionPedido = ({ data }) => {
+const BotonMasInformacionPedido = ({ idOrder }) => {
   const apiUrl = getUrlBackend();
 
-  const urlInfoPedido = `${apiUrl}/api/pedidos/id/?id=${data.id}`
+  const urlInfoPedido = `${apiUrl}/api/pedidos/id/?id=${idOrder}`
 
   return (
     <div>
