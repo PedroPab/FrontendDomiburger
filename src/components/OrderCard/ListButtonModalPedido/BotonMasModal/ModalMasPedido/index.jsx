@@ -1,5 +1,5 @@
-import { Modal, Button, Row } from 'react-bootstrap';
-import { EstadoPago } from './EstadoPago';
+import { Modal, Button, Row, Col } from 'react-bootstrap';
+import EstadoPago from './EstadoPago';
 import MetodoDePago from './MetodoDePago';
 import BotonEliminarPedido from './BotonEliminarPedido';
 import BotonMasInformacionPedido from './BotonMasInformacionPedido';
@@ -10,27 +10,37 @@ const ModalMasPedido = ({ show, handleClose, data }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Mas... {data.id}</Modal.Title>
+        <Modal.Title>Más... {data.id}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-
-        <Row className='m-3 '>
-          <EstadoPago pagado={data.pagoConfirmado.confirmado} />
-          <MetodoDePago metodo={data.fee} />
+        <Row className='m-3'>
+          <Col>
+            <EstadoPago pagado={data.pagoConfirmado.confirmado} />
+          </Col>
+          <Col>
+            <MetodoDePago metodo={data.fee} />
+          </Col>
         </Row>
-        <Row className='m-3 '>
-          <BotonEliminarPedido data={data} handleClose={handleClose} />
+        <Row className='m-3'>
+          <Col>
+            <BotonEliminarPedido data={data} handleClose={handleClose} />
+          </Col>
         </Row>
-        <Row className='m-3 '>
-          <BotonMasInformacionPedido data={data} handleClose={handleClose} />
+        <Row className='m-3'>
+          <Col>
+            <BotonMasInformacionPedido data={data} handleClose={handleClose} />
+          </Col>
         </Row>
-        <Row className='m-3 '>
-          <CambiarMetodoPago data={data} handleClose={handleClose} />
+        <Row className='m-3'>
+          <Col>
+            <CambiarMetodoPago data={data} handleClose={handleClose} />
+          </Col>
         </Row>
-        <Row className='m-3 '>
-          <BotonConfirmarPagoPedido data={data} handleClose={handleClose} />
+        <Row className='m-3'>
+          <Col>
+            <BotonConfirmarPagoPedido data={data} handleClose={handleClose} />
+          </Col>
         </Row>
-
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
@@ -41,7 +51,4 @@ const ModalMasPedido = ({ show, handleClose, data }) => {
   );
 };
 
-
-
-
-export { ModalMasPedido };
+export default ModalMasPedido;
