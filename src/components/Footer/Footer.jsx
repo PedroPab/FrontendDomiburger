@@ -86,7 +86,7 @@ const Footer = () => {
                 <FaTwitter />
               </a>
               <a
-                href="https://instagram.com/domiburger_"
+                href="https://instagram.com/domiburguer_"
                 className="text-light text-decoration-none fs-4"
                 target="_blank"
                 rel="noopener noreferrer"
