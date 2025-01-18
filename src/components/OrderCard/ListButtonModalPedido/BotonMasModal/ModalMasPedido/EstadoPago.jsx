@@ -1,13 +1,14 @@
+import { Col } from 'react-bootstrap';
 
 const EstadoPago = ({ pagado }) => {
   return (
-    <div>
+    <Col>
       {pagado ? (
-        <p>El pedido ha sido pagado ✅</p>
+        <p className="text-success">El pedido ha sido pagado ✅</p>
       ) : (
-        <p>El pedido aún no ha sido pagado ❌</p>
+        <p className="text-danger">El pedido aún no ha sido pagado ❌</p>
       )}
-    </div>
+    </Col>
   );
 };
 

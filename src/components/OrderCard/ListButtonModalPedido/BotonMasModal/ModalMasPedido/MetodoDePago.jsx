@@ -1,10 +1,10 @@
-import React from 'react';
+import { Col } from 'react-bootstrap';
 
 const MetodoDePago = ({ metodo }) => {
   return (
-    <div>
-      <span>Método de Pago: {metodo}</span>
-    </div>
+    <Col>
+      <span className="font-weight-bold">Método de Pago:</span> {metodo}
+    </Col>
   );
 };
 
