@@ -102,7 +102,8 @@ const FormContainer = () => {
       setLoading(false);
       return;
     }
-    if (!coordinates.lan || !coordinates.lng) {
+    if (!coordinates.lat || !coordinates.lng) {
+      console.log(coordinates)
       toast.error('Por favor seleccione la dirección en el mapa');
       document.getElementById('direccion').focus();
       setLoading(false);
