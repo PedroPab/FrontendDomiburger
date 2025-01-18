@@ -22,9 +22,16 @@ const OrderCard = ({ dataPedido }) => {
   console.log(`[ ~ OrderCard ~ colorEstado]`, colorEstado)
   const urlAdress = encodeURIComponent(dataPedido?.address.address_complete);
 
+
+  const origin = dataPedido?.origin
+  let colorCard = false
+  if (origin?.name == 'formClient') {
+    colorCard = `alert alert-warning`
+  }
+
   return (
     <Card
-      className="mb-3 shadow-sm mt-3"
+      className={`mb-3 shadow-sm mt-3 ${colorCard}`}
       style={{
         width: "100%",
         border: "1px solid #e0e0e0",
