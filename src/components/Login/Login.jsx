@@ -23,6 +23,7 @@ const Login1 = () => {
     setError('');
     try {
       const ho = await signInWithEmailAndPassword(FirebaseAuth, email, password);
+      console.log(`[ ~ handleLogin ~ ho]`, ho)
       setSuccess('¡Inicio de sesión exitoso!');
       setTimeout(() => {
         navigate(from, { replace: true });
