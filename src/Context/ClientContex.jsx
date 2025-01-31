@@ -1,16 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
+import { getIdToken } from 'firebase/auth';
+import { FirebaseAuth } from '../firebase/config';
 
 export const ContexClient = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const ContextProviderClient = ({ children }) => {
-  console.log(`[ContextProviderClient]`);
 
   //token de usuario
-  const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUserClient', initialValue: {} })
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    const getToken = async () => {
+      const getToken = await getIdToken(FirebaseAuth.currentUser);
+      console.log('Token:', getToken);
+      setToken(getToken);
+    };
+    getToken();
+  }, []);
 
   // Estado para el modo oscuro
   const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: true })
@@ -36,7 +45,7 @@ export const ContextProviderClient = ({ children }) => {
     <ContexClient.Provider value={
       {
         // token , pued no tener un token hasta que ingrese en login 
-        tokenLogin, setTokenLogin,
+        token, setToken,
 
         modoOscuro, alternarModo,
 
