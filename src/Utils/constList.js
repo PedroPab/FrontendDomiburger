@@ -43,6 +43,7 @@ const FORMA_DE_PAGO = {
 const PRODUCTS = {
   Hamburguesa: 'Hamburguesa',
   Combo: 'Combo',
+  SalsaDeAjo: 'Salsa De Ajo',
 }
 
 export { COLLECTIONS, ESTADOS, ROLES, FORMA_DE_PAGO, PRODUCTS }

@@ -91,9 +91,20 @@ class Combo extends Producto {
     this.price = 22900
   }
 }
+
+class SalsaDeAjo extends Producto {
+  constructor(props) {
+    super(props)
+    this.name = PRODUCTS.SalsaDeAjo
+    this.id = `55`
+    this.type = `product`
+    this.price = 25000
+  }
+}
 export {
   Producto,
   Hamburguesa,
   Combo,
+  SalsaDeAjo,
   Adiciones
 }

@@ -2,6 +2,9 @@ import CardProduct from "../../CardProduct";
 import imgHamburguesa from './../../../assets/img/hamburguesa.png';
 import imgCombo from './../../../assets/img/combo.png';
 import { PRODUCTS } from '../../../Utils/constList';
+//style
+import './ProductsSection.css';
+
 
 function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }) {
   return (
@@ -9,6 +12,16 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
       <section className="mb-3">
         <h3 className="text-center mb-4">Nuestros Productos</h3>
         <div className="d-flex flex-column flex-md-row justify-content-around">
+          <div className="mb-4 mb-md-0 special-product">
+            <CardProduct
+              title="Nueva salsa de Ajo"
+              description="Nuestra propia salsa de Ajo artesanal"
+              img={imgCombo}
+              count={listaProductosOrder.filter(e => e.name === PRODUCTS.SalsaDeAjo).length}
+              incrementCount={() => incrementCount(PRODUCTS.SalsaDeAjo)}
+              decrementCount={() => decrementCount(PRODUCTS.SalsaDeAjo)}
+            />
+          </div>
           <div className="mb-4 mb-md-0">
             <CardProduct
               title="Hamburguesa Artesanal"
@@ -29,6 +42,7 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
               decrementCount={() => decrementCount(PRODUCTS.Combo)}
             />
           </div>
+
         </div>
       </section>
     </>

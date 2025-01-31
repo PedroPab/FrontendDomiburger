@@ -1,4 +1,4 @@
-import { Combo, Hamburguesa } from "../../../Utils/classProduct";
+import { Combo, Hamburguesa, SalsaDeAjo } from "../../../Utils/classProduct";
 import { PRODUCTS } from "../../../Utils/constList";
 import ResumenProductosForm from "../../ResumenProductosForm";
 import ProductsSection from "../ProductsSection";
@@ -19,6 +19,7 @@ const DashboardProducts = ({
     const productClass = {}
     productClass[`${PRODUCTS.Hamburguesa}`] = Hamburguesa
     productClass[`${PRODUCTS.Combo}`] = Combo
+    productClass[`${PRODUCTS.SalsaDeAjo}`] = SalsaDeAjo
 
     const listaProducts = [...listaProductosOrder]
     const producto = new productClass[product]({})
