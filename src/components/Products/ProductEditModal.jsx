@@ -7,7 +7,7 @@ const formatDate = (timestamp) => {
   return new Date(timestamp._seconds * 1000).toLocaleDateString();
 };
 
-const ProductDetailsModal = ({ show, handleClose, product, handleEdit }) => {
+const ProductEditModal = ({ show, handleClose, product, handleEdit }) => {
   if (!product) return null;
 
   return (
@@ -113,4 +113,4 @@ const ProductDetailsModal = ({ show, handleClose, product, handleEdit }) => {
   );
 };
 
-export default ProductDetailsModal;
+export default ProductEditModal;

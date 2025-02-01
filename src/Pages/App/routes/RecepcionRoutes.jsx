@@ -8,6 +8,7 @@ import { ROLES } from "../../../Utils/constList";
 import Pedidos from "../../Pedidos";
 import PedidosDetails from "../../Pedidos/PedidosDetails";
 import ProductosAdmin from "../../ProductosAdmin/ListProducts";
+import CreateProduct from "../../ProductosAdmin/CreateProduct";
 
 
 const RecepcionRoutes = () => {
@@ -24,6 +25,7 @@ const RecepcionRoutes = () => {
       <Route path="/pedidos" element={<Pedidos />} />
       <Route path="/pedidos/:id" element={<PedidosDetails />} />
       <Route path="/productosAdmin" element={<ProductosAdmin />} />
+      <Route path="/createProduct" element={<CreateProduct />} />
     </Route>
   );
 };

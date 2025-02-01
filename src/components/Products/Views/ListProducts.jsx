@@ -18,8 +18,8 @@ const ListProducts = ({ products, handleCardClick, handleEdit }) => {
             No hay pedidos para mostrar
           </Alert>
         ) : (
-          <>{products.map((order) => (
-            <Col xs={12} sm={4} lg={3} key={order.id}>
+          <>{products.map((order, index) => (
+            <Col xs={12} sm={4} lg={3} key={index}>
               <ProductCard dataPedido={order.data} handleEdit={handleEdit} />
             </Col>
           ))}

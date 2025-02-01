@@ -2,12 +2,18 @@ import { useState } from 'react';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { FaLock } from 'react-icons/fa'; // Icono de candado
 import ProductDetailsModal from './ProductDetailsModal';
+import ProductEditModal from './ProductEditModal';
 
-const ProductCard = ({ dataPedido, handleEdit }) => {
+const ProductCard = ({ dataPedido }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowDetails = () => setShowModal(true);
   const handleCloseDetails = () => setShowModal(false);
+
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const handleShowEdit = () => setShowEditModal(true);
+  const handleCloseEdit = () => setShowEditModal(false);
 
   if (!dataPedido) return null;
 
@@ -34,7 +40,8 @@ const ProductCard = ({ dataPedido, handleEdit }) => {
 
         <Card.Img
           variant="top"
-          src={dataPedido.imagen}
+          // src={dataPedido.imagen}
+          src="https://picsum.photos/400/300"
           alt={dataPedido.name}
           style={{ height: '200px', objectFit: 'cover', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}
         />
@@ -61,7 +68,7 @@ const ProductCard = ({ dataPedido, handleEdit }) => {
           <Button
             variant="warning"
             className="rounded-pill px-4 py-2 fw-bold shadow"
-            onClick={() => handleEdit(dataPedido)}
+            onClick={() => handleShowEdit(dataPedido)}
           >
             Editar
           </Button>
@@ -69,7 +76,15 @@ const ProductCard = ({ dataPedido, handleEdit }) => {
       </Card>
 
       {/* Modal de detalles */}
-      <ProductDetailsModal show={showModal} handleClose={handleCloseDetails} product={dataPedido} handleEdit={handleEdit} />
+      <ProductDetailsModal show={showModal} handleClose={handleCloseDetails} product={dataPedido} handleEdit={handleShowEdit} />
+      {/* Modal para editar un producto */}
+      <ProductEditModal
+        show={showEditModal}
+        handleClose={handleCloseEdit}
+        product={dataPedido}
+        handleEdit={handleShowEdit}
+      />
+
     </>
   );
 };
