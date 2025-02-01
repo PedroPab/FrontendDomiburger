@@ -45,8 +45,8 @@ const VisualizarProductos = ({ token }) => {
   }, [page]);
 
   const handleCardCreateOrderClick = () => {
-    console.log('handleCardCreateOrderClick');
-    navigate('/formAdmin');
+    console.log('handleCardCreateProductClick');
+    navigate('/CreateProduct');
   }
 
   return (
