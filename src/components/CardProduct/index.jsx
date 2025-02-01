@@ -1,15 +1,22 @@
 import { Card, Button, Image, Badge, Container } from 'react-bootstrap';
 import { FaMinus, FaPlus } from 'react-icons/fa';
+import InfoButton from '../InfoButton';
 
-const CardProduct = ({ img, count, incrementCount, decrementCount, title, description, isNew = false }) => {
+const CardProduct = ({ img, count, incrementCount, decrementCount, title, description, isNew = false, toggleInfo }) => {
   return (
-    <Card className="border-0 shadow-lg p-4 rounded-4 h-100 d-flex flex-column justify-content-between">
-      {/* Badge "NUEVO" más elegante */}
+    <Card className="border-0 shadow-lg p-4 rounded-4 h-100 d-flex flex-column justify-content-between position-relative"
+    >
+      {/* Badge "NUEVO" en la esquina superior izquierda */}
       {isNew && (
         <Badge bg="success" className="position-absolute top-0 start-0 m-3 rounded-pill px-3 py-1 fs-6 shadow">
           NUEVO
         </Badge>
       )}
+
+      {/* Botón de información en la esquina superior derecha (con mejor alineación) */}
+      <div className="position-absolute top-0 end-0 m-3">
+        <InfoButton textInfo="Más información" color="primary" onClick={toggleInfo} />
+      </div>
 
       <Card.Body className="d-flex flex-column align-items-center text-center">
         {/* Imagen del producto con efecto hover */}
@@ -33,7 +40,7 @@ const CardProduct = ({ img, count, incrementCount, decrementCount, title, descri
         {/* Separador visual */}
         <div className="my-3 w-75 border-bottom border-2 border-primary opacity-50"></div>
 
-        {/* Título y descripción estilizados */}
+        {/* Título y descripción siempre visibles */}
         <h5 className="fw-bold">{title}</h5>
         <p className="text-muted small">{description}</p>
       </Card.Body>
@@ -57,7 +64,7 @@ const CardProduct = ({ img, count, incrementCount, decrementCount, title, descri
           <FaMinus />
         </Button>
 
-        <span className="fw-bold fs-4 text-dark">{count}</span>
+        <span className="fw-bold fs-4">{count}</span>
 
         <Button
           variant="success"

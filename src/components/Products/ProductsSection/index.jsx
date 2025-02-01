@@ -54,6 +54,7 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
               incrementCount={() => incrementCount(productKey)}
               decrementCount={() => decrementCount(productKey)}
               isNew={isNew}
+              toggleInfo={() => console.log('toggleInfo')}
             />
           </Col>
         ))}

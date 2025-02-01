@@ -45,9 +45,9 @@ const FormClient = () => {
 
         <NavbarCliente />
 
-        {cerrado && <ClosedNotice proximaApertura={proximaApertura} />}
+        {!cerrado && <ClosedNotice proximaApertura={proximaApertura} />}
 
-        <div style={{ opacity: cerrado ? 0.6 : 1, pointerEvents: cerrado ? 'none' : 'auto' }}>
+        <div style={{ opacity: !cerrado ? 0.6 : 1, pointerEvents: !cerrado ? 'none' : 'auto' }}>
           <FormContainer />
         </div>
       </LayoutCliente>
