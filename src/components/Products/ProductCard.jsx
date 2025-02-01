@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, Button, Badge } from 'react-bootstrap';
-import ProductDetailsModal from './ProductDetailsModal.jsx';
+import { FaLock } from 'react-icons/fa'; // Icono de candado
+import ProductDetailsModal from './ProductDetailsModal';
 
 const ProductCard = ({ dataPedido, handleEdit }) => {
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +14,7 @@ const ProductCard = ({ dataPedido, handleEdit }) => {
   return (
     <>
       <Card
-        className="shadow-lg border-0 rounded-4 h-100 d-flex flex-column justify-content-between"
+        className="shadow-lg border-0 rounded-4 h-100 d-flex flex-column justify-content-between position-relative"
         style={{ backgroundColor: dataPedido.colorPrimary, color: '#fff' }}
       >
         {/* Badge con el tipo de producto */}
@@ -23,6 +24,13 @@ const ProductCard = ({ dataPedido, handleEdit }) => {
         >
           {dataPedido.type}
         </Badge>
+
+        {/* Icono de candado si el producto es "secreto" */}
+        {dataPedido.secret && (
+          <Badge className="position-absolute top-0 end-0 m-2 p-2 bg-white rounded-circle shadow">
+            <FaLock size={14} className="text-danger" />
+          </Badge>
+        )}
 
         <Card.Img
           variant="top"

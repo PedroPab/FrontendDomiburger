@@ -1,5 +1,11 @@
 import React from 'react';
-import { Modal, Button, Carousel, ListGroup } from 'react-bootstrap';
+import { Modal, Button, Carousel, Card, Row, Col, ListGroup, Badge } from 'react-bootstrap';
+import { FaLock } from 'react-icons/fa'; // Icono de candado
+
+const formatDate = (timestamp) => {
+  if (!timestamp?._seconds) return 'No disponible';
+  return new Date(timestamp._seconds * 1000).toLocaleDateString();
+};
 
 const ProductDetailsModal = ({ show, handleClose, product, handleEdit }) => {
   if (!product) return null;
@@ -7,27 +13,92 @@ const ProductDetailsModal = ({ show, handleClose, product, handleEdit }) => {
   return (
     <Modal show={show} onHide={handleClose} centered size="lg">
       <Modal.Header closeButton>
-        <Modal.Title className="fw-bold">{product.name}</Modal.Title>
+        <Modal.Title className="fw-bold">{product.name || 'Producto sin nombre'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* Galería de imágenes */}
-        <Carousel>
-          <Carousel.Item>
-            <img src={product.imagen} className="d-block w-100" alt={product.name} style={{ maxHeight: '400px', objectFit: 'cover' }} />
-          </Carousel.Item>
-        </Carousel>
+        <Row>
+          {/* Columna de imágenes */}
+          <Col md={6} className="mb-3 position-relative">
+            <Carousel>
+              <Carousel.Item>
+                <img
+                  src={product.imagen || 'https://via.placeholder.com/400'}
+                  className="d-block w-100 rounded"
+                  alt={product.name}
+                  style={{ maxHeight: '400px', objectFit: 'cover', filter: product.secret ? 'brightness(50%)' : 'none' }}
+                />
+              </Carousel.Item>
+            </Carousel>
 
-        {/* Información del producto */}
-        <div className="mt-4">
-          <h5 className="fw-bold text-primary">Descripción</h5>
-          <p className="text-muted">{product.description}</p>
+            {/* Si es un producto secreto, colocar candado en la imagen */}
+            {product.secret && (
+              <div className="position-absolute top-50 start-50 translate-middle text-white">
+                <FaLock size={50} className="opacity-75" />
+              </div>
+            )}
+          </Col>
 
-          <h5 className="fw-bold text-primary">Tipo de Producto</h5>
-          <p>{product.type}</p>
+          {/* Columna de detalles */}
+          <Col md={6}>
+            <Card className="shadow border-0 p-3" style={{ backgroundColor: product.colorPrimary || '#ffffff' }}>
+              <Card.Body>
+                {/* Badge si el producto es secreto */}
+                {product.secret && (
+                  <Badge bg="danger" className="mb-2 w-100 text-center py-2">
+                    <FaLock className="me-1" /> Producto Secreto
+                  </Badge>
+                )}
 
-          <h5 className="fw-bold text-primary">Precio</h5>
-          <p className="fs-4 fw-bold text-success">${product.price.toLocaleString()}</p>
-        </div>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <strong className="text-primary">Tipo:</strong> {product.type || 'No especificado'}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong className="text-primary">Precio:</strong>
+                    <span className="fs-5 fw-bold text-success ms-2">${product.price?.toLocaleString() || 'No disponible'}</span>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong className="text-primary">Descripción:</strong>
+                    <p className="text-muted mb-0">{product.description || 'Sin descripción'}</p>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong className="text-primary">Fecha de Creación:</strong> {formatDate(product.dataCreate)}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong className="text-primary">Última Actualización:</strong> {formatDate(product.dataUpdate)}
+                  </ListGroup.Item>
+                </ListGroup>
+
+                {/* Muestras de colores */}
+                <div className="mt-3">
+                  <strong className="text-primary">Colores del Producto:</strong>
+                  <div className="d-flex align-items-center gap-3 mt-2">
+                    <div
+                      className="border rounded-circle"
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        backgroundColor: product.colorPrimary || '#ddd',
+                        border: '1px solid #000'
+                      }}
+                      title={`Color Primario: ${product.colorPrimary}`}
+                    ></div>
+                    <div
+                      className="border rounded-circle"
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        backgroundColor: product.colorSecondary || '#ddd',
+                        border: '1px solid #000'
+                      }}
+                      title={`Color Secundario: ${product.colorSecondary}`}
+                    ></div>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
