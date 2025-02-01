@@ -11,8 +11,8 @@ const CardProduct = ({ img, count, incrementCount, decrementCount, title, descri
       {isNew && <RainbowBadge />}
 
       {/* Botón de información en la esquina superior derecha (con mejor alineación) */}
-      <div className="position-absolute top-0 end-0 m-3">
-        <InfoButton textInfo={moreInfo} color="primary" onClick={toggleInfo} />
+      <div className="position-absolute top-0 end-0 m-3" onClick={toggleInfo}>
+        <InfoButton textInfo={moreInfo} color="primary" />
       </div>
 
       <Card.Body className="d-flex flex-column align-items-center text-center">
