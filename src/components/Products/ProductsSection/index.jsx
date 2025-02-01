@@ -7,7 +7,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 // Imágenes
 import imgHamburguesa from '../../../assets/img/hamburguesa.png';
 import imgCombo from '../../../assets/img/combo.png';
-import salsaDeAjo from '../../../assets/img/salsaDeAjo.png';
+import salsaDeAjo from '../../../assets/img/salsaDeAjo2.jpeg';
 
 // Constantes
 import { PRODUCTS } from '../../../Utils/constList';
