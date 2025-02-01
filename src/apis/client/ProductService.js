@@ -30,6 +30,10 @@ const productService = {
       console.error('Error fetching :', error);
       throw error;
     }
+  },
+  create: async (data) => {
+    const rta = await apiClient.post(`/productos`, data)
+    return rta.data
   }
 };
 
