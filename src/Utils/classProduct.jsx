@@ -11,6 +11,7 @@ class Producto {
     colorPrimary,
     colorSecondary,
     code,
+    applyModifications = true,
   }) {
     this.name = name
     this.id = id
@@ -21,7 +22,7 @@ class Producto {
     this.colorPrimary = colorPrimary
     this.colorSecondary = colorSecondary
     code ? this.code = code : null
-
+    this.applyModifications = applyModifications
   }
   anadirModifique(modifique) {
     this.modifique.push(modifique)
@@ -94,7 +95,7 @@ class Combo extends Producto {
 
 class SalsaDeAjo extends Producto {
   constructor(props) {
-    super(props)
+    super({ ...props, applyModifications: false })
     this.name = PRODUCTS.SalsaDeAjo
     this.id = `22`
     this.type = `product`
