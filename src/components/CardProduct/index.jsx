@@ -1,21 +1,18 @@
-import { Card, Button, Image, Badge, Container } from 'react-bootstrap';
+import { Card, Button, Image, Container } from 'react-bootstrap';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import InfoButton from '../InfoButton';
+import RainbowBadge from './RainbowBadge';
 
-const CardProduct = ({ img, count, incrementCount, decrementCount, title, description, isNew = false, toggleInfo }) => {
+const CardProduct = ({ img, count, incrementCount, decrementCount, title, description, isNew = false, toggleInfo, moreInfo }) => {
   return (
     <Card className="border-0 shadow-lg p-4 rounded-4 h-100 d-flex flex-column justify-content-between position-relative"
     >
       {/* Badge "NUEVO" en la esquina superior izquierda */}
-      {isNew && (
-        <Badge bg="success" className="position-absolute top-0 start-0 m-3 rounded-pill px-3 py-1 fs-6 shadow">
-          NUEVO
-        </Badge>
-      )}
+      {isNew && <RainbowBadge />}
 
       {/* Botón de información en la esquina superior derecha (con mejor alineación) */}
       <div className="position-absolute top-0 end-0 m-3">
-        <InfoButton textInfo="Más información" color="primary" onClick={toggleInfo} />
+        <InfoButton textInfo={moreInfo} color="primary" onClick={toggleInfo} />
       </div>
 
       <Card.Body className="d-flex flex-column align-items-center text-center">

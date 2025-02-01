@@ -25,12 +25,14 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
       img: salsaDeAjo,
       productKey: PRODUCTS.SalsaDeAjo,
       isNew: true,
+      moreInfo: 'La salsa de casa. La misma que usamos en la hamburguesa'
     },
     {
       title: 'Hamburguesa Artesanal',
       description: 'La clásica hamburguesa artesanal.',
       img: imgHamburguesa,
       productKey: PRODUCTS.Hamburguesa,
+
     },
     {
       title: 'Combo Especial',
@@ -44,7 +46,7 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
     <Container className="my-5">
       <h3 className="text-center mb-4 fw-bold text-primary">Nuestros Productos</h3>
       <Row className="g-3 text-center">
-        {products.map(({ title, description, img, productKey, isNew }) => (
+        {products.map(({ title, description, img, productKey, isNew, moreInfo }) => (
           <Col key={productKey} xs={12} sm={6} md={4} lg={4} className="d-flex justify-content-center text-center">
             <CardProduct
               title={title}
@@ -55,6 +57,7 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
               decrementCount={() => decrementCount(productKey)}
               isNew={isNew}
               toggleInfo={() => console.log('toggleInfo')}
+              moreInfo={moreInfo}
             />
           </Col>
         ))}
