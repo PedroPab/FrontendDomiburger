@@ -97,7 +97,7 @@ class SalsaDeAjo extends Producto {
   constructor(props) {
     super({ ...props, applyModifications: false })
     this.name = PRODUCTS.SalsaDeAjo
-    this.id = `22`
+    this.id = `38`
     this.type = `product`
     this.price = 25000
   }
