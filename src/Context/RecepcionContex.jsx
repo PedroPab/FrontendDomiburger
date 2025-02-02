@@ -39,6 +39,9 @@ export const ContextProviderRecepcion = ({ children }) => {
   //el filtro para buscar los domiciliarios
   const [domiciliarioIdFilter, setDomiciliarioIdFilter] = useState(null)
 
+  const [openSidebarFilterDelivery, setOpenSidebarFilterDelivery] = useState(true)
+
+
   return (
     <RecepcionContexto.Provider value={
       {
@@ -52,6 +55,8 @@ export const ContextProviderRecepcion = ({ children }) => {
         estadoSeleccionado, setEstadoSeleccionado,
 
         domiciliarioIdFilter, setDomiciliarioIdFilter,
+
+        openSidebarFilterDelivery, setOpenSidebarFilterDelivery
       }
     }>
       {children}

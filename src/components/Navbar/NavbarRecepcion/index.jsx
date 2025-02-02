@@ -1,23 +1,30 @@
 /* eslint-disable react/prop-types */
-import { Container, Navbar, Nav, NavDropdown, Col, Row } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown, Col, Row, Button } from 'react-bootstrap';
 import { BsMoonStars, BsTools, BsFillPersonFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { useContext } from 'react';
 import { RecepcionContexto } from '../../../Context/RecepcionContex';
 import { FaMapMarkerAlt, FaRegChartBar, FaCashRegister } from 'react-icons/fa';
-import { MdOutlineDeliveryDining, MdOutlineAdminPanelSettings, MdOutlineSettings, MdOutlineReceipt } from "react-icons/md";
-import { FiMapPin, FiList } from "react-icons/fi";
+import { MdOutlineDeliveryDining, MdOutlineAdminPanelSettings, MdOutlineSettings, MdOutlineReceipt } from 'react-icons/md';
+import { FiMapPin, FiList } from 'react-icons/fi';
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
 
 const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto);
+  const { openSidebarFilterDelivery, setOpenSidebarFilterDelivery } = contextRecepcion;
 
   return (
-    <Navbar expand="lg" className="sticky-top" bg={modoOscuro ? 'dark' : 'light'}>
-      <Container fluid className="m-1">
-        <Row className="w-100 align-items-center justify-content-between">
+    <Navbar
+      expand="lg"
+      sticky="top"
+      bg={modoOscuro ? 'dark' : 'light'}
+      variant={modoOscuro ? 'dark' : 'light'}
+      className="shadow-sm"
+    >
+      <Container fluid className="px-3 py-2">
+        <Row className="w-100 align-items-center justify-content-between g-2">
           {/* 1. Logo */}
           <Col xs="auto">
             <Navbar.Brand as={Link} to="/">
@@ -30,76 +37,100 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
             </Navbar.Brand>
           </Col>
 
-          {/* 2. Indicador de Conexión */}
+          {/* 2. Botón para alternar el filtro de domiciliarios */}
+          <Col xs="auto">
+            <Button variant="outline-primary" onClick={() => setOpenSidebarFilterDelivery(prev => !prev)}>
+              <BsTools size={20} />
+            </Button>
+          </Col>
+
+          {/* 3. Indicador de Conexión */}
           <Col xs="auto">
             <ConnectionStatusIndicator />
           </Col>
 
-          {/* 3. Conteo de Pedidos (solo visible en pantallas medianas y grandes) */}
-          <Col xs="auto" className="">
+          {/* 4. Conteo de Pedidos (solo visible en pantallas medianas en adelante) */}
+          <Col xs="auto" className="d-none d-md-block">
             <OrderCountIndicator />
           </Col>
 
-          {/* 4. Navbar Toggle */}
-          <Col xs="auto" className="text-end d-lg-none">
+          {/* 5. Toggle del Navbar para móviles */}
+          <Col xs="auto" className="d-lg-none text-end">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
           </Col>
         </Row>
 
-        {/* 5. Navbar Collapse (Menú de Navegación) */}
+        {/* 6. Menú de Navegación */}
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            {/* Sección de Crear Pedido */}
-            <NavDropdown title={<><MdOutlineReceipt className="me-2" />Crear Pedido</>} id="nav-dropdown-crear-pedido">
-              <NavDropdown.Item as={Link} to="/formAdmin">
-                <MdOutlineReceipt className="me-2" /> Crear pedido
-              </NavDropdown.Item>
-              <NavDropdown.Item href="https://domiburguer.com/forAdmin" target="_blank" className='text-muted'>
-                <FiList className="me-2" /> Antiguo
-              </NavDropdown.Item>
-            </NavDropdown>
+          <Nav className="ms-auto align-items-center">
+            {/* Sección: Crear Pedido */}
+            <NavDropdown.Item as={Link} to="/formAdmin" className="mx-2">
+              <MdOutlineReceipt className="me-1" size={18} /> Crear pedido
+            </NavDropdown.Item>
 
-            {/* Sección de Seguimiento */}
-            <NavDropdown title={<><FiMapPin className="me-2" />Seguimiento</>} id="nav-dropdown-seguimiento">
+            {/* Sección: Seguimiento */}
+            <NavDropdown
+              title={
+                <span>
+                  <FiMapPin className="me-1" size={18} /> Seguimiento
+                </span>
+              }
+              id="nav-dropdown-seguimiento"
+              className="mx-2"
+            >
               <NavDropdown.Item as={Link} to="/recepcion">
-                <MdOutlineDeliveryDining className="me-2" /> Recepción
+                <MdOutlineDeliveryDining className="me-1" size={18} /> Recepción
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/mapRecepcion">
-                <FaMapMarkerAlt className="me-2" /> Mapa
+                <FaMapMarkerAlt className="me-1" size={18} /> Mapa
               </NavDropdown.Item>
             </NavDropdown>
 
-            {/* Sección de Administración */}
-            <NavDropdown title={<><MdOutlineAdminPanelSettings className="me-2" />Administración</>} id="nav-dropdown-administracion">
+            {/* Sección: Administración */}
+            <NavDropdown
+              title={
+                <span>
+                  <MdOutlineAdminPanelSettings className="me-1" size={18} /> Administración
+                </span>
+              }
+              id="nav-dropdown-administracion"
+              className="mx-2"
+            >
               <NavDropdown.Item as={Link} to="/contabilidad">
-                <FaCashRegister className="me-2" /> Contabilidad
+                <FaCashRegister className="me-1" size={18} /> Contabilidad
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/estadisticas">
-                <FaRegChartBar className="me-2" /> Estadísticas
+                <FaRegChartBar className="me-1" size={18} /> Estadísticas
               </NavDropdown.Item>
               <NavDropdown.Item onClick={() => contextRecepcion.openCloseModalAgregarDo()}>
-                <MdOutlineDeliveryDining className="me-2" /> Domiciliarios
+                <MdOutlineDeliveryDining className="me-1" size={18} /> Domiciliarios
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/codigos">
-                <FiList className="me-2" /> Códigos
+                <FiList className="me-1" size={18} /> Códigos
               </NavDropdown.Item>
-              {/* clientes */}
               <NavDropdown.Item as={Link} to="/clientes">
-                <BsFillPersonFill className="me-2" /> Clientes
+                <BsFillPersonFill className="me-1" size={18} /> Clientes
               </NavDropdown.Item>
-              {/* Pedidos */}
               <NavDropdown.Item as={Link} to="/pedidos">
-                <MdOutlineReceipt className="me-2" /> Pedidos
+                <MdOutlineReceipt className="me-1" size={18} /> Pedidos
               </NavDropdown.Item>
             </NavDropdown>
 
-            {/* Sección de Ajustes */}
-            <NavDropdown title={<><MdOutlineSettings className="me-2" />Ajustes</>} id="nav-dropdown-ajustes">
+            {/* Sección: Ajustes */}
+            <NavDropdown
+              title={
+                <span>
+                  <MdOutlineSettings className="me-1" size={18} /> Ajustes
+                </span>
+              }
+              id="nav-dropdown-ajustes"
+              className="mx-2"
+            >
               <NavDropdown.Item as={Link} to="/login">
-                <BsFillPersonFill className="me-2" /> Login
+                <BsFillPersonFill className="me-1" size={18} /> Login
               </NavDropdown.Item>
-              <NavDropdown.Item onClick={() => alternarModo()}>
-                <BsMoonStars className="me-2" /> Cambiar Tema
+              <NavDropdown.Item onClick={alternarModo}>
+                <BsMoonStars className="me-1" size={18} /> Cambiar Tema
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

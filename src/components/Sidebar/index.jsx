@@ -5,24 +5,31 @@ import { RecepcionContexto } from '../../Context/RecepcionContex';
 import InfoButton from '../InfoButton';
 
 const Sidebar = () => {
-  const contextRecepcion = useContext(RecepcionContexto)
+  // Accedemos al contexto, incluyendo la variable que controlará la visibilidad del sidebar.
+  const contextRecepcion = useContext(RecepcionContexto);
+  const { openSidebarFilterDelivery } = contextRecepcion;
 
+  // Estado local para manejar qué sección está abierta.
   const [openSection, setOpenSection] = useState('dashboard');
 
   const handleToggle = (section) => {
+    // Si la sección ya está abierta, la cerramos y removemos el filtro;
+    // de lo contrario, la abrimos y establecemos el domiciliario correspondiente.
     setOpenSection(openSection === section ? '' : section);
-    // establecer el domiciliarioIdFilter segun el id del domiciliario
-    //si es el mismo que el que esta selecion lo quitamos y ponemos ''
     if (openSection === section) {
-      contextRecepcion.setDomiciliarioIdFilter(null)
-      return
+      contextRecepcion.setDomiciliarioIdFilter(null);
+      return;
     }
-    contextRecepcion.setDomiciliarioIdFilter(section)
+    contextRecepcion.setDomiciliarioIdFilter(section);
   };
+
+  // Si openSidebarFilterDelivery es false, no renderizamos el Sidebar.
+  if (!openSidebarFilterDelivery) {
+    return null;
+  }
 
   return (
     <Col xs={3} md={2} className="vh-90 p-3 border-end">
-
       <div className="position-relative">
         <h3 className="text-center border-bottom pb-2 mb-3">
           Filtrar por domiciliario
@@ -32,19 +39,16 @@ const Sidebar = () => {
 
       <div className="overflow-auto" style={{ maxHeight: '70vh' }}>
         <ul className="list-unstyled">
-
-          {
-            contextRecepcion.listDomiciliarios.map(domiciliario => (
-              <SidebarElementDelivery
-                key={domiciliario.id}
-                handleToggle={handleToggle}
-                openSection={openSection}
-                title={domiciliario.name}
-                eventKey={domiciliario.id}
-                imageUrl={`https://i.pravatar.cc/150?img=${domiciliario.id}`}
-              />
-            ))
-          }
+          {contextRecepcion.listDomiciliarios.map((domiciliario) => (
+            <SidebarElementDelivery
+              key={domiciliario.id}
+              handleToggle={handleToggle}
+              openSection={openSection}
+              title={domiciliario.name}
+              eventKey={domiciliario.id}
+              imageUrl={`https://i.pravatar.cc/150?img=${domiciliario.id}`}
+            />
+          ))}
 
           <SidebarElementDelivery
             handleToggle={handleToggle}
@@ -54,7 +58,7 @@ const Sidebar = () => {
             imageUrl={`https://i.pravatar.cc/150?img=${10}`}
           />
 
-          {/* agrega un botón para poner mas domiciliarios */}
+          {/* Botón para agregar nuevos domiciliarios */}
           <li className="mt-3">
             <div className="position-relative">
               <button
@@ -69,7 +73,6 @@ const Sidebar = () => {
               />
             </div>
           </li>
-
         </ul>
       </div>
     </Col>
