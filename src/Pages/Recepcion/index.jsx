@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { MiContexto } from '../../Context';
+import { RecepcionContexto } from '../../Context/RecepcionContex';
 import { Container, ToastContainer, Row, Col } from 'react-bootstrap';
 import RowListCol from "../../components/RowListCol";
 import { ColsPedidos } from '../../components/ColsPedidos';
@@ -7,28 +8,41 @@ import SelectListDomiciliarios from '../../components/SelectListDomiciliarios';
 import LayoutRecepcion from '../../Layout/Recepcion';
 import Sidebar from '../../components/Sidebar';
 
-const Recepcion = () => {
+const RecepcionContent = () => {
+  // Contexto global (por ejemplo, para los pedidos)
   const context = useContext(MiContexto);
+  // Contexto específico de recepción (para controlar el sidebar, etc.)
+  const recepcionContext = useContext(RecepcionContexto);
+  const showSidebar = recepcionContext.openSidebarFilterDelivery;
 
   return (
     <>
-      <LayoutRecepcion>
+      <>
         <Container fluid>
           <Row>
-            <Sidebar />
-            <Col xs={9} md={10}>
-              {/* El orden de las columnas es de derecha a izquierda */}
+            {/* Si showSidebar es true, se renderiza el Sidebar */}
+            {showSidebar && <Sidebar />}
+            <Col xs={showSidebar ? 9 : 12} md={showSidebar ? 10 : 12}>
               <RowListCol>
                 <ColsPedidos pedidos={context.items ? context.items : []} />
               </RowListCol>
             </Col>
           </Row>
         </Container>
-
         <ToastContainer />
         <SelectListDomiciliarios />
-      </LayoutRecepcion>
+      </>
     </>
+  );
+};
+
+
+// Componente principal que envuelve al contenido con los Providers
+const Recepcion = () => {
+  return (
+    <LayoutRecepcion>
+      <RecepcionContent />
+    </LayoutRecepcion>
   );
 };
 

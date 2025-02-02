@@ -5,16 +5,16 @@ import { RecepcionContexto } from '../../Context/RecepcionContex';
 import InfoButton from '../InfoButton';
 
 const Sidebar = () => {
-  // Accedemos al contexto, incluyendo la variable que controlará la visibilidad del sidebar.
+  // Accedemos al contexto para obtener la visibilidad del sidebar y demás funciones
   const contextRecepcion = useContext(RecepcionContexto);
   const { openSidebarFilterDelivery } = contextRecepcion;
 
-  // Estado local para manejar qué sección está abierta.
+  // Estado local para saber qué sección (domiciliario) está activa
   const [openSection, setOpenSection] = useState('dashboard');
 
   const handleToggle = (section) => {
-    // Si la sección ya está abierta, la cerramos y removemos el filtro;
-    // de lo contrario, la abrimos y establecemos el domiciliario correspondiente.
+    // Si la sección ya está abierta, se cierra y se elimina el filtro;
+    // en caso contrario, se activa y se establece el filtro correspondiente
     setOpenSection(openSection === section ? '' : section);
     if (openSection === section) {
       contextRecepcion.setDomiciliarioIdFilter(null);
@@ -23,7 +23,7 @@ const Sidebar = () => {
     contextRecepcion.setDomiciliarioIdFilter(section);
   };
 
-  // Si openSidebarFilterDelivery es false, no renderizamos el Sidebar.
+  // Si el sidebar no debe mostrarse, no se renderiza nada
   if (!openSidebarFilterDelivery) {
     return null;
   }
@@ -34,7 +34,7 @@ const Sidebar = () => {
         <h3 className="text-center border-bottom pb-2 mb-3">
           Filtrar por domiciliario
         </h3>
-        <InfoButton textInfo={'Selecciona un domiciliario para ver sus pedidos'} />
+        <InfoButton textInfo="Selecciona un domiciliario para ver sus pedidos" />
       </div>
 
       <div className="overflow-auto" style={{ maxHeight: '70vh' }}>
@@ -53,9 +53,9 @@ const Sidebar = () => {
           <SidebarElementDelivery
             handleToggle={handleToggle}
             openSection={openSection}
-            title={'Ninguno'}
-            eventKey={'ninguno'}
-            imageUrl={`https://i.pravatar.cc/150?img=${10}`}
+            title="Ninguno"
+            eventKey="ninguno"
+            imageUrl="https://i.pravatar.cc/150?img=10"
           />
 
           {/* Botón para agregar nuevos domiciliarios */}
