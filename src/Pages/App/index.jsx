@@ -9,31 +9,39 @@ import { EstadisticasRoutes } from './routes/EstadisticasRoutes';
 import { CodigoRoutes } from './routes/CodigoRoutes';
 import { ClientesRoutes } from './routes/ClientesRoutes';
 import { DomiciliarioRoutes } from './routes/DomiciliarioRoutes';
+// import { UserRoutes } from './routes/UserRoutes';
 
 const AppRoutes = () => {
   return (
+    <>
 
-    <Routes>
-      {HomeRoutes()}
-      {LoginRoutes()}
-      {GeneralRoutes()}
-      {RecepcionRoutes()}
-      {EstadisticasRoutes()}
-      {CodigoRoutes()}
-      {CocinaRoutes()}
-      {ClientesRoutes()}
-      {DomiciliarioRoutes()}
-    </Routes>
+
+      <ContextProvider>
+
+        <Routes>
+          {HomeRoutes()}
+          {LoginRoutes()}
+          {GeneralRoutes()}
+          {RecepcionRoutes()}
+          {EstadisticasRoutes()}
+          {CodigoRoutes()}
+          {CocinaRoutes()}
+          {ClientesRoutes()}
+          {DomiciliarioRoutes()}
+          {/* {UserRoutes()} */}
+
+        </Routes>
+      </ContextProvider>
+
+    </>
   );
 }
 
 const App = () => {
   return (
-    <ContextProvider>
-      <Router>
-        <AppRoutes />
-      </Router>
-    </ContextProvider>
+    <Router>
+      <AppRoutes />
+    </Router>
   )
 }
 
