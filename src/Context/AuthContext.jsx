@@ -1,8 +1,9 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+// AuthContext.js
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { FirebaseAuth } from '../firebase/config';
 import { onAuthStateChanged, getIdToken } from 'firebase/auth';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [usuarioActual, setUsuarioActual] = useState(null);
@@ -20,16 +21,16 @@ export const AuthProvider = ({ children }) => {
       }
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
   return (
     <AuthContext.Provider value={{ usuarioActual, token }}>
+      {/* Se renderiza children solo cuando se ha terminado la carga */}
       {!loading && children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);

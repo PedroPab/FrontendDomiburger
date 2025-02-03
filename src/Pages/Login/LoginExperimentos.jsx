@@ -1,15 +1,18 @@
-import { useState } from 'react';
+// LoginExp.js
+import React, { useState } from 'react';
 import { registerWithEmail, loginWithEmail, logout } from './../../firebase/services';
+import { useAuth } from '../../Context/AuthContext';
+
 
 const LoginExp = () => {
+  const { usuarioActual } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
 
   const handleRegister = async () => {
     try {
-      const newUser = await registerWithEmail(email, password);
-      setUser(newUser);
+      // Se registra al usuario; la actualización del estado se realizará vía onAuthStateChanged en el AuthContext
+      await registerWithEmail(email, password);
       alert('Usuario registrado correctamente');
     } catch (error) {
       alert(error.message);
@@ -18,8 +21,8 @@ const LoginExp = () => {
 
   const handleLogin = async () => {
     try {
-      const loggedInUser = await loginWithEmail(email, password);
-      setUser(loggedInUser);
+      // Se inicia sesión; el AuthContext detectará el cambio de usuario
+      await loginWithEmail(email, password);
       alert('Inicio de sesión exitoso');
     } catch (error) {
       alert(error.message);
@@ -27,17 +30,20 @@ const LoginExp = () => {
   };
 
   const handleLogout = async () => {
-    await logout();
-    setUser(null);
-    alert('Sesión cerrada');
+    try {
+      await logout();
+      alert('Sesión cerrada');
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
     <div>
       <h1>Autenticación con Firebase</h1>
-      {user ? (
+      {usuarioActual ? (
         <div>
-          <p>Bienvenido, {user.email}</p>
+          <p>Bienvenido, {usuarioActual.email}</p>
           <button onClick={handleLogout}>Cerrar sesión</button>
         </div>
       ) : (

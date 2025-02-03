@@ -1,33 +1,31 @@
-// Import the functions you need from the SDKs you need
+// Importa las funciones necesarias del SDK de Firebase
 import { initializeApp } from "firebase/app";
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { getAuth, connectAuthEmulator } from "firebase/auth";
 
+// TODO: Agrega otros SDKs de productos de Firebase que necesites
+// Más información: https://firebase.google.com/docs/web/setup#available-libraries
 
-// TOD o: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Configuración de Firebase para tu aplicación web
+// Para Firebase JS SDK v7.20.0 y posteriores, measurementId es opcional
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || ''
 };
 
-console.log(firebaseConfig)
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const FirebaseAuth = getAuth(app)
+console.log("Configuración de Firebase:", firebaseConfig);
 
-// Conecta con los emuladores si estás en desarrollo
-if (location.hostname === "localhost") {
+// Inicializa Firebase
+const app = initializeApp(firebaseConfig);
+const FirebaseAuth = getAuth(app);
+
+// Conecta con el emulador de autenticación si estás en desarrollo (localhost)
+if (window.location.hostname === "localhost") {
   connectAuthEmulator(FirebaseAuth, "http://localhost:9099");
 }
 
-export {
-  FirebaseAuth,
-}
+export { FirebaseAuth };
