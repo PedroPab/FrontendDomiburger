@@ -17,8 +17,19 @@ class LocationsService {
     }
 
   }
-
-
+  async create(data, token) {
+    try {
+      const rta = await this.api.post(`/`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return rta;
+    } catch (error) {
+      console.log(`[ ~ LocationsService ~ create ~ error]`, error)
+      throw error;
+    }
+  }
 }
 
 export const locationsService = new LocationsService();

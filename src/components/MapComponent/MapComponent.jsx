@@ -66,8 +66,8 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
   };
 
   return (
-    <form autoComplete="off">
-      <Autocomplete
+    <form autoComplete="off" className="mb-3">
+      <Autocomplete Autocomplete
         onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
         bounds={{
           north: center.lat + 1.5,
@@ -209,7 +209,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </form>
+    </form >
   );
 };
 

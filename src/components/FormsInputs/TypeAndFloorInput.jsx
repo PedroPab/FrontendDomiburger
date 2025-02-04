@@ -1,5 +1,5 @@
 import { Col, Row, Form, FormControl, InputGroup } from 'react-bootstrap';
-import { FaUser } from 'react-icons/fa';
+import { FaHouseUser } from "react-icons/fa";
 
 const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) => {
   // Estado para el select del tipo de inmueble
@@ -39,7 +39,7 @@ const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) =
           <Form.Label> Piso o Apartamento</Form.Label>
           <InputGroup>
             <InputGroup.Text>
-              <FaUser />
+              <FaHouseUser />
             </InputGroup.Text>
             <FormControl
               id='piso'

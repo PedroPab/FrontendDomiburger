@@ -8,46 +8,16 @@ import { useLoadScript } from '@react-google-maps/api';
 import MapComponent from '../../components/MapComponent/MapComponent';
 import { TypeAndFloorInput } from '../../components/FormsInputs/TypeAndFloorInput';
 import { NotesInput } from '../../components/FormsInputs/NotesInput';
+const ENV = import.meta.env
 
 const CreateLocation = () => {
-  const { usuarioActual, token } = useAuth();
+  const { token } = useAuth();
 
   // Estados para el manejo de la petición
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-
-  // Manejar el envío del formulario
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
-
-    try {
-
-      const formData = {
-      }
-      // Llamada al servicio para crear la ubicación
-      await locationsService.create(formData, token);
-
-      // Si todo sale bien, mostramos un mensaje de éxito y opcionalmente limpiamos el formulario
-      setSuccess(true);
-      setDireccion('');
-      setPiso('');
-      setTipoPropiedad('');
-      setComentario('');
-      setFotos([]);
-    } catch (err) {
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
-  const ENV = import.meta.env
 
   const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
   const libraries = ['places'];
@@ -68,6 +38,30 @@ const CreateLocation = () => {
 
   //notas
   const [notes, setNotes] = useState('');
+
+
+  // Manejar el envío del formulario
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+
+      const formData = {
+      }
+      // Llamada al servicio para crear la ubicación
+      await locationsService.create(formData, token);
+
+      // Si todo sale bien, mostramos un mensaje de éxito y opcionalmente limpiamos el formulario
+
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (
@@ -104,7 +98,10 @@ const CreateLocation = () => {
               notes={notes}
               setNotes={setNotes}
             />
-
+            {/* boton de crear */}
+            <Button variant="primary" type="submit" onClick={handleSubmit}>
+              {loading ? <Spinner animation="border" size="sm" /> : 'Crear'}
+            </Button>
 
           </Col>
         </Row>
