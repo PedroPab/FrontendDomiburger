@@ -1,8 +1,8 @@
 import { Col, Row, Form, FormControl, InputGroup } from 'react-bootstrap';
 import { FaHouseUser } from "react-icons/fa";
 
-const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) => {
-  // Estado para el select del tipo de inmueble
+const TypeAndFloorInput = ({ floor, setFloor, errors, propertyType, setPropertyType }) => {
+  const [errorFloor, errorType] = errors;
 
   // Maneja el cambio del input de piso/apartamento
   const handleChangeFloor = (e) => {
@@ -24,13 +24,13 @@ const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) =
           <Form.Label>
             Tipo de Ubicación
           </Form.Label>
-          <Form.Control as="select" value={propertyType} onChange={handleTypeChange}>
-            <option value="">Seleccione un tipo</option>
-            <option value="casa">Casa</option>
-            <option value="apartamento">Apartamento</option>
-            <option value="oficina">Oficina</option>
-            <option value="otro">Otro</option>
+          <Form.Control required as="select" value={propertyType} onChange={handleTypeChange}>
+            <option value="house">Casa</option>
+            {/* <option value="building">Apartamento</option> */}
+            <option value="urbanization">Urbanización</option>
+            <option value="office">Oficina</option>
           </Form.Control>
+          {errorType && <Form.Text className="text-danger">{errorType}</Form.Text>}
         </Form.Group>
       </Col>
       <Col md={6}>
@@ -42,6 +42,7 @@ const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) =
               <FaHouseUser />
             </InputGroup.Text>
             <FormControl
+              required
               id='piso'
               type="text"
               placeholder="Ej: 3"
@@ -50,6 +51,7 @@ const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) =
               autoComplete="true"
             />
           </InputGroup>
+          {errorFloor && <Form.Text className="text-danger">{errorFloor}</Form.Text>}
         </Form.Group>
       </Col>
       <Form.Text className="text-muted">

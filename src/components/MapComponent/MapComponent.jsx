@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, Autocomplete } from "@react-google-maps/api";
 import FormField from "../FormField";
-import { BiLogoGoogle } from "react-icons/bi";
 import { BsFillGeoAltFill } from "react-icons/bs";
 import { Button, Col, Row, Modal } from "react-bootstrap";
 import WhatsAppButton from "../WhatsAppButton";
 
-const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
+const MapComponent = ({ center, stateCoordenadas, stateDireccion, errors }) => {
+  const [errorCoordinates, errorAdress] = errors;
   const [coordinates, setCoordinates] = stateCoordenadas;
   const [direccion, setDireccion] = stateDireccion;
   const [manualSelect, setManualSelect] = useState(false);
@@ -90,10 +90,13 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion }) => {
           placeholder="Ejemplo: Calle 103d # 76 12"
           value={direccion.address_complete}
           onChange={handleInputChange}
+          error={errorAdress}
         />
       </Autocomplete>
 
       <Row className="align-items-center mb-3">
+        {errorCoordinates && <div className="text-danger">{errorCoordinates}</div>}
+
         <Col xs={12} md={8} className="d-flex align-items-center">
           <p className="mb-0 me-3">
             <strong>Instrucciones:</strong> Si tienes problemas con la dirección, selecciónala en el mapa.

@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 
-const NotesInput = ({ notes, setNotes }) => {
+const NotesInput = ({ notes, setNotes, error }) => {
   const handleChange = (e) => {
     setNotes(e.target.value);
   };
@@ -18,6 +18,7 @@ const NotesInput = ({ notes, setNotes }) => {
       <Form.Text className="text-muted">
         Escriba cualquier comentario o nota adicional que seria util para el domiciliario ubicarse mejor.
       </Form.Text>
+      <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
     </Form.Group>
   );
 };
