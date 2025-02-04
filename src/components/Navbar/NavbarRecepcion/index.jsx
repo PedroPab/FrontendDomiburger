@@ -140,11 +140,11 @@ const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
   );
 };
 
-const NavbarRecepcion = () => {
+const NavbarRecepcion = (props) => {
 
   return (
     <ContextProviderRecepcion  >
-      <NavbarRecepcionCom />
+      <NavbarRecepcionCom  {...props} />
     </ContextProviderRecepcion >
   )
 }
