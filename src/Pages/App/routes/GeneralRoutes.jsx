@@ -6,6 +6,8 @@ import { MeProfile } from "../../User/MeProfile";
 
 import ProtectedRouteFirebase from "../../../components/ProtectedRouteFirebase";
 import { AuthProvider } from "../../../Context/AuthContext";
+import MyLocations from "../../User/MyLocations";
+import { CreateLocation } from "../../User/CreateLocation";
 
 // Definir constantes para rutas y roles
 const ROUTES = {
@@ -34,6 +36,21 @@ const GeneralRoutes = () => {
 
     // Uso del componente separado en la definición de rutas
     <Route key='me' path={ROUTES.ME} element={<MeRoute />} />,
+    <Route key='locations' path={`${ROUTES.ME}/ubicaciones`} element={
+      <AuthProvider>
+        <ProtectedRouteFirebase role={ROLES.USER}>
+          <MyLocations />
+        </ProtectedRouteFirebase>
+      </AuthProvider>
+    } />,
+    <Route key='CreateLocations' path={`${ROUTES.ME}/ubicaciones/crear`} element={
+      <AuthProvider>
+        <ProtectedRouteFirebase role={ROLES.USER}>
+          <CreateLocation />
+        </ProtectedRouteFirebase>
+      </AuthProvider>
+    } />,
+
   ]
 }
 
