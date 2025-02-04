@@ -11,7 +11,7 @@ import { FiMapPin, FiList } from 'react-icons/fi';
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
 
-const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
+const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto);
   const { setOpenSidebarFilterDelivery } = contextRecepcion;
 
@@ -140,10 +140,13 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
   );
 };
 
-const o = () => {
-  <ContextProviderRecepcion>
-    <NavbarRecepcion />
-  </ContextProviderRecepcion>
+const NavbarRecepcion = () => {
+
+  return (
+    <ContextProviderRecepcion  >
+      <NavbarRecepcionCom />
+    </ContextProviderRecepcion >
+  )
 }
 
-export { o as NavbarRecepcion };
+export { NavbarRecepcion };
