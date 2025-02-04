@@ -1,6 +1,5 @@
-import { Col, Row, Form } from 'react-bootstrap';
-import FormField from '../FormField';
-import { FaTable, FaUser } from 'react-icons/fa';
+import { Col, Row, Form, FormControl, InputGroup } from 'react-bootstrap';
+import { FaUser } from 'react-icons/fa';
 
 const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) => {
   // Estado para el select del tipo de inmueble
@@ -18,12 +17,12 @@ const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) =
   };
 
   return (
-    <Row className="m-3">
+    <Row className="mb-3">
       <Col md={6}>
         {/* Select con opciones de tipos de inmueble */}
-        <Form.Group controlId="propertyType" className="mb-3">
+        <Form.Group controlId="propertyType" className="">
           <Form.Label>
-            Tipo de Inmueble <FaTable />
+            Tipo de Ubicación
           </Form.Label>
           <Form.Control as="select" value={propertyType} onChange={handleTypeChange}>
             <option value="">Seleccione un tipo</option>
@@ -35,18 +34,27 @@ const TypeAndFloorInput = ({ floor, setFloor, propertyType, setPropertyType }) =
         </Form.Group>
       </Col>
       <Col md={6}>
-        <FormField
-          id="piso"
-          label="Piso o Apartamento"
-          type="text"
-          icon={<FaUser />}
-          placeholder="Ej: 3"
-          value={floor}
-          onChange={handleChangeFloor}
-          required
-          helptext="Así entregaremos más rápido tu pedido"
-        />
+
+        <Form.Group className="">
+          <Form.Label> Piso o Apartamento</Form.Label>
+          <InputGroup>
+            <InputGroup.Text>
+              <FaUser />
+            </InputGroup.Text>
+            <FormControl
+              id='piso'
+              type="text"
+              placeholder="Ej: 3"
+              value={floor}
+              onChange={handleChangeFloor}
+              autoComplete="true"
+            />
+          </InputGroup>
+        </Form.Group>
       </Col>
+      <Form.Text className="text-muted">
+        Así entregaremos más rápido tu pedido
+      </Form.Text>
     </Row>
   );
 };

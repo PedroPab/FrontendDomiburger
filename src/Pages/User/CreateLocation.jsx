@@ -7,6 +7,7 @@ import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import { useLoadScript } from '@react-google-maps/api';
 import MapComponent from '../../components/MapComponent/MapComponent';
 import { TypeAndFloorInput } from '../../components/FormsInputs/TypeAndFloorInput';
+import { NotesInput } from '../../components/FormsInputs/NotesInput';
 
 const CreateLocation = () => {
   const { usuarioActual, token } = useAuth();
@@ -65,6 +66,9 @@ const CreateLocation = () => {
   const [floor, setFloor] = useState('');
   const [propertyType, setPropertyType] = useState('');
 
+  //notas
+  const [notes, setNotes] = useState('');
+
 
   return (
     <LayoutCliente>
@@ -92,6 +96,13 @@ const CreateLocation = () => {
               setFloor={setFloor}
               propertyType={propertyType}
               setPropertyType={setPropertyType}
+            />
+
+            {/* Notas */}
+
+            <NotesInput
+              notes={notes}
+              setNotes={setNotes}
             />
 
 
