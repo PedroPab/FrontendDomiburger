@@ -10,6 +10,7 @@ import { TypeAndFloorInput } from '../../components/FormsInputs/TypeAndFloorInpu
 import { NotesInput } from '../../components/FormsInputs/NotesInput';
 import { toast } from 'react-toastify';
 import Joi from 'joi';
+import { useNavigate } from 'react-router-dom';
 
 const ENV = import.meta.env;
 
@@ -38,6 +39,7 @@ const createLocationSchema = Joi.object({
 });
 
 const CreateLocation = () => {
+  const navigate = useNavigate();
   const { token } = useAuth();
 
   const [loading, setLoading] = useState(false);
@@ -106,6 +108,7 @@ const CreateLocation = () => {
       setNotes('');
       setCoordinates({});
       setInputDataDireccion({ address_complete: "", valid: false });
+      setTimeout(() => navigate(-1), 2000); // Redirige a la página anterior después de 2 segundos
 
     } catch (err) {
       toast.error(`Error: ${err.message}`);
