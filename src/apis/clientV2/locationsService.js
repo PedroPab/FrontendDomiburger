@@ -10,7 +10,7 @@ class LocationsService {
     try {
       const rta = await this.api.get(`/user/${id}`, { headers: { Authorization: `Bearer ${token}` } })
 
-      return rta;
+      return rta
     } catch (error) {
       console.log(`[ ~ LocationsService ~ getByIdUser ~ error]`, error)
       throw error;
@@ -24,7 +24,7 @@ class LocationsService {
           Authorization: `Bearer ${token}`,
         },
       });
-      return rta;
+      return rta
     } catch (error) {
       console.log(`[ ~ LocationsService ~ create ~ error]`, error)
       throw error;

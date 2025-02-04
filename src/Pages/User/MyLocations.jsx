@@ -14,6 +14,7 @@ import {
   Form,
 } from 'react-bootstrap';
 import { useAuth } from '../../Context/AuthContext';
+import LocationCard from '../../components/Locations/LocationCard';
 
 const MyLocations = () => {
   const [locations, setLocations] = useState([]);
@@ -34,7 +35,8 @@ const MyLocations = () => {
     const findLocations = async () => {
       try {
         const rta = await locationsService.getByIdUser(idUser, token);
-        setLocations(rta?.body);
+        console.log(`[ ~ findLocations ~ rta]`, rta)
+        setLocations(rta.data?.body);
       } catch (error) {
         setErrorLocations(error);
       } finally {
@@ -120,13 +122,8 @@ const MyLocations = () => {
             {!loadingLocations && !errorLocations && locations.length > 0 && (
               <Row>
                 {locations.map((location) => (
-                  <Col key={location.id} xs={12} md={6} lg={4} className="mb-4">
-                    <Card className="h-100 shadow-sm">
-                      <Card.Body>
-                        <Card.Title>{location.name}</Card.Title>
-                        <Card.Text>{location.address}</Card.Text>
-                      </Card.Body>
-                    </Card>
+                  <Col key={location.id} xs={12} md={6} lg={4}>
+                    <LocationCard location={location} />
                   </Col>
                 ))}
               </Row>
