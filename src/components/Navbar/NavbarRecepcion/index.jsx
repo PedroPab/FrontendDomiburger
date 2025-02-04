@@ -4,7 +4,7 @@ import { BsMoonStars, BsTools, BsFillPersonFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { useContext } from 'react';
-import { RecepcionContexto } from '../../../Context/RecepcionContex';
+import { ContextProviderRecepcion, RecepcionContexto } from '../../../Context/RecepcionContex';
 import { FaMapMarkerAlt, FaRegChartBar, FaCashRegister } from 'react-icons/fa';
 import { MdOutlineDeliveryDining, MdOutlineAdminPanelSettings, MdOutlineSettings, MdOutlineReceipt } from 'react-icons/md';
 import { FiMapPin, FiList } from 'react-icons/fi';
@@ -13,7 +13,7 @@ import { OrderCountIndicator } from '../OrderCountIndicator';
 
 const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto);
-  const { openSidebarFilterDelivery, setOpenSidebarFilterDelivery } = contextRecepcion;
+  const { setOpenSidebarFilterDelivery } = contextRecepcion;
 
   return (
     <Navbar
@@ -140,4 +140,10 @@ const NavbarRecepcion = ({ modoOscuro, alternarModo }) => {
   );
 };
 
-export { NavbarRecepcion };
+const o = () => {
+  <ContextProviderRecepcion>
+    <NavbarRecepcion />
+  </ContextProviderRecepcion>
+}
+
+export { o as NavbarRecepcion };
