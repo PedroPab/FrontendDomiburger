@@ -54,7 +54,7 @@ function FormLogin() {
 
       const objRedireccionRole = {
         admin: `recepcion`,
-        cliente: `home`,
+        cliente: `me`,
         domiciliario: `domiciliarios`,
         recepcion: `recepcion`,
         cocinero: `cocina`,

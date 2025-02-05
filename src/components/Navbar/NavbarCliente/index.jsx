@@ -6,11 +6,13 @@ import logo from './../../../assets/logo.png';
 import { FaHome, FaInfoCircle, FaShoppingCart } from 'react-icons/fa';
 import { useContext } from 'react';
 import { MiContexto } from '../../../Context';
+import { useAuth } from '../../../Context/AuthContext';
 
 const NavbarCliente = () => {
-  const context = useContext(MiContexto);
-  const modoOscuro = context.modoOscuro;
-  const alternarModo = context.alternarModo;
+  const { modoOscuro, alternarModo } = useContext(MiContexto);
+
+  const { usuarioActual } = useAuth();
+  const usuario = usuarioActual
 
   return (
     <Navbar
@@ -44,7 +46,7 @@ const NavbarCliente = () => {
 
         {/* Menú de Navegación */}
         <Navbar.Collapse id="navbar-client-nav">
-          <Nav className="ms-auto ">
+          <Nav className="ms-auto">
             {/* Inicio */}
             <Nav.Link
               as={Link}
@@ -55,16 +57,16 @@ const NavbarCliente = () => {
               <FaHome className="me-1" aria-hidden="true" /> Inicio
             </Nav.Link>
 
-            {/* mi pedido */}
+            {/* Mi Pedido */}
             <Nav.Link
               as={Link}
               to="/mi-pedido"
               aria-label="Ir a la página de mi pedido"
               className="text-decoration-none"
             >
-              <FaShoppingCart className="me-1" aria-hidden="true" />  Mi Pedido
-
+              <FaShoppingCart className="me-1" aria-hidden="true" /> Mi Pedido
             </Nav.Link>
+
             {/* Nosotros */}
             <Nav.Link
               as={Link}
@@ -74,7 +76,8 @@ const NavbarCliente = () => {
             >
               <FaInfoCircle className="me-1" aria-hidden="true" /> Nosotros
             </Nav.Link>
-            {/* Botón Cambiar Tema */}
+
+            {/* Botón para Cambiar Tema */}
             <Nav.Item>
               <Button
                 variant={modoOscuro ? 'outline-light' : 'outline-dark'}
@@ -85,6 +88,41 @@ const NavbarCliente = () => {
                 <BsMoonStars aria-hidden="true" />
               </Button>
             </Nav.Item>
+
+            {/* Perfil del Usuario */}
+            {usuario ? (
+              <Nav.Link
+                as={Link}
+                to="/me"
+                className="d-flex align-items-center ms-3"
+                aria-label="Ir a tu perfil"
+              >
+                <img
+                  src={usuario.photoURL || 'https://via.placeholder.com/30'}
+                  alt="Foto de perfil"
+                  style={{
+                    width: '30px',
+                    height: '30px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                  }}
+                  className="me-2"
+                />
+                {/* Se muestra el nombre solo en pantallas grandes; en móviles se puede prescindir */}
+                <span className="d-none d-lg-inline">
+                  {usuario.displayName || usuario.email}
+                </span>
+              </Nav.Link>
+            ) : (
+              <Nav.Link
+                as={Link}
+                to="/login"
+                className="text-decoration-none ms-3"
+                aria-label="Iniciar sesión"
+              >
+                Iniciar Sesión
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
