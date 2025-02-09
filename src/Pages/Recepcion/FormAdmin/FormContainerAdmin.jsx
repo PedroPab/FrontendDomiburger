@@ -287,6 +287,7 @@ const FormContainerAdmin = ({ token, userId }) => {
           center={centerOrigin}
           stateCoordenadas={[coordinates, setCoordinates]}
           stateDireccion={[inputDataDireccion, setInputDataDireccion]}
+          errors={[null, null]}
         />
       }
 

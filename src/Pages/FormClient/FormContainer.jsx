@@ -197,6 +197,7 @@ const FormContainer = () => {
         <MapComponent center={centerOrigin}
           stateCoordenadas={[coordinates, setCoordinates]}
           stateDireccion={[inputDataDireccion, setInputDataDireccion]}
+          errors={[null, null]}
         />
       }
 

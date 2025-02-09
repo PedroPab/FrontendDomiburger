@@ -1,5 +1,3 @@
-import React from 'react';
-
 function RegisterSaleButton({ onClick }) {
   return (
     <div className="d-flex justify-content-center mt-5 mb-5">
@@ -9,7 +7,7 @@ function RegisterSaleButton({ onClick }) {
       >
         Registrar Venta
       </button>
-      <style jsx>{`
+      <style>{`
         .register-sale-button {
           border-radius: 30px;
           border: 2px solid #007bff;

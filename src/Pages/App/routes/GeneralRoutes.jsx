@@ -39,7 +39,7 @@ const GeneralRoutes = () => {
     <Route key='locations' path={`${ROUTES.ME}/ubicaciones`} element={
       <AuthProvider>
         <ProtectedRouteFirebase role={ROLES.USER}>
-          <MyLocations />
+          <MyLocations />.
         </ProtectedRouteFirebase>
       </AuthProvider>
     } />,
