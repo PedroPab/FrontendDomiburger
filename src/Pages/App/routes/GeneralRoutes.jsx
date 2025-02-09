@@ -8,6 +8,7 @@ import ProtectedRouteFirebase from "../../../components/ProtectedRouteFirebase";
 import { AuthProvider } from "../../../Context/AuthContext";
 import MyLocations from "../../User/MyLocations";
 import { CreateLocation } from "../../User/CreateLocation";
+import OrderContainerUser from "../../User/createOrder/OrderContainerUser";
 
 // Definir constantes para rutas y roles
 const ROUTES = {
@@ -47,6 +48,13 @@ const GeneralRoutes = () => {
       <AuthProvider>
         <ProtectedRouteFirebase role={ROLES.USER}>
           <CreateLocation />
+        </ProtectedRouteFirebase>
+      </AuthProvider>
+    } />,
+    <Route key='Pedir' path={`${ROUTES.ME}/order`} element={
+      <AuthProvider>
+        <ProtectedRouteFirebase role={ROLES.USER}>
+          <OrderContainerUser />
         </ProtectedRouteFirebase>
       </AuthProvider>
     } />,
