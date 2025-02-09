@@ -41,6 +41,10 @@ export const ContextProviderRecepcion = ({ children }) => {
 
   const [openSidebarFilterDelivery, setOpenSidebarFilterDelivery] = useState(true)
 
+  const toggleSidebar = () => {
+    console.log('toggleSidebar', openSidebarFilterDelivery)
+    setOpenSidebarFilterDelivery((prevState) => !prevState);
+  };
 
   return (
     <RecepcionContexto.Provider value={
@@ -56,7 +60,7 @@ export const ContextProviderRecepcion = ({ children }) => {
 
         domiciliarioIdFilter, setDomiciliarioIdFilter,
 
-        openSidebarFilterDelivery, setOpenSidebarFilterDelivery
+        openSidebarFilterDelivery, toggleSidebar
       }
     }>
       {children}

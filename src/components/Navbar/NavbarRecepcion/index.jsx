@@ -13,7 +13,7 @@ import { OrderCountIndicator } from '../OrderCountIndicator';
 
 const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto);
-  const { setOpenSidebarFilterDelivery } = contextRecepcion;
+  const { toggleSidebar } = contextRecepcion;
 
   return (
     <Navbar
@@ -39,8 +39,8 @@ const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
 
           {/* 2. Botón para alternar el filtro de domiciliarios */}
           <Col xs="auto">
-            <Button variant="outline-primary" onClick={() => setOpenSidebarFilterDelivery(prev => !prev)}>
-              <BsTools size={20} />
+            <Button variant="outline-primary" onClick={() => toggleSidebar()}>
+              <BsTools size={20} /> hol
             </Button>
           </Col>
 
@@ -143,9 +143,9 @@ const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
 const NavbarRecepcion = (props) => {
 
   return (
-    <ContextProviderRecepcion  >
+    <  >
       <NavbarRecepcionCom  {...props} />
-    </ContextProviderRecepcion >
+    </ >
   )
 }
 
