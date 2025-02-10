@@ -11,6 +11,9 @@ import ProductosAdmin from "../../ProductosAdmin/ListProducts";
 import CreateProduct from "../../ProductosAdmin/CreateProduct";
 import { ContextProvider } from "../../../Context";
 import { ContextProviderRecepcion } from "../../../Context/RecepcionContex";
+import { EstadisticasRoutes } from "./EstadisticasRoutes";
+import { CodigoRoutes } from "./CodigoRoutes";
+import { ClientesRoutes } from "./ClientesRoutes";
 
 
 const RecepcionRoutes = () => {
@@ -32,6 +35,12 @@ const RecepcionRoutes = () => {
             <Route path="/pedidos/:id" element={<PedidosDetails />} />
             <Route path="/productosAdmin" element={<ProductosAdmin />} />
             <Route path="/createProduct" element={<CreateProduct />} />
+
+            {EstadisticasRoutes()}
+            {CodigoRoutes()}
+            {ClientesRoutes()}
+
+
           </Route>
         </Routes>
 

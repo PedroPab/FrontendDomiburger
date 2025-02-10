@@ -1,15 +1,20 @@
 import { Container, } from "react-bootstrap";
 import PaginationComponent from "../Pagination";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import clientService from "../../apis/client/ClientService";
 import ClientList from "./ClientList";
 import { toast } from "react-toastify";
 import BuscadorCliente from "../Codigos/CrearCodigoReferido/BuscadorCliente";
 import BuscadorClientePorNombre from "../Codigos/CrearCodigoReferido/BuscadorClientePorNombre";
+import { MiContexto } from "../../Context";
 
 
-const VisualizarClientesComponente = ({ token }) => {
+const VisualizarClientesComponente = () => {
+
+  const context = useContext(MiContexto)
+  const token = context.tokenLogin.token
+
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
