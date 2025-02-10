@@ -10,16 +10,17 @@ import { EditarCodigo } from "../../Codigo/EditarCodigo"
 const CodigoRoutes = () => {
   return (
     <Route
+      path="codigos"
       element={
         <ProtectedRoute
           users={[ROLES.admin, ROLES.recepcion]}
           redirectTo="/login" />
       }>
-      <Route path="/Codigos" element={<Codigos />} />
-      <Route path="/codigos/crearCodigoReferido" element={<CrearCodigoReferido />} />
-      <Route path="/codigos/crearCodigoYaCreado" element={<CrearCodigoReferidoYaCreado />} />
-      <Route path="/codigos/buscar" element={<VisualizarCodigoReferidos />} />
-      <Route path="/codigos/editar/:id" element={<EditarCodigo />} />
+      <Route index element={<Codigos />} />
+      <Route path="crearCodigoReferido" element={<CrearCodigoReferido />} />
+      <Route path="crearCodigoYaCreado" element={<CrearCodigoReferidoYaCreado />} />
+      <Route path="buscar" element={<VisualizarCodigoReferidos />} />
+      <Route path="editar/:id" element={<EditarCodigo />} />
 
     </Route>
   )

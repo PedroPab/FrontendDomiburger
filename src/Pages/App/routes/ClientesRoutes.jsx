@@ -6,12 +6,13 @@ import { ROLES } from "../../../Utils/constList";
 const ClientesRoutes = () => {
   return (
     <Route
+      path="clientes"
       element={
         <ProtectedRoute
           users={[ROLES.admin, ROLES.recepcion]}
           redirectTo="/login" />
       }>
-      <Route path="/clientes" element={<Clientes />} />
+      <Route index element={<Clientes />} />
     </Route>
   );
 };

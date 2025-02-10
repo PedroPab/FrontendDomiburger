@@ -10,14 +10,14 @@ const DomiciliarioRoutes = () => {
     <ContextProvider>
       <Routes>
         <Route
+          path="/domiciliario"
           element={
             <ProtectedRoute
               users={[ROLES.admin, ROLES.domiciliario]}
               redirectTo="/login" />
           }>
-          <Route path="/domiciliarios" element={<Domiciliario />} />
-          <Route path="/domiciliario" element={<Domiciliario />} />
-          <Route path="/domiciliario/history" element={<DomiciliarioHistory />} />
+          <Route index element={<Domiciliario />} />
+          <Route path="domiciliario/history" element={<DomiciliarioHistory />} />
         </Route>
       </Routes>
     </ContextProvider>

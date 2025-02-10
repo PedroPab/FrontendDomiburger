@@ -9,12 +9,13 @@ const CocinaRoutes = () => {
     <ContextProvider>
       <Routes>
         <Route
+          path="cocina"
           element={
             <ProtectedRoute
               users={[ROLES.admin, ROLES.recepcion, ROLES.cocina, "cocinero"]}
               redirectTo="/login" />
           }>
-          <Route key="Cocina" path="/cocina" element={< Cocina />} />
+          <Route index element={< Cocina />} />
         </Route >
       </Routes>
     </ContextProvider>

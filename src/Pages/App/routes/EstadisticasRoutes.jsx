@@ -9,15 +9,16 @@ import { ROLES } from "../../../Utils/constList"
 const EstadisticasRoutes = () => {
   return (
     <Route
+      path="estadisticas"
       element={
         <ProtectedRoute
           users={[ROLES.admin, ROLES.recepcion]}
           redirectTo="/login" />
       }>
-      <Route path="/estadisticas/domiciliarios" element={<EstadisticasDomiciliarios />} />
-      <Route path="/estadisticas/ventas/hoy" element={<EstadisticasVentasHoy />} />
-      <Route path="/estadisticas/clientes" element={<EstadisticasClientes />} />
-      <Route path="/estadisticas" element={<EstadisticasHome />} />
+      <Route path="estadisticas/domiciliarios" element={<EstadisticasDomiciliarios />} />
+      <Route path="estadisticas/ventas/hoy" element={<EstadisticasVentasHoy />} />
+      <Route path="estadisticas/clientes" element={<EstadisticasClientes />} />
+      <Route index element={<EstadisticasHome />} />
     </Route>
   )
 }
