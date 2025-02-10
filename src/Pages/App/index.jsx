@@ -16,12 +16,16 @@ const AppRoutes = () => {
           {HomeRoutes()}
           {LoginRoutes()}
           {GeneralRoutes()}
-          {CocinaRoutes()}
-          {DomiciliarioRoutes()}
+          {/* {CocinaRoutes()} */}
+          {/* {DomiciliarioRoutes()} */}
 
         </Routes>
 
         <RecepcionRoutes />
+
+        <DomiciliarioRoutes />
+
+        <CocinaRoutes />
 
 
       </PreferencesProvider>
