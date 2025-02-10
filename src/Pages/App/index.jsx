@@ -17,22 +17,14 @@ const AppRoutes = () => {
         <AuthProvider>
 
           <Routes>
+            {LoginRoutes()}
             {HomeRoutes()}
-            { }
-            {/* {GeneralRoutes()} */}
-
+            {RecepcionRoutes()}
+            {DomiciliarioRoutes()}
+            {CocinaRoutes()}
+            {UserRoutes()}
+            {GeneralRoutes()}
           </Routes>
-
-          <LoginRoutes />
-
-          <RecepcionRoutes />
-
-          <DomiciliarioRoutes />
-
-          <CocinaRoutes />
-
-          <UserRoutes />
-
         </AuthProvider>
       </PreferencesProvider>
     </>
