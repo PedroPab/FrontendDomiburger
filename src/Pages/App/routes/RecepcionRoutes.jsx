@@ -1,50 +1,51 @@
-import { Route, Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
 import ProtectedRoute from "../../../components/ProtectedRoute";
+import { ROLES } from "../../../Utils/constList";
+import { ContextProvider } from "../../../Context";
+import { ContextProviderRecepcion } from "../../../Context/RecepcionContex";
 import Recepcion from "../../Recepcion";
 import Contabilidad from "../../Contabilidad";
 import MapRecepcion from "../../Recepcion/MapRecepcion";
 import FormAdmin from "../../Recepcion/FormAdmin";
-import { ROLES } from "../../../Utils/constList";
 import Pedidos from "../../Pedidos";
 import PedidosDetails from "../../Pedidos/PedidosDetails";
 import ProductosAdmin from "../../ProductosAdmin/ListProducts";
 import CreateProduct from "../../ProductosAdmin/CreateProduct";
-import { ContextProvider } from "../../../Context";
-import { ContextProviderRecepcion } from "../../../Context/RecepcionContex";
 import { EstadisticasRoutes } from "./EstadisticasRoutes";
 import { CodigoRoutes } from "./CodigoRoutes";
-import { ClientesRoutes } from "./ClientesRoutes";
+import { RECEPCION_ROUTES } from "../../../Utils/const/namesRutes"; // Importamos las rutas constantes
+import Clientes from "../../Clientes/Clientes";
 
-
+const routes = RECEPCION_ROUTES.routes;
 const RecepcionRoutes = () => {
   return (
     <Route
-      path="/recepcion"
+      path={RECEPCION_ROUTES.path} // Usamos la constante para la ruta principal
       element={
         <ContextProvider>
           <ContextProviderRecepcion>
             <ProtectedRoute
               users={[ROLES.admin, ROLES.recepcion]}
-              redirectTo="/login" />
+              redirectTo="/login"
+            />
           </ContextProviderRecepcion>
         </ContextProvider>
-      }>
-
+      }
+    >
       <Route index element={<Recepcion />} />
-      <Route path="contabilidad" element={<Contabilidad />} />
-      <Route path="mapRecepcion" element={<MapRecepcion />} />
-      <Route path="formAdmin" element={<FormAdmin />} />
-      <Route path="pedidos" element={<Pedidos />} />
-      <Route path="pedidos/:id" element={<PedidosDetails />} />
-      <Route path="productosAdmin" element={<ProductosAdmin />} />
-      <Route path="createProduct" element={<CreateProduct />} />
+      <Route path={routes.CONTABILIDAD} element={<Contabilidad />} />
+      <Route path={routes.MAP_RECEPCION} element={<MapRecepcion />} />
+      <Route path={routes.FORM_ADMIN} element={<FormAdmin />} />
+      <Route path={routes.PEDIDOS} element={<Pedidos />} />
+      <Route path={routes.PEDIDOS_DETAIL} element={<PedidosDetails />} />
+      <Route path={routes.PRODUCTOS_ADMIN} element={<ProductosAdmin />} />
+      <Route path={routes.CREATE_PRODUCT} element={<CreateProduct />} />
+      <Route path={routes.CLIENTES} element={<Clientes />} />
 
       {EstadisticasRoutes()}
       {CodigoRoutes()}
-      {ClientesRoutes()}
     </Route>
   );
 };
-
 
 export { RecepcionRoutes };

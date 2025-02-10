@@ -122,7 +122,7 @@ function FormLogin() {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               feedback="Genial"
-              requiredz
+              required
               name="passwordInput"
               className="flex-grow-1"
             />

@@ -4,18 +4,20 @@ import { BsMoonStars, BsTools, BsFillPersonFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { useContext } from 'react';
-import { ContextProviderRecepcion, RecepcionContexto } from '../../../Context/RecepcionContex';
+import { RecepcionContexto } from '../../../Context/RecepcionContex';
 import { FaMapMarkerAlt, FaRegChartBar, FaCashRegister } from 'react-icons/fa';
 import { MdOutlineDeliveryDining, MdOutlineAdminPanelSettings, MdOutlineSettings, MdOutlineReceipt } from 'react-icons/md';
 import { FiMapPin, FiList } from 'react-icons/fi';
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
 import { PreferencesContext } from '../../../Context/PreferencesContext';
+import { CODIGO_ROUTES, ESTADISTICAS_ROUTES, RECEPCION_ROUTES } from '../../../Utils/const/namesRutes'; // Importamos las rutas definidas
+
 
 const NavbarRecepcionCom = () => {
   const contextRecepcion = useContext(RecepcionContexto);
   const { toggleSidebar } = contextRecepcion;
-  const { isDarkMode, toggleTheme } = useContext(PreferencesContext)
+  const { isDarkMode, toggleTheme } = useContext(PreferencesContext);
 
   return (
     <Navbar
@@ -66,7 +68,7 @@ const NavbarRecepcionCom = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto align-items-center">
             {/* Sección: Crear Pedido */}
-            <NavDropdown.Item as={Link} to="/formAdmin" className="mx-2">
+            <NavDropdown.Item as={Link} to={RECEPCION_ROUTES.routes.FORM_ADMIN} className="mx-2">
               <MdOutlineReceipt className="me-1" size={18} /> Crear pedido
             </NavDropdown.Item>
 
@@ -80,10 +82,10 @@ const NavbarRecepcionCom = () => {
               id="nav-dropdown-seguimiento"
               className="mx-2"
             >
-              <NavDropdown.Item as={Link} to="/recepcion">
+              <NavDropdown.Item as={Link} to={RECEPCION_ROUTES.path}>
                 <MdOutlineDeliveryDining className="me-1" size={18} /> Recepción
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/mapRecepcion">
+              <NavDropdown.Item as={Link} to={RECEPCION_ROUTES.routes.MAP_RECEPCION}>
                 <FaMapMarkerAlt className="me-1" size={18} /> Mapa
               </NavDropdown.Item>
             </NavDropdown>
@@ -98,22 +100,22 @@ const NavbarRecepcionCom = () => {
               id="nav-dropdown-administracion"
               className="mx-2"
             >
-              <NavDropdown.Item as={Link} to="/contabilidad">
+              <NavDropdown.Item as={Link} to={RECEPCION_ROUTES.routes.CONTABILIDAD}>
                 <FaCashRegister className="me-1" size={18} /> Contabilidad
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/estadisticas">
+              <NavDropdown.Item as={Link} to={ESTADISTICAS_ROUTES.path}>
                 <FaRegChartBar className="me-1" size={18} /> Estadísticas
               </NavDropdown.Item>
               <NavDropdown.Item onClick={() => contextRecepcion.openCloseModalAgregarDo()}>
                 <MdOutlineDeliveryDining className="me-1" size={18} /> Domiciliarios
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/codigos">
+              <NavDropdown.Item as={Link} to={CODIGO_ROUTES.path}>
                 <FiList className="me-1" size={18} /> Códigos
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/clientes">
+              <NavDropdown.Item as={Link} to={RECEPCION_ROUTES.routes.CLIENTES}>
                 <BsFillPersonFill className="me-1" size={18} /> Clientes
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/pedidos">
+              <NavDropdown.Item as={Link} to={RECEPCION_ROUTES.routes.PEDIDOS}>
                 <MdOutlineReceipt className="me-1" size={18} /> Pedidos
               </NavDropdown.Item>
             </NavDropdown>
@@ -143,12 +145,11 @@ const NavbarRecepcionCom = () => {
 };
 
 const NavbarRecepcion = (props) => {
-
   return (
-    <  >
-      <NavbarRecepcionCom  {...props} />
-    </ >
-  )
-}
+    <>
+      <NavbarRecepcionCom {...props} />
+    </>
+  );
+};
 
 export { NavbarRecepcion };

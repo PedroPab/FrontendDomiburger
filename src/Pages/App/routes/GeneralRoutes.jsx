@@ -6,10 +6,10 @@ import { NotFoundPage } from "../../NotFoundPage"
 const GeneralRoutes = () => {
   return (
     <>
-      <Route key="experimentos" path="/experimentos" element={<Experimentos />} />
-      <Route key="loginEx" path="loginEx" element={<LoginExp />} />
-      <Route key="home" path="/home" element={<Experimentos />} />
-      <Route key="404" path="*" element={<NotFoundPage />} />
+      <Route path="/experimentos" element={<Experimentos />} />
+      <Route path="loginEx" element={<LoginExp />} />
+      <Route path="/home" element={<Experimentos />} />
+      <Route path="*" element={<NotFoundPage />} />
     </>
   )
 }
