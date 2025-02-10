@@ -10,6 +10,7 @@ import SelectListDomiciliarios from '../../../components/SelectListDomiciliarios
 import StickyCard from '../../../components/StickyCard';
 import Sidebar from '../../../components/Sidebar';
 import ListOrder from './ListOrder';
+import LayoutRecepcion from '../../../Layout/Recepcion';
 
 const MapRecepcionContent = () => {
   // Uso de los contextos dentro del componente contenido, ya que aquí se encuentran envueltos por el Provider.
@@ -29,10 +30,6 @@ const MapRecepcionContent = () => {
 
   return (
     <>
-      <NavbarRecepcion
-        modoOscuro={context.modoOscuro}
-        alternarModo={context.alternarModo}
-      />
       <Container fluid>
         <Row>
           {/* Si showSidebar es true, se renderiza el Sidebar; de lo contrario, el contenido ocupará todo el ancho */}
@@ -65,12 +62,10 @@ const MapRecepcionContent = () => {
 
 const MapRecepcion = () => {
   return (
-    <Layout>
+    <LayoutRecepcion>
       {/* Se envuelve el contenido con el Provider correspondiente para que los hooks useContext funcionen correctamente */}
-      <ContextProviderRecepcion>
-        <MapRecepcionContent />
-      </ContextProviderRecepcion>
-    </Layout>
+      <MapRecepcionContent />
+    </LayoutRecepcion>
   );
 };
 

@@ -9,6 +9,7 @@ import { UtilsApi } from '../../Utils/utilsApi';
 import FormulariFiltros from '../../components/FormulariFiltros';
 import { NavbarRecepcion } from '../../components/Navbar/NavbarRecepcion';
 import EstadisticasDashboard from '../../components/EstadisticasDashboard';
+import LayoutRecepcion from '../../Layout/Recepcion';
 
 const calcularEstadisticas = (pedidosData) => {
   let totalDeVentas = 0,
@@ -103,7 +104,7 @@ const calcularEstadisticas = (pedidosData) => {
 };
 
 const Contabilidad = () => {
-  const { tokenLogin, modoOscuro, alternarModo } = useContext(MiContexto);
+  const { tokenLogin } = useContext(MiContexto);
   const token = tokenLogin?.token;
 
   const [pedidos, setPedidos] = useState([]);
@@ -148,37 +149,34 @@ const Contabilidad = () => {
   const estadisticas = useMemo(() => calcularEstadisticas(pedidos), [pedidos]);
 
   return (
-    <Layout>
-      <ContextProviderRecepcion>
-        <NavbarRecepcion modoOscuro={modoOscuro} alternarModo={alternarModo} />
-        <Container fluid>
+    <LayoutRecepcion>
+      <Container fluid>
+        <Row className="my-3">
+          <FormulariFiltros onBuscar={buscarPorFiltro} />
+        </Row>
+
+        {loading && (
+          <Row className="justify-content-center my-3">
+            <Spinner animation="border" variant="primary" />
+          </Row>
+        )}
+
+        {error && (
           <Row className="my-3">
-            <FormulariFiltros onBuscar={buscarPorFiltro} />
+            <Alert variant="danger">{error}</Alert>
           </Row>
+        )}
 
-          {loading && (
-            <Row className="justify-content-center my-3">
-              <Spinner animation="border" variant="primary" />
-            </Row>
-          )}
+        {/* Visualizamos las estadísticas usando el componente Dashboard */}
+        <Row className="mb-3">
+          <EstadisticasDashboard stats={estadisticas} />
+        </Row>
 
-          {error && (
-            <Row className="my-3">
-              <Alert variant="danger">{error}</Alert>
-            </Row>
-          )}
-
-          {/* Visualizamos las estadísticas usando el componente Dashboard */}
-          <Row className="mb-3">
-            <EstadisticasDashboard stats={estadisticas} />
-          </Row>
-
-          <Row>
-            <TablaListaPedidos pedidos={pedidos} />
-          </Row>
-        </Container>
-      </ContextProviderRecepcion>
-    </Layout>
+        <Row>
+          <TablaListaPedidos pedidos={pedidos} />
+        </Row>
+      </Container>
+    </LayoutRecepcion>
   );
 };
 

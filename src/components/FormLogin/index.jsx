@@ -4,20 +4,21 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useContext } from 'react'
-import { MiContexto } from '../../Context'
 import { Navigate } from "react-router-dom";
 import { getUrlBackend } from '../../Utils/getUrlApiByOriginPath.js';
+import { PreferencesContext } from '../../Context/PreferencesContext.jsx';
+import { MiContexto } from '../../Context/index.jsx';
 
 
 function FormLogin() {
   const [validated, setValidated] = useState(false);
   const [redireccionar, setRedireccionar] = useState({ ok: false, to: `` });
   const [messageErrorLogin, setMessageErrorLogin] = useState(null);
-  const context = useContext(MiContexto)
+  const { setTokenLogin } = useContext(PreferencesContext)
+  const { setTokenLogin: setTokenLogin2 } = useContext(MiContexto)
   const [showPassword, setShowPassword] = useState(false);
 
   const apiUrl = getUrlBackend()
-  console.log(`[ ~ FormLogin ~ apiUrl]`, apiUrl)
 
   //al entrar al login , borramos el token que tengamos guardado
   // context.saveToken({})
@@ -48,8 +49,8 @@ function FormLogin() {
       const body = login.body
 
       document.cookie = `token=${token}; Secure; SameSite=Strict`;
-      console.log(`context.savetoek`, context.setTokenLogin);
-      context.setTokenLogin(body)
+      setTokenLogin(body)
+      setTokenLogin2(body)
       // Después de que el usuario inicie sesión, redirigirlo a la página anterior
 
       const objRedireccionRole = {

@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { FirebaseAuth } from '../../firebase/config';
-import Layout from '../../Layout/Recepcion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
+import { UserLayout } from '../../Layout/UserLayout';
 
 const Login1 = () => {
   const [email, setEmail] = useState('');
@@ -61,7 +61,7 @@ const Login1 = () => {
   };
 
   return (
-    <Layout>
+    <UserLayout>
       <div className="container mt-5">
         <div className="row justify-content-center">
           <div className="col-md-6">
@@ -109,7 +109,7 @@ const Login1 = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </UserLayout>
   );
 };
 

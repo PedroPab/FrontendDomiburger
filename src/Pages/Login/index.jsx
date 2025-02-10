@@ -1,12 +1,10 @@
-import { useContext, useState } from 'react'
-import { MiContexto } from '../../Context'
+import { useState } from 'react'
+import { ContextProvider } from '../../Context'
 import { Container, Row, Col, Card, Modal, Button } from 'react-bootstrap'
 import Layout from "../../components/Layout";
 import FormLogin from '../../components/FormLogin';
-import { NavbarRecepcion } from '../../components/Navbar/NavbarRecepcion';
 
 const Login = () => {
-  const context = useContext(MiContexto)
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
@@ -15,10 +13,10 @@ const Login = () => {
   return (
     <>
       <Layout>
-        <NavbarRecepcion
+        {/* <NavbarRecepcion
           modoOscuro={context.modoOscuro}
           alternarModo={context.alternarModo}
-        />
+        /> */}
         <Container className="login-container">
           <Row className="justify-content-center">
             <Col md={6}>
@@ -53,4 +51,12 @@ const Login = () => {
   );
 };
 
-export default Login;
+const LoginC = () => {
+  return (
+    <ContextProvider>
+      <Login />
+    </ContextProvider>
+  )
+}
+
+export default LoginC;

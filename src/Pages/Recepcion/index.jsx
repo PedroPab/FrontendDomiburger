@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { MiContexto } from '../../Context';
+import { ContextProvider, MiContexto } from '../../Context';
 import { RecepcionContexto } from '../../Context/RecepcionContex';
 import { Container, ToastContainer, Row, Col } from 'react-bootstrap';
 import RowListCol from "../../components/RowListCol";

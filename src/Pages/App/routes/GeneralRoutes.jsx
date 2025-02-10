@@ -31,7 +31,7 @@ const MeRoute = () => (
 const GeneralRoutes = () => {
   return [
     <Route key="experimentos" path="/experimentos" element={<Experimentos />} />,
-    <Route key="404" path="/*" element={<NotFoundPage />} />,
+    // <Route key="404" path="/*" element={<NotFoundPage />} />,
     <Route key="loginEx" path="loginEx" element={<LoginExp />} />,
     <Route key="home" path="/home" element={<Experimentos />} />,
 

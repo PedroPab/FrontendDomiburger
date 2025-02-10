@@ -9,20 +9,17 @@ import { EstadisticasRoutes } from './routes/EstadisticasRoutes';
 import { CodigoRoutes } from './routes/CodigoRoutes';
 import { ClientesRoutes } from './routes/ClientesRoutes';
 import { DomiciliarioRoutes } from './routes/DomiciliarioRoutes';
+import { PreferencesProvider } from '../../Context/PreferencesContext';
 // import { UserRoutes } from './routes/UserRoutes';
 
 const AppRoutes = () => {
   return (
     <>
-
-
-      <ContextProvider>
-
+      <PreferencesProvider>
         <Routes>
           {HomeRoutes()}
           {LoginRoutes()}
           {GeneralRoutes()}
-          {RecepcionRoutes()}
           {EstadisticasRoutes()}
           {CodigoRoutes()}
           {CocinaRoutes()}
@@ -31,8 +28,11 @@ const AppRoutes = () => {
           {/* {UserRoutes()} */}
 
         </Routes>
-      </ContextProvider>
 
+        <RecepcionRoutes />
+
+
+      </PreferencesProvider>
     </>
   );
 }

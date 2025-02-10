@@ -4,21 +4,21 @@ import { BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { FaHome, FaInfoCircle, FaShoppingCart } from 'react-icons/fa';
-import { useContext } from 'react';
-import { MiContexto } from '../../../Context';
-import { useAuth } from '../../../Context/AuthContext';
+import { usePreferences } from '../../../Context/PreferencesContext';
+// import { MiContexto } from '../../../Context';
+// import { useAuth } from '../../../Context/AuthContext';
 
 const NavbarCliente = () => {
-  const { modoOscuro, alternarModo } = useContext(MiContexto);
+  const { isDarkMode, toggleTheme } = usePreferences(); // Obtener estado y función del contexto de preferencias
 
-  const { usuarioActual } = useAuth();
-  const usuario = usuarioActual
+  // const { usuarioActual } = useAuth();
+  const usuario = false
 
   return (
     <Navbar
       expand="lg"
-      bg={modoOscuro ? 'dark' : 'light'}
-      variant={modoOscuro ? 'dark' : 'light'}
+      bg={isDarkMode ? 'dark' : 'light'}
+      variant={isDarkMode ? 'dark' : 'light'}
       className="sticky-top shadow-sm"
       role="navigation"
       aria-label="Navegación principal"
@@ -80,10 +80,10 @@ const NavbarCliente = () => {
             {/* Botón para Cambiar Tema */}
             <Nav.Item>
               <Button
-                variant={modoOscuro ? 'outline-light' : 'outline-dark'}
-                onClick={alternarModo}
+                variant={isDarkMode ? 'outline-light' : 'outline-dark'}
+                onClick={toggleTheme}
                 className="mt-2 mt-lg-0"
-                aria-label={`Activar ${modoOscuro ? 'tema claro' : 'tema oscuro'}`}
+                aria-label={`Activar ${isDarkMode ? 'tema claro' : 'tema oscuro'}`}
               >
                 <BsMoonStars aria-hidden="true" />
               </Button>

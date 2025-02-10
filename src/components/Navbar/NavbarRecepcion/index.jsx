@@ -10,17 +10,19 @@ import { MdOutlineDeliveryDining, MdOutlineAdminPanelSettings, MdOutlineSettings
 import { FiMapPin, FiList } from 'react-icons/fi';
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
+import { PreferencesContext } from '../../../Context/PreferencesContext';
 
-const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
+const NavbarRecepcionCom = () => {
   const contextRecepcion = useContext(RecepcionContexto);
   const { toggleSidebar } = contextRecepcion;
+  const { isDarkMode, toggleTheme } = useContext(PreferencesContext)
 
   return (
     <Navbar
       expand="lg"
       sticky="top"
-      bg={modoOscuro ? 'dark' : 'light'}
-      variant={modoOscuro ? 'dark' : 'light'}
+      bg={isDarkMode ? 'dark' : 'light'}
+      variant={isDarkMode ? 'dark' : 'light'}
       className="shadow-sm"
     >
       <Container fluid className="px-3 py-2">
@@ -129,7 +131,7 @@ const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
               <NavDropdown.Item as={Link} to="/login">
                 <BsFillPersonFill className="me-1" size={18} /> Login
               </NavDropdown.Item>
-              <NavDropdown.Item onClick={alternarModo}>
+              <NavDropdown.Item onClick={toggleTheme}>
                 <BsMoonStars className="me-1" size={18} /> Cambiar Tema
               </NavDropdown.Item>
             </NavDropdown>

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useState } from 'react';
-import { CambiarTema } from '../components/ThemeDark/theme';
 import { useLocalStorage } from '../Utils/localStore';
 
 export const ContexClient = createContext()
@@ -13,12 +12,8 @@ export const ContextProviderClient = ({ children }) => {
   const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUserClient', initialValue: {} })
 
   // Estado para el modo oscuro
-  const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: true })
 
   // Función para alternar entre el modo oscuro y claro
-  const alternarModo = () => {
-    setModoOscuro(!modoOscuro);
-  };
 
   ///aletas de la aplicacion 
   const [alerts, setAlerts] = useState([]);
@@ -38,8 +33,6 @@ export const ContextProviderClient = ({ children }) => {
         // token , pued no tener un token hasta que ingrese en login 
         tokenLogin, setTokenLogin,
 
-        modoOscuro, alternarModo,
-
         alerts, setAlerts,
 
         alertaActiva, setAlertaActiva,
@@ -47,7 +40,6 @@ export const ContextProviderClient = ({ children }) => {
         pedido, setPedido,
       }
     }>
-      <CambiarTema modoOscuro={modoOscuro} />
       {children}
     </ContexClient.Provider>
   )
