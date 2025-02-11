@@ -8,7 +8,6 @@ const ListOrder = ({ items }) => {
   const [filteredPedidos, setFilteredPedidos] = useState(items)
 
   useEffect(() => {
-    console.log('domiciliarioIdFilter', domiciliarioIdFilter);
     // si es un id valido filtramos los pedidos que tengan ese domiciliario
     if (domiciliarioIdFilter === 'ninguno') {
       setFilteredPedidos(items.filter(pedido => !pedido?.domiciliario_asignado))

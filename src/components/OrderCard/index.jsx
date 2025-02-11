@@ -19,7 +19,6 @@ const OrderCard = ({ dataPedido }) => {
   const indexEstado = listaEstados.findIndex(e => e.name === dataPedido?.estado);
   const objEstado = listaEstados[indexEstado];
   const colorEstado = objEstado?.color;
-  console.log(`[ ~ OrderCard ~ colorEstado]`, colorEstado)
   const urlAdress = encodeURIComponent(dataPedido?.address.address_complete);
 
 
