@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { MiContexto } from '../../Context'; // Ajusta la importación según la ubicación de tu contexto de autenticación
 import { PreferencesContext } from '../../Context/PreferencesContext';
 
 const ProtectedRoute = ({ users, children, redirectTo = '/login' }) => {

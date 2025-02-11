@@ -78,12 +78,21 @@ class UserRoutes extends RoutesClass {
   }
 }
 
+class LoginRoutes extends RoutesClass {
+  constructor() {
+    super()
+    this.path = `/login`
+    this.routes = {}
+  }
+}
+
 const RECEPCION_ROUTES = new RecepcionRoutes()
 const ESTADISTICAS_ROUTES = new EstadisticasRoutes()
 const CODIGO_ROUTES = new CodigoRoutes()
 const DOMICILIARIO_ROUTES = new DomiciliarioRoutes()
 const COCINA_ROUTES = new CocinaRoutes()
 const USER_ROUTES = new UserRoutes()
+const LOGIN_ROUTES = new LoginRoutes()
 
 export {
   RECEPCION_ROUTES,
@@ -91,5 +100,6 @@ export {
   CODIGO_ROUTES,
   DOMICILIARIO_ROUTES,
   COCINA_ROUTES,
-  USER_ROUTES
+  USER_ROUTES,
+  LOGIN_ROUTES,
 }
