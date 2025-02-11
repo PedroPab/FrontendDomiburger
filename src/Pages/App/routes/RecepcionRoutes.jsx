@@ -32,7 +32,7 @@ const RecepcionRoutes = () => {
         </ContextProvider>
       }
     >
-      <Route index element={<Recepcion />} />
+      <Route path='' element={<Recepcion />} />
       <Route path={routes.CONTABILIDAD} element={<Contabilidad />} />
       <Route path={routes.MAP_RECEPCION} element={<MapRecepcion />} />
       <Route path={routes.FORM_ADMIN} element={<FormAdmin />} />

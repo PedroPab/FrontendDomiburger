@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
 
 const MeProfile = () => {
   const { usuarioActual } = useAuth();
+  console.log(`:P `, usuarioActual)
 
   // Si el usuario no está autenticado, mostramos un mensaje indicándolo.
   if (!usuarioActual) {

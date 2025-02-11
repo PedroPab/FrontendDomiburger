@@ -1,10 +1,9 @@
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
-import Layout from "../../components/Layout";
 import { Col, Container, Row } from 'react-bootstrap';
 import OrderCard from '../../components/OrderCard';
 import { FaBoxOpen } from 'react-icons/fa';
-import { NavbarCocinero } from '../../components/Navbar/NavbarCocinero';
+import LayoutCocina from '../../Layout/LayoutCocina';
 
 
 const Cocina = () => {
@@ -51,20 +50,13 @@ const Cocina = () => {
 
   return (
     <>
-      <Layout>
-        <NavbarCocinero
-          modoOscuro={context.modoOscuro}
-          alternarModo={context.alternarModo}
-          pedidos={context.items}
-        />
+      <LayoutCocina>
         <Container fluid  >
-
-          <Row className=''>
-
+          <Row>
             <ListPedidos />
           </Row>
         </Container>
-      </Layout >
+      </LayoutCocina>
     </>
   );
 };

@@ -14,7 +14,7 @@ import { PreferencesContext } from '../../../Context/PreferencesContext';
 import { CODIGO_ROUTES, ESTADISTICAS_ROUTES, RECEPCION_ROUTES } from '../../../Utils/const/namesRutes'; // Importamos las rutas definidas
 
 
-const NavbarRecepcionCom = () => {
+const NavbarRecepcion = () => {
   const contextRecepcion = useContext(RecepcionContexto);
   const { toggleSidebar } = contextRecepcion;
   const { isDarkMode, toggleTheme } = useContext(PreferencesContext);
@@ -147,14 +147,6 @@ const NavbarRecepcionCom = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  );
-};
-
-const NavbarRecepcion = (props) => {
-  return (
-    <>
-      <NavbarRecepcionCom {...props} />
-    </>
   );
 };
 
