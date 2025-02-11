@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Container, Navbar, Nav, NavDropdown, Col, Row, Button } from 'react-bootstrap';
-import { BsMoonStars, BsTools, BsFillPersonFill } from 'react-icons/bs';
+import { BsMoonStars, BsFillPersonFill, BsPeopleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { useContext } from 'react';
@@ -42,9 +42,15 @@ const NavbarRecepcionCom = () => {
           </Col>
 
           {/* 2. Botón para alternar el filtro de domiciliarios */}
+
           <Col xs="auto">
-            <Button variant="outline-primary" onClick={() => toggleSidebar()}>
-              <BsTools size={20} /> hol
+            <Button
+              variant="link"
+              onClick={() => toggleSidebar()}
+              className="p-2 text-primary d-flex align-items-center"
+              style={{ boxShadow: 'none', border: 'none' }}
+            >
+              <BsPeopleFill size={20} className="me-1" />
             </Button>
           </Col>
 

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useLocalStorage } from '../Utils/localStore';
-import { MiContexto } from '../Context';
 import { UtilsApi } from '../Utils/utilsApi';
 import { usePreferences } from './PreferencesContext';
 
@@ -40,8 +39,8 @@ export const ContextProviderRecepcion = ({ children }) => {
   //el filtro para buscar los domiciliarios
   const [domiciliarioIdFilter, setDomiciliarioIdFilter] = useState(null)
 
-  const [openSidebarFilterDelivery, setOpenSidebarFilterDelivery] = useState(true)
-
+  const { item: openSidebarFilterDelivery, saveItem: setOpenSidebarFilterDelivery } = useLocalStorage({ itemName: 'openSidebarFilterDelivery', initialValue: false })
+  //setOpenSidebarFilterDelivery)
   const toggleSidebar = () => {
     setOpenSidebarFilterDelivery((prevState) => !prevState);
   };
