@@ -26,12 +26,15 @@ export const PreferencesProvider = ({ children }) => {
 
   //token V1
   const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} });
+  const clearTokenLogin = () => {
+    setTokenLogin({});
+  };
 
   return (
     <PreferencesContext.Provider value={{
       isDarkMode, toggleTheme,
 
-      tokenLogin, setTokenLogin,
+      tokenLogin, setTokenLogin, clearTokenLogin,
     }}>
       {children}
     </PreferencesContext.Provider>

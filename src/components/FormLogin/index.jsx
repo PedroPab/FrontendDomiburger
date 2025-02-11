@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FloatingLabel, Alert, Spinner } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -11,11 +11,13 @@ function FormLogin() {
   const [validated, setValidated] = useState(false);
   const [redireccionar, setRedireccionar] = useState({ ok: false, to: `` });
   const [messageErrorLogin, setMessageErrorLogin] = useState(null);
-  const { setTokenLogin } = usePreferences();
+  const { setTokenLogin, clearTokenLogin } = usePreferences();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const apiUrl = getUrlBackend();
+
+  useEffect(clearTokenLogin, [])
 
   // Refs para manejar los inputs sin acceder al DOM manualmente
   const usernameRef = useRef(null);
