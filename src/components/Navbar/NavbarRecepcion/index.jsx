@@ -27,11 +27,11 @@ const NavbarRecepcion = () => {
       variant={isDarkMode ? 'dark' : 'light'}
       className="shadow-sm"
     >
-      <Container fluid className="px-3 py-2">
+      <Container fluid >
         <Row className="w-100 align-items-center justify-content-between g-2">
           {/* 1. Logo */}
           <Col xs="auto">
-            <Navbar.Brand as={Link} to="/">
+            <Navbar.Brand as={Link} to={RECEPCION_ROUTES.path}>
               <img
                 src={logo}
                 alt="Domiburguer"

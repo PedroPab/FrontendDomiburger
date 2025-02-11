@@ -1,0 +1,41 @@
+.theme-toggle {
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Efecto de brillo cuando cambia */
+.icon-glow {
+  animation: glowEffect 0.5s ease-in-out;
+}
+
+/* Brillo dorado para el sol */
+.light-mode .icon-glow {
+  color: #ffcc00;
+  text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff9900;
+}
+
+/* Brillo azul para la luna */
+.dark-mode .icon-glow {
+  color: #8899ff;
+  text-shadow: 0 0 10px #8899ff, 0 0 20px #5566ff;
+}
+
+/* Animación de brillo */
+@keyframes glowEffect {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.9);
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: brightness(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}

@@ -15,7 +15,6 @@ const AppRoutes = () => {
     <>
       <PreferencesProvider>
         <AuthProvider>
-
           <Routes>
             {LoginRoutes()}
             {HomeRoutes()}
