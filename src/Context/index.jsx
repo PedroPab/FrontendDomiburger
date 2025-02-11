@@ -1,14 +1,18 @@
-import { io } from 'socket.io-client';
+// context/OrdersContext.js
 import { createContext, useEffect, useState } from 'react';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
+// import { socket } from '../Utils/socket';
 import { usePreferences } from './PreferencesContext';
+import { io } from 'socket.io-client';
 import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
 
 export const MiContexto = createContext();
 
 export const ContextProvider = ({ children }) => {
   const apiUrl = getUrlSocket();
+
   const socket = io(apiUrl);
+
 
   const { tokenLogin } = usePreferences()
 

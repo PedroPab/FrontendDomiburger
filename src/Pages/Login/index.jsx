@@ -50,10 +50,4 @@ const Login = () => {
   );
 };
 
-const LoginC = () => {
-  return (
-    <Login />
-  )
-}
-
-export default LoginC;
+export default Login;
