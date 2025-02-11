@@ -13,7 +13,6 @@ class ApiClient {
       },
     });
 
-    return this.apiClient;
   }
 }
 

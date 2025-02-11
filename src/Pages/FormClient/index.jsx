@@ -4,6 +4,7 @@ import FormContainer from './FormContainer';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import { HelmetClientHome } from './HelmetClientHome';
 import ClosedNotice from './ClosedNotice';
+import { UserLayout } from '../../Layout/UserLayout';
 
 // Obtiene el entorno de ejecución
 const VITE_NODE_ENV = import.meta.env.VITE_NODE_ENV;
@@ -48,16 +49,15 @@ const FormClient = () => {
 
   return (
     <>
-      <LayoutCliente>
+      <UserLayout>
         <HelmetClientHome />
-        <NavbarCliente />
 
         {cerrado && VITE_NODE_ENV === 'production' && <ClosedNotice proximaApertura={proximaApertura} />}
 
         <div style={{ opacity: cerrado && VITE_NODE_ENV === 'production' ? 0.6 : 1, pointerEvents: cerrado && VITE_NODE_ENV === 'production' ? 'none' : 'auto' }}>
           <FormContainer />
         </div>
-      </LayoutCliente>
+      </UserLayout>
     </>
   );
 };

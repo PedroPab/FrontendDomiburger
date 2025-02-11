@@ -1,11 +1,13 @@
+import { HelmetProvider } from "react-helmet-async"
 import { UserNavbar } from "./UserNavbar"
 
 const UserLayout = ({ children }) => {
   return (
     <>
-      <UserNavbar />
-      {children}
-
+      <HelmetProvider>
+        <UserNavbar />
+        {children}
+      </HelmetProvider>
     </>
   )
 }

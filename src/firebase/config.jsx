@@ -1,6 +1,6 @@
 // Importa las funciones necesarias del SDK de Firebase
 import { initializeApp } from "firebase/app";
-import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getAuth, connectAuthEmulator, RecaptchaVerifier } from "firebase/auth";
 import { getUrlAuth } from "../Utils/getUrlApiByOriginPath";
 const ENV = import.meta.env
 
@@ -31,4 +31,17 @@ if (window.location.hostname === "localhost" || ENV.VITE_NODE_ENV == "developmen
   connectAuthEmulator(FirebaseAuth, getUrlAuth());
 }
 
-export { FirebaseAuth };
+const configureRecaptcha = () => {
+  window.recaptchaVerifier = new RecaptchaVerifier(FirebaseAuth, "recaptcha-container", {
+    size: "invisible",
+    callback: (response) => {
+      console.log("reCAPTCHA resuelto", response);
+    },
+    "expired-callback": () => {
+      console.log("reCAPTCHA expirado, recargar página");
+    },
+  });
+};
+
+
+export { FirebaseAuth, configureRecaptcha };

@@ -1,10 +1,9 @@
 import { ApiClient } from '../ConfigApiV2';
 
-const api = new ApiClient(`locations`);
 
 class LocationsService {
   constructor() {
-    this.api = api;
+    this.api = new ApiClient(`locations`);
   }
   async getByIdUser(id, token) {
     try {
