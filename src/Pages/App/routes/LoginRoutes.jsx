@@ -1,15 +1,13 @@
 import { Route } from "react-router-dom"
 import Login from "../../Login"
 import { Login1 } from "../../../components/Login/Login"
-import { ContextProvider } from "../../../Context"
+import { LOGIN_ROUTES } from "../../../Utils/const/namesRutes"
 
 const LoginRoutes = () => {
-
   return (
-    <Route path="/login" >
-
+    <Route path={LOGIN_ROUTES.path} >
       <Route index element={<Login />} />
-      <Route path="login1" element={<Login1 />} />
+      <Route path={LOGIN_ROUTES.routes.LOGIN_AUTH} element={<Login1 />} />
     </Route >
   )
 }

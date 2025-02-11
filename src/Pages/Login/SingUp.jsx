@@ -1,10 +1,11 @@
 // src/components/SignUp.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../Firebase/firebaseConfig';
 import Layout from '../../Layout/LayoutDefault';
 import { useNavigate } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
+import { LOGIN_ROUTES } from '../../Utils/const/namesRutes';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ const SignUp = () => {
       await createUserWithEmailAndPassword(auth, email, password);
       setSuccess('Registro exitoso. Serás redirigido al inicio de sesión...');
       setTimeout(() => {
-        navigate('/login');
+        navigate(LOGIN_ROUTES.routes.LOGIN_AUTH);
       }, 2000);
     } catch (error) {
       console.error('Error al registrar:', error);

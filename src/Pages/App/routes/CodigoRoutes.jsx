@@ -6,7 +6,7 @@ import CrearCodigoReferido from "../../Codigo/CrearCodigoReferido";
 import CrearCodigoReferidoYaCreado from "../../Codigo/CrearCodigoReferidoYaCreado";
 import { VisualizarCodigoReferidos } from "../../Codigo/VisualisarCodigosReferidos";
 import { EditarCodigo } from "../../Codigo/EditarCodigo";
-import { CODIGO_ROUTES } from "../../../Utils/const/namesRutes"; // Importamos las rutas
+import { CODIGO_ROUTES, LOGIN_ROUTES } from "../../../Utils/const/namesRutes"; // Importamos las rutas
 const routes = CODIGO_ROUTES.routes
 const CodigoRoutes = () => {
   return (
@@ -15,7 +15,8 @@ const CodigoRoutes = () => {
       element={
         <ProtectedRoute
           users={[ROLES.admin, ROLES.recepcion]}
-          redirectTo="/login" />
+          redirectTo={LOGIN_ROUTES.path}
+        />
       }>
       <Route index element={<Codigos />} />
       <Route path={routes.CREATE_CODIGO_REFERIDO} element={<CrearCodigoReferido />} />

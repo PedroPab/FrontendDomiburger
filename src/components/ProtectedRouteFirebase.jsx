@@ -1,12 +1,13 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAuth } from '../Context/AuthContext';
+import { LOGIN_ROUTES } from '../Utils/const/namesRutes';
 
 const ProtectedRouteFirebase = ({ children }) => {
   const { usuarioActual } = useAuth();
 
   if (!usuarioActual) {
-    return <Navigate to="/login1" />;
+    return <Navigate to={LOGIN_ROUTES.routes.LOGIN_AUTH} />;
   }
   console.log(`pasaste la prueba ...`)
 

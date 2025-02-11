@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { FaHome, FaInfoCircle, FaShoppingCart } from 'react-icons/fa';
 import { usePreferences } from '../../../Context/PreferencesContext';
+import { LOGIN_ROUTES } from '../../../Utils/const/namesRutes';
 // import { MiContexto } from '../../../Context';
 // import { useAuth } from '../../../Context/AuthContext';
 
@@ -116,7 +117,7 @@ const NavbarCliente = () => {
             ) : (
               <Nav.Link
                 as={Link}
-                to="/login"
+                to={LOGIN_ROUTES.routes.LOGIN_AUTH}
                 className="text-decoration-none ms-3"
                 aria-label="Iniciar sesión"
               >

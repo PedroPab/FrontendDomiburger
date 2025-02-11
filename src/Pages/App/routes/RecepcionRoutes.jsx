@@ -13,7 +13,7 @@ import ProductosAdmin from "../../ProductosAdmin/ListProducts";
 import CreateProduct from "../../ProductosAdmin/CreateProduct";
 import { EstadisticasRoutes } from "./EstadisticasRoutes";
 import { CodigoRoutes } from "./CodigoRoutes";
-import { RECEPCION_ROUTES } from "../../../Utils/const/namesRutes"; // Importamos las rutas constantes
+import { LOGIN_ROUTES, RECEPCION_ROUTES } from "../../../Utils/const/namesRutes"; // Importamos las rutas constantes
 import Clientes from "../../Clientes/Clientes";
 
 const routes = RECEPCION_ROUTES.routes;
@@ -26,7 +26,7 @@ const RecepcionRoutes = () => {
           <ContextProviderRecepcion>
             <ProtectedRoute
               users={[ROLES.admin, ROLES.recepcion]}
-              redirectTo="/login"
+              redirectTo={LOGIN_ROUTES.path}
             />
           </ContextProviderRecepcion>
         </ContextProvider>

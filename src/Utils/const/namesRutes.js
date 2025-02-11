@@ -82,7 +82,9 @@ class LoginRoutes extends RoutesClass {
   constructor() {
     super()
     this.path = `/login`
-    this.routes = {}
+    this.routes = {
+      LOGIN_AUTH: `${this.path}/auth`,
+    }
   }
 }
 

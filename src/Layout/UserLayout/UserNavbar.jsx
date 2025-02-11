@@ -8,6 +8,7 @@ import logo from "./../../assets/logo.png";
 import ThemeToggle from "../ThemeToggle";
 import { FaSignOutAlt, FaUserCircle, FaShoppingCart, FaMapMarkerAlt } from "react-icons/fa";
 import "./UserNavbar.css";
+import { LOGIN_ROUTES } from "../../Utils/const/namesRutes";
 
 const UserNavbar = () => {
   const { isDarkMode, toggleTheme } = usePreferences();
@@ -85,14 +86,14 @@ const UserNavbar = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <Nav.Link as={Link} to="/login">
+              <Nav.Link as={Link} to={LOGIN_ROUTES.routes.LOGIN_AUTH}>
                 <Button variant="primary" className="px-4">Iniciar Sesión</Button>
               </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </Navbar >
   );
 };
 

@@ -4,10 +4,10 @@ import { BsFillPersonFill, BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { FaHome, FaHistory } from "react-icons/fa";
-import { BiLogIn } from "react-icons/bi";
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
 import { MdOutlineSettings } from 'react-icons/md';
+import { LOGIN_ROUTES } from '../../../Utils/const/namesRutes';
 
 const NavbarDomiciliario = ({ modoOscuro, alternarModo }) => {
 
@@ -58,7 +58,7 @@ const NavbarDomiciliario = ({ modoOscuro, alternarModo }) => {
 
             {/* Sección de Ajustes */}
             <NavDropdown title={<><MdOutlineSettings className="me-2" />Ajustes</>} id="nav-dropdown-ajustes">
-              <NavDropdown.Item as={Link} to="/login">
+              <NavDropdown.Item as={Link} to={LOGIN_ROUTES.path}>
                 <BsFillPersonFill className="me-2" /> Login
               </NavDropdown.Item>
               <NavDropdown.Item onClick={() => alternarModo()}>

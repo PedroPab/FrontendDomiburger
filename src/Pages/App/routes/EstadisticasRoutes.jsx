@@ -5,7 +5,7 @@ import EstadisticasClientes from "../../EstadisticasHome/EstadisticasClientes";
 import EstadisticasHome from "../../EstadisticasHome";
 import ProtectedRoute from "../../../components/ProtectedRoute";
 import { ROLES } from "../../../Utils/constList";
-import { ESTADISTICAS_ROUTES } from "../../../Utils/const/namesRutes";
+import { ESTADISTICAS_ROUTES, LOGIN_ROUTES } from "../../../Utils/const/namesRutes";
 
 const routes = ESTADISTICAS_ROUTES.routes;
 
@@ -16,7 +16,7 @@ const EstadisticasRoutes = () => {
       element={
         <ProtectedRoute
           users={[ROLES.admin, ROLES.recepcion]}
-          redirectTo="/login"
+          redirectTo={LOGIN_ROUTES.path}
         />
       }
     >

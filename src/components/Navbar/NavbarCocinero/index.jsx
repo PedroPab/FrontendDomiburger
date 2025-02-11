@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
-import { Container, Navbar, Nav, NavDropdown, Col, Row, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown, Col, Row } from 'react-bootstrap';
 import { BsFillPersonFill, BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
-import { FaHome, FaMapMarkedAlt } from 'react-icons/fa';
-import { BiLogIn } from "react-icons/bi";
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
 import { MdOutlineSettings } from 'react-icons/md';
+import { LOGIN_ROUTES } from '../../../Utils/const/namesRutes';
 
 const NavbarCocinero = ({ modoOscuro, alternarModo }) => {
   return (
@@ -54,7 +53,7 @@ const NavbarCocinero = ({ modoOscuro, alternarModo }) => {
 
             {/* Sección de Ajustes */}
             <NavDropdown title={<><MdOutlineSettings className="me-2" />Ajustes</>} id="nav-dropdown-ajustes">
-              <NavDropdown.Item as={Link} to="/login">
+              <NavDropdown.Item as={Link} to={LOGIN_ROUTES.path}>
                 <BsFillPersonFill className="me-2" /> Login
               </NavDropdown.Item>
               <NavDropdown.Item onClick={() => alternarModo()}>

@@ -8,6 +8,7 @@ import { ConnectionStatusIndicator } from './ConnectionStatusIndicator';
 import { OrderCountIndicator } from './OrderCountIndicator';
 import { PreferencesContext } from '../../Context/PreferencesContext';
 import { MdOutlineSettings } from 'react-icons/md';
+import { LOGIN_ROUTES } from '../../Utils/const/namesRutes';
 
 
 const NavbarCocina = () => {
@@ -67,7 +68,7 @@ const NavbarCocina = () => {
               id="nav-dropdown-ajustes"
               className="mx-2"
             >
-              <NavDropdown.Item as={Link} to="/login">
+              <NavDropdown.Item as={Link} to={LOGIN_ROUTES.path}>
                 <BsFillPersonFill className="me-1" size={18} /> Login
               </NavDropdown.Item>
               <NavDropdown.Item onClick={toggleTheme}>

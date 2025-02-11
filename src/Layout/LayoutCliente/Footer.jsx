@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Footer.css'; // Asegúrate de crear este archivo CSS
+import { LOGIN_ROUTES } from '../../Utils/const/namesRutes';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Footer = () => {
     if (newClicks.join('') === easterEggSequence.join('')) {
       setAnimate(true);
       setTimeout(() => {
-        navigate('/login');
+        navigate(LOGIN_ROUTES.path);
       }, 2000); // Duración de la animación
     }
   };

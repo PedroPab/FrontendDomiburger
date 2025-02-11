@@ -3,6 +3,7 @@ import ProtectedRoute from "../../../components/ProtectedRoute"
 import Cocina from "../../Cocina"
 import { ROLES } from "../../../Utils/constList"
 import { ContextProvider } from "../../../Context"
+import { LOGIN_ROUTES } from "../../../Utils/const/namesRutes"
 
 const CocinaRoutes = () => {
   return (
@@ -12,7 +13,8 @@ const CocinaRoutes = () => {
         <ContextProvider>
           <ProtectedRoute
             users={[ROLES.admin, ROLES.recepcion, ROLES.cocina, "cocinero"]}
-            redirectTo="/login" />
+            redirectTo={LOGIN_ROUTES.path}
+          />
 
         </ContextProvider>
       }>

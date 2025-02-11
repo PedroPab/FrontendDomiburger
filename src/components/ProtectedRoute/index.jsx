@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { usePreferences } from '../../Context/PreferencesContext';
+import { LOGIN_ROUTES } from '../../Utils/const/namesRutes';
 
-const ProtectedRoute = ({ users, children, redirectTo = '/login' }) => {
+const ProtectedRoute = ({ users, children, redirectTo = LOGIN_ROUTES.path }) => {
   const { tokenLogin } = usePreferences()
 
 

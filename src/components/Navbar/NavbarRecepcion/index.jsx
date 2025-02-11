@@ -11,7 +11,7 @@ import { FiMapPin, FiList } from 'react-icons/fi';
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
 import { PreferencesContext } from '../../../Context/PreferencesContext';
-import { CODIGO_ROUTES, ESTADISTICAS_ROUTES, RECEPCION_ROUTES } from '../../../Utils/const/namesRutes'; // Importamos las rutas definidas
+import { CODIGO_ROUTES, ESTADISTICAS_ROUTES, LOGIN_ROUTES, RECEPCION_ROUTES } from '../../../Utils/const/namesRutes'; // Importamos las rutas definidas
 
 
 const NavbarRecepcion = () => {
@@ -136,7 +136,7 @@ const NavbarRecepcion = () => {
               id="nav-dropdown-ajustes"
               className="mx-2"
             >
-              <NavDropdown.Item as={Link} to="/login">
+              <NavDropdown.Item as={Link} to={LOGIN_ROUTES.path}>
                 <BsFillPersonFill className="me-1" size={18} /> Login
               </NavDropdown.Item>
               <NavDropdown.Item onClick={toggleTheme}>
