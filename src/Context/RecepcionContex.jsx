@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useLocalStorage } from '../Utils/localStore';
 import { MiContexto } from '../Context';
 import { UtilsApi } from '../Utils/utilsApi';
+import { usePreferences } from './PreferencesContext';
 
 export const RecepcionContexto = createContext()
 
@@ -19,7 +20,7 @@ export const ContextProviderRecepcion = ({ children }) => {
   //estado seleccionado
   const [estadoSeleccionado, setEstadoSeleccionado] = useState()
 
-  const context = useContext(MiContexto)
+  const context = usePreferences()
 
   //miramos todo los domiciliarios en la api
   useEffect(() => {
@@ -42,7 +43,6 @@ export const ContextProviderRecepcion = ({ children }) => {
   const [openSidebarFilterDelivery, setOpenSidebarFilterDelivery] = useState(true)
 
   const toggleSidebar = () => {
-    console.log('toggleSidebar', openSidebarFilterDelivery)
     setOpenSidebarFilterDelivery((prevState) => !prevState);
   };
 

@@ -1,12 +1,12 @@
 import { createContext, useContext, useEffect } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../Utils/localStore';
 
 // Crear el contexto
 export const PreferencesContext = createContext();
 
 // Crear el provider para este contexto
 export const PreferencesProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useLocalStorage({
+  const { item: isDarkMode, saveItem: setIsDarkMode } = useLocalStorage({
     itemName: 'isDarkMode',
     initialValue: false,
   }); // Modo oscuro por defecto
@@ -25,7 +25,7 @@ export const PreferencesProvider = ({ children }) => {
   }, [isDarkMode])
 
   //token V1
-  const [tokenLogin, setTokenLogin] = useLocalStorage({ itemName: 'tokenUser', initialValue: {} });
+  const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} });
 
   return (
     <PreferencesContext.Provider value={{

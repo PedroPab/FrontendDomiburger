@@ -14,11 +14,6 @@ const RecepcionContent = () => {
   // Contexto específico de recepción (para controlar el sidebar, etc.)
   const recepcionContext = useContext(RecepcionContexto);
   const showSidebar = recepcionContext.openSidebarFilterDelivery;
-  console.log(`[ ~ RecepcionContent ~ recepcionContext]`, recepcionContext)
-
-  useEffect(() => {
-    console.log(`showSidebar: ${showSidebar}`)
-  }, [showSidebar])
 
   return (
     <>

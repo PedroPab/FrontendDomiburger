@@ -1,14 +1,16 @@
-import { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { PreferencesContext } from '../../Context/PreferencesContext';
+import { usePreferences } from '../../Context/PreferencesContext';
 
 const ProtectedRoute = ({ users, children, redirectTo = '/login' }) => {
-  const { tokenLogin } = useContext(PreferencesContext); // Ajusta el contexto de autenticación según tu implementación
+  const { tokenLogin } = usePreferences()
+
 
   // Si no se especifican usuarios permitidos, permite el acceso
   if (!users || users.length === 0) {
     return children ? children : <Outlet />;
   }
+
+  console.log(`Role====> ${tokenLogin?.user?.role}`)
 
   // Verifica si el rol del usuario actual está en la lista de usuarios permitidos
   if (!users.includes(tokenLogin?.user?.role)) {

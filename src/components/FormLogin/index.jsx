@@ -3,19 +3,17 @@ import { FloatingLabel, Alert } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { useContext } from 'react'
 import { Navigate } from "react-router-dom";
 import { getUrlBackend } from '../../Utils/getUrlApiByOriginPath.js';
-import { PreferencesContext } from '../../Context/PreferencesContext.jsx';
-import { MiContexto } from '../../Context/index.jsx';
+import { usePreferences } from '../../Context/PreferencesContext.jsx';
+// import { MiContexto } from '../../Context/index.jsx';
 
 
 function FormLogin() {
   const [validated, setValidated] = useState(false);
   const [redireccionar, setRedireccionar] = useState({ ok: false, to: `` });
   const [messageErrorLogin, setMessageErrorLogin] = useState(null);
-  const { setTokenLogin } = useContext(PreferencesContext)
-  const { setTokenLogin: setTokenLogin2 } = useContext(MiContexto)
+  const { setTokenLogin } = usePreferences()
   const [showPassword, setShowPassword] = useState(false);
 
   const apiUrl = getUrlBackend()
@@ -50,7 +48,7 @@ function FormLogin() {
 
       document.cookie = `token=${token}; Secure; SameSite=Strict`;
       setTokenLogin(body)
-      setTokenLogin2(body)
+      // setTokenLogin2(body)
       // Después de que el usuario inicie sesión, redirigirlo a la página anterior
 
       const objRedireccionRole = {

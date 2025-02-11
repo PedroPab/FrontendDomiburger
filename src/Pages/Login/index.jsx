@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { ContextProvider } from '../../Context'
 import { Container, Row, Col, Card, Modal, Button } from 'react-bootstrap'
 import Layout from "../../components/Layout";
 import FormLogin from '../../components/FormLogin';
@@ -53,9 +52,7 @@ const Login = () => {
 
 const LoginC = () => {
   return (
-    <ContextProvider>
-      <Login />
-    </ContextProvider>
+    <Login />
   )
 }
 

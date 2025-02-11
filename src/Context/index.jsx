@@ -1,24 +1,24 @@
-// context/OrdersContext.js
+import { io } from 'socket.io-client';
 import { createContext, useEffect, useState } from 'react';
-import { CambiarTema } from '../components/ThemeDark/theme';
-import { useLocalStorage } from '../Utils/localStore';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
-import { socket } from '../Utils/socket';
-
+import { usePreferences } from './PreferencesContext';
+import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
 
 export const MiContexto = createContext();
 
 export const ContextProvider = ({ children }) => {
+  const apiUrl = getUrlSocket();
+  const socket = io(apiUrl);
+
+  const { tokenLogin } = usePreferences()
+
   const [items, setItems] = useState([]);
-  const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} });
-  const { item: modoOscuro, saveItem: setModoOscuro } = useLocalStorage({ itemName: 'modoOscuro', initialValue: false });
   const [alerts, setAlerts] = useState([]);
   const [idItemSelect, setIdItemSelect] = useState(null);
   const [zoomMaps, setZoomMaps] = useState(15);
   const [alertaActiva, setAlertaActiva] = useState(false);
   const [isConnected, setIsConnected] = useState(false); // Nuevo estado para indicar si está conectado
 
-  const alternarModo = () => setModoOscuro(!modoOscuro);
 
   const ROLE = tokenLogin?.user?.role;
   const ID = tokenLogin?.user?.id;
@@ -55,14 +55,14 @@ export const ContextProvider = ({ children }) => {
     socket.on('pedidosIniciales', (pedido) => {
       console.log(`[ ~ socket.on ~ pedido]`, pedido)
       console.log('cantidad de pedidos iniciales:', pedido.length);
-      setItems(filtrarPedidos(pedido, tokenLogin.user.role));
+      setItems(filtrarPedidos(pedido, ROLE));
     });
 
     socket.on('pedidos/added', (pedido) => {
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
         mapItems.set(pedido.id, pedido);
-        return filtrarPedidos(Array.from(mapItems.values()), tokenLogin.user.role);
+        return filtrarPedidos(Array.from(mapItems.values()), ROLE);
       });
     });
 
@@ -70,7 +70,7 @@ export const ContextProvider = ({ children }) => {
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
         mapItems.set(pedido.id, pedido);
-        return filtrarPedidos(Array.from(mapItems.values()), tokenLogin.user.role);
+        return filtrarPedidos(Array.from(mapItems.values()), ROLE);
       });
     });
 
@@ -88,9 +88,6 @@ export const ContextProvider = ({ children }) => {
     <MiContexto.Provider
       value={{
         tokenLogin,
-        setTokenLogin,
-        modoOscuro,
-        alternarModo,
         items,
         setItems,
         alerts,
@@ -105,7 +102,6 @@ export const ContextProvider = ({ children }) => {
         reconnectSocket // Exportamos la función de reconexión
       }}
     >
-      <CambiarTema />
       {children}
     </MiContexto.Provider>
   );
