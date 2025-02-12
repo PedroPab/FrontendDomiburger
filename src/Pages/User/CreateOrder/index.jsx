@@ -16,7 +16,7 @@ const CreateOrder = () => {
   const [chosenLocation, setChosenLocation] = useState(null);
 
   // Comentario y método de pago
-  const [objComment, setObjComment] = useState('');
+  const [comment, setComment] = useState('');
   const [paymentMethod, setPaymentMethod] = useState("Efectivo");
 
   const nextStep = () => {
@@ -66,7 +66,7 @@ const CreateOrder = () => {
           <PaymentMethodAndComments
             onNext={nextStep}
             onPrev={prevStep}
-            objComment={[objComment, setObjComment]}
+            objComment={[comment, setComment]}
             objPaymentMethod={[paymentMethod, setPaymentMethod]}
           />
         )}
@@ -74,8 +74,11 @@ const CreateOrder = () => {
         {/* Resumen del Pedido */}
         {step === 4 && (
           <OrderSummary
-            onNext={nextStep}
             onPrev={prevStep}
+            productOrderList={productOrderList}
+            location={chosenLocation}
+            comment={comment}
+            paymentMethod={paymentMethod}
           />
         )}
       </Container>
