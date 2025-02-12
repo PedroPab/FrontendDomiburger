@@ -8,7 +8,7 @@ import logo from "./../../assets/logo.png";
 import ThemeToggle from "../ThemeToggle";
 import { FaSignOutAlt, FaUserCircle, FaShoppingCart, FaMapMarkerAlt } from "react-icons/fa";
 import "./UserNavbar.css";
-import { LOGIN_ROUTES } from "../../Utils/const/namesRutes";
+import { LOGIN_ROUTES, USER_ROUTES } from "../../Utils/const/namesRutes";
 
 const UserNavbar = () => {
   const { isDarkMode, toggleTheme } = usePreferences();
@@ -47,7 +47,7 @@ const UserNavbar = () => {
               <FaShoppingCart /> Pedir ahora
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/services" className="d-flex align-items-center gap-2">
+            <Nav.Link as={Link} to={USER_ROUTES.routes.LOCATIONS} className="d-flex align-items-center gap-2">
               <FaMapMarkerAlt /> Ubicaciones
             </Nav.Link>
           </Nav>

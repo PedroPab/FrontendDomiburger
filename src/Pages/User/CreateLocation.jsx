@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Alert, Spinner } from 'react-bootstrap';
-import { locationsService } from '../../apis/clientV2/locationsService';
+import { LocationsService } from '../../apis/clientV2/LocationsService';
 import { useAuth } from '../../Context/AuthContext';
 import LayoutCliente from '../../Layout/LayoutCliente';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
@@ -66,6 +66,8 @@ const CreateLocation = () => {
   const [propertyType, setPropertyType] = useState('house');
   const [notes, setNotes] = useState('');
 
+  const locationsService = new LocationsService(token);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -82,12 +84,9 @@ const CreateLocation = () => {
     };
 
     notes ? (formData.comment = notes) : null
-    console.log(`[ ~ handleSubmit ~ formData]`, formData)
 
     const ho = createLocationSchema.validate(formData, { abortEarly: false });
     const error = ho.error;
-    console.log(`[ ~ handleSubmit ~ ho ]`, ho)
-    console.log(`[ ~ handleSubmit ~ error]`, error)
     if (error) {
       const formattedErrors = error.details.reduce((acc, curr) => ({ ...acc, [curr.context.key]: curr.message }), {});
       setErrors(formattedErrors);
