@@ -11,5 +11,8 @@
 }
 
 .firebase-emulator-warning {
-  opacity: 10%;
+  font-size: 34%; /* Reduce el tamaño de la fuente */
+  padding: 1px; /* Ajusta el relleno */
+  width: 10%; /* Reduce el ancho */
+  height: auto; /* Mantiene la proporción */
 }

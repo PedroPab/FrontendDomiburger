@@ -1,6 +1,7 @@
-import { FaCartPlus } from "react-icons/fa"
 import DashboardProducts from "../../../components/Products/Dashboard/Dashboard"
 import { useState } from "react";
+import { Container } from "react-bootstrap";
+import { NavigationButtons } from "./NavigationButtons";
 
 const ProductSelectionStep = ({ onNext, productOrderList, setProductOrderList }) => {
 
@@ -9,24 +10,23 @@ const ProductSelectionStep = ({ onNext, productOrderList, setProductOrderList })
 
   return (
     <>
-      <div className="container">
+      <Container>
 
-        <div className="">
+        <DashboardProducts
+          listaProductosOrder={productOrderList}
+          setListaProductosOrder={setProductOrderList}
+          dataDomicilio={dataDomicilio}
+          setDataDomicilio={setDataDomicilio}
+          precioDeliveryManual={precioDeliveryManual}
+          setPrecioDeliveryManual={setPrecioDeliveryManual}
+        />
 
-          <DashboardProducts
-            listaProductosOrder={productOrderList}
-            setListaProductosOrder={setProductOrderList}
-            dataDomicilio={dataDomicilio}
-            setDataDomicilio={setDataDomicilio}
-            precioDeliveryManual={precioDeliveryManual}
-            setPrecioDeliveryManual={setPrecioDeliveryManual}
-          />
+        <div className="my-5"></div>
+        <div className="p-4"></div>
 
-        </div>
-        <button className="btn btn-primary mt-4 w-100 mb-4" onClick={onNext}>
-          Siguiente
-        </button>
-      </div>
+        <NavigationButtons onNext={onNext} disabled={false} />
+
+      </Container>
     </>
   )
 }

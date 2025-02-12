@@ -1,7 +1,7 @@
 import { HelmetProvider } from "react-helmet-async";
 import { ToastContainer } from "react-toastify";
 import { UserNavbar } from "./UserNavbar";
-import Footer from "../LayoutCliente/Footer";
+// import Footer from "../LayoutCliente/Footer";
 
 const UserLayout = ({ children }) => {
   return (
@@ -9,7 +9,7 @@ const UserLayout = ({ children }) => {
       <HelmetProvider>
         <UserNavbar />
         <main className="content">{children}</main>
-        <Footer />
+        {/* <Footer /> */}
         <ToastContainer />
       </HelmetProvider>
     </div>
