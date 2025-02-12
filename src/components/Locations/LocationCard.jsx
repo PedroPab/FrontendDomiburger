@@ -51,7 +51,8 @@ const AddressCard = ({ location, onEdit }) => {
               }}
               zoom={16}
             >
-              <Marker position={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }} label="📍" />
+              holas
+              <Marker position={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }} label="🌟" />
             </GoogleMap>
           </div>
         ) : (

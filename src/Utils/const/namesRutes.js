@@ -73,7 +73,8 @@ class UserRoutes extends RoutesClass {
     this.routes = {
       PROFILE: `${this.path}`,
       LOCATIONS: `${this.path}/ubicaciones`,
-      CREATE_LOCATION: `${this.path}/ubicaciones/crear`
+      CREATE_LOCATION: `${this.path}/ubicaciones/crear`,
+      CREATE_ORDER: `${this.path}/pedidos/crear`,
     }
   }
 }

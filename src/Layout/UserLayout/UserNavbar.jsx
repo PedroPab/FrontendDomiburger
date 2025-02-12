@@ -50,6 +50,10 @@ const UserNavbar = () => {
             <Nav.Link as={Link} to={USER_ROUTES.routes.LOCATIONS} className="d-flex align-items-center gap-2">
               <FaMapMarkerAlt /> Ubicaciones
             </Nav.Link>
+
+            <Nav.Link as={Link} to={USER_ROUTES.routes.CREATE_ORDER} className="d-flex align-items-center gap-2">
+              <FaShoppingCart /> Pedir Ya Nuevo
+            </Nav.Link>
           </Nav>
 
           {/* SECCIÓN DE USUARIO */}

@@ -3,19 +3,21 @@ import { MeProfile } from "../../User/MeProfile";
 import ProtectedRouteFirebase from "../../../components/ProtectedRouteFirebase";
 import { CreateLocation } from "../../User/CreateLocation";
 import MyLocations from "../../User/MyLocations";
+import { CreateOrder } from "../../User/CreateOrder";
+import { USER_ROUTES } from "../../../Utils/const/namesRutes";
 
 const UserRoutes = () => {
   return (
     <Route
-      path="/me"
+      path={USER_ROUTES.path}
       element={
         <ProtectedRouteFirebase />
       }
     >
       <Route path="" element={<MeProfile />} />
-      <Route path={`ubicaciones`} element={<MyLocations />} />
-      <Route path={`ubicaciones/crear`} element={<CreateLocation />} />
-      <Route path={`order/crear`} element={<CreateLocation />} />
+      <Route path={USER_ROUTES.routes.LOCATIONS} element={<MyLocations />} />
+      <Route path={USER_ROUTES.routes.CREATE_LOCATION} element={<CreateLocation />} />
+      <Route path={USER_ROUTES.routes.CREATE_ORDER} element={<CreateOrder />} />
 
     </Route>
   );

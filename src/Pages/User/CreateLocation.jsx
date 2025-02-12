@@ -46,7 +46,6 @@ const CreateLocation = () => {
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState({});
 
-  const [success, setSuccess] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
 
   const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
@@ -72,7 +71,6 @@ const CreateLocation = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setSuccess(false);
     setValidationErrors([]);
     setErrors({});
 
@@ -100,7 +98,6 @@ const CreateLocation = () => {
       await locationsService.create(formData, token);
 
       toast.success('¡Ubicación creada exitosamente!');
-      setSuccess(true);
 
       setFloor('');
       setPropertyType('');
