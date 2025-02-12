@@ -1,27 +1,39 @@
 import { useState } from "react";
 import { Card, Table, Button, Collapse } from "react-bootstrap";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import { FaInfoCircle, FaEdit } from "react-icons/fa";
+import { FaInfoCircle, FaEdit, FaMoon, FaSun } from "react-icons/fa";
+import { usePreferences } from "../../Context/PreferencesContext"; // Importa el contexto
 
 const ENV = import.meta.env;
 
 const AddressCard = ({ location, onEdit }) => {
   const { address, comment, coordinates, floor, city, state, country, postalCode, propertyType } = location;
 
+  const { isDarkMode } = usePreferences(); // Obtiene el estado del tema
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: ENV.VITE_KEYMAPS, // Clave de Google Maps
+    googleMapsApiKey: ENV.VITE_KEYMAPS,
     libraries: ["places"],
   });
 
   const [showMore, setShowMore] = useState(false);
 
+  // Estilos de mapa para modo claro y oscuro
+  const mapStyles = {
+    dark: [
+      { elementType: "geometry", stylers: [{ color: "#212121" }] },
+      { elementType: "labels.text.fill", stylers: [{ color: "#ffffff" }] },
+      { elementType: "labels.text.stroke", stylers: [{ color: "#212121" }] },
+      { featureType: "road", elementType: "geometry", stylers: [{ color: "#383838" }] },
+      { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#ffffff" }] },
+    ],
+    light: [],
+  };
+
   return (
-    <Card className="shadow-sm  rounded-4 " style={{ transition: "0.3s" }}>
+    <Card className="shadow-sm rounded-4" style={{ transition: "0.3s" }}>
       <Card.Body>
         {/* Dirección Principal */}
-        <h6>
-          {address || "Dirección no disponible"}
-        </h6>
+        <h6>{address || "Dirección no disponible"}</h6>
         <p className="text-muted fst-italic">{comment || "Sin comentarios"}</p>
         {/* Mapa */}
         {isLoaded ? (
@@ -31,17 +43,15 @@ const AddressCard = ({ location, onEdit }) => {
               center={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }}
               options={{
                 disableDefaultUI: true,
-                zoomControl: false,
+                zoomControl: true,
                 streetViewControl: false,
                 mapTypeControl: false,
                 fullscreenControl: false,
+                styles: isDarkMode ? mapStyles.dark : mapStyles.light, // Aplica tema dinámicamente
               }}
               zoom={16}
             >
-              <Marker
-                position={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }}
-                label="🌟"
-              />
+              <Marker position={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }} label="📍" />
             </GoogleMap>
           </div>
         ) : (
@@ -59,11 +69,7 @@ const AddressCard = ({ location, onEdit }) => {
             {showMore ? "Ocultar info" : "Ver más"}
           </Button>
 
-          <Button
-            variant="outline-success"
-            className="rounded-pill px-4"
-            onClick={onEdit}
-          >
+          <Button variant="outline-success" className="rounded-pill px-4" onClick={onEdit}>
             <FaEdit className="me-2" />
             Editar
           </Button>
