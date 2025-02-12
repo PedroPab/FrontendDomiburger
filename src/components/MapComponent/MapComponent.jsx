@@ -91,6 +91,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion, errors }) => {
           value={direccion.address_complete}
           onChange={handleInputChange}
           error={errorAdress}
+          onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
         />
       </Autocomplete>
 

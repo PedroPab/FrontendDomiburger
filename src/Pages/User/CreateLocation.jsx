@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Alert, Spinner } from 'react-bootstrap';
+import { useState } from 'react';
+import Joi from 'joi';
+import { Container, Row, Col, Button, Alert, Spinner } from 'react-bootstrap';
+import { useLoadScript } from '@react-google-maps/api';
+import { toast } from 'react-toastify';
+
 import { LocationsService } from '../../apis/clientV2/LocationsService';
 import { useAuth } from '../../Context/AuthContext';
-import LayoutCliente from '../../Layout/LayoutCliente';
-import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
-import { useLoadScript } from '@react-google-maps/api';
 import MapComponent from '../../components/MapComponent/MapComponent';
 import { TypeAndFloorInput } from '../../components/FormsInputs/TypeAndFloorInput';
 import { NotesInput } from '../../components/FormsInputs/NotesInput';
-import { toast } from 'react-toastify';
-import Joi from 'joi';
+import { UserLayout } from '../../Layout/UserLayout';
 import { useNavigate } from 'react-router-dom';
 
 const ENV = import.meta.env;
@@ -39,8 +39,8 @@ const createLocationSchema = Joi.object({
 });
 
 const CreateLocation = () => {
-  const navigate = useNavigate();
   const { token } = useAuth();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -107,7 +107,8 @@ const CreateLocation = () => {
       setNotes('');
       setCoordinates({});
       setInputDataDireccion({ address_complete: "", valid: false });
-      setTimeout(() => navigate(-1), 2000); // Redirige a la página anterior después de 2 segundos
+      navigate(-1)
+      // setTimeout(() => navigate(-1), 2000); // Redirige a la página anterior después de 2 segundos
 
     } catch (err) {
       toast.error(`Error: ${err.message}`);
@@ -118,8 +119,7 @@ const CreateLocation = () => {
   };
 
   return (
-    <LayoutCliente>
-      <NavbarCliente />
+    <UserLayout>
       <Container className="mt-4">
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
@@ -180,11 +180,10 @@ const CreateLocation = () => {
               </Button>
             </div>
             {error && <Alert variant="danger">Error: {error.message}</Alert>}
-            {success && <Alert variant="success">¡Ubicación creada exitosamente!</Alert>}
           </Col>
         </Row>
       </Container>
-    </LayoutCliente>
+    </UserLayout>
   );
 };
 

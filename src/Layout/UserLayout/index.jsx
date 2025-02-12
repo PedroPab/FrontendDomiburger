@@ -1,4 +1,5 @@
 import { HelmetProvider } from "react-helmet-async"
+import { ToastContainer } from "react-toastify"
 import { UserNavbar } from "./UserNavbar"
 
 const UserLayout = ({ children }) => {
@@ -7,6 +8,7 @@ const UserLayout = ({ children }) => {
       <HelmetProvider>
         <UserNavbar />
         {children}
+        <ToastContainer />
       </HelmetProvider>
     </>
   )
