@@ -1,5 +1,5 @@
 const ProgressBar = ({ step, stepList }) => {
-  const steps = stepList || ['Productos', 'Envío', 'Pago'];
+  const steps = stepList
   const progress = (step / steps.length) * 100;
   return (
     <div className="progress my-4">

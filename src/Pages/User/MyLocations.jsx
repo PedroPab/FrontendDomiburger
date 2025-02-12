@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { LocationsService } from '../../apis/clientV2/LocationsService';
 import { useAuth } from '../../Context/AuthContext';
-import LocationCard from '../../components/Locations/LocationCard';
+import { LocationCard } from '../../components/Locations/LocationCard';
 import { UserLayout } from '../../Layout/UserLayout';
 import { USER_ROUTES } from '../../Utils/const/namesRutes';
 

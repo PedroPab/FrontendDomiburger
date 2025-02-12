@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Card, Table, Button, Collapse } from "react-bootstrap";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import { FaInfoCircle, FaEdit, FaMoon, FaSun } from "react-icons/fa";
+import { FaInfoCircle, FaEdit } from "react-icons/fa";
 import { usePreferences } from "../../Context/PreferencesContext"; // Importa el contexto
 
 const ENV = import.meta.env;
 
-const AddressCard = ({ location, onEdit }) => {
+const LocationCard = ({ location, onEdit }) => {
   const { address, comment, coordinates, floor, city, state, country, postalCode, propertyType } = location;
 
   const { isDarkMode } = usePreferences(); // Obtiene el estado del tema
@@ -42,11 +42,12 @@ const AddressCard = ({ location, onEdit }) => {
               mapContainerStyle={{ height: "100%", width: "100%" }}
               center={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }}
               options={{
-                disableDefaultUI: true,
-                zoomControl: true,
+                disableDefaultUI: true,   // Desactiva los controles predeterminados
+                zoomControl: false,       // Desactiva el botón de zoom
                 streetViewControl: false,
                 mapTypeControl: false,
                 fullscreenControl: false,
+                gestureHandling: 'none',
                 styles: isDarkMode ? mapStyles.dark : mapStyles.light, // Aplica tema dinámicamente
               }}
               zoom={16}
@@ -114,4 +115,4 @@ const AddressCard = ({ location, onEdit }) => {
   );
 };
 
-export default AddressCard;
+export { LocationCard }
