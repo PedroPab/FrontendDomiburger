@@ -132,7 +132,7 @@ const MapComponent = ({ center, stateCoordenadas, stateDireccion, errors }) => {
       </Row>
 
       <GoogleMap
-        mapContainerStyle={{ width: "100%", height: "400px" }}
+        mapContainerStyle={{ width: "100%", height: "200px" }}
         center={coordinates.lat ? coordinates : center}
         zoom={14}
         onClick={handleMapClick}
