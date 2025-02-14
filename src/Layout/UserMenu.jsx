@@ -1,0 +1,54 @@
+import { Nav, NavDropdown, Image, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import ThemeToggle from "./ThemeToggle";
+import { usePreferences } from "../Context/PreferencesContext";
+
+const UserMenu = ({ usuarioActual, onLogout }) => {
+  const { isDarkMode, toggleTheme } = usePreferences();
+
+  if (!usuarioActual) return (
+    <Nav className="d-flex align-items-center">
+      <Nav.Link as={Link} to="/login">
+        <Button variant="primary" className="px-4">Iniciar Sesión</Button>
+      </Nav.Link>
+    </Nav>
+  )
+
+  return (
+    <Nav className="d-flex align-items-center">
+      <NavDropdown
+        bsPrefix="nav-link"
+        title={
+          <div className="d-flex align-items-center user-profile">
+            <Image
+              src={usuarioActual.photoURL || "https://via.placeholder.com/40"}
+              roundedCircle
+              width="40"
+              height="40"
+              className="me-2 user-avatar"
+            />
+            <span className="user-name">{usuarioActual.displayName || "Usuario"}</span>
+          </div>
+        }
+        id="user-dropdown"
+        align="end"
+        className="user-menu"
+      >
+        <NavDropdown.Item as={Link} to="/me">
+          <FaUserCircle className="me-2" /> Perfil
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item onClick={onLogout} className="text-danger">
+          <FaSignOutAlt className="me-2" /> Cerrar Sesión
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item as={Link} to="/login">
+          <ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+        </NavDropdown.Item>
+      </NavDropdown>
+    </Nav>
+  );
+};
+
+export { UserMenu };

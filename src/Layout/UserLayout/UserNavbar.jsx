@@ -1,15 +1,15 @@
-import { Navbar, Nav, Container, NavDropdown, Button, Image } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { usePreferences } from "../../Context/PreferencesContext";
 import { useAuth } from "../../Context/AuthContext";
 import logo from "./../../assets/logo.png";
-import ThemeToggle from "../ThemeToggle";
-import { FaSignOutAlt, FaUserCircle, FaShoppingCart, FaMapMarkerAlt } from "react-icons/fa";
+import { FaShoppingCart, FaMapMarkerAlt } from "react-icons/fa";
 import "./UserNavbar.css";
-import { LOGIN_ROUTES, USER_ROUTES } from "../../Utils/const/namesRutes";
+import { USER_ROUTES } from "../../Utils/const/namesRutes";
+import { UserMenu } from "../UserMenu";
 
 const UserNavbar = () => {
-  const { isDarkMode, toggleTheme } = usePreferences();
+  const { isDarkMode } = usePreferences();
   const { usuarioActual, handleLogout } = useAuth();
 
 
@@ -47,44 +47,11 @@ const UserNavbar = () => {
           </Nav>
 
           {/* SECCIÓN DE USUARIO */}
-          <Nav className="d-flex align-items-center">
-            {/* Botón para cambiar tema */}
-            <ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+          {/* Botón para cambiar tema */}
 
-            {/* Si el usuario está autenticado, mostrar menú de usuario sin flecha */}
-            {usuarioActual ? (
-              <NavDropdown
-                bsPrefix="nav-link" // Elimina el estilo de dropdown por defecto
-                title={
-                  <div className="d-flex align-items-center user-profile">
-                    <Image
-                      src={usuarioActual.photoURL || "https://via.placeholder.com/40"}
-                      roundedCircle
-                      width="40"
-                      height="40"
-                      className="me-2 user-avatar"
-                    />
-                    <span className="user-name">{usuarioActual.displayName || "Usuario"}</span>
-                  </div>
-                }
-                id="user-dropdown"
-                align="end"
-                className="user-menu"
-              >
-                <NavDropdown.Item as={Link} to="/me">
-                  <FaUserCircle className="me-2" /> Perfil
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleLogout} className="text-danger">
-                  <FaSignOutAlt className="me-2" /> Cerrar Sesión
-                </NavDropdown.Item>
-              </NavDropdown>
-            ) : (
-              <Nav.Link as={Link} to={LOGIN_ROUTES.routes.LOGIN_AUTH}>
-                <Button variant="primary" className="px-4">Iniciar Sesión</Button>
-              </Nav.Link>
-            )}
-          </Nav>
+          {/* Si el usuario está autenticado, mostrar menú de usuario sin flecha */}
+          <UserMenu usuarioActual={usuarioActual} onLogout={handleLogout} />
+
         </Navbar.Collapse>
       </Container>
     </Navbar >
