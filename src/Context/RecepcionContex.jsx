@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useLocalStorage } from '../Utils/localStore';
 import { UtilsApi } from '../Utils/utilsApi';
 import { useAuth } from './AuthContext';
@@ -17,7 +17,6 @@ export const ContextProviderRecepcion = ({ children }) => {
   //domiciliarios seleccionados
   const [domiciliariosSeleccionados, setDomiciliariosSeleccionados] = useState([])
   //estado seleccionado
-  const [estadoSeleccionado, setEstadoSeleccionado] = useState()
 
   const { token } = useAuth()
 
@@ -54,7 +53,6 @@ export const ContextProviderRecepcion = ({ children }) => {
         openCloseModalAgregarDo, showModalAgregarDomiciliarios,
 
         domiciliariosSeleccionados, setDomiciliariosSeleccionados,
-        estadoSeleccionado, setEstadoSeleccionado,
 
         domiciliarioIdFilter, setDomiciliarioIdFilter,
 
@@ -66,4 +64,4 @@ export const ContextProviderRecepcion = ({ children }) => {
   )
 }
 
-
+export const useRecepcion = () => { return useContext(RecepcionContexto) }

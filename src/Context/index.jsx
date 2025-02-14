@@ -25,7 +25,7 @@ export const ContextProvider = ({ children }) => {
 
   const { usuarioActual } = useAuth()
 
-  const ID = usuarioActual.uid
+  const ID = usuarioActual?.uid
 
   const reconnectSocket = () => {
     if (!isConnected) {

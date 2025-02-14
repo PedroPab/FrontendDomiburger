@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { FirebaseAuth } from '../firebase/config';
-import { onAuthStateChanged, getIdToken } from 'firebase/auth';
+import { onAuthStateChanged, getIdToken, signOut } from 'firebase/auth';
+import { LOGIN_ROUTES } from '../Utils/const/namesRutes';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -8,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [usuarioActual, setUsuarioActual] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Función para obtener el ID Token manualmente
   const refreshToken = async () => {
@@ -45,8 +48,24 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+
+  const handleLogout = async () => {
+    try {
+      await signOut(FirebaseAuth);
+      console.log("Sesión cerrada con éxito");
+      navigate(LOGIN_ROUTES.routes.LOGIN_AUTH);
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ usuarioActual, token, refreshToken }}>
+    <AuthContext.Provider value={{
+      usuarioActual,
+      token,
+      refreshToken,
+      handleLogout,
+    }}>
       {!loading && children}
     </AuthContext.Provider>
   );

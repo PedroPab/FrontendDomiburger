@@ -2,8 +2,6 @@ import { Navbar, Nav, Container, NavDropdown, Button, Image } from "react-bootst
 import { Link } from "react-router-dom";
 import { usePreferences } from "../../Context/PreferencesContext";
 import { useAuth } from "../../Context/AuthContext";
-import { FirebaseAuth } from "../../firebase/config";
-import { signOut } from "firebase/auth";
 import logo from "./../../assets/logo.png";
 import ThemeToggle from "../ThemeToggle";
 import { FaSignOutAlt, FaUserCircle, FaShoppingCart, FaMapMarkerAlt } from "react-icons/fa";
@@ -12,16 +10,8 @@ import { LOGIN_ROUTES, USER_ROUTES } from "../../Utils/const/namesRutes";
 
 const UserNavbar = () => {
   const { isDarkMode, toggleTheme } = usePreferences();
-  const { usuarioActual } = useAuth();
+  const { usuarioActual, handleLogout } = useAuth();
 
-  const handleLogout = async () => {
-    try {
-      await signOut(FirebaseAuth);
-      console.log("Sesión cerrada con éxito");
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
-  };
 
   return (
     <Navbar

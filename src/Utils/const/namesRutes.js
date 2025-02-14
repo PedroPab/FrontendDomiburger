@@ -89,6 +89,18 @@ class LoginRoutes extends RoutesClass {
   }
 }
 
+class AdminRoutes extends RoutesClass {
+  constructor() {
+    super()
+    this.path = `/admin`
+    this.routes = {
+      USER_MANAGEMENT: `${this.path}/usuarios`,
+      PRODUCT_MANAGEMENT: `${this.path}/productos`,
+      KITCHEN_MANAGEMENT: `${this.path}/cocinas`,
+    }
+  }
+}
+
 const RECEPCION_ROUTES = new RecepcionRoutes()
 const ESTADISTICAS_ROUTES = new EstadisticasRoutes()
 const CODIGO_ROUTES = new CodigoRoutes()
@@ -96,6 +108,7 @@ const DOMICILIARIO_ROUTES = new DomiciliarioRoutes()
 const COCINA_ROUTES = new CocinaRoutes()
 const USER_ROUTES = new UserRoutes()
 const LOGIN_ROUTES = new LoginRoutes()
+const ADMIN_ROUTES = new AdminRoutes()
 
 export {
   RECEPCION_ROUTES,
@@ -105,4 +118,5 @@ export {
   COCINA_ROUTES,
   USER_ROUTES,
   LOGIN_ROUTES,
+  ADMIN_ROUTES,
 }

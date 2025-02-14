@@ -3,6 +3,7 @@ import { RecepcionRoutes } from "./routes/RecepcionRoutes"
 import { CocinaRoutes } from "./routes/CocinaRoutes"
 import { GeneralRoutes } from './routes/GeneralRoutes';
 import { LoginRoutes } from './routes/LoginRoutes';
+import { AdminRoutes } from './routes/AdminRoutes';
 import { HomeRoutes } from './routes/HomeRoutes';
 import { DomiciliarioRoutes } from './routes/DomiciliarioRoutes';
 import { PreferencesProvider } from '../../Context/PreferencesContext';
@@ -18,6 +19,7 @@ const AppRoutes = () => {
           <Routes>
             {LoginRoutes()}
             {HomeRoutes()}
+            {AdminRoutes()}
             {RecepcionRoutes()}
             {DomiciliarioRoutes()}
             {CocinaRoutes()}

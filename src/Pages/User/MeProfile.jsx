@@ -17,10 +17,13 @@ import { UserLayout } from "../../Layout/UserLayout";
 import { UsersService } from "../../apis/clientV2/usersService";
 import PhoneInputComponent from "../../components/FormsInputs/PhoneInput";
 import { FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
+import JobsList from "../../components/JobsList";
 
 const MeProfile = () => {
   const { usuarioActual, token } = useAuth();
   const usersService = new UsersService(token);
+
+  const rolesOptions = usuarioActual?.roles || [];
 
   const [userFind, setUserFind] = useState({
     loading: true,
@@ -123,6 +126,12 @@ const MeProfile = () => {
               </Card.Body>
             </Card>
           </Col>
+        </Row>
+        <Row className="mt-5 justify-content-center">
+          {
+            rolesOptions &&
+            <JobsList rolesOptions={rolesOptions} />
+          }
         </Row>
       </Container>
 

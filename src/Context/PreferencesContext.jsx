@@ -13,7 +13,7 @@ export const PreferencesProvider = ({ children }) => {
 
   const { item: roleSelect, saveItem: setRoleSelect } = useLocalStorage({
     itemName: 'roleSelect',
-    initialValue: '',
+    initialValue: null,
   });
 
   const toggleTheme = () => {
