@@ -26,7 +26,10 @@ const CarouselListCards = ({ data }) => {
     <>
       <Slider {...settings}
         ref={sliderRef}
-        afterChange={(index) => context.setIdItemSelect(index)}
+        afterChange={(index) => {
+          const idSelect = data[index].id
+          context.setIdItemSelect(idSelect)
+        }}
       >
         {
           (data && data.length > 0) ?

@@ -21,9 +21,11 @@ const Domiciliario = () => {
     if (context.idItemSelect !== null) {
       console.log(`hola como estas`)
       console.log(context.items)
+      const item = context.items.find(pedido => pedido.id === context.idItemSelect)
+      console.log(item)
       setCenterMaps({
-        lat: context.items[context.idItemSelect].address.coordinates.lat,
-        lng: context.items[context.idItemSelect].address.coordinates.lng
+        lat: item?.address.coordinates.lat,
+        lng: item?.address.coordinates.lng
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
