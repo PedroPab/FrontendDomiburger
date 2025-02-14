@@ -23,7 +23,7 @@ export const ContextProvider = ({ children }) => {
   const [alertaActiva, setAlertaActiva] = useState(false);
   const [isConnected, setIsConnected] = useState(false); // Nuevo estado para indicar si está conectado
 
-  const { usuarioActual } = useAuth()
+  const { usuarioActual, token } = useAuth()
 
   const ID = usuarioActual?.uid
 
@@ -41,11 +41,12 @@ export const ContextProvider = ({ children }) => {
     socket.on("connect", () => {
       console.log(`Socket conectado 🏁, ID: ${socket.id}`);
       setIsConnected(true); // Indicamos que el socket está conectado
-      if (ROLE && ID) {
-        socket.emit('api/v2/pedidos/role', ROLE, ID);
+      if (ROLE) {
+        // socket.emit('api/v2/pedidos/role', ROLE, ID);
+        socket.emit('login', token, ROLE)
       }
       console.log("Señor debugeador , estas son mi variables, no me haga daño")
-      console.log(ROLE, ID)
+      console.log(ROLE)
     });
 
     // Manejo de desconexión
