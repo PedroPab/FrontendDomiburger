@@ -11,6 +11,11 @@ export const PreferencesProvider = ({ children }) => {
     initialValue: false,
   }); // Modo oscuro por defecto
 
+  const { item: roleSelect, saveItem: setRoleSelect } = useLocalStorage({
+    itemName: 'roleSelect',
+    initialValue: '',
+  });
+
   const toggleTheme = () => {
     setIsDarkMode(prevMode => !prevMode);
   };
@@ -24,17 +29,11 @@ export const PreferencesProvider = ({ children }) => {
     }
   }, [isDarkMode])
 
-  //token V1
-  const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUser', initialValue: {} });
-  const clearTokenLogin = () => {
-    setTokenLogin({});
-  };
-
   return (
     <PreferencesContext.Provider value={{
       isDarkMode, toggleTheme,
 
-      tokenLogin, setTokenLogin, clearTokenLogin,
+      roleSelect, setRoleSelect,
     }}>
       {children}
     </PreferencesContext.Provider>

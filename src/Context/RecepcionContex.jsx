@@ -2,7 +2,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { useLocalStorage } from '../Utils/localStore';
 import { UtilsApi } from '../Utils/utilsApi';
-import { usePreferences } from './PreferencesContext';
+import { useAuth } from './AuthContext';
 
 export const RecepcionContexto = createContext()
 
@@ -19,11 +19,10 @@ export const ContextProviderRecepcion = ({ children }) => {
   //estado seleccionado
   const [estadoSeleccionado, setEstadoSeleccionado] = useState()
 
-  const context = usePreferences()
+  const { token } = useAuth()
 
   //miramos todo los domiciliarios en la api
   useEffect(() => {
-    const token = context.tokenLogin.token
     UtilsApi({ peticion: `domiciliarios`, token: token, vervo: `GET` })
       .then(result => {
         setUsers(result)

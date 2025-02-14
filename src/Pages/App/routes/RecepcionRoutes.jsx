@@ -25,7 +25,7 @@ const RecepcionRoutes = () => {
         <ContextProvider>
           <ContextProviderRecepcion>
             <ProtectedRoute
-              users={[ROLES.admin, ROLES.recepcion]}
+              roles={[ROLES.admin, ROLES.recepcion]}
               redirectTo={LOGIN_ROUTES.path}
             />
           </ContextProviderRecepcion>

@@ -11,11 +11,11 @@ import { MiContexto } from "../../Context";
 import { listaEstados } from "../../Utils/listEstados";
 import { formatTimeString } from "../../Utils/formatTime";
 import CopiableText from "./CopiableText";
+import { usePreferences } from "../../Context/PreferencesContext";
 
 const OrderCard = ({ dataPedido }) => {
   const context = useContext(MiContexto);
-  const role = context.tokenLogin?.user?.role;
-
+  const { roleSelect } = usePreferences()
   const indexEstado = listaEstados.findIndex(e => e.name === dataPedido?.estado);
   const objEstado = listaEstados[indexEstado];
   const colorEstado = objEstado?.color;
@@ -81,7 +81,7 @@ const OrderCard = ({ dataPedido }) => {
           padding: "10px 20px",
         }}
       >
-        <ListButtonModalPedido dataPedido={dataPedido} role={role} />
+        <ListButtonModalPedido dataPedido={dataPedido} role={roleSelect} />
       </Card.Footer>
       <Badge
         pill

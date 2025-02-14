@@ -16,7 +16,7 @@ import { useLoadScript } from '@react-google-maps/api';
 import NoteClientInput from '../../../components/FormsInputs/NoteClientInput';
 import DashboardProducts from '../../../components/Products/Dashboard/Dashboard';
 import { calculateDeliveryDetails } from '../../../Utils/maps/calculateDeliveryDetails';
-import { MiContexto } from '../../../Context';
+import { useAuth } from '../../../Context/AuthContext';
 
 const ENV = import.meta.env;
 
@@ -25,10 +25,7 @@ const libraries = ['places'];
 
 // eslint-disable-next-line no-unused-vars
 const FormContainerAdmin = () => {
-  const context = useContext(MiContexto)
-
-  const token = context.tokenLogin.token
-  console.log(`[ ~ FormContainerAdmin ~ token]`, token)
+  const { token } = useAuth()
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: ENV.VITE_KEYMAPS,

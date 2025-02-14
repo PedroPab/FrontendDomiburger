@@ -1,16 +1,15 @@
 import { Container, } from "react-bootstrap";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import orderService from "../../apis/client/OrderService";
 import { useParams } from "react-router-dom";
 import OrderCard from "../OrderCard";
-import { MiContexto } from "../../Context";
+import { useAuth } from "../../Context/AuthContext";
 
 
 const PedidoDetalles = () => {
 
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { token } = useAuth()
 
   //sacar el id del pedido de la url
   const { id } = useParams();

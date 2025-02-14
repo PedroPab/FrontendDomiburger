@@ -10,12 +10,13 @@ import { convertirFecha2 } from "../../../Utils/formatTime"
 import { ConfigProvider, theme } from 'antd';
 import ProgressDataDomiciliario from '../../../components/ProgressDataDomiciliario';
 import { NavbarDomiciliario } from '../../../components/Navbar/NavbarDomiciliario';
+import { useAuth } from '../../../Context/AuthContext';
 
 const DomiciliarioHistory = () => {
   const context = useContext(MiContexto)
 
-  const token = context.tokenLogin.token
-
+  const { token } = useAuth()
+  const id = useAuth()?.usuarioActual?.uid
   //los pedidos qeu se muestran en la tabla
   const [pedidos, setPedidos] = useState([])
   const fechaStr = new Date()
@@ -24,6 +25,7 @@ const DomiciliarioHistory = () => {
   // Restar un día
   fecha.setDate(fecha.getDate() - 1);
   const diaAnteriorStr = fecha.toISOString().split('T')[0];
+
   useEffect(() => {
     const dataFilter = [{
       key: `date`,
@@ -33,7 +35,7 @@ const DomiciliarioHistory = () => {
     }, {
       key: `domiciliario_asignado.id`,
       options: `==`,
-      value: context.tokenLogin.user.id
+      value: id
     }]
 
     const filter = JSON.stringify({ filter: dataFilter })

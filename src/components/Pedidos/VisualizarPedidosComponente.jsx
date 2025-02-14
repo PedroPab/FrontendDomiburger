@@ -1,18 +1,17 @@
 import { Container, } from "react-bootstrap";
 import PaginationComponent from "../Pagination";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 // import orderservice from "../../apis/client/Orderservice";
 import { toast } from "react-toastify";
 import orderService from "../../apis/client/OrderService";
 import ListOrders from "./ListOrders";
-import { MiContexto } from "../../Context";
+import { useAuth } from "../../Context/AuthContext";
 
 
 const VisualizarPedidosComponente = () => {
 
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { token } = useAuth()
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,17 +1,16 @@
 import { useContext, useEffect, useState } from 'react'
-import { MiContexto } from '../../../Context'
 import { UtilsApi } from '../../../Utils/utilsApi';
 import ListEstadisticasDomiciliarios from '../../../components/ListEstadisticasDomiciliarios';
 import { ConfigProvider, theme } from 'antd';
 import LayoutRecepcion from '../../../Layout/Recepcion';
 import { PreferencesContext } from '../../../Context/PreferencesContext';
+import { useAuth } from '../../../Context/AuthContext';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
 const EstadisticasDomiciliarios = () => {
   const { isDarkMode } = useContext(PreferencesContext);
 
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { token } = useAuth()
 
   //los pedidos qeu se muestran en la tabla
   const [pedidos, setPedidos] = useState([])

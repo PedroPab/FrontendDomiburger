@@ -5,6 +5,7 @@ import { filtrarPedidos } from '../Utils/filtrarPedidos';
 import { usePreferences } from './PreferencesContext';
 import { io } from 'socket.io-client';
 import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
+import { useAuth } from './AuthContext';
 
 export const MiContexto = createContext();
 
@@ -13,8 +14,7 @@ export const ContextProvider = ({ children }) => {
 
   const socket = io(apiUrl);
 
-
-  const { tokenLogin } = usePreferences()
+  const { roleSelect: ROLE } = usePreferences()
 
   const [items, setItems] = useState([]);
   const [alerts, setAlerts] = useState([]);
@@ -23,9 +23,9 @@ export const ContextProvider = ({ children }) => {
   const [alertaActiva, setAlertaActiva] = useState(false);
   const [isConnected, setIsConnected] = useState(false); // Nuevo estado para indicar si está conectado
 
+  const { usuarioActual } = useAuth()
 
-  const ROLE = tokenLogin?.user?.role;
-  const ID = tokenLogin?.user?.id;
+  const ID = usuarioActual.uid
 
   const reconnectSocket = () => {
     if (!isConnected) {
@@ -44,6 +44,8 @@ export const ContextProvider = ({ children }) => {
       if (ROLE && ID) {
         socket.emit('api/v2/pedidos/role', ROLE, ID);
       }
+      console.log("Señor debugeador , estas son mi variables, no me haga daño")
+      console.log(ROLE, ID)
     });
 
     // Manejo de desconexión
@@ -86,12 +88,11 @@ export const ContextProvider = ({ children }) => {
       socket.off('pedidos/added');
       socket.off('pedidos/modified');
     };
-  }, []);
+  }, [usuarioActual, ROLE]);
 
   return (
     <MiContexto.Provider
       value={{
-        tokenLogin,
         items,
         setItems,
         alerts,

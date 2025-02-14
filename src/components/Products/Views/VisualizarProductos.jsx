@@ -1,18 +1,17 @@
 import { Container, } from "react-bootstrap";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import PaginationComponent from "../../Pagination/index.jsx";
 import ListProducts from "./ListProducts.jsx";
 
 import productService from "../../../apis/client/ProductService";
-import { MiContexto } from "../../../Context/index.jsx";
+import { useAuth } from "../../../Context/AuthContext.jsx";
 
 
 const VisualizarProductos = () => {
 
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { token } = useAuth()
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);

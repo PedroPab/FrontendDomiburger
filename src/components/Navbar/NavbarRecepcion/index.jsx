@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Container, Navbar, Nav, NavDropdown, Col, Row, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown, Col, Row, Button, Dropdown } from 'react-bootstrap';
 import { BsMoonStars, BsFillPersonFill, BsPeopleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
@@ -10,14 +10,14 @@ import { MdOutlineDeliveryDining, MdOutlineAdminPanelSettings, MdOutlineSettings
 import { FiMapPin, FiList } from 'react-icons/fi';
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
-import { PreferencesContext } from '../../../Context/PreferencesContext';
+import { usePreferences } from '../../../Context/PreferencesContext';
 import { CODIGO_ROUTES, ESTADISTICAS_ROUTES, LOGIN_ROUTES, RECEPCION_ROUTES } from '../../../Utils/const/namesRutes'; // Importamos las rutas definidas
-
 
 const NavbarRecepcion = () => {
   const contextRecepcion = useContext(RecepcionContexto);
   const { toggleSidebar } = contextRecepcion;
-  const { isDarkMode, toggleTheme } = useContext(PreferencesContext);
+  const { isDarkMode, toggleTheme, roleSelect, setRoleSelect } = usePreferences();
+  const rolesOptions = ['admin', 'recepcion', 'domiciliario'];
 
   return (
     <Navbar
@@ -42,7 +42,6 @@ const NavbarRecepcion = () => {
           </Col>
 
           {/* 2. Botón para alternar el filtro de domiciliarios */}
-
           <Col xs="auto">
             <Button
               variant="link"
@@ -142,6 +141,27 @@ const NavbarRecepcion = () => {
               <NavDropdown.Item onClick={toggleTheme}>
                 <BsMoonStars className="me-1" size={18} /> Cambiar Tema
               </NavDropdown.Item>
+            </NavDropdown>
+
+            {/* Sección: Selección de Rol */}
+            <NavDropdown
+              title={
+                <span>
+                  <FiList className="me-1" size={18} /> Rol: {roleSelect}
+                </span>
+              }
+              id="nav-dropdown-rol"
+              className="mx-2"
+            >
+              {rolesOptions.map((role, index) => (
+                <NavDropdown.Item
+                  key={index}
+                  onClick={() => setRoleSelect(role)}
+                  className={roleSelect === role ? 'text-primary fw-bold' : ''}
+                >
+                  {role.charAt(0).toUpperCase() + role.slice(1)}
+                </NavDropdown.Item>
+              ))}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

@@ -1,14 +1,13 @@
 import { Container, Row, Col, Card, Button, Form as BootstrapForm } from "react-bootstrap";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import productService from "../../apis/client/ProductService";
-import { MiContexto } from "../../Context";
+import { useAuth } from "../../Context/AuthContext";
 
 const CrearProducto = () => {
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { token } = useAuth()
 
   const [imagePreview, setImagePreview] = useState("");
 

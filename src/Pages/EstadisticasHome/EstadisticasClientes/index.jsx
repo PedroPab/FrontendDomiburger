@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from 'react'
-import { MiContexto } from '../../../Context'
+import { useEffect, useState } from 'react'
 import { UtilsApi } from '../../../Utils/utilsApi';
 import GraficaCLientesNuevos from '../../../components/GraficaCLientesNuevos';
 // eslint-disable-next-line no-unused-vars
 // import Pedido from '../../../Utils/class/Pedido';
 import LayoutRecepcion from '../../../Layout/Recepcion';
+import { useAuth } from '../../../Context/AuthContext';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
 const EstadisticasClientes = () => {
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { token } = useAuth()
 
   //los pedidos qeu se muestran en la tabla
   const [pedidos, setPedidos] = useState([])

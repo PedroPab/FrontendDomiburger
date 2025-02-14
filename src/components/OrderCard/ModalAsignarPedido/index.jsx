@@ -3,11 +3,10 @@ import { Modal, Button, Row } from 'react-bootstrap';
 import { RecepcionContexto } from '../../../Context/RecepcionContex';
 import Form from 'react-bootstrap/Form';
 import { UtilsApi } from '../../../Utils/utilsApi';
-import { MiContexto } from '../../../Context';
+import { useAuth } from '../../../Context/AuthContext';
 
 const ModalAsignarPedido = ({ show, handleClose, nameDomiciliario, idPedido, data }) => {
   const contextRecepcion = useContext(RecepcionContexto)
-  const context = useContext(MiContexto)
   //el domiciliaro que selecion en el select
   const [domiciliarioSelect, setDomiciliarioSelect] = useState(null)
   //el estasdo del boton de los botones para hacer aparecer el boton de confirmar y cacelar 
@@ -20,12 +19,12 @@ const ModalAsignarPedido = ({ show, handleClose, nameDomiciliario, idPedido, dat
       //deberiamos de poner el select en la opcion por defecto 
     }
   }, [domiciliarioSelect])
+  const { token } = useAuth()
 
   const handleConfirmar = () => {
     // Lógica para confirmar el pedido
     //si ya esta asignado un domiciliario se debe reasignar
     if (!domiciliarioSelect) return
-    const token = context.tokenLogin.token
 
     //asignamos al domiciliario
     let urlPeticion = `domiciliarios/asignacion/?idDomiciliario=${domiciliarioSelect}&idPedido=${idPedido}`

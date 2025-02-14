@@ -25,6 +25,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Escuchar cambios en la autenticación
     const unsubscribe = onAuthStateChanged(FirebaseAuth, async (user) => {
+      //agregamos los roles asignados al usuario de manera fácil y accesible
+      const customAttributes = user?.reloadUserInfo?.customAttributes || '{}'
+      const roles = JSON.parse(customAttributes)?.roles || []
+
+      if (user) user.roles = roles || []
+
       setUsuarioActual(user);
       if (user) {
         const fetchedToken = await getIdToken(user);
