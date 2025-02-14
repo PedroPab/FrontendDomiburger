@@ -9,6 +9,7 @@ const ModalAgregarDomiciliarios = ({ show, handleClose }) => {
   // Funciones handleSelectUser y handleRemoveUser permanecen iguales
   const handleSelectUser = (user, id) => {
     const find = listDomiciliarios.find(e => e.id == id)
+    console.log(`[ ~ handleSelectUser ~ find]`, find)
     if (!find) {
       setListDomiciliarios([...listDomiciliarios, user]);
     }
