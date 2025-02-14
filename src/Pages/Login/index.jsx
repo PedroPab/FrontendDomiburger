@@ -14,41 +14,41 @@ const Login = () => {
 
   return (
     <>
-      <Layout>
-        <NavbarRecepcion
+      {/* <Layout> */}
+      {/* <NavbarRecepcion
           modoOscuro={context.modoOscuro}
           alternarModo={context.alternarModo}
-        />
-        <Container className="login-container">
-          <Row className="justify-content-center">
-            <Col md={6}>
-              <Card className="login-card mt-3">
-                <Card.Header className="text-center">
-                  <h2>Iniciar Sesión</h2>
-                </Card.Header>
-                <Card.Body>
-                  <FormLogin />
-                </Card.Body>
-                <Card.Footer className="text-center">
-                  <a href="#" onClick={handleShowModal}>¿No tienes una cuenta? Regístrate</a>
-                </Card.Footer>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
+        /> */}
+      <Container className="login-container">
+        <Row className="justify-content-center">
+          <Col md={6}>
+            <Card className="login-card mt-3">
+              <Card.Header className="text-center">
+                <h2>Iniciar Sesión</h2>
+              </Card.Header>
+              <Card.Body>
+                <FormLogin />
+              </Card.Body>
+              <Card.Footer className="text-center">
+                <a href="#" onClick={handleShowModal}>¿No tienes una cuenta? Regístrate</a>
+              </Card.Footer>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
 
-        <Modal show={showModal} onHide={handleCloseModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Registro</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>No hay manera de registrarse, habla con el administrador.</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Cerrar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </Layout>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Registro</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>No hay manera de registrarse, habla con el administrador.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* </Layout> */}
     </>
   );
 };
