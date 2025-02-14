@@ -16,9 +16,8 @@ import { UserMenu } from '../../../Layout/UserMenu';
 
 const NavbarRecepcion = () => {
   const { toggleSidebar, openCloseModalAgregarDo } = useRecepcion()
-  const { isDarkMode, toggleTheme, roleSelect, setRoleSelect } = usePreferences();
+  const { isDarkMode, toggleTheme } = usePreferences();
   const { usuarioActual, handleLogout } = useAuth();
-  const rolesOptions = usuarioActual?.roles || [];
 
   return (
     <Navbar
@@ -142,27 +141,6 @@ const NavbarRecepcion = () => {
               <NavDropdown.Item onClick={toggleTheme}>
                 <BsMoonStars className="me-1" size={18} /> Cambiar Tema
               </NavDropdown.Item>
-            </NavDropdown>
-
-            {/* Sección: Selección de Rol */}
-            <NavDropdown
-              title={
-                <span>
-                  <FiList className="me-1" size={18} /> Rol: {roleSelect}
-                </span>
-              }
-              id="nav-dropdown-rol"
-              className="mx-2"
-            >
-              {rolesOptions.map((role, index) => (
-                <NavDropdown.Item
-                  key={index}
-                  onClick={() => setRoleSelect(role)}
-                  className={roleSelect === role ? 'text-primary fw-bold' : ''}
-                >
-                  {role.charAt(0).toUpperCase() + role.slice(1)}
-                </NavDropdown.Item>
-              ))}
             </NavDropdown>
           </Nav>
 
