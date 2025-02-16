@@ -33,6 +33,16 @@ class UsersService {
       throw error;
     }
   }
+  async updateRole(id, role) {
+    try {
+      const data = { roles: role }
+      const rta = await this.api.patch(`/role/${id}`, data)
+      return rta
+    } catch (error) {
+      console.log(`[ ~ UsersService ~ updatePhone ~ error]`, error)
+      throw error;
+    }
+  }
   async getByIdUser(id, token) {
     try {
       const rta = await this.api.get(`/user/${id}`, { headers: { Authorization: `Bearer ${token}` } })
@@ -43,6 +53,14 @@ class UsersService {
       throw error;
     }
 
+  }
+  async getAll(pagination) {
+    const { page, limit } = pagination || {};
+    const query = new URLSearchParams();
+    if (page) query.append('page', page);
+    if (limit) query.append('limit', limit);
+    const rta = await this.api.get(`?${query.toString()}`)
+    return rta.data
   }
   async create(data, token) {
     try {

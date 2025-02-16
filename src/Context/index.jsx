@@ -1,5 +1,5 @@
 // context/OrdersContext.js
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
 // import { socket } from '../Utils/socket';
 import { usePreferences } from './PreferencesContext';
@@ -110,3 +110,5 @@ export const ContextProvider = ({ children }) => {
     </MiContexto.Provider>
   );
 };
+
+export const useMiContexto = () => useContext(MiContexto)
