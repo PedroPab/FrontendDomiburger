@@ -54,11 +54,16 @@ class UsersService {
     }
 
   }
-  async getAll(pagination) {
+  async getAll(pagination, filter) {
     const { page, limit } = pagination || {};
     const query = new URLSearchParams();
     if (page) query.append('page', page);
     if (limit) query.append('limit', limit);
+    if (filter) {
+      if (filter.key) query.append('key', filter.key);
+      if (filter.value) query.append('value', filter.value);
+      if (filter.option) query.append('option', filter.option);
+    }
     const rta = await this.api.get(`?${query.toString()}`)
     return rta.data
   }

@@ -1,68 +1,92 @@
-import { Container } from 'react-bootstrap';
+import { Button, Container, InputGroup, Form, Spinner } from 'react-bootstrap';
 import LayoutAdmin from '../../Layout/Admin';
 import PaginationComponent from '../../components/Pagination';
-import { UserList } from './../../components/Users/UserList'
+import { UserList } from './../../components/Users/UserList';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { UsersService } from '../../apis/clientV2/usersService';
 import { useAuth } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
+import { FaSearch } from 'react-icons/fa';
 
 const AdminUser = () => {
-
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  // const [page, setPage] = useState(1);
+  const [emailSearch, setEmailSearch] = useState('');
+  const [filter, setFilter] = useState(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1', 10);
 
+  const { token } = useAuth();
+  const usersService = new UsersService(token);
 
-  const { token } = useAuth()
-  const usersService = new UsersService(token)
+  // Función para obtener los usuarios de la API
+  const fetchUsers = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const limit = 12;
+      const params = { page, limit };
 
+      const data = await usersService.getAll(params, filter);
+      setUsers(data?.body || []);
+    } catch (error) {
+      setError('Error al cargar los usuarios');
+      toast.error('Error al cargar los usuarios');
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Ejecutar la búsqueda cuando cambia la página o el filtro
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const limit = 12
-
-        const data = await usersService.getAll({ page, limit });
-        setUsers(data?.body);
-        console.log(`[ ~ fetchOrders ~ data?.body]`, data?.body)
-
-      } catch (error) {
-        setError('Error fetching orders');
-        toast.error('Error al cargar los pedidos');
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrders();
+    fetchUsers();
   }, [page]);
 
+  // Función para manejar el cambio de página
+  const handlePageChange = (newPage) => {
+    setSearchParams({ page: newPage });
+  };
 
   return (
     <LayoutAdmin>
-      <h1>dime? quires administrar los usuarios?</h1>
-      <Container >
+      <Container>
+        <h1 className="mb-4 text-center">Administrar Usuarios</h1>
 
-        <UserList
-          users={users}
-          loading={loading}
-          error={error}
-        />
+        {/* Buscador */}
+        <InputGroup className="mb-4">
+          <Form.Control
+            type="text"
+            placeholder="Buscar por email..."
+            value={emailSearch}
+            onChange={(e) => {
+              setEmailSearch(e.target.value)
+              setFilter({ key: 'email', value: e.target.value, option: '==' });
+            }}
+          />
+          <Button variant="primary" onClick={fetchUsers}>
+            <FaSearch />
+          </Button>
+        </InputGroup>
 
-        <PaginationComponent
-          page={page}
-          handlePageChange={(newPage) => setSearchParams({ page: newPage })}
-        />
+        {/* Mostrar Spinner mientras carga */}
+        {loading && (
+          <div className="text-center my-4">
+            <Spinner animation="border" variant="primary" />
+          </div>
+        )}
 
+        {/* Lista de usuarios */}
+        {!loading && <UserList users={users} error={error} />}
+
+        {/* Pagination */}
+        <PaginationComponent page={page} handlePageChange={handlePageChange} />
       </Container>
-    </LayoutAdmin >
+    </LayoutAdmin>
   );
-}
+};
 
-export { AdminUser }
+export { AdminUser };
