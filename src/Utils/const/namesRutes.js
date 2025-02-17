@@ -97,6 +97,7 @@ class AdminRoutes extends RoutesClass {
       USER_MANAGEMENT: `${this.path}/usuarios`,
       PRODUCT_MANAGEMENT: `${this.path}/productos`,
       KITCHEN_MANAGEMENT: `${this.path}/cocinas`,
+      KITCHEN_CREATE: `${this.path}/cocinas/crear`,
     }
   }
 }
