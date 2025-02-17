@@ -6,7 +6,6 @@ import { useAuth } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 
 const UserCard = ({ user }) => {
-  console.log(`[ ~ UserCard ~ user]`, user)
   const { token } = useAuth();
   const usersService = new UsersService(token);
 
@@ -53,7 +52,7 @@ const UserCard = ({ user }) => {
         <p className="text-muted small">ID: {user?.id}</p>
         <p className="mb-1"><strong>Email:</strong> {user?.email}</p>
         {user?.phone && <p className="mb-1"><strong>Teléfono:</strong> {user?.phone}</p>}
-        <p className="text-muted small">Roles: {user?.roles && <RoleList roles={user.roles} />}</p>
+        <strong className="text-muted small">Roles: {user?.roles && <RoleList roles={user.roles} />}</strong>
 
         <div className="d-flex justify-content-center gap-2 mt-3">
           <button className="btn btn-outline-primary btn-sm" disabled={loading}>Ver Perfil</button>

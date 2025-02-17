@@ -5,12 +5,14 @@ const RoleList = ({ roles }) => {
   }
 
   return (
-    <div className="d-flex flex-wrap gap-2">
-      {roles.map((role) => (
-        <span key={role} className="badge bg-warning px-3 py-2 text-white">
-          {role}
-        </span>
-      ))}
+    <div className="d-flex flex-wrap gap-2" >
+      {
+        roles.map((role) => (
+          <span key={role} className="badge bg-warning px-3 py-2 text-white">
+            {role}
+          </span>
+        ))
+      }
     </div>
   );
 };

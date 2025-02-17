@@ -1,4 +1,4 @@
-import { Button, Container, InputGroup, Form, Spinner } from 'react-bootstrap';
+import { Button, Container, InputGroup, Form, Spinner, Row, Col } from 'react-bootstrap';
 import LayoutAdmin from '../../Layout/Admin';
 import PaginationComponent from '../../components/Pagination';
 import { UserList } from './../../components/Users/UserList';
@@ -53,37 +53,54 @@ const AdminUser = () => {
 
   return (
     <LayoutAdmin>
-      <Container>
-        <h1 className="mb-4 text-center">Administrar Usuarios</h1>
+      <Container fluid className="px-4">
+        {/* Título */}
+        <Row className="mb-4">
+          <Col>
+            <h1 className="text-primary fw-bold text-center">Administrar Usuarios</h1>
+          </Col>
+        </Row>
 
         {/* Buscador */}
-        <InputGroup className="mb-4">
-          <Form.Control
-            type="text"
-            placeholder="Buscar por email..."
-            value={emailSearch}
-            onChange={(e) => {
-              setEmailSearch(e.target.value)
-              setFilter({ key: 'email', value: e.target.value, option: '==' });
-            }}
-          />
-          <Button variant="primary" onClick={fetchUsers}>
-            <FaSearch />
-          </Button>
-        </InputGroup>
+        <Row className="mb-4 justify-content-center">
+          <Col md={6} lg={4}>
+            <InputGroup>
+              <Form.Control
+                type="text"
+                placeholder="Buscar por email..."
+                value={emailSearch}
+                onChange={(e) => {
+                  setEmailSearch(e.target.value);
+                  setFilter({ key: 'email', value: e.target.value, option: '==' });
+                }}
+              />
+              <Button variant="primary" onClick={fetchUsers}>
+                <FaSearch />
+              </Button>
+            </InputGroup>
+          </Col>
+        </Row>
 
-        {/* Mostrar Spinner mientras carga */}
-        {loading && (
-          <div className="text-center my-4">
-            <Spinner animation="border" variant="primary" />
-          </div>
-        )}
+        {/* Contenido */}
+        <Row>
+          <Col>
+            {/* Spinner mientras carga */}
+            {loading ? (
+              <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
+                <Spinner animation="border" variant="primary" />
+              </div>
+            ) : (
+              <UserList users={users} error={error} />
+            )}
+          </Col>
+        </Row>
 
-        {/* Lista de usuarios */}
-        {!loading && <UserList users={users} error={error} />}
-
-        {/* Pagination */}
-        <PaginationComponent page={page} handlePageChange={handlePageChange} />
+        {/* Paginación */}
+        <Row className="mt-4">
+          <Col className="d-flex justify-content-center">
+            <PaginationComponent page={page} handlePageChange={handlePageChange} />
+          </Col>
+        </Row>
       </Container>
     </LayoutAdmin>
   );
