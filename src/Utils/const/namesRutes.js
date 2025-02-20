@@ -96,6 +96,7 @@ class AdminRoutes extends RoutesClass {
     this.routes = {
       USER_MANAGEMENT: `${this.path}/usuarios`,
       PRODUCT_MANAGEMENT: `${this.path}/productos`,
+      CREATE_PRODUCT: `${this.path}/productos/crear`,
       KITCHEN_MANAGEMENT: `${this.path}/cocinas`,
       KITCHEN_CREATE: `${this.path}/cocinas/crear`,
     }

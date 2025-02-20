@@ -7,6 +7,8 @@ import { AdminDashboard } from "../../Admin";
 import { AdminUser } from "../../Admin/AdminUser";
 import { AdminKitchens } from "../../Admin/AdminKitchens";
 import { CreateKitchen } from "../../Admin/CreateKitchen";
+import { CreateProduct } from "../../Admin/CreateProduct";
+import { AdminProducts } from "../../Admin/AdminProducts";
 
 const routes = ADMIN_ROUTES.routes;
 
@@ -27,6 +29,8 @@ const AdminRoutes = () => {
       <Route path={`${routes.KITCHEN_MANAGEMENT}`} element={<AdminKitchens />} />
       <Route path={`${routes.USER_MANAGEMENT}`} element={<AdminUser />} />
       <Route path={`${routes.KITCHEN_CREATE}`} element={<CreateKitchen />} />
+      <Route path={`${routes.PRODUCT_MANAGEMENT}`} element={<AdminProducts />} />
+      <Route path={`${routes.CREATE_PRODUCT}`} element={<CreateProduct />} />
     </Route>
   );
 };
