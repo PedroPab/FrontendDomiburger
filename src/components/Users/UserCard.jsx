@@ -5,12 +5,12 @@ import { UsersService } from "../../apis/clientV2/usersService";
 import { useAuth } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ element }) => {
   const { token } = useAuth();
   const usersService = new UsersService(token);
 
   const [modalUpdateRole, setModalUpdaterRole] = useState(false);
-  const [selectedRoles, setSelectedRoles] = useState(user?.roles || []);
+  const [selectedRoles, setSelectedRoles] = useState(element?.roles || []);
   const [loading, setLoading] = useState(false); // Estado de carga
 
   const toggleModal = () => setModalUpdaterRole(prev => !prev);
@@ -40,19 +40,19 @@ const UserCard = ({ user }) => {
         </div>
       )}
 
-      {user?.photoUrl ? (
-        <img src={user?.photoUrl} alt={user?.name} className="card-img-top rounded-top" />
+      {element?.photoUrl ? (
+        <img src={element?.photoUrl} alt={element?.name} className="card-img-top rounded-top" />
       ) : (
         <div className="bg-light d-flex align-items-center justify-content-center" style={{ height: "150px" }}>
           <span className="text-muted">Sin imagen</span>
         </div>
       )}
       <div className="card-body text-center">
-        <h5 className="card-title mb-1">{user?.name}</h5>
-        <p className="text-muted small">ID: {user?.id}</p>
-        <p className="mb-1"><strong>Email:</strong> {user?.email}</p>
-        {user?.phone && <p className="mb-1"><strong>Teléfono:</strong> {user?.phone}</p>}
-        <strong className="text-muted small">Roles: {user?.roles && <RoleList roles={user.roles} />}</strong>
+        <h5 className="card-title mb-1">{element?.name}</h5>
+        <p className="text-muted small">ID: {element?.id}</p>
+        <p className="mb-1"><strong>Email:</strong> {element?.email}</p>
+        {element?.phone && <p className="mb-1"><strong>Teléfono:</strong> {element?.phone}</p>}
+        <strong className="text-muted small">Roles: {element?.roles && <RoleList roles={element.roles} />}</strong>
 
         <div className="d-flex justify-content-center gap-2 mt-3">
           <button className="btn btn-outline-primary btn-sm" disabled={loading}>Ver Perfil</button>
@@ -70,7 +70,7 @@ const UserCard = ({ user }) => {
         show={modalUpdateRole}
         handleClose={toggleModal}
         userRoles={selectedRoles}
-        onSave={(roles) => onUpdateRoles(user.id, roles)}
+        onSave={(roles) => onUpdateRoles(element.id, roles)}
         isLoading={loading} // Pasamos el estado de carga al modal
       />
     </div>
