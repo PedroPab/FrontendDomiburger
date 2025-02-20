@@ -1,29 +1,29 @@
 import { Card, Button, Row, Col, Badge } from "react-bootstrap";
 import { FaMapMarkerAlt, FaEdit, FaEye, FaBox } from "react-icons/fa";
 
-const KitchenCard = ({ kitchen }) => {
+const KitchenCard = ({ element }) => {
   return (
     <Card className="shadow-sm border-0 rounded-3 p-3">
       {/* Encabezado con Nombre e ID */}
       <Row className="mb-2">
         <Col>
-          <h5 className="fw-bold text-primary">{kitchen.name}</h5>
+          <h5 className="fw-bold text-primary">{element.name}</h5>
         </Col>
         <Col xs="auto">
-          <Badge bg="secondary" className="text-wrap">{kitchen.id}</Badge>
+          <Badge bg="secondary" className="text-wrap">{element.id}</Badge>
         </Col>
       </Row>
 
       {/* Dirección */}
       <p className="text-muted mb-2">
         <FaMapMarkerAlt className="me-2 text-danger" />
-        {kitchen.address}
+        {element.address}
       </p>
 
       {/* Daily Orders con icono */}
       <div className="d-flex align-items-center mb-3">
         <FaBox className="text-warning me-2" size={20} />
-        <span className="fw-bold">{kitchen.dailyOrders}</span>
+        <span className="fw-bold">{element.dailyOrders}</span>
       </div>
 
       {/* Botones */}

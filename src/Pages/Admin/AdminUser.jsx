@@ -1,13 +1,14 @@
 import { Button, Container, InputGroup, Form, Spinner, Row, Col } from 'react-bootstrap';
 import LayoutAdmin from '../../Layout/Admin';
 import PaginationComponent from '../../components/Pagination';
-import { UserList } from './../../components/Users/UserList';
+import { ListCardsElements } from '../../components/common/ListCards';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { UsersService } from '../../apis/clientV2/usersService';
 import { useAuth } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
 import { FaSearch } from 'react-icons/fa';
+import { UserCard } from '../../components/Users/UserCard';
 
 const AdminUser = () => {
   const [users, setUsers] = useState([]);
@@ -90,7 +91,10 @@ const AdminUser = () => {
                 <Spinner animation="border" variant="primary" />
               </div>
             ) : (
-              <UserList users={users} error={error} />
+              <ListCardsElements
+                elements={users} loading={loading} error={error}
+                CardComponent={UserCard} messageText='Crear un Usuario'
+              />
             )}
           </Col>
         </Row>

@@ -8,6 +8,8 @@ import { KitchenService } from '../../apis/clientV2/KitchenService.js';
 import { useAuth } from '../../Context/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import { ADMIN_ROUTES } from '../../Utils/const/namesRutes.js';
+import { ListCardsElements } from '../../components/common/ListCards.jsx';
+import { KitchenCard } from '../../components/Kitchens/KitchenCard.jsx';
 
 const AdminKitchens = () => {
   const [kitchens, setKitchens] = useState([]);
@@ -68,7 +70,11 @@ const AdminKitchens = () => {
               <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
                 <Spinner animation="border" variant="primary" />
               </div> :
-              <KitchensList kitchens={kitchens} error={error} handleCardClick={() => navigate(ADMIN_ROUTES.routes.KITCHEN_CREATE)} handleEdit={() => console.log('edit')} />
+              <ListCardsElements
+                loading={loading}
+                error={error}
+                CardComponent={KitchenCard}
+                elements={kitchens} handleCardClick={() => navigate(ADMIN_ROUTES.routes.KITCHEN_CREATE)} />
             }
           </Col>
         </Row>
