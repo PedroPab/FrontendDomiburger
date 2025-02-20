@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Joi from 'joi';
 import { Container, Row, Col, Button, Alert, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { ProductsService } from '../../apis/clientV2/ProductsService'; // Asegúrate de tener este servicio
+import { ProductsService } from '../../apis/clientV2/ProductsService';
 import { useAuth } from '../../Context/AuthContext';
 import LayoutAdmin from '../../Layout/Admin';
 import { useNavigate } from 'react-router-dom';
@@ -17,13 +17,11 @@ const createProductSchema = Joi.object({
     'any.required': 'La descripción es obligatoria',
     'string.min': 'La descripción debe tener al menos 10 caracteres',
   }),
-  colorPrimary: Joi.string().pattern(/^#[0-9A-Fa-f]{6}$/).required().messages({
+  colorPrimary: Joi.string().required().messages({
     'any.required': 'El color primario es obligatorio',
-    'string.pattern.base': 'El color primario debe ser un código hexadecimal válido',
   }),
-  colorSecondary: Joi.string().pattern(/^#[0-9A-Fa-f]{6}$/).required().messages({
+  colorSecondary: Joi.string().required().messages({
     'any.required': 'El color secundario es obligatorio',
-    'string.pattern.base': 'El color secundario debe ser un código hexadecimal válido',
   }),
   photos: Joi.array().items(Joi.string().uri()).min(1).required().messages({
     'any.required': 'Debe incluir al menos una foto',
@@ -50,8 +48,8 @@ const CreateProduct = () => {
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [colorPrimary, setColorPrimary] = useState('');
-  const [colorSecondary, setColorSecondary] = useState('');
+  const [colorPrimary, setColorPrimary] = useState('#000000'); // Color por defecto
+  const [colorSecondary, setColorSecondary] = useState('#FFFFFF'); // Color por defecto
   const [photos, setPhotos] = useState('');
   const [price, setPrice] = useState('');
   const [type, setType] = useState('product');
@@ -67,16 +65,14 @@ const CreateProduct = () => {
     const formData = {
       name,
       description,
-      colorPrimary,
-      colorSecondary,
-      photos: photos.split(',').map((url) => url.trim()), // Convierte string a array
+      colorPrimary: colorPrimary.toString(),
+      colorSecondary: colorSecondary.toString(),
+      photos: photos.split(',').map((url) => url.trim()),
       price: parseFloat(price),
       type,
     };
 
     const validation = createProductSchema.validate(formData, { abortEarly: false });
-    console.log(`[ ~ handleSubmit ~ validation]`, validation)
-
     if (validation.error) {
       const formattedErrors = validation.error.details.reduce(
         (acc, curr) => ({ ...acc, [curr.context.key]: curr.message }),
@@ -96,8 +92,8 @@ const CreateProduct = () => {
       // Resetear el formulario
       setName('');
       setDescription('');
-      setColorPrimary('');
-      setColorSecondary('');
+      setColorPrimary('#000000');
+      setColorSecondary('#FFFFFF');
       setPhotos('');
       setPrice('');
       setType('product');
@@ -149,26 +145,22 @@ const CreateProduct = () => {
             <div className="mb-3">
               <label className="form-label fw-bold">Color Primario</label>
               <input
-                type="text"
-                className={`form-control ${errors.colorPrimary ? 'is-invalid' : ''}`}
+                type="color"
+                className="form-control form-control-color"
                 value={colorPrimary}
                 onChange={(e) => setColorPrimary(e.target.value)}
-                placeholder="Ej: #444401"
               />
-              {errors.colorPrimary && <div className="invalid-feedback">{errors.colorPrimary}</div>}
             </div>
 
             {/* Campo Color Secundario */}
             <div className="mb-3">
               <label className="form-label fw-bold">Color Secundario</label>
               <input
-                type="text"
-                className={`form-control ${errors.colorSecondary ? 'is-invalid' : ''}`}
+                type="color"
+                className="form-control form-control-color"
                 value={colorSecondary}
                 onChange={(e) => setColorSecondary(e.target.value)}
-                placeholder="Ej: #66585"
               />
-              {errors.colorSecondary && <div className="invalid-feedback">{errors.colorSecondary}</div>}
             </div>
 
             {/* Campo Fotos */}

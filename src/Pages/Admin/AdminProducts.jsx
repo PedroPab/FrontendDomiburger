@@ -1,13 +1,14 @@
-import { Button, Container, InputGroup, Form, Spinner, Row, Col } from 'react-bootstrap';
+import { Container, Spinner, Row, Col } from 'react-bootstrap';
 import LayoutAdmin from '../../Layout/Admin';
 import PaginationComponent from '../../components/Pagination';
-import { ProductsList } from './../../components/Products/ProductsList';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ProductsService } from '../../apis/clientV2/ProductsService';
 import { useAuth } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
 import { ADMIN_ROUTES } from '../../Utils/const/namesRutes';
+import { ListCardsElements } from '../../components/common/ListCards';
+import { ProductCard } from "../../components/Products/ProductCard";
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -75,7 +76,15 @@ const AdminProducts = () => {
                 <Spinner animation="border" variant="primary" />
               </div>
             ) : (
-              <ProductsList products={products} error={error} handleCardClick={handleCardClick} />
+              <ListCardsElements
+                elements={products}
+                loading={loading}
+                error={error}
+                handleCardClick={handleCardClick}
+                CardComponent={ProductCard}
+                messageText='Crear un Producto'
+              />
+              // <ProductsList products={products} error={error} handleCardClick={handleCardClick} />
             )}
           </Col>
         </Row>
