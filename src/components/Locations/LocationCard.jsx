@@ -106,6 +106,10 @@ const LocationCard = ({ location, onEdit }) => {
                   <td className="fw-bold bg-light">Tipo de Propiedad</td>
                   <td>{propertyType || "N/A"}</td>
                 </tr>
+                <tr>
+                  <td className="fw-bold bg-light">Id</td>
+                  <td>{location.id}</td>
+                </tr>
               </tbody>
             </Table>
           </div>
