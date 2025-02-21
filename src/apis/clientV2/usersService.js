@@ -43,6 +43,17 @@ class UsersService {
       throw error;
     }
   }
+  async updateAssignedKitchens(id, kitchens) {
+    try {
+      const data = { kitchensIds: kitchens }
+      const rta = await this.api.patch(`/assignedKitchens/${id}`, data)
+      return rta
+    }
+    catch (error) {
+      console.log(`[ ~ UsersService ~ updateAssignedKitchens ~ error]`, error)
+      throw error;
+    }
+  }
   async getByIdUser(id, token) {
     try {
       const rta = await this.api.get(`/user/${id}`, { headers: { Authorization: `Bearer ${token}` } })

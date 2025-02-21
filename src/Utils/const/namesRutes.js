@@ -75,6 +75,7 @@ class UserRoutes extends RoutesClass {
       LOCATIONS: `${this.path}/ubicaciones`,
       CREATE_LOCATION: `${this.path}/ubicaciones/crear`,
       CREATE_ORDER: `${this.path}/pedidos/crear`,
+      THANKS: `${this.path}/gracias`
     }
   }
 }

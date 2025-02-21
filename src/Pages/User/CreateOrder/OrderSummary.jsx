@@ -7,6 +7,7 @@ import { KitchenService } from "../../../apis/clientV2/KitchenService";
 import { OrderService } from "../../../apis/clientV2/OrderService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { USER_ROUTES } from "../../../Utils/const/namesRutes";
 
 const OrderSummary = ({ onPrev, location, productOrderList = [], comment, paymentMethod }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -73,7 +74,7 @@ const OrderSummary = ({ onPrev, location, productOrderList = [], comment, paymen
     try {
       const rta = await orderService.create(data);
       toast.success(rta.data.message);
-      navigate("/thanks");
+      navigate(USER_ROUTES.routes.THANKS);
     } catch (err) {
       console.log(`[ ~ sendOrder ~ err]`, err)
       setError("Error al procesar la orden. Intenta nuevamente.");
