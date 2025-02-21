@@ -36,6 +36,7 @@ const createProductSchema = Joi.object({
     'any.required': 'El tipo es obligatorio',
     'any.only': 'El tipo debe ser "product"',
   }),
+  id: Joi.string().optional(),
 });
 
 const CreateProduct = () => {
@@ -53,6 +54,7 @@ const CreateProduct = () => {
   const [photos, setPhotos] = useState('');
   const [price, setPrice] = useState('');
   const [type, setType] = useState('product');
+  const [id, setId] = useState('');
 
   const productService = new ProductsService(token);
 
@@ -70,6 +72,7 @@ const CreateProduct = () => {
       photos: photos.split(',').map((url) => url.trim()),
       price: parseFloat(price),
       type,
+      id,
     };
 
     const validation = createProductSchema.validate(formData, { abortEarly: false });
@@ -97,6 +100,7 @@ const CreateProduct = () => {
       setPhotos('');
       setPrice('');
       setType('product');
+      setId('');
 
       navigate(-1);
     } catch (err) {
@@ -189,6 +193,18 @@ const CreateProduct = () => {
               {errors.price && <div className="invalid-feedback">{errors.price}</div>}
             </div>
 
+            {/* Campo de Id */}
+            <div className="mb-3">
+              <label className="form-label fw-bold">Id</label>
+              <input
+                type="text"
+                className={`form-control ${errors.id ? 'is-invalid' : ''}`}
+                value={id}
+                onChange={(e) => setId(e.target.value)}
+                placeholder="Ej: 1"
+              />
+              {errors.id && <div className="invalid-feedback">{errors.id}</div>}
+            </div>
             <div className="d-flex justify-content-center mt-4 mb-4">
               <Button variant="primary" onClick={handleSubmit} size="lg" disabled={loading}>
                 {loading ? <Spinner as="span" animation="border" size="sm" /> : 'Crear Producto'}

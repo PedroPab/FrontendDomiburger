@@ -1,10 +1,10 @@
 const PAYMENT_METHODS = {
-  CASH: { value: 'Cash', name: 'Efectivo', active: true },
-  CREDIT_CARD: { value: 'Credit_card', name: 'Credit Card', active: false },
-  DEBIT_CARD: { value: 'Debit_card', name: 'Debit Card', active: false },
-  TRANSFER: { value: 'Transfer', name: 'Transfer', active: false },
-  BANCOLOMBIA: { value: 'Bancolombia', name: 'Bancolombia', active: true },
-  NEQUI: { value: 'Nequi', name: 'Nequi', active: true },
+  CASH: { value: 'cash', name: 'Efectivo', active: true },
+  CREDIT_CARD: { value: 'credit_card', name: 'Credit Card', active: false },
+  DEBIT_CARD: { value: 'debit_card', name: 'Debit Card', active: false },
+  TRANSFER: { value: 'transfer', name: 'Transfer', active: false },
+  BANCOLOMBIA: { value: 'bancolombia', name: 'Bancolombia', active: true },
+  NEQUI: { value: 'nequi', name: 'Nequi', active: true },
 }
 
 export { PAYMENT_METHODS }

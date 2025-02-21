@@ -11,22 +11,18 @@ import { TypeAndFloorInput } from '../../components/FormsInputs/TypeAndFloorInpu
 import { NotesInput } from '../../components/FormsInputs/NotesInput';
 import { UserLayout } from '../../Layout/UserLayout';
 import { useNavigate } from 'react-router-dom';
+import { LOCATIONS } from '../../Utils/const/locations';
 
 const ENV = import.meta.env;
 
-const TYPES = {
-  HOUSE: 'house',   // Casa
-  BUILDING: 'building', // Edificio
-  URBANIZATION: 'urbanization', // Urbanización
-  OFFICE: 'office'  // Oficina
-};
 
-const listTypes = Object.values(TYPES);
+const listTypes = Object.values(LOCATIONS).map((location) => location.value);
+console.log(`[ ~ listTypes]`, listTypes)
 
 const createLocationSchema = Joi.object({
   address: Joi.string().min(3).max(255).required().messages({ 'any.required': 'Establece una dirección', 'string.min': 'La dirección debe tener al menos 3 caracteres', 'string.empty': 'Debes ingresar un valor' }),
   state: Joi.string().min(3).max(255).optional(),
-  floor: Joi.string().max(255).required().messages({ 'any.required': 'Necesitamos el piso', 'string.min': 'El piso debe tener al menos 3 caracteres', 'string.empty': 'Debes ingresar un valor' }),
+  floor: Joi.string().max(255).required().messages({ 'any.required': 'Necesitamos el piso o apartamento', 'string.min': 'El piso debe tener al menos 3 caracteres', 'string.empty': 'Debes ingresar un valor' }),
   city: Joi.string().min(3).max(255).optional(),
   country: Joi.string().min(3).max(255).optional(),
   postalCode: Joi.string().min(3).max(255).optional(),
