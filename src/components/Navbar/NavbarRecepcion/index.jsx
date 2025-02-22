@@ -13,11 +13,17 @@ import { usePreferences } from '../../../Context/PreferencesContext';
 import { useAuth } from '../../../Context/AuthContext';
 import { CODIGO_ROUTES, ESTADISTICAS_ROUTES, LOGIN_ROUTES, RECEPCION_ROUTES } from '../../../Utils/const/namesRutes'; // Importamos las rutas definidas
 import { UserMenu } from '../../../Layout/UserMenu';
+import { useState } from 'react';
+import { useMiContexto } from '../../../Context';
 
 const NavbarRecepcion = () => {
   const { toggleSidebar, openCloseModalAgregarDo } = useRecepcion()
   const { isDarkMode, toggleTheme } = usePreferences();
   const { usuarioActual, handleLogout } = useAuth();
+  //cambiar la cocina asignada
+  const { changeKitchen } = useMiContexto();
+  const { userData } = useAuth();
+  const [showKitchens, setShowKitchens] = useState(false);
 
   return (
     <Navbar
@@ -67,9 +73,10 @@ const NavbarRecepcion = () => {
           <Col xs="auto" className="d-lg-none text-end">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
           </Col>
+
         </Row>
 
-        {/* 6. Menú de Navegación */}
+        {/* 7. Menú de Navegación */}
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto align-items-center">
             {/* Sección: Crear Pedido */}
@@ -147,6 +154,25 @@ const NavbarRecepcion = () => {
           {/* Si el usuario está autenticado, mostrar menú de usuario sin flecha */}
           <UserMenu usuarioActual={usuarioActual} onLogout={handleLogout} />
 
+          <Col xs="auto">
+            <Button
+              variant="link"
+              onClick={() => setShowKitchens(!showKitchens)}
+              className="p-2 text-primary d-flex align-items-center"
+              style={{ boxShadow: 'none', border: 'none' }}
+            >
+              <MdOutlineSettings size={20} className="me-1" /> Seleccionar Cocina
+            </Button>
+            {showKitchens && (
+              <NavDropdown show>
+                {userData.assignedKitchens.map((kitchen) => (
+                  <NavDropdown.Item key={kitchen} onClick={() => changeKitchen(kitchen)}>
+                    {kitchen}
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
+            )}
+          </Col>
         </Navbar.Collapse>
       </Container>
     </Navbar>

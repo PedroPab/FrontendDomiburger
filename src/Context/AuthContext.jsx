@@ -1,8 +1,9 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import { FirebaseAuth } from '../firebase/config';
 import { onAuthStateChanged, getIdToken, signOut } from 'firebase/auth';
 import { LOGIN_ROUTES } from '../Utils/const/namesRutes';
 import { useNavigate } from 'react-router-dom';
+import { UsersService } from '../apis/clientV2/usersService';
 
 const AuthContext = createContext();
 
@@ -59,12 +60,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const [userData, setUserData] = useState(null);
+  const usersService = new UsersService(token);
+  useEffect(() => {
+    const fetchUserData = async () => {
+        const response = await usersService.me();
+        const userData = response.data.body;
+        setUserData(userData);
+    };
+    fetchUserData();
+  }, [token]);
+
   return (
     <AuthContext.Provider value={{
       usuarioActual,
       token,
       refreshToken,
       handleLogout,
+      userData,
     }}>
       {!loading && children}
     </AuthContext.Provider>

@@ -6,13 +6,14 @@ import { usePreferences } from './PreferencesContext';
 import { io } from 'socket.io-client';
 import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
 import { useAuth } from './AuthContext';
+import { toast } from 'react-toastify';
 
 export const MiContexto = createContext();
 
 export const ContextProvider = ({ children }) => {
   const apiUrl = getUrlSocket();
 
-  const socket = io(apiUrl);
+  const socket = io(`${apiUrl}/apiV2`);
 
   const { roleSelect: ROLE } = usePreferences()
 
@@ -23,7 +24,33 @@ export const ContextProvider = ({ children }) => {
   const [alertaActiva, setAlertaActiva] = useState(false);
   const [isConnected, setIsConnected] = useState(false); // Nuevo estado para indicar si está conectado
 
-  const { usuarioActual, token } = useAuth()
+  const { usuarioActual, token , userData} = useAuth()
+
+
+  const [kitchenSelectId, setKitchenSelectId] = useState(null);
+
+  const changeKitchen = (id) => {
+    setKitchenSelectId(id);
+  };
+
+  // al comienzo de la aplicación, se  escoje una cocina
+  useEffect(() => {
+    //miramos cules son las cocinas que tiene asisgndas el usuario
+    const assignedKitchens = userData?.assignedKitchens || [];
+    console.log("🚀 ~ useEffect ~ assignedKitchens:", assignedKitchens)
+
+    if (assignedKitchens.length < 0) {
+      toast.error('No tiene cocinas asignadas');
+      return
+    }
+       // si tiene cocinas asignadas, se escoge la primera
+       const kitchen = assignedKitchens[0]
+       console.log('🚀 ~ useEffect ~ kitchen', kitchen)
+       changeKitchen(kitchen);
+       setKitchenSelectId(kitchen);
+  }, [usuarioActual]);
+
+  
 
   const reconnectSocket = () => {
     if (!isConnected) {
@@ -41,7 +68,12 @@ export const ContextProvider = ({ children }) => {
       setIsConnected(true); // Indicamos que el socket está conectado
       if (ROLE) {
         // socket.emit('api/v2/pedidos/role', ROLE, ID);
-        socket.emit('login', token, ROLE)
+        const params = {
+          token : token, 
+          role: ROLE, 
+          kitchenId: kitchenSelectId
+        }
+        socket.emit('login', params )
       }
       console.log("Señor debugeador , estas son mi variables, no me haga daño")
       console.log(ROLE)
@@ -55,6 +87,8 @@ export const ContextProvider = ({ children }) => {
 
     socket.on("message", (newMessage) => {
       console.log(newMessage);
+      //ejecutmaos una aletrta 
+      toast(newMessage);
     });
 
     socket.on('pedidosIniciales', (pedido) => {
@@ -87,8 +121,9 @@ export const ContextProvider = ({ children }) => {
       socket.off('pedidos/added');
       socket.off('pedidos/modified');
     };
-  }, [usuarioActual, ROLE]);
+  }, [usuarioActual, ROLE, kitchenSelectId]);
 
+  
   return (
     <MiContexto.Provider
       value={{
@@ -103,7 +138,10 @@ export const ContextProvider = ({ children }) => {
         alertaActiva,
         setAlertaActiva,
         isConnected, // Exportamos el estado de conexión
-        reconnectSocket // Exportamos la función de reconexión
+        reconnectSocket, // Exportamos la función de reconexión
+
+        kitchenSelectId,
+        changeKitchen
       }}
     >
       {children}
