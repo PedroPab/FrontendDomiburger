@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from "react";
 import { Col } from "react-bootstrap";
-import { listaEstados } from "../../Utils/listEstados";
-import { OrderCard } from "../../components/OrderCard";
+// import { listaEstados } from "../../Utils/listEstados";
+import {listStatusRecepcion} from "../../Utils/listStatus";
+// import { OrderCard } from "../../components/OrderCard";
 import { RecepcionContexto } from "../../Context/RecepcionContex";
 import { BsInbox } from "react-icons/bs";
 import { FaExpand } from "react-icons/fa";
+import { OrderCardV2 } from "../OrderCardV2";
 
 export const ColsPedidos = ({ pedidos }) => {
   const { domiciliarioIdFilter } = useContext(RecepcionContexto);
@@ -27,9 +29,11 @@ export const ColsPedidos = ({ pedidos }) => {
 
   useEffect(() => {
     // Inicializar las columnas como colapsadas si no tienen pedidos
-    const initialStates = listaEstados.map((estado) => {
+    const initialStates = listStatusRecepcion.map((estado) => {
+    console.log("🚀 ~ initialStates ~ estado:", estado)
+
       const pedidosEnEstado = filteredPedidos.filter(
-        pedido => pedido.estado === estado.name
+        pedido => pedido.status == estado.name
       );
       return pedidosEnEstado.length === 0; // Mantener colapsado si ya estaba colapsado o no hay pedidos
     });
@@ -37,19 +41,25 @@ export const ColsPedidos = ({ pedidos }) => {
   }, [filteredPedidos]);
 
   const toggleCollapse = index => {
-    setCollapsedStates(prev =>
-      prev.map((isCollapsed, i) => (i === index ? !isCollapsed : isCollapsed))
+    console.log("🚀 ~ ColsPedidos ~ index:", index)
+    setCollapsedStates(prev =>{
+      
+      console.log("🚀 ~ ColsPedidos ~ prev:", prev)
+     return prev.map((isCollapsed, i) => {
+        return (i === index ? !isCollapsed : isCollapsed)
+      })}
     );
   };
 
-  const estadosPedidos = listaEstados.map(estado => {
+
+  const estadosPedidos = listStatusRecepcion.map(estado => {
     const icon = estado.icon
       ? React.cloneElement(estado.icon, { style: { color: estado.color } })
       : <BsInbox style={{ color: estado.color }} />;
 
     return {
       name: estado.name,
-      pedidos: filteredPedidos.filter(pedido => pedido.estado === estado.name),
+      pedidos: filteredPedidos.filter(pedido => pedido.status === estado.name),
       icon: icon
     };
   });
@@ -140,7 +150,9 @@ export const ColsPedidos = ({ pedidos }) => {
                 />
               ) : (
                 estado.pedidos.map((pedido, i) => (
-                  <OrderCard key={i} dataPedido={pedido} />
+                  // <OrderCard key={i} dataPedido={pedido} />
+                 <OrderCardV2 key={i} data={pedido} />
+                  
                 ))
               )}
             </div>
