@@ -7,6 +7,7 @@ import { io } from 'socket.io-client';
 import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
 import { useAuth } from './AuthContext';
 import { toast } from 'react-toastify';
+import { useLocalStorage } from '../Utils/localStore';
 
 export const MiContexto = createContext();
 
@@ -27,7 +28,7 @@ export const ContextProvider = ({ children }) => {
   const { usuarioActual, token , userData} = useAuth()
 
 
-  const [kitchenSelectId, setKitchenSelectId] = useState(null);
+  const {item: kitchenSelectId  , saveItem: setKitchenSelectId } = useLocalStorage({ itemName: 'kitchenSelectId', initialValue: null });
 
   const changeKitchen = (id) => {
     setKitchenSelectId(id);
@@ -37,17 +38,21 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     //miramos cules son las cocinas que tiene asisgndas el usuario
     const assignedKitchens = userData?.assignedKitchens || [];
-    console.log("🚀 ~ useEffect ~ assignedKitchens:", assignedKitchens)
 
     if (assignedKitchens.length < 0) {
       toast.error('No tiene cocinas asignadas');
+      changeKitchen(null);
       return
     }
-       // si tiene cocinas asignadas, se escoge la primera
-       const kitchen = assignedKitchens[0]
-       console.log('🚀 ~ useEffect ~ kitchen', kitchen)
-       changeKitchen(kitchen);
-       setKitchenSelectId(kitchen);
+    
+    if(kitchenSelectId){
+      const kitchen = assignedKitchens.find(kitchen => kitchen.id === kitchenSelectId);
+      if(kitchen){
+        changeKitchen(kitchen);
+        return
+      }
+    }
+    // si tiene cocinas asignadas, se escoge la primera
   }, [usuarioActual]);
 
   
@@ -86,18 +91,17 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on("message", (newMessage) => {
-      console.log(newMessage);
       //ejecutmaos una aletrta 
       toast(newMessage);
     });
 
-    socket.on('pedidosIniciales', (pedido) => {
-      console.log(`[ ~ socket.on ~ pedido]`, pedido)
+    socket.on('order/init', (pedido) => {
+      toast(`Cargando pedidos iniciales 🚚, canidad de pedidos ${pedido.length}`);
       console.log('cantidad de pedidos iniciales:', pedido.length);
       setItems(filtrarPedidos(pedido, ROLE));
     });
 
-    socket.on('pedidos/added', (pedido) => {
+    socket.on('order/create', (pedido) => {
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
         mapItems.set(pedido.id, pedido);
@@ -105,7 +109,7 @@ export const ContextProvider = ({ children }) => {
       });
     });
 
-    socket.on('pedidos/modified', (pedido) => {
+    socket.on('order/update', (pedido) => {
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
         mapItems.set(pedido.id, pedido);
