@@ -54,16 +54,9 @@ class UsersService {
       throw error;
     }
   }
-  async getByIdUser(id, token) {
-    try {
-      const rta = await this.api.get(`/user/${id}`, { headers: { Authorization: `Bearer ${token}` } })
-
-      return rta
-    } catch (error) {
-      console.log(`[ ~ UsersService ~ getByIdUser ~ error]`, error)
-      throw error;
-    }
-
+  async getByIdUser(id) {
+    const rta = await this.api.get(`/${id}`)
+    return rta.data
   }
   async getAll(pagination, filter) {
     const { page, limit } = pagination || {};

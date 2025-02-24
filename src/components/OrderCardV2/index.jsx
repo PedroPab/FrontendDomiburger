@@ -2,25 +2,43 @@ import { Card } from "react-bootstrap";
 import CardHeaderComponent from "./CardHeader";
 import CardBodyComponent from "./CardBody";
 import CardFooterComponent from "./CardFooter";
+import { useEffect, useState } from "react";
+import { UsersService } from "../../apis/clientV2/usersService";
+import { useAuth } from "../../Context/AuthContext";
 
-function OrderCardV2() {
-  // Ejemplo de datos. En la práctica, podrías recibirlos por props o desde una API.
-  const comentarios = "Este usuario ha realizado varios pedidos.";
-  const direccion = "Calle Falsa 123, Ciudad XYZ";
-  const productos = "Pizza, Refresco";
+function OrderCardV2({ data }) {
+
+  //consultamos a la api el usuario y la locacion a la api
+  const [userClient, setUserClient] = useState(null)
+  const [loadUserClient, setLoadUserClient] = useState(false)
+
+  const { token } = useAuth()
+
+  const usersService = new UsersService(token)
+  useEffect(() => {
+    const findUser = async () => {
+      const user = await usersService.getByIdUser(data.userClientId)
+      setUserClient(user.body)
+      setLoadUserClient(false)
+    }
+    setLoadUserClient(true)
+    findUser()
+  }, [token])
+
+
 
   return (
     <Card style={{ width: "20rem" }}>
       <CardHeaderComponent
+        userClient={userClient}
+        loadUserClient={loadUserClient}
+        data={data}
       />
       <CardBodyComponent
-        comentarios={comentarios}
-        direccion={direccion}
-        productos={productos}
       />
       <CardFooterComponent />
     </Card>
   );
 }
 
-export  {OrderCardV2};
+export { OrderCardV2 };
