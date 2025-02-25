@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Col } from "react-bootstrap";
-// import { listaEstados } from "../../Utils/listEstados";
-import {listStatusRecepcion} from "../../Utils/listStatus";
-// import { OrderCard } from "../../components/OrderCard";
+import { listStatusRecepcion } from "../../Utils/listStatus";
 import { RecepcionContexto } from "../../Context/RecepcionContex";
 import { BsInbox } from "react-icons/bs";
 import { FaExpand } from "react-icons/fa";
@@ -11,44 +9,29 @@ import { OrderCardV2 } from "../OrderCardV2";
 
 export const ColsPedidos = ({ pedidos }) => {
   const { domiciliarioIdFilter } = useContext(RecepcionContexto);
-  const [filteredPedidos, setFilteredPedidos] = useState(pedidos);
   const [collapsedStates, setCollapsedStates] = useState([]);
 
-  useEffect(() => {
-    // Filtrar los pedidos según el filtro del contexto
+  const filteredPedidos = useMemo(() => {
     if (domiciliarioIdFilter === "ninguno") {
-      setFilteredPedidos(pedidos.filter(pedido => !pedido?.domiciliario_asignado));
+      return pedidos.filter(pedido => !pedido?.domiciliario_asignado);
     } else if (domiciliarioIdFilter) {
-      setFilteredPedidos(
-        pedidos.filter(pedido => pedido?.domiciliario_asignado?.id === domiciliarioIdFilter)
-      );
-    } else {
-      setFilteredPedidos(pedidos);
+      return pedidos.filter(pedido => pedido?.domiciliario_asignado?.id === domiciliarioIdFilter);
     }
+    return pedidos;
   }, [domiciliarioIdFilter, pedidos]);
 
   useEffect(() => {
-    // Inicializar las columnas como colapsadas si no tienen pedidos
     const initialStates = listStatusRecepcion.map((estado) => {
-    console.log("🚀 ~ initialStates ~ estado:", estado)
-
       const pedidosEnEstado = filteredPedidos.filter(
-        pedido => pedido.status == estado.name
+        pedido => pedido.status === estado.name
       );
-      return pedidosEnEstado.length === 0; // Mantener colapsado si ya estaba colapsado o no hay pedidos
+      return pedidosEnEstado.length === 0;
     });
     setCollapsedStates(initialStates);
   }, [filteredPedidos]);
 
   const toggleCollapse = index => {
-    console.log("🚀 ~ ColsPedidos ~ index:", index)
-    setCollapsedStates(prev =>{
-      
-      console.log("🚀 ~ ColsPedidos ~ prev:", prev)
-     return prev.map((isCollapsed, i) => {
-        return (i === index ? !isCollapsed : isCollapsed)
-      })}
-    );
+    setCollapsedStates(prev => prev.map((isCollapsed, i) => (i === index ? !isCollapsed : isCollapsed)));
   };
 
 
@@ -68,10 +51,8 @@ export const ColsPedidos = ({ pedidos }) => {
     <>
       {estadosPedidos.map((estado, index) => {
         const isCollapsed = collapsedStates[index];
-
         const pedidosCount = estado.pedidos.length;
 
-        // Determinación de colores
         let badgeColor = "bg-secondary"; // Default color (sin pedidos)
         if (pedidosCount > 0) {
           badgeColor = isCollapsed ? "bg-warning" : "bg-success"; // Amarillo si está colapsada, verde si expandida
@@ -150,9 +131,7 @@ export const ColsPedidos = ({ pedidos }) => {
                 />
               ) : (
                 estado.pedidos.map((pedido, i) => (
-                  // <OrderCard key={i} dataPedido={pedido} />
-                 <OrderCardV2 key={i} data={pedido} />
-                  
+                  <OrderCardV2 key={i} data={pedido} />
                 ))
               )}
             </div>

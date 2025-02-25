@@ -1,10 +1,31 @@
+import { memo, useEffect, useState } from "react";
 import { Card, Badge, Image, Spinner, OverlayTrigger, Popover } from "react-bootstrap";
+import { useAuth } from "../../Context/AuthContext";
+import { UsersService } from "../../apis/clientV2/usersService";
 
-function CardHeaderComponent({ userClient, loadUserClient, data }) {
+const CardHeaderComponent = memo(function Greeting({ userClientId, dailyOrderNumber }) {
+    const [userClient, setUserClient] = useState(null)
+    const [loadUserClient, setLoadUserClient] = useState(false)
+
+    const { token } = useAuth()
+
+    const usersService = new UsersService(token)
+    useEffect(() => {
+        const findUser = async () => {
+
+            const user = await usersService.getByIdUser(userClientId)
+            console.log("🚀🚀🚀🚀 haciendo una petición :", user)
+            setUserClient(user.body)
+            setLoadUserClient(false)
+        }
+        setLoadUserClient(true)
+        findUser()
+    }, [token, userClientId])
+
     console.log("🚀 ~ CardHeaderComponent ~ userClient:", userClient)
     const userName = userClient?.name;
     const profilePicture = userClient?.photoUrl;
-    const orderNumber = data?.dailyOrderNumber;
+    const orderNumber = dailyOrderNumber;
 
     const popover = (
         <Popover id="popover-profile">
@@ -45,6 +66,6 @@ function CardHeaderComponent({ userClient, loadUserClient, data }) {
             </div>
         </Card.Header>
     );
-}
+})
 
 export default CardHeaderComponent;

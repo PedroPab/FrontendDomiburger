@@ -97,12 +97,10 @@ export const ContextProvider = ({ children }) => {
 
     socket.on('order/init', (pedido) => {
       // toast(`Cargando pedidos iniciales 🚚, canidad de pedidos ${pedido.length}`);
-      console.log('cantidad de pedidos iniciales:', pedido.length);
       setItems(filtrarPedidos(pedido, ROLE));
     });
 
     socket.on('order/create', (pedido) => {
-      console.log("🚀 ~ socket.on ~ pedido:", pedido)
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
         mapItems.set(pedido.id, pedido);
