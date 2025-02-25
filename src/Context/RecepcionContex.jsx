@@ -1,67 +1,80 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useLocalStorage } from '../Utils/localStore';
-import { UtilsApi } from '../Utils/utilsApi';
 import { useAuth } from './AuthContext';
+import { UsersService } from '../apis/clientV2/usersService';
+import { toast } from 'react-toastify';
+import { ROLES } from '../Utils/const/roles';
 
 export const RecepcionContexto = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const ContextProviderRecepcion = ({ children }) => {
-  //las lista para tener  los domiciliarios  que queremos y no los todo los que hay
-  const { item: listDomiciliarios, saveItem: setListDomiciliarios } = useLocalStorage({ itemName: 'listDomiciliarios', initialValue: [] })
+	//las lista para tener  los domiciliarios  que queremos y no los todo los que hay
+	const { item: listDomiciliarios, saveItem: setListDomiciliarios } = useLocalStorage({ itemName: 'listDomiciliarios', initialValue: [] })
 
-  //la lista de todos los domiciliarios
-  const { item: users, saveItem: setUsers } = useLocalStorage({ itemName: 'Domiciliarios', initialValue: [] });
+	//la lista de todos los domiciliarios
+	const { item: users, saveItem: setUsers } = useLocalStorage({ itemName: 'Domiciliarios', initialValue: [] });
 
-  //domiciliarios seleccionados
-  const [domiciliariosSeleccionados, setDomiciliariosSeleccionados] = useState([])
-  //estado seleccionado
+	//domiciliarios seleccionados
+	const [domiciliariosSeleccionados, setDomiciliariosSeleccionados] = useState([])
+	//estado seleccionado
 
-  const { token } = useAuth()
+	const { token } = useAuth()
 
-  //miramos todo los domiciliarios en la api
-  useEffect(() => {
-    UtilsApi({ peticion: `domiciliarios`, token: token, vervo: `GET` })
-      .then(result => {
-        setUsers(result)
-      })
-      .catch(error => console.log('error', error));
-  }, [])
+	//miramos todo los domiciliarios en la api
+	const userService = new UsersService(token);
 
-  //el modal para agrega los domiciliarios
-  const [showModalAgregarDomiciliarios, setShowModalAgregarDomiciliarios] = useState(false);
-  const openCloseModalAgregarDo = () => setShowModalAgregarDomiciliarios(!showModalAgregarDomiciliarios);
+	const findUser = async () => {
+		try {
+			const users = await userService.getByRole(ROLES.COURIER.value);
+			console.log("🚀 ~ findUser ~ users:", users)
+			toast.success(`Domiciliarios cargados correctamente ${users?.body?.length}`);
+			setUsers(users.body);
+		} catch (error) {
+			console.log("🚀 ~ findUser ~ error:", error)
+			toast.error(`Error al cargar los domiciliarios ${error?.response?.data?.message}`);
+		}
+	}
+
+	useEffect(() => {
+		findUser();
+	}
+		, [])
+
+	//el modal para agrega los domiciliarios
+	const [showModalAgregarDomiciliarios, setShowModalAgregarDomiciliarios] = useState(false);
+	const openCloseModalAgregarDo = () => setShowModalAgregarDomiciliarios(!showModalAgregarDomiciliarios);
 
 
-  //el filtro para buscar los domiciliarios
-  const [domiciliarioIdFilter, setDomiciliarioIdFilter] = useState(null)
+	//el filtro para buscar los domiciliarios
+	const [domiciliarioIdFilter, setDomiciliarioIdFilter] = useState(null)
 
-  const { item: openSidebarFilterDelivery, saveItem: setOpenSidebarFilterDelivery } = useLocalStorage({ itemName: 'openSidebarFilterDelivery', initialValue: false })
-  //setOpenSidebarFilterDelivery)
-  const toggleSidebar = () => {
-    setOpenSidebarFilterDelivery((prevState) => !prevState);
-  };
+	const { item: openSidebarFilterDelivery, saveItem: setOpenSidebarFilterDelivery } = useLocalStorage({ itemName: 'openSidebarFilterDelivery', initialValue: false })
+	//setOpenSidebarFilterDelivery)
+	const toggleSidebar = () => {
+		setOpenSidebarFilterDelivery((prevState) => !prevState);
+	};
 
-  return (
-    <RecepcionContexto.Provider value={
-      {
-        listDomiciliarios, setListDomiciliarios,
+	return (
+		<RecepcionContexto.Provider value={
+			{
+				listDomiciliarios, setListDomiciliarios,
 
-        users, setUsers,
+				users, setUsers,
 
-        openCloseModalAgregarDo, showModalAgregarDomiciliarios,
+				openCloseModalAgregarDo, showModalAgregarDomiciliarios,
 
-        domiciliariosSeleccionados, setDomiciliariosSeleccionados,
+				domiciliariosSeleccionados, setDomiciliariosSeleccionados,
 
-        domiciliarioIdFilter, setDomiciliarioIdFilter,
+				domiciliarioIdFilter, setDomiciliarioIdFilter,
 
-        openSidebarFilterDelivery, toggleSidebar
-      }
-    }>
-      {children}
-    </RecepcionContexto.Provider>
-  )
+				openSidebarFilterDelivery, toggleSidebar
+			}
+		}>
+			{children}
+		</RecepcionContexto.Provider>
+	)
 }
 
 export const useRecepcion = () => { return useContext(RecepcionContexto) }

@@ -25,8 +25,9 @@ function CardFooterComponent({ data }) {
 				setLoadChangeStatus(false);
 				toast.success("Estado de la orden actualizado");
 			} catch (error) {
+				console.log("🚀 ~ updateOrderStatus ~ error:", error)
 				setLoadChangeStatus(false);
-				toast.error(`Error al cambiar el estado de la orden ${error.response.data.message}`);
+				toast.error(`Error al cambiar el estado de la orden ${error?.response?.data?.message}`);
 			}
 		};
 		setLoadChangeStatus(true);
@@ -43,6 +44,7 @@ function CardFooterComponent({ data }) {
 
 			<DeliveryDropdown
 				assignedCourierUserId={data?.assignedCourierUserId}
+				orderId={data.id}
 			/>
 
 			<Button variant="primary" onClick={nextStatus} disabled={loadChangeStatus}>
