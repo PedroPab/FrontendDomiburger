@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 
 const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 	const { listDomiciliarios } = useRecepcion();
-	console.log("🚀 ~ DeliveryDropdown ~ listDomiciliarios:", listDomiciliarios);
 
 	const { token } = useAuth();
 	const userService = new UsersService(token);
@@ -29,10 +28,19 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 	};
 
 	useEffect(() => {
-		if (!assignedCourierUserId) return;
-		setLoadUser(true);
-		findUser();
-	}, [token, assignedCourierUserId]);
+		if (!assignedCourierUserId) {
+			setDataUserCourier(null);
+			return;
+		}
+
+		const localUser = listDomiciliarios.find(d => d.id === assignedCourierUserId);
+		if (localUser) {
+			setDataUserCourier(localUser);
+		} else {
+			setLoadUser(true);
+			findUser();
+		}
+	}, [token, assignedCourierUserId, listDomiciliarios]);
 
 	const orderService = new OrderService(token);
 
@@ -41,7 +49,6 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 			setLoadChangeCourier(true);
 			await orderService.updateCurrier(orderId, courierId);
 			setLoadChangeCourier(false);
-			toast.success("Domiciliario actualizado");
 		} catch (error) {
 			setLoadChangeCourier(false);
 			toast.error(`Error al cambiar el domiciliario: ${error?.response?.data?.message}`);
@@ -52,7 +59,7 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 	return (
 		<div className="d-flex align-items-center">
 			<Image
-				src={dataUserCourier?.photoUrl || "https://i.pravatar.cc/300"}
+				src={dataUserCourier?.photoUrl || "https://via.placeholder.com/40"}
 				style={{
 					width: "40px",
 					height: "40px",
@@ -61,11 +68,18 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 			/>
 
 			<Dropdown className="m-2">
-				<Dropdown.Toggle variant="success" id="dropdown-basic">
+				<Dropdown.Toggle variant={assignedCourierUserId ? "success" : "danger"} id="dropdown-basic">
 					{loadChangeCourier ? <Spinner animation="border" size="sm" /> : (dataUserCourier?.name || "Sin Domiciliario")}
 				</Dropdown.Toggle>
 
 				<Dropdown.Menu>
+					{/* opción para no asignar nada */}
+					<Dropdown.Item
+						onClick={() => updateCourierOrder(null)}
+						style={{ backgroundColor: "#f8d7da", color: "#721c24" }}
+					>
+						No asignar domiciliario
+					</Dropdown.Item>
 					{/* todos los domiciliarios disponibles */}
 					{listDomiciliarios.map((domiciliario) => (
 						<Dropdown.Item
@@ -75,14 +89,17 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 							}}
 							key={domiciliario.id}
 							data-id={domiciliario.id}
+							disabled={domiciliario.id === assignedCourierUserId}
+							style={domiciliario.id === assignedCourierUserId ? { backgroundColor: "#d3d3d3" } : {}}
 						>
 							{domiciliario.name}
+
 						</Dropdown.Item>
 					))}
 				</Dropdown.Menu>
 			</Dropdown>
 		</div>
 	);
-};
+}
 
 export { DeliveryDropdown };

@@ -11,10 +11,10 @@ export const RecepcionContexto = createContext()
 // eslint-disable-next-line react/prop-types
 export const ContextProviderRecepcion = ({ children }) => {
 	//las lista para tener  los domiciliarios  que queremos y no los todo los que hay
-	const { item: listDomiciliarios, saveItem: setListDomiciliarios } = useLocalStorage({ itemName: 'listDomiciliarios', initialValue: [] })
+	const { item: listDomiciliarios, saveItem: setListDomiciliarios } = useLocalStorage({ itemName: 'listDomiciliarios1', initialValue: [] })
 
 	//la lista de todos los domiciliarios
-	const { item: users, saveItem: setUsers } = useLocalStorage({ itemName: 'Domiciliarios', initialValue: [] });
+	const { item: users, saveItem: setUsers } = useLocalStorage({ itemName: 'Domiciliarios1', initialValue: [] });
 
 	//domiciliarios seleccionados
 	const [domiciliariosSeleccionados, setDomiciliariosSeleccionados] = useState([])
@@ -28,11 +28,8 @@ export const ContextProviderRecepcion = ({ children }) => {
 	const findUser = async () => {
 		try {
 			const users = await userService.getByRole(ROLES.COURIER.value);
-			console.log("🚀 ~ findUser ~ users:", users)
-			toast.success(`Domiciliarios cargados correctamente ${users?.body?.length}`);
 			setUsers(users.body);
 		} catch (error) {
-			console.log("🚀 ~ findUser ~ error:", error)
 			toast.error(`Error al cargar los domiciliarios ${error?.response?.data?.message}`);
 		}
 	}
