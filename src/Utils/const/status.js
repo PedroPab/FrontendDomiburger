@@ -9,17 +9,19 @@ const ORDER_STATUSES = {
     READY_FOR_PICKUP: 'ready_for_pickup',  // Listo para ser recogido
     // WAITING: 'Waiting',  // En espera
     DISPATCHED: 'dispatched',  // Despachado (enviado)
+    AT_DESTINATION: 'at_destination',  // El domiciliario ha llegado al punto de entrega y espera la acción del cliente
     DELIVERED: 'delivered',  // Entregado
     RETURNED: 'returned',  // Pedido devuelto por el cliente
     REFUNDED: 'refunded',  // Pedido reembolsado
     INVOICED: 'invoiced',  // Facturado
     FAILED: 'failed',  // Pedido fallido por algún problema
     DELETED: 'deleted',  // Eliminado
-    PENDING_TRANSFER: 'pending_transfer',  // Pendiente de transferencia (pago en proceso)
+    PENDING_PAYMENT: 'pending_payment',  // Pendiente de transferencia (pago en proceso)
     UNDEFINED: 'undefined',  // Indefinido
     //programodo: cuando se programa un pedido para el futuro
     CODE_ERROR: 'code_error'  // Error de código
 };
+
 
 const PAYMENT_METHODS = {
     CASH: 'cash',

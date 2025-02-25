@@ -28,6 +28,14 @@ class OrderService {
     const rta = await this.api.post(`/ `, data);
     return rta
   }
+  async changeStatus(id, previousState, nextState) {
+    const body = {
+      previousState,
+      nextState
+    }
+    const rta = await this.api.patch(`/status/${id}`, body);
+    return rta.data
+  }
 }
 
 export { OrderService }

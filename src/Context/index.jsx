@@ -25,10 +25,10 @@ export const ContextProvider = ({ children }) => {
   const [alertaActiva, setAlertaActiva] = useState(false);
   const [isConnected, setIsConnected] = useState(false); // Nuevo estado para indicar si está conectado
 
-  const { usuarioActual, token , userData} = useAuth()
+  const { usuarioActual, token, userData } = useAuth()
 
 
-  const {item: kitchenSelectId  , saveItem: setKitchenSelectId } = useLocalStorage({ itemName: 'kitchenSelectId', initialValue: null });
+  const { item: kitchenSelectId, saveItem: setKitchenSelectId } = useLocalStorage({ itemName: 'kitchenSelectId', initialValue: null });
 
   const changeKitchen = (id) => {
     setKitchenSelectId(id);
@@ -44,10 +44,10 @@ export const ContextProvider = ({ children }) => {
       changeKitchen(null);
       return
     }
-    
-    if(kitchenSelectId){
+
+    if (kitchenSelectId) {
       const kitchen = assignedKitchens.find(kitchen => kitchen.id === kitchenSelectId);
-      if(kitchen){
+      if (kitchen) {
         changeKitchen(kitchen);
         return
       }
@@ -55,7 +55,7 @@ export const ContextProvider = ({ children }) => {
     // si tiene cocinas asignadas, se escoge la primera
   }, [usuarioActual]);
 
-  
+
 
   const reconnectSocket = () => {
     if (!isConnected) {
@@ -74,11 +74,11 @@ export const ContextProvider = ({ children }) => {
       if (ROLE) {
         // socket.emit('api/v2/pedidos/role', ROLE, ID);
         const params = {
-          token : token, 
-          role: ROLE, 
+          token: token,
+          role: ROLE,
           kitchenId: kitchenSelectId
         }
-        socket.emit('login', params )
+        socket.emit('login', params)
       }
       console.log("Señor debugeador , estas son mi variables, no me haga daño")
       console.log(ROLE)
@@ -96,12 +96,13 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('order/init', (pedido) => {
-      toast(`Cargando pedidos iniciales 🚚, canidad de pedidos ${pedido.length}`);
+      // toast(`Cargando pedidos iniciales 🚚, canidad de pedidos ${pedido.length}`);
       console.log('cantidad de pedidos iniciales:', pedido.length);
       setItems(filtrarPedidos(pedido, ROLE));
     });
 
     socket.on('order/create', (pedido) => {
+      console.log("🚀 ~ socket.on ~ pedido:", pedido)
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
         mapItems.set(pedido.id, pedido);
@@ -110,6 +111,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     socket.on('order/update', (pedido) => {
+      toast(`Pedido actualizado 🚚, ${pedido.id}`);
       setItems((itemsPrevios) => {
         const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
         mapItems.set(pedido.id, pedido);
@@ -127,7 +129,7 @@ export const ContextProvider = ({ children }) => {
     };
   }, [usuarioActual, ROLE, kitchenSelectId]);
 
-  
+
   return (
     <MiContexto.Provider
       value={{

@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import CardHeaderComponent from "./CardHeader";
 import CardBodyComponent from "./CardBody";
-import CardFooterComponent from "./CardFooter";
+import { CardFooterComponent } from "./CardFooter";
 import { useEffect, useState } from "react";
 import { UsersService } from "../../apis/clientV2/usersService";
 import { useAuth } from "../../Context/AuthContext";
@@ -36,7 +36,9 @@ function OrderCardV2({ data }) {
       />
       <CardBodyComponent
       />
-      <CardFooterComponent />
+      <CardFooterComponent
+        data={data}
+      />
     </Card>
   );
 }

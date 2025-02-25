@@ -87,6 +87,7 @@ const listStatusRecepcion = [
 ]
 
 export {
+    statusOrderCol,
     listStatusRecepcion
 }
 
