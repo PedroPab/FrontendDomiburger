@@ -13,6 +13,7 @@ import { OrderCountIndicator } from '../OrderCountIndicator';
 
 const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
   const contextRecepcion = useContext(RecepcionContexto);
+  console.log("🚀 ~ NavbarRecepcionCom ~ contextRecepcion:", RecepcionContexto)
   const { toggleSidebar } = contextRecepcion;
 
   return (
@@ -143,9 +144,9 @@ const NavbarRecepcionCom = ({ modoOscuro, alternarModo }) => {
 const NavbarRecepcion = (props) => {
 
   return (
-    <  >
+    < ContextProviderRecepcion >
       <NavbarRecepcionCom  {...props} />
-    </ >
+    </ ContextProviderRecepcion>
   )
 }
 
