@@ -58,14 +58,18 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 
 	return (
 		<div className="d-flex align-items-center">
-			<Image
-				src={dataUserCourier?.photoUrl || "https://via.placeholder.com/40"}
-				style={{
-					width: "40px",
-					height: "40px",
-				}}
-				roundedCircle
-			/>
+			{
+				assignedCourierUserId && (
+					<Image
+						src={dataUserCourier?.photoUrl}
+						style={{
+							width: "40px",
+							height: "40px",
+						}}
+						roundedCircle
+					/>
+				)
+			}
 
 			<Dropdown className="m-2">
 				<Dropdown.Toggle variant={assignedCourierUserId ? "success" : "danger"} id="dropdown-basic">
