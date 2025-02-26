@@ -5,6 +5,7 @@ import { useAuth } from './AuthContext';
 import { UsersService } from '../apis/clientV2/usersService';
 import { toast } from 'react-toastify';
 import { ROLES } from '../Utils/const/roles';
+import { ProductsService } from '../apis/clientV2/ProductsService';
 
 export const RecepcionContexto = createContext()
 
@@ -19,11 +20,12 @@ export const ContextProviderRecepcion = ({ children }) => {
 	//domiciliarios seleccionados
 	const [domiciliariosSeleccionados, setDomiciliariosSeleccionados] = useState([])
 	//estado seleccionado
-
+	const [listProducts, setListProducts] = useState([])
 	const { token } = useAuth()
 
 	//miramos todo los domiciliarios en la api
 	const userService = new UsersService(token);
+	const productosService = new ProductsService(token);
 
 	const findUser = async () => {
 		try {
@@ -34,8 +36,18 @@ export const ContextProviderRecepcion = ({ children }) => {
 		}
 	}
 
+	const findsProducts = async () => {
+		try {
+			const products = await productosService.getAll();
+			setListProducts(products.body);
+		} catch (error) {
+			toast.error(`Error al cargar los productos ${error?.response?.data?.message}`);
+		}
+	}
+
 	useEffect(() => {
 		findUser();
+		findsProducts();
 	}
 		, [])
 
@@ -59,6 +71,8 @@ export const ContextProviderRecepcion = ({ children }) => {
 				listDomiciliarios, setListDomiciliarios,
 
 				users, setUsers,
+
+				listProducts,
 
 				openCloseModalAgregarDo, showModalAgregarDomiciliarios,
 
