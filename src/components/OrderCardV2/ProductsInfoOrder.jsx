@@ -42,7 +42,6 @@ const ProductsInfoOrder = ({ orderItems }) => {
 				<Accordion.Body>
 
 					<ProductsTable orderItems={products} />
-					<p>gbi</p>
 
 				</Accordion.Body>
 			</Accordion.Item>
