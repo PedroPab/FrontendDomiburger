@@ -1,29 +1,28 @@
 import { memo, useEffect, useState } from "react";
-import { Card, Badge, Image, Spinner, OverlayTrigger, Popover } from "react-bootstrap";
+import { Card, Badge, Image, Spinner, OverlayTrigger, Popover, Button, Modal } from "react-bootstrap";
 import { useAuth } from "../../Context/AuthContext";
 import { UsersService } from "../../apis/clientV2/usersService";
 
 const CardHeaderComponent = memo(function Greeting({ userClientId, dailyOrderNumber }) {
-	const [userClient, setUserClient] = useState(null)
-	const [loadUserClient, setLoadUserClient] = useState(false)
+	const [userClient, setUserClient] = useState(null);
+	const [loadUserClient, setLoadUserClient] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
-	const { token } = useAuth()
+	const { token } = useAuth();
+	const usersService = new UsersService(token);
 
-	const usersService = new UsersService(token)
 	useEffect(() => {
 		const findUser = async () => {
-
-			const user = await usersService.getByIdUser(userClientId)
-			setUserClient(user.body)
-			setLoadUserClient(false)
-		}
-		setLoadUserClient(true)
-		findUser()
-	}, [token, userClientId])
+			const user = await usersService.getByIdUser(userClientId);
+			setUserClient(user.body);
+			setLoadUserClient(false);
+		};
+		setLoadUserClient(true);
+		findUser();
+	}, [token, userClientId]);
 
 	const userName = userClient?.name;
 	const profilePicture = userClient?.photoUrl;
-
 	const orderNumber = dailyOrderNumber;
 
 	const popover = (
@@ -45,36 +44,59 @@ const CardHeaderComponent = memo(function Greeting({ userClientId, dailyOrderNum
 		</Popover>
 	);
 
+	const handleModalClose = () => setShowModal(false);
+	const handleModalShow = () => setShowModal(true);
+
 	return (
-		<Card.Header className="d-flex justify-content-between align-items-center">
-			{/* Sección izquierda: nombre de usuario y número de pedido */}
-			<Badge bg="success" pill style={{ fontSize: "1rem", padding: "0.5rem 1rem" }}>
-				<small>{orderNumber || "#"}</small>
-			</Badge>
+		<>
+			<Card.Header className="d-flex justify-content-between align-items-center">
+				{/* Sección izquierda: nombre de usuario y número de pedido */}
+				<Badge
+					variant="info" onClick={handleModalShow}
+					className="d-flex align-items-center rounded-pill"
+					style={{ fontSize: "1rem", padding: "0.5rem 0.7rem" }}>
+					<small>{orderNumber || "#"}</small>
+				</Badge>
 
-			<h5 className="mb-0 ml-2">
-				{loadUserClient ? <Spinner animation="border" size="sm" /> : (userName || "Sin nombre")}
-			</h5>
+				<h5 className="mb-0 ml-2">
+					{loadUserClient ? <Spinner animation="border" size="sm" /> : (userName || "Sin nombre")}
+				</h5>
 
-			{/* Sección derecha: foto de perfil y botón de más info */}
-			<div className="d-flex align-items-center">
-				{loadUserClient ? (
-					<Spinner animation="border" size="sm" />
-				) : (
-					<OverlayTrigger trigger="click" placement="auto" overlay={popover} container={document.body}>
-						<Image
-							src={profilePicture || "https://i.pravatar.cc/300"}
-							alt="Foto de perfil del usuario actual"
-							className="rounded-circle"
-							width="40"
-							height="40"
-							style={{ cursor: "pointer" }}
-						/>
-					</OverlayTrigger>
-				)}
-			</div>
-		</Card.Header>
+				{/* Sección derecha: foto de perfil y botón de más info */}
+				<div className="d-flex align-items-center">
+					{loadUserClient ? (
+						<Spinner animation="border" size="sm" />
+					) : (
+						<OverlayTrigger trigger="click" placement="auto" overlay={popover} container={document.body}>
+							<Image
+								src={profilePicture || "https://i.pravatar.cc/300"}
+								alt="Foto de perfil del usuario actual"
+								className="rounded-circle"
+								width="40"
+								height="40"
+								style={{ cursor: "pointer" }}
+							/>
+						</OverlayTrigger>
+					)}
+				</div>
+			</Card.Header>
+
+			{/* Modal para mostrar más detalles */}
+			<Modal show={showModal} onHide={handleModalClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Detalles del Pedido #{orderNumber}</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					Aquí puedes agregar más detalles del pedido.
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleModalClose}>
+						Cerrar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		</>
 	);
-})
+});
 
 export default CardHeaderComponent;
