@@ -2,24 +2,33 @@ import { memo, useEffect, useState } from "react";
 import { Card, Badge, Image, Spinner, OverlayTrigger, Popover, Button, Modal } from "react-bootstrap";
 import { useAuth } from "../../Context/AuthContext";
 import { UsersService } from "../../apis/clientV2/usersService";
+import { ClientsService } from "../../apis/clientV2/ClientsService";
 
-const CardHeaderComponent = memo(function Greeting({ userClientId, dailyOrderNumber }) {
+import photoGeneric from "../../assets/img/photoGeneric.jpg";
+
+const CardHeaderComponent = memo(function Greeting({ userId, dailyOrderNumber, clientId }) {
 	const [userClient, setUserClient] = useState(null);
 	const [loadUserClient, setLoadUserClient] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
 	const { token } = useAuth();
 	const usersService = new UsersService(token);
+	const clientsService = new ClientsService(token);
 
 	useEffect(() => {
 		const findUser = async () => {
-			const user = await usersService.getByIdUser(userClientId);
+			let user
+			if (userId) {
+				user = await usersService.getByIdUser(userId);
+			} else if (clientId) {
+				user = await clientsService.getById(clientId);
+			}
 			setUserClient(user.body);
 			setLoadUserClient(false);
 		};
 		setLoadUserClient(true);
 		findUser();
-	}, [token, userClientId]);
+	}, [token, userId]);
 
 	const userName = userClient?.name;
 	const profilePicture = userClient?.photoUrl;
@@ -69,7 +78,7 @@ const CardHeaderComponent = memo(function Greeting({ userClientId, dailyOrderNum
 					) : (
 						<OverlayTrigger trigger="click" placement="auto" overlay={popover} container={document.body}>
 							<Image
-								src={profilePicture || "https://i.pravatar.cc/300"}
+								src={profilePicture || photoGeneric}
 								alt="Foto de perfil del usuario actual"
 								className="rounded-circle"
 								width="40"
