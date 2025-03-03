@@ -1,9 +1,9 @@
 import { Accordion } from "react-bootstrap";
 import { ProductsTable } from "./ProductsTable";
-import { useRecepcion } from "../../Context/RecepcionContex";
+import { useWorker } from "../../Context/WorkerContext";
 
 const ProductsInfoOrder = ({ orderItems }) => {
-	const { listProducts } = useRecepcion()
+	const { listProducts } = useWorker()
 	//separamos los productos para ver su informacion de forma resumida
 	const groupedItems = orderItems?.reduce((acc, item) => {
 		if (!acc[item.id]) {

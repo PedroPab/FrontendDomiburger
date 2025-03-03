@@ -6,9 +6,11 @@ import { useState } from "react";
 import { statusNext } from "../../Utils/const/statusChange/listNextStatus";
 import { statusOrderCol } from "../../Utils/listStatus";
 import { DeliveryDropdown } from "./DeliveryDropdown";
+import { usePreferences } from "../../Context/PreferencesContext";
+import { ROLES } from "../../Utils/const/roles";
 
 function CardFooterComponent({ data }) {
-
+	const { roleSelect } = usePreferences();
 
 	const { token } = useAuth();
 	const orderService = new OrderService(token);
@@ -41,11 +43,12 @@ function CardFooterComponent({ data }) {
 	return (
 		<Card.Footer className="d-flex justify-content-between align-items-center">
 
-
-			<DeliveryDropdown
-				assignedCourierUserId={data?.assignedCourierUserId}
-				orderId={data.id}
-			/>
+			{roleSelect == ROLES.ADMIN.value || roleSelect == ROLES.RECEPTION.value && (
+				<DeliveryDropdown
+					assignedCourierUserId={data?.assignedCourierUserId}
+					orderId={data.id}
+				/>
+			)}
 
 			<Button variant="primary" onClick={nextStatus} disabled={loadChangeStatus}>
 				{loadChangeStatus ? <Spinner animation="border" size="sm" /> : nameStatus || "Cambiar estado"}
