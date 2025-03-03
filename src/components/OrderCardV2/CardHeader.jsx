@@ -3,12 +3,11 @@ import { Card, Badge, Image, Spinner, OverlayTrigger, Popover, Button, Modal } f
 import { useAuth } from "../../Context/AuthContext";
 import { UsersService } from "../../apis/clientV2/usersService";
 import { ClientsService } from "../../apis/clientV2/ClientsService";
-
 import photoGeneric from "../../assets/img/photoGeneric.jpg";
 
-const CardHeaderComponent = memo(function Greeting({ userId, dailyOrderNumber, clientId }) {
+const CardHeaderComponent = memo(({ userId, dailyOrderNumber, clientId }) => {
 	const [userClient, setUserClient] = useState(null);
-	const [loadUserClient, setLoadUserClient] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [showModal, setShowModal] = useState(false);
 
 	const { token } = useAuth();
@@ -16,27 +15,29 @@ const CardHeaderComponent = memo(function Greeting({ userId, dailyOrderNumber, c
 	const clientsService = new ClientsService(token);
 
 	useEffect(() => {
-		const findUser = async () => {
-			let user
-			if (userId) {
-				user = await usersService.getByIdUser(userId);
-			} else if (clientId) {
-				user = await clientsService.getById(clientId);
-			}
-			setUserClient(user.body);
-			setLoadUserClient(false);
-		};
-		setLoadUserClient(true);
-		findUser();
-	}, [token, userId]);
+		const fetchUser = async () => {
+			setLoading(true);
+			const user = userId
+				? await usersService.getByIdUser(userId)
+				: clientId
+					? await clientsService.getById(clientId)
+					: null;
 
-	const userName = userClient?.name;
-	const profilePicture = userClient?.photoUrl;
-	const orderNumber = dailyOrderNumber;
+			setUserClient(user?.body || null);
+			setLoading(false);
+		};
+
+		if (userId || clientId) fetchUser();
+	}, [userId, clientId]);
+
+	const userName = userClient?.name || "Sin nombre";
+	const profilePicture = userClient?.photoUrl || photoGeneric;
+	const orderNumber = dailyOrderNumber || "#";
+	const headerVariant = userId ? "primary" : clientId ? "success" : "secondary";
 
 	const popover = (
 		<Popover id="popover-profile">
-			<Popover.Header as="h3">{userName || "Sin nombre"}</Popover.Header>
+			<Popover.Header as="h3">{userName}</Popover.Header>
 			<Popover.Body>
 				<strong>Información del usuario:</strong>
 				<p>Email: {userClient?.email || "No disponible"}</p>
@@ -53,33 +54,31 @@ const CardHeaderComponent = memo(function Greeting({ userId, dailyOrderNumber, c
 		</Popover>
 	);
 
-	const handleModalClose = () => setShowModal(false);
-	const handleModalShow = () => setShowModal(true);
-
 	return (
 		<>
-			<Card.Header className="d-flex justify-content-between align-items-center">
-				{/* Sección izquierda: nombre de usuario y número de pedido */}
+			<Card.Header className={`bg-${headerVariant} text-white d-flex justify-content-between align-items-center`}>
 				<Badge
-					variant="info" onClick={handleModalShow}
-					className="d-flex align-items-center rounded-pill"
-					style={{ fontSize: "1rem", padding: "0.5rem 0.7rem" }}>
-					<small>{orderNumber || "#"}</small>
+					bg="light"
+					text="dark"
+					onClick={() => setShowModal(true)}
+					className="rounded-pill"
+					style={{ fontSize: "1rem", padding: "0.5rem 0.7rem", cursor: "pointer" }}
+				>
+					<small>{orderNumber}</small>
 				</Badge>
 
 				<h5 className="mb-0 ml-2">
-					{loadUserClient ? <Spinner animation="border" size="sm" /> : (userName || "Sin nombre")}
+					{loading ? <Spinner animation="border" size="sm" /> : userName}
 				</h5>
 
-				{/* Sección derecha: foto de perfil y botón de más info */}
 				<div className="d-flex align-items-center">
-					{loadUserClient ? (
+					{loading ? (
 						<Spinner animation="border" size="sm" />
 					) : (
-						<OverlayTrigger trigger="click" placement="auto" overlay={popover} container={document.body}>
+						<OverlayTrigger trigger="click" placement="auto" overlay={popover}>
 							<Image
-								src={profilePicture || photoGeneric}
-								alt="Foto de perfil del usuario actual"
+								src={profilePicture}
+								alt="Foto de perfil"
 								className="rounded-circle"
 								width="40"
 								height="40"
@@ -90,16 +89,13 @@ const CardHeaderComponent = memo(function Greeting({ userId, dailyOrderNumber, c
 				</div>
 			</Card.Header>
 
-			{/* Modal para mostrar más detalles */}
-			<Modal show={showModal} onHide={handleModalClose}>
+			<Modal show={showModal} onHide={() => setShowModal(false)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Detalles del Pedido #{orderNumber}</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
-					Aquí puedes agregar más detalles del pedido.
-				</Modal.Body>
+				<Modal.Body>Aquí puedes agregar más detalles del pedido.</Modal.Body>
 				<Modal.Footer>
-					<Button variant="secondary" onClick={handleModalClose}>
+					<Button variant="secondary" onClick={() => setShowModal(false)}>
 						Cerrar
 					</Button>
 				</Modal.Footer>
@@ -107,5 +103,8 @@ const CardHeaderComponent = memo(function Greeting({ userId, dailyOrderNumber, c
 		</>
 	);
 });
+
+// 🔥 SOLUCIÓN: Agregar displayName manualmente
+CardHeaderComponent.displayName = "CardHeaderComponent";
 
 export default CardHeaderComponent;
