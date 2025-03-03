@@ -9,6 +9,7 @@ export const WorkerContext = createContext()
 // eslint-disable-next-line react/prop-types
 export const WorkerProvider = ({ children }) => {
 
+	const [idOrderSelect, setIdOrderSelect] = useState(null);
 
 	const [listProducts, setListProducts] = useState([])
 	const { token } = useAuth()
@@ -35,6 +36,7 @@ export const WorkerProvider = ({ children }) => {
 		<WorkerContext.Provider value={
 			{
 				listProducts,
+				idOrderSelect, setIdOrderSelect
 			}
 		}>
 			{children}

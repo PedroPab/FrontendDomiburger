@@ -1,21 +1,19 @@
 import { useEffect, useRef } from 'react'
-import { useMiContexto } from '../../Context'
 import { Col, Container, Row } from "react-bootstrap"
-import OrderCard from "../OrderCard"
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { FaBoxOpen } from 'react-icons/fa';
 import { OrderCardV2 } from '../OrderCardV2';
+import { useWorker } from '../../Context/WorkerContext';
 
 const CarouselListCards = ({ data }) => {
-	console.log("🚀 ~ CarouselListCards ~ data:", data)
-	const { idItemSelect, setIdItemSelect } = useMiContexto()
+	const { idOrderSelect, setIdOrderSelect } = useWorker()
 	const sliderRef = useRef(null); // Crea una referencia para el Slider
-	//cada vez que se camien el index se cambian mualmente el
+
 	useEffect(() => {
-		sliderRef.current.slickGoTo(idItemSelect);
-	}, [idItemSelect])
+		sliderRef.current.slickGoTo(idOrderSelect);
+	}, [idOrderSelect])
 
 	const settings = {
 		infinite: false,
@@ -30,7 +28,7 @@ const CarouselListCards = ({ data }) => {
 				ref={sliderRef}
 				afterChange={(index) => {
 					const idSelect = data[index].id
-					setIdItemSelect(idSelect)
+					setIdOrderSelect(idSelect)
 				}}
 			>
 				{
