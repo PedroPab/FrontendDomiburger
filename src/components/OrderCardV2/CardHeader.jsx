@@ -4,11 +4,14 @@ import { useAuth } from "../../Context/AuthContext";
 import { UsersService } from "../../apis/clientV2/usersService";
 import { ClientsService } from "../../apis/clientV2/ClientsService";
 import photoGeneric from "../../assets/img/photoGeneric.jpg";
+import { DetailsModalOrder } from "./DetailsModalOrder";
 
-const CardHeaderComponent = memo(({ userId, dailyOrderNumber, clientId }) => {
+const CardHeaderComponent = memo(({ order }) => {
+	const { userId, dailyOrderNumber, clientId } = order;
 	const [userClient, setUserClient] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [showModal, setShowModal] = useState(false);
+	const [selectedOrder, setSelectedOrder] = useState(null);
 
 	const { token } = useAuth();
 	const usersService = new UsersService(token);
@@ -54,6 +57,8 @@ const CardHeaderComponent = memo(({ userId, dailyOrderNumber, clientId }) => {
 		</Popover>
 	);
 
+
+
 	return (
 		<>
 			<Card.Header className={`bg-${headerVariant} text-white d-flex justify-content-between align-items-center`}>
@@ -89,17 +94,8 @@ const CardHeaderComponent = memo(({ userId, dailyOrderNumber, clientId }) => {
 				</div>
 			</Card.Header>
 
-			<Modal show={showModal} onHide={() => setShowModal(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title>Detalles del Pedido #{orderNumber}</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Aquí puedes agregar más detalles del pedido.</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={() => setShowModal(false)}>
-						Cerrar
-					</Button>
-				</Modal.Footer>
-			</Modal>
+			<DetailsModalOrder showModal={showModal} setShowModal={setShowModal} order={order} />
+
 		</>
 	);
 });

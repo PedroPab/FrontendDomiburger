@@ -11,9 +11,7 @@ function OrderCardV2({ data }) {
 			className="mb-3"
 		>
 			<CardHeaderComponent
-				dailyOrderNumber={data.dailyOrderNumber}
-				userId={data.userId}
-				clientId={data.clientId}
+				order={data}
 			/>
 			<CardBodyComponent
 				data={data}
