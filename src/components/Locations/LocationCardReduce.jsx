@@ -6,12 +6,14 @@ const ENV = import.meta.env;
 // Adaptación de LocationCardReduce para mostrar solo mapa, dirección y comentario
 const LocationCardReduce = ({ location, isSelect, onClick }) => {
 	const { address, comment, coordinates } = location;
+	console.log("🚀 ~ LocationCardReduce ~ coordinates:", coordinates)
 
 	const { isDarkMode } = usePreferences(); // Obtiene el estado del tema
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: ENV.VITE_KEYMAPS,
 		libraries: ["places"],
 	});
+	console.log("🚀 ~ LocationCardReduce ~ isLoaded:", isLoaded)
 	const mapStyles = {
 		dark: [
 			{ elementType: "geometry", stylers: [{ color: "#212121" }] },
@@ -24,8 +26,8 @@ const LocationCardReduce = ({ location, isSelect, onClick }) => {
 	};
 	// Estilos de la tarjeta dependiendo de si está seleccionada
 	const cardClasses = isSelect
-		? "card shadow-sm rounded-4 border-success bg-success-subtle "
-		: "card shadow-sm rounded-4 border-muted ";
+		? "card shadow-sm border-success bg-success-subtle "
+		: "card shadow-sm border-muted ";
 
 	return (
 		<Card className={cardClasses} onClick={onClick} style={{ transition: "0.3s" }}>

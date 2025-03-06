@@ -24,6 +24,16 @@ class LocationsService {
 			throw error;
 		}
 	}
+	async getByIdClient(id) {
+		try {
+			const rta = await this.api.get(`/client/${id}`)
+
+			return rta.data
+		} catch (error) {
+			console.log(`[~LocationsService ~getByIdClient ~error]`, error)
+			throw error;
+		}
+	}
 	async getById(id) {
 		const rta = await this.api.get(`/${id}`)
 

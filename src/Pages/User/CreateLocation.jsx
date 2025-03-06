@@ -55,7 +55,7 @@ const CreateLocation = () => {
 	);
 };
 
-const CreateLocationComponent = ({ successForm }) => {
+const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
 	const { token } = useAuth();
 
 	const [loading, setLoading] = useState(false);
@@ -110,6 +110,10 @@ const CreateLocationComponent = ({ successForm }) => {
 
 
 		try {
+			if (clientId === null) throw new Error('debes de tener un cliente');
+			if (clientId) {
+				formData.clientId = clientId;
+			}
 			await locationsService.create(formData, token);
 			setFloor('');
 			setPropertyType('');
@@ -127,7 +131,7 @@ const CreateLocationComponent = ({ successForm }) => {
 		}
 	};
 	return (
-		<Col md={{ span: 8, offset: 2 }} >
+		<Col  >
 			<h1 className="mb-4">Crear Nueva Ubicación</h1>
 
 			{

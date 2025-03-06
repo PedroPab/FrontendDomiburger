@@ -12,83 +12,83 @@ import { useAuth } from "../../Context/AuthContext";
 
 const VisualizarClientesComponente = () => {
 
-  const { token } = useAuth()
+	const { token } = useAuth()
 
-  const [clients, setClients] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+	const [clients, setClients] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-  const [telefono, setTelefono] = useState('');
-  const [dataCliente, setDataCliente] = useState(null);
-
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = parseInt(searchParams.get('page') || '1', 10);
+	const [telefono, setTelefono] = useState('');
+	const [dataCliente, setDataCliente] = useState(null);
 
 
-  const navigate = useNavigate();
-
-  const handlePageChange = (newPage) => {
-    setSearchParams({ page: newPage });
-  }
+	const [searchParams, setSearchParams] = useSearchParams();
+	const page = parseInt(searchParams.get('page') || '1', 10);
 
 
-  useEffect(() => {
-    const fetchFocus = async () => {
-      try {
-        const limit = 10;
+	const navigate = useNavigate();
 
-        const data = await clientService.getAll({ page, limit });
-        setClients(data?.body);
-      } catch (error) {
-        console.log('Error fetching clientes:', error);
-        setError('Error fetching clientes');
-        toast.error('Error al cargar los clientes');
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+	const handlePageChange = (newPage) => {
+		setSearchParams({ page: newPage });
+	}
 
-    fetchFocus();
-  }, [page]);
 
-  const handleCardCreateClientClick = () => {
-    console.log('showCreateClientModal');
-    toast.success('showCreateClientModal');
-    //los mandamos a la pagina de crear cliente con react router
-    navigate('/client/create');
-  }
+	useEffect(() => {
+		const fetchFocus = async () => {
+			try {
+				const limit = 10;
 
-  return (
-    <Container >
+				const data = await clientService.getAll({ page, limit });
+				setClients(data?.body);
+			} catch (error) {
+				console.log('Error fetching clientes:', error);
+				setError('Error fetching clientes');
+				toast.error('Error al cargar los clientes');
+				toast.error(error.message);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-      <BuscadorCliente
-        telefono={telefono}
-        setTelefono={setTelefono}
-        dataCliente={dataCliente}
-        setDataCliente={setDataCliente}
-        token={token}
-        visibleDataClient={true}
-      />
+		fetchFocus();
+	}, [page]);
 
-      {/* buscar por nombre */}
-      <BuscadorClientePorNombre
-        token={token}
-        setClients={setClients}
-      />
+	const handleCardCreateClientClick = () => {
+		console.log('showCreateClientModal');
+		toast.success('showCreateClientModal');
+		//los mandamos a la pagina de crear cliente con react router
+		navigate('/client/create');
+	}
 
-      {/* ver card de cada cliente */}
-      <ClientList clients={clients} handleCardCreateClientClick={handleCardCreateClientClick} />
+	return (
+		<Container >
 
-      <PaginationComponent
-        page={page}
-        handlePageChange={handlePageChange}
-      />
-      {/* modal para crear a un cliente */}
+			<BuscadorCliente
+				telefono={telefono}
+				setTelefono={setTelefono}
+				dataCliente={dataCliente}
+				setDataCliente={setDataCliente}
+				token={token}
+				visibleDataClient={true}
+			/>
 
-    </Container>
-  );
+			{/* buscar por nombre */}
+			<BuscadorClientePorNombre
+				token={token}
+				setClients={setClients}
+			/>
+
+			{/* ver card de cada cliente */}
+			<ClientList clients={clients} handleCardCreateClientClick={handleCardCreateClientClick} />
+
+			<PaginationComponent
+				page={page}
+				handlePageChange={handlePageChange}
+			/>
+			{/* modal para crear a un cliente */}
+
+		</Container>
+	);
 }
 
 export { VisualizarClientesComponente };

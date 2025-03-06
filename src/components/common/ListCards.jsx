@@ -1,5 +1,5 @@
 import { Alert, Col, Row, Spinner } from "react-bootstrap"
-import CardCreate from "../CardCreate"
+import CardCreate from "./CardCreate"
 
 const ListCardsElements = ({
 	elements = [],

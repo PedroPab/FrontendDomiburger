@@ -49,6 +49,14 @@ class ClientsService {
 		const rta = await this.api.get(`/${id}`)
 		return rta.data
 	}
+	async findByPhone(phone) {
+		const rta = await this.api.get(`/phone/${phone}`)
+		return rta.data
+	}
+	async importLocation(id) {
+		const rta = await this.api.post(`/importLocation/${id}`)
+		return rta
+	}
 	async getAll(pagination, filter) {
 		const { page, limit } = pagination || {};
 		const query = new URLSearchParams();
@@ -62,14 +70,10 @@ class ClientsService {
 		const rta = await this.api.get(`?${query.toString()}`)
 		return rta.data
 	}
-	async create(data, token) {
+	async create(data) {
 		try {
-			const rta = await this.api.post(`/`, data, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-			return rta
+			const rta = await this.api.post(`/`, data);
+			return rta.data
 		} catch (error) {
 			console.log(`[ ~ UsersService ~ create ~ error]`, error)
 			throw error;

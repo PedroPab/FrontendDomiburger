@@ -4,7 +4,7 @@ import { LocationsService } from "../../../apis/clientV2/LocationsService";
 import { useAuth } from "../../../Context/AuthContext";
 import { LocationCardReduce } from "../../../components/Locations/LocationCardReduce.jsx";
 import { NavigationButtons } from "./NavigationButtons.jsx";
-import CardCreate from "../../../components/CardCreate/index.jsx";
+import CardCreate from "../../../components/common/CardCreate";
 import { toast } from "react-toastify";
 import ReusableModal from "../../../components/common/ReusableModal.jsx";
 import { CreateLocationComponent } from "../CreateLocation.jsx";
