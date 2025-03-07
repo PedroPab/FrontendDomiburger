@@ -19,6 +19,14 @@ const ClientSearchModule = ({ dataClient, setDataClient }) => {
 	// Memoizamos el servicio para que no se recree en cada render.
 	const clientsService = useMemo(() => new ClientsService(token), [token]);
 
+	useEffect(() => {
+		if (dataClient === null) {
+			setName("");
+			setPhone("");
+			setOpenCreateClient(CREATE_CLIENT.CLOSED);
+		}
+	}, [dataClient]);
+
 	const findClientForPhone = useCallback(async () => {
 		if (!phone) {
 			toast.error("Por favor ingresa un número de teléfono válido.");

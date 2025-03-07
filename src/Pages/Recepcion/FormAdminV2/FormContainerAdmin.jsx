@@ -72,6 +72,21 @@ const FormContainerAdmin = () => {
 			console.log("Pedido enviado:", response);
 			toast.success("Pedido creado con éxito.");
 			// Opcional: Resetear estados o limpiar formulario aquí
+			//ponemos los estados en su estado original
+			setDataClient(null);
+
+			setSelectDomiciliario('');
+			setPaymentMethod(PAYMENT_METHODS.CASH.value);
+			setLocationIdSelect(null);
+			setComment('');
+			setKitchenIdSelect('');
+			setDataDomicilio({});
+			setPrecioDeliveryManual(null);
+			setProductOrderList([]);
+			setDelivery(null);
+			setKitchen(null);
+
+
 		} catch (error) {
 			console.error("Error al crear el pedido:", error);
 			toast.error("Error al crear el pedido");
