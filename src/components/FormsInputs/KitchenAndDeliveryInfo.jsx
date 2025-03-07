@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Spinner, Card, Row, Col } from 'react-bootstrap';
+import { Spinner, Card, Row, Col, Container, Alert } from 'react-bootstrap';
 import { useAuth } from '../../Context/AuthContext';
 import { KitchenService } from '../../apis/clientV2/KitchenService';
 import { toast } from 'react-toastify';
@@ -19,7 +19,7 @@ const KitchenAndDeliveryInfo = ({
 	useEffect(() => {
 		if (!locationIdSelect) return;
 
-		const calculateDistance = async () => {
+		const fetchKitchenAndDelivery = async () => {
 			setDelivery(null);
 			setKitchen(null);
 			try {
@@ -38,53 +38,62 @@ const KitchenAndDeliveryInfo = ({
 		};
 
 		setLoading(true);
-		calculateDistance();
+		fetchKitchenAndDelivery();
 	}, [locationIdSelect, kitchenIdSelect]);
 
 	return (
-		<div className="my-4">
-			{loading && (
+		<Container className="my-4">
+			<h3 className="text-center mb-4">Información de Cocina y Delivery</h3>
+			{loading ? (
 				<div className="d-flex justify-content-center my-4">
 					<Spinner animation="border" variant="primary" />
 				</div>
+			) : (
+				<>
+					{!kitchen && !delivery && (
+						<Alert variant="info" className="text-center">
+							No se encontró información para mostrar.
+						</Alert>
+					)}
+					<Row>
+						{kitchen && (
+							<Col md={6} className="mb-3">
+								<Card border="primary" className="shadow-sm">
+									<Card.Header as="h5" className="bg-primary text-white">
+										Cocina
+									</Card.Header>
+									<Card.Body>
+										<Card.Title>{kitchen.name}</Card.Title>
+										<Card.Text>
+											<strong>ID:</strong> {kitchen.id} <br />
+											<strong>Dirección:</strong> {kitchen.address || 'No disponible'} <br />
+											<strong>Teléfono:</strong> {kitchen.phone || 'N/A'} <br />
+											<strong>Órdenes Diarias:</strong> {kitchen.dailyOrders || 0}
+										</Card.Text>
+									</Card.Body>
+								</Card>
+							</Col>
+						)}
+						{delivery && (
+							<Col md={6} className="mb-3">
+								<Card border="success" className="shadow-sm">
+									<Card.Header as="h5" className="bg-success text-white">
+										Delivery
+									</Card.Header>
+									<Card.Body>
+										<Card.Text>
+											<strong>Precio:</strong> {delivery.price} COP <br />
+											<strong>Distancia:</strong> {delivery.distance} metros <br />
+											<strong>Duración:</strong> {delivery.duration} segundos
+										</Card.Text>
+									</Card.Body>
+								</Card>
+							</Col>
+						)}
+					</Row>
+				</>
 			)}
-			<Row>
-				{kitchen && (
-					<Col md={6} className="mb-3">
-						<Card border="primary" className="shadow-sm">
-							<Card.Header as="h5" className="bg-primary text-white">
-								Cocina
-							</Card.Header>
-							<Card.Body>
-								<Card.Title>{kitchen.name}</Card.Title>
-								<Card.Text>
-									<strong>ID:</strong> {kitchen.id} <br />
-									<strong>Dirección:</strong> {kitchen.address || 'No disponible'} <br />
-									<strong>Teléfono:</strong> {kitchen.phone || 'N/A'} <br />
-									<strong>Órdenes Diarias:</strong> {kitchen.dailyOrders || 0}
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-				)}
-				{delivery && (
-					<Col md={6} className="mb-3">
-						<Card border="success" className="shadow-sm">
-							<Card.Header as="h5" className="bg-success text-white">
-								Delivery
-							</Card.Header>
-							<Card.Body>
-								<Card.Text>
-									<strong>Precio:</strong> {delivery.price} COP <br />
-									<strong>Distancia:</strong> {delivery.distance} metros <br />
-									<strong>Duración:</strong> {delivery.duration} segundos
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-				)}
-			</Row>
-		</div>
+		</Container>
 	);
 };
 
