@@ -28,6 +28,10 @@ class OrderService {
 		const rta = await this.api.post(`/ `, data);
 		return rta
 	}
+	async createPublicAdmin(data) {
+		const rta = await this.api.post(`/public/admin `, data);
+		return rta
+	}
 	async changeStatus(id, previousState, nextState) {
 		const body = {
 			previousState,

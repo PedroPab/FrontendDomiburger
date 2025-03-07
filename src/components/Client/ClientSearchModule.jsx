@@ -128,6 +128,17 @@ const ClientSearchModule = ({ dataClient, setDataClient }) => {
 								>
 									Importar Ubicación
 								</Button>
+
+								{/* // editar cliente */}
+
+								<Button
+									type="button"
+									variant="primary"
+									onClick={() => toast.info("Funcionalidad no implementada,,, pero imaginese que si")}
+									className="w-100 my-2"
+								>
+									Editar Cliente
+								</Button>
 							</>
 
 						)}
