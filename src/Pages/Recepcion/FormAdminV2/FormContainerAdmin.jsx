@@ -11,7 +11,7 @@ import SelectDomiciliario from '../../../components/FormsInputs/SelectDomiciliar
 import { SelectKitchen } from '../../../components/FormsInputs/SelectKitchen';
 import DashboardProducts from '../../../components/Products/Dashboard/Dashboard';
 import RegisterSaleButton from '../../../components/RegisterSaleButton';
-import KitchenAndDeliveryInfo from '../../../components/FormsInputs/KitchenAndDeliveryInfo';
+import { KitchenAndDeliveryInfo } from '../../../components/FormsInputs/KitchenAndDeliveryInfo';
 
 import { OrderService } from '../../../apis/clientV2/OrderService';
 import { useAuth } from '../../../Context/AuthContext';
