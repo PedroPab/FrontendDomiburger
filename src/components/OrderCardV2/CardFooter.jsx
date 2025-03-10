@@ -29,7 +29,7 @@ function CardFooterComponent({ data }) {
 			} catch (error) {
 				console.log("🚀 ~ updateOrderStatus ~ error:", error)
 				setLoadChangeStatus(false);
-				toast.error(`Error al cambiar el estado de la orden ${error?.response?.data?.message}`);
+				toast.error(`Error al cambiar el estado de la orden: ${error?.message}`);
 			}
 		};
 		setLoadChangeStatus(true);

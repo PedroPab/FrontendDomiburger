@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getUrlBackend } from '../../Utils/getUrlApiByOriginPath';
+import { tr } from 'faker/lib/locales';
 
 class OrderService {
 	constructor(token) {
@@ -33,12 +34,17 @@ class OrderService {
 		return rta
 	}
 	async changeStatus(id, previousState, nextState) {
-		const body = {
-			previousState,
-			nextState
+		try {
+			const body = {
+				previousState,
+				nextState
+			}
+			const rta = await this.api.patch(`/status/${id}`, body);
+			return rta.data
+		} catch (error) {
+			console.log("🚀 ~ OrderService ~ changeStatus ~ error:", error)
+			throw error?.response?.data
 		}
-		const rta = await this.api.patch(`/status/${id}`, body);
-		return rta.data
 	}
 	async updateCurrier(id, courierId) {
 		const body = {
