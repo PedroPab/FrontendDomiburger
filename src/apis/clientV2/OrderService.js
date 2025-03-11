@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getUrlBackend } from '../../Utils/getUrlApiByOriginPath';
-import { tr } from 'faker/lib/locales';
 
 class OrderService {
 	constructor(token) {
@@ -51,6 +50,10 @@ class OrderService {
 			courierUserId: courierId
 		}
 		const rta = await this.api.patch(`/courier/${id}`, body);
+		return rta.data
+	}
+	async updatePayment(id) {
+		const rta = await this.api.patch(`/payment/${id}`);
 		return rta.data
 	}
 }
