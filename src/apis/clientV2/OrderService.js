@@ -24,6 +24,15 @@ class OrderService {
 			throw error;
 		}
 	}
+	async delete(id) {
+		try {
+			const rta = await this.api.delete(`/${id}`);
+			return rta
+		} catch (error) {
+			throw error.response.data
+		}
+
+	}
 	async create(data) {
 		const rta = await this.api.post(`/ `, data);
 		return rta

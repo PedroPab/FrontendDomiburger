@@ -4,7 +4,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { UsersService } from "../../apis/clientV2/usersService";
 import { ClientsService } from "../../apis/clientV2/ClientsService";
 import photoGeneric from "../../assets/img/photoGeneric.jpg";
-import { DetailsModalOrder } from "./DetailsModalOrder";
+import { DetailsModalOrder } from "./DetailsModalOrder/index";
 
 const CardHeaderComponent = memo(({ order }) => {
 	const { userId, dailyOrderNumber, clientId } = order;

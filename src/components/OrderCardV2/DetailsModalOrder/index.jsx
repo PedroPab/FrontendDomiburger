@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button, Table } from "react-bootstrap";
+import { ButtonDeleteOrder } from "./ButtonDeleteOrder";
 
 const DetailsModalOrder = ({ showModal, setShowModal, order }) => {
 	if (!order) return null; // Si no hay orden, no renderiza el modal
@@ -142,6 +143,9 @@ const DetailsModalOrder = ({ showModal, setShowModal, order }) => {
 						</tr>
 					</tbody>
 				</Table>
+
+				{/* boton para elimiar el pedido */}
+				<ButtonDeleteOrder id={order.id} deleteSuccefuld={() => setShowModal(false)} />
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={() => setShowModal(false)}>
