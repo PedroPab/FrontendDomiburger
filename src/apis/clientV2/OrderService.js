@@ -56,6 +56,20 @@ class OrderService {
 		const rta = await this.api.patch(`/payment/${id}`);
 		return rta.data
 	}
+	async updateChangePayment(id, previousPaymentMethod, payment) {
+		try {
+
+			const body = {
+				previousPaymentMethod: previousPaymentMethod,
+				paymentMethod: payment
+			}
+
+			const rta = await this.api.patch(`/paymentMethod/${id}`, body);
+			return rta.data
+		} catch (error) {
+			throw error?.response?.data
+		}
+	}
 }
 
 export { OrderService }
