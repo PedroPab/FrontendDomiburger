@@ -15,15 +15,19 @@ import { CODIGO_ROUTES, ESTADISTICAS_ROUTES, LOGIN_ROUTES, RECEPCION_ROUTES } fr
 import { UserMenu } from '../../../Layout/UserMenu';
 import { useState } from 'react';
 import { useMiContexto } from '../../../Context';
+import { useWorker } from '../../../Context/WorkerContext';
 
 const NavbarRecepcion = () => {
 	const { toggleSidebar, openCloseModalAgregarDo } = useRecepcion()
 	const { isDarkMode, toggleTheme } = usePreferences();
 	const { usuarioActual, handleLogout } = useAuth();
 	//cambiar la cocina asignada
-	const { changeKitchen } = useMiContexto();
+	const { changeKitchen, kitchenSelectId } = useMiContexto();
 	const { userData } = useAuth();
+	console.log("🚀 ~ NavbarRecepcion ~ userData:", userData)
 	const [showKitchens, setShowKitchens] = useState(false);
+
+	const { listKitchens } = useWorker()
 
 	return (
 		<Navbar
@@ -168,11 +172,15 @@ const NavbarRecepcion = () => {
 						>
 							<MdOutlineSettings size={20} className="me-1" /> Seleccionar Cocina
 						</Button>
+						{/* cocina actual */}
+						<span className="mx-2">
+							{listKitchens && listKitchens.find((k) => k.id === kitchenSelectId)?.name || 'Cocina'}
+						</span>
 						{showKitchens && (
 							<NavDropdown show>
-								{userData.assignedKitchens.map((kitchen) => (
+								{userData?.assignedKitchens.map((kitchen) => (
 									<NavDropdown.Item key={kitchen} onClick={() => changeKitchen(kitchen)}>
-										{kitchen}
+										{listKitchens.find((k) => k.id === kitchen)?.name || 'Cocina'}
 									</NavDropdown.Item>
 								))}
 							</NavDropdown>

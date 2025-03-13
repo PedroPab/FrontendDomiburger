@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
 import { toast } from 'react-toastify';
 import { ProductsService } from '../apis/clientV2/ProductsService';
+import { KitchenService } from '../apis/clientV2/KitchenService';
 
 export const WorkerContext = createContext()
 
@@ -12,11 +13,13 @@ export const WorkerProvider = ({ children }) => {
 	const [idOrderSelect, setIdOrderSelect] = useState(null);
 
 	const [listProducts, setListProducts] = useState([])
+	const [listKitchens, setListKitchens] = useState([])
+
 	const { token } = useAuth()
 
 	//miramos todo los domiciliarios en la api
 	const productosService = new ProductsService(token);
-
+	const kitchensService = new KitchenService(token);
 	const findsProducts = async () => {
 		try {
 			const products = await productosService.getAll();
@@ -26,8 +29,18 @@ export const WorkerProvider = ({ children }) => {
 		}
 	}
 
+	const findKitchens = async () => {
+		try {
+			const kitchens = await kitchensService.getAll();
+			setListKitchens(kitchens.body);
+		} catch (error) {
+			toast.error(`Error al cargar las cocinas ${error?.response?.data?.message}`);
+		}
+	}
+
 	useEffect(() => {
 		findsProducts();
+		findKitchens();
 	}
 		, [])
 
@@ -36,7 +49,9 @@ export const WorkerProvider = ({ children }) => {
 		<WorkerContext.Provider value={
 			{
 				listProducts,
-				idOrderSelect, setIdOrderSelect
+				listKitchens,
+				idOrderSelect, setIdOrderSelect,
+
 			}
 		}>
 			{children}
