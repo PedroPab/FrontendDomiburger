@@ -18,6 +18,7 @@ const SelectKitchen = ({ kitchenIdSelect, setKitchenIdSelect }) => {
 
 	useEffect(() => {
 		fetchKitchens();
+		console.info("pidineo los datos de las cocinas");
 	}, []);
 
 	return (

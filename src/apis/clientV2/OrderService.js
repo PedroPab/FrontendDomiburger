@@ -61,6 +61,13 @@ class OrderService {
 		const rta = await this.api.patch(`/courier/${id}`, body);
 		return rta.data
 	}
+	async updateKitchen(id, kitchenId) {
+		const body = {
+			kitchenId: kitchenId
+		}
+		const rta = await this.api.patch(`/kitchen/${id}`, body);
+		return rta.data
+	}
 	async updatePayment(id) {
 		const rta = await this.api.patch(`/payment/${id}`);
 		return rta.data

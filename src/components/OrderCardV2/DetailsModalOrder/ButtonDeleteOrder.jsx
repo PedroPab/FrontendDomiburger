@@ -4,7 +4,7 @@ import { OrderService } from "../../../apis/clientV2/OrderService";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const ButtonDeleteOrder = ({ id, deleteSuccefuld }) => {
+const ButtonDeleteOrder = ({ id, changeSucceed }) => {
 	const { token } = useAuth();
 	const orderService = new OrderService(token);
 	const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ const ButtonDeleteOrder = ({ id, deleteSuccefuld }) => {
 			await orderService.delete(id);
 			setIsDeleted(true);
 			toast.success("Orden eliminada");
-			deleteSuccefuld();
+			changeSucceed();
 		} catch (error) {
 			console.error("Error deleting order:", error);
 			toast.error(`Error al eliminar la orden: ${error?.message}`);
