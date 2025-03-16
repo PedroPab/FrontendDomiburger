@@ -3,24 +3,30 @@ import ProtectedRoute from "../../../components/ProtectedRoute"
 import Cocina from "../../Cocina"
 import { ROLES } from "../../../Utils/constList"
 import { ContextProvider } from "../../../Context"
-import { LOGIN_ROUTES } from "../../../Utils/const/namesRutes"
+import { LOGIN_ROUTES, COCINA_ROUTES } from "../../../Utils/const/namesRutes"
+import { WorkerProvider } from "../../../Context/WorkerContext"
+
+const routes = COCINA_ROUTES.routes;
 
 const CocinaRoutes = () => {
-  return (
-    <Route
-      path="cocina"
-      element={
-        <ContextProvider>
-          <ProtectedRoute
-            users={[ROLES.admin, ROLES.recepcion, ROLES.cocina, "cocinero"]}
-            redirectTo={LOGIN_ROUTES.path}
-          />
+	return (
+		<Route
+			path={COCINA_ROUTES.path}
+			element={
+				<ContextProvider>
+					<WorkerProvider>
 
-        </ContextProvider>
-      }>
-      <Route index element={< Cocina />} />
-    </Route >
-  )
+						<ProtectedRoute
+							users={[ROLES.admin, ROLES.recepcion, ROLES.cocina, "cocinero"]}
+							redirectTo={LOGIN_ROUTES.path}
+						/>
+
+					</WorkerProvider>
+				</ContextProvider>
+			}>
+			<Route index element={< Cocina />} />
+		</Route >
+	)
 }
 
 export { CocinaRoutes }

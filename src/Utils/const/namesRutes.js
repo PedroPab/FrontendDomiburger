@@ -1,3 +1,5 @@
+import { ROLES } from "../const/roles"
+
 class RoutesClass {
 	constructor() {
 		this.path
@@ -8,7 +10,7 @@ class RoutesClass {
 class RecepcionRoutes extends RoutesClass {
 	constructor() {
 		super()
-		this.path = `/recepcion`
+		this.path = `/${ROLES.RECEPTION.name}`
 		this.routes = {
 			CONTABILIDAD: `${this.path}/contabilidad`,
 			MAP_RECEPCION: `${this.path}/mapRecepcion`,
@@ -52,7 +54,7 @@ class CodigoRoutes extends RoutesClass {
 class DomiciliarioRoutes extends RoutesClass {
 	constructor() {
 		super()
-		this.path = `/domiciliario`
+		this.path = `/${ROLES.COURIER.name}`
 		this.routes = {
 			DOMICILIARIO_HISTORY: `${this.path}/history`
 		}
@@ -62,7 +64,7 @@ class DomiciliarioRoutes extends RoutesClass {
 class CocinaRoutes extends RoutesClass {
 	constructor() {
 		super()
-		this.path = `/cocina`
+		this.path = `/${ROLES.COOK.name}`
 		this.routes = {}
 	}
 }
@@ -94,7 +96,7 @@ class LoginRoutes extends RoutesClass {
 class AdminRoutes extends RoutesClass {
 	constructor() {
 		super()
-		this.path = `/admin`
+		this.path = `/${ROLES.ADMIN.name}`
 		this.routes = {
 			USER_MANAGEMENT: `${this.path}/usuarios`,
 			PRODUCT_MANAGEMENT: `${this.path}/productos`,
