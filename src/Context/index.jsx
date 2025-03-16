@@ -117,6 +117,15 @@ export const ContextProvider = ({ children }) => {
 			});
 		});
 
+		socket.on('order/remove', (pedido) => {
+			// toast(`Pedido eliminado 🚚, ${pedido.id}`);
+			setItems((itemsPrevios) => {
+				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
+				mapItems.delete(pedido.id);
+				return filtrarPedidos(Array.from(mapItems.values()), ROLE);
+			});
+		});
+
 		socket.on('order/delete', (pedido) => {
 			toast(`Pedido eliminado 🚚, ${pedido.id}`);
 			setItems((itemsPrevios) => {
