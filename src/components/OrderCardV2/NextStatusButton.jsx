@@ -27,6 +27,7 @@ function NextStatusButton({ data }) {
 			console.error("Error al actualizar el estado:", error);
 			toast.error(`Error al cambiar el estado de la orden: ${error?.message}`);
 		} finally {
+			setConfirming(false);
 			setLoadChangeStatus(false);
 		}
 	}, [data.id, data.status, orderService]);
