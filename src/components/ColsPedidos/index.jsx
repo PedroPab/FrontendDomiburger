@@ -41,7 +41,7 @@ export const ColsPedidos = ({ pedidos }) => {
 			: <BsInbox style={{ color: estado.color }} />;
 
 		return {
-			name: estado.name,
+			name: estado.label,
 			pedidos: filteredPedidos.filter(pedido => pedido.status === estado.name),
 			icon: icon
 		};
