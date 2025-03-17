@@ -1,21 +1,22 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Col } from "react-bootstrap";
 import { listStatusRecepcion } from "../../Utils/listStatus";
-import { RecepcionContexto } from "../../Context/RecepcionContex";
+import { useRecepcion } from "../../Context/RecepcionContex";
 import { BsInbox } from "react-icons/bs";
 import { FaExpand } from "react-icons/fa";
 import { OrderCardV2 } from "../OrderCardV2";
 
 export const ColsPedidos = ({ pedidos }) => {
-	const { domiciliarioIdFilter } = useContext(RecepcionContexto);
+	const { domiciliarioIdFilter } = useRecepcion();
 	const [collapsedStates, setCollapsedStates] = useState([]);
 
 	const filteredPedidos = useMemo(() => {
 		if (domiciliarioIdFilter === "ninguno") {
-			return pedidos.filter(pedido => !pedido?.domiciliario_asignado);
+			return pedidos.filter(pedido => !pedido?.assignedCourierUserId);
 		} else if (domiciliarioIdFilter) {
-			return pedidos.filter(pedido => pedido?.domiciliario_asignado?.id === domiciliarioIdFilter);
+			console.log("Filtrando por domiciliario:", domiciliarioIdFilter);
+			return pedidos.filter(pedido => pedido?.assignedCourierUserId === domiciliarioIdFilter);
 		}
 		return pedidos;
 	}, [domiciliarioIdFilter, pedidos]);

@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import SidebarElementDelivery from './SidebarElement';
 import { RecepcionContexto } from '../../Context/RecepcionContex';
 import InfoButton from '../InfoButton';
+import imageDefault from "../../assets/img/photoGeneric.jpg";
 
 const Sidebar = () => {
 	// Accedemos al contexto para obtener la visibilidad del sidebar y demás funciones
@@ -46,7 +47,7 @@ const Sidebar = () => {
 							openSection={openSection}
 							title={domiciliario.name}
 							eventKey={domiciliario.id}
-							imageUrl={domiciliario?.photoUrl}
+							image={domiciliario?.photoUrl}
 						/>
 					))}
 
@@ -55,7 +56,7 @@ const Sidebar = () => {
 						openSection={openSection}
 						title="Ninguno"
 						eventKey="ninguno"
-						imageUrl="https://i.pravatar.cc/150?img=10"
+						image={imageDefault}
 					/>
 
 					{/* Botón para agregar nuevos domiciliarios */}
