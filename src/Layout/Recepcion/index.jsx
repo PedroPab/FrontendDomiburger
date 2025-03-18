@@ -4,15 +4,15 @@ import { NavbarRecepcion } from "../../components/Navbar/NavbarRecepcion";
 
 const LayoutRecepcion = ({ children }) => {
 
-  return (
-    <>
-      <NavbarRecepcion />
+	return (
+		<>
+			<NavbarRecepcion />
 
-      {children}
+			{children}
 
-      <ToastContainer />
-    </>
-  )
+			<ToastContainer position="bottom-center" />
+		</>
+	)
 }
 
 export default LayoutRecepcion

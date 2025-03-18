@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
   return (
     <>
       {children}
-      <ToastContainer />
+      <ToastContainer position="bottom-center" />
 
     </>
   )

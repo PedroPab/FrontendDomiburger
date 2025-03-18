@@ -28,7 +28,7 @@ const RecepcionContent = () => {
           </Col>
         </Row>
       </Container>
-      <ToastContainer />
+      <ToastContainer position="bottom-center" />
       <SelectListDomiciliarios />
     </>
   );

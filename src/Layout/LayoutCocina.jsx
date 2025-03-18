@@ -10,7 +10,7 @@ const LayoutCocina = ({ children }) => {
 
       {children}
 
-      <ToastContainer />
+      <ToastContainer position="bottom-center" />
     </>
   )
 }
