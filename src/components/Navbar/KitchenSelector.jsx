@@ -9,6 +9,7 @@ const KitchenSelector = () => {
 	const { listKitchens } = useWorker()
 	const { changeKitchen, kitchenSelectId } = useMiContexto();
 	const { userData } = useAuth();
+	console.log("🚀 ~ KitchenSelector ~ userData:", userData)
 
 
 	const [showKitchens, setShowKitchens] = useState(false);
@@ -46,7 +47,7 @@ const KitchenSelector = () => {
 			) : (
 				showKitchens && (
 					<NavDropdown show className="w-100">
-						{userData?.assignedKitchens.length ? (
+						{userData?.assignedKitchens?.length ? (
 							userData.assignedKitchens.map((kitchen) => (
 								<NavDropdown.Item
 									key={kitchen}

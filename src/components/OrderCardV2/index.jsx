@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 import CardHeaderComponent from "./CardHeader";
 import CardBodyComponent from "./CardBody";
 import { CardFooterComponent } from "./CardFooter";
+import { StatusName } from "./StatusName";
 
 function OrderCardV2({ data }) {
 
@@ -19,6 +20,7 @@ function OrderCardV2({ data }) {
 			<CardFooterComponent
 				data={data}
 			/>
+			<StatusName order={data} />
 		</Card>
 	);
 }

@@ -118,7 +118,7 @@ const PaymentInfoOrder = ({ data }) => {
 
 
 							{
-								!checkUserRolesValidity([roleSelect], [ROLES.ADMIN, ROLES.RECEPTION]) &&
+								checkUserRolesValidity([roleSelect], [ROLES.ADMIN.value, ROLES.RECEPTION.value]) &&
 								<>
 									{/* Botón para aprobar el pago */}
 									{payment.status !== "approved" && (
