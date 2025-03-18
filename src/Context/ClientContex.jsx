@@ -1,48 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useState } from 'react';
-import { useLocalStorage } from '../Utils/localStore';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
-export const ContexClient = createContext()
+export const ContextClient = createContext()
 
 // eslint-disable-next-line react/prop-types
 export const ContextProviderClient = ({ children }) => {
-  console.log(`[ContextProviderClient]`);
 
-  //token de usuario
-  const { item: tokenLogin, saveItem: setTokenLogin } = useLocalStorage({ itemName: 'tokenUserClient', initialValue: {} })
+	//token de usuario
+	const [tokenLogin, setTokenLogin] = useLocalStorage('tokenUserClient', {})
 
-  // Estado para el modo oscuro
+	const [alerts, setAlerts] = useState([]);
 
-  // Función para alternar entre el modo oscuro y claro
+	const [alertaActiva, setAlertaActiva] = useState(false);
 
-  ///aletas de la aplicacion 
-  const [alerts, setAlerts] = useState([]);
+	const { item: pedido, saveItem: setPedido } = useLocalStorage({ itemName: 'pedido', initialValue: {} })
 
 
-  const [alertaActiva, setAlertaActiva] = useState(false);
+	return (
+		<ContextClient.Provider value={
+			{
+				tokenLogin, setTokenLogin,
 
+				alerts, setAlerts,
 
-  const { item: pedido, saveItem: setPedido } = useLocalStorage({ itemName: 'pedido', initialValue: {} })
+				alertaActiva, setAlertaActiva,
 
-
-
-
-  return (
-    <ContexClient.Provider value={
-      {
-        // token , pued no tener un token hasta que ingrese en login 
-        tokenLogin, setTokenLogin,
-
-        alerts, setAlerts,
-
-        alertaActiva, setAlertaActiva,
-
-        pedido, setPedido,
-      }
-    }>
-      {children}
-    </ContexClient.Provider>
-  )
+				pedido, setPedido,
+			}
+		}>
+			{children}
+		</ContextClient.Provider>
+	)
 }
-
-

@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
 import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
 import { useAuth } from './AuthContext';
 import { toast } from 'react-toastify';
-import { useLocalStorage } from '../Utils/localStore';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const MiContexto = createContext();
 
@@ -28,7 +28,7 @@ export const ContextProvider = ({ children }) => {
 	const { usuarioActual, token, userData } = useAuth()
 
 
-	const { item: kitchenSelectId, saveItem: setKitchenSelectId } = useLocalStorage({ itemName: 'kitchenSelectId', initialValue: null });
+	const [kitchenSelectId, setKitchenSelectId] = useLocalStorage('kitchenSelectId', null);
 
 	const changeKitchen = (id) => {
 		setKitchenSelectId(id);

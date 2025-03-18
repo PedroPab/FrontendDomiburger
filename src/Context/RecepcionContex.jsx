@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useLocalStorage } from '../Utils/localStore';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useAuth } from './AuthContext';
 import { UsersService } from '../apis/clientV2/usersService';
 import { toast } from 'react-toastify';
@@ -12,10 +12,10 @@ export const RecepcionContexto = createContext()
 // eslint-disable-next-line react/prop-types
 export const ContextProviderRecepcion = ({ children }) => {
 	//las lista para tener  los domiciliarios  que queremos y no los todo los que hay
-	const { item: listDomiciliarios, saveItem: setListDomiciliarios } = useLocalStorage({ itemName: 'listDomiciliarios1', initialValue: [] })
+	const [listDomiciliarios, setListDomiciliarios] = useLocalStorage('listDomiciliarios1', [])
 
 	//la lista de todos los domiciliarios
-	const { item: users, saveItem: setUsers } = useLocalStorage({ itemName: 'Domiciliarios1', initialValue: [] });
+	const [users, setUsers] = useLocalStorage('Domiciliarios1', []);
 
 	//domiciliarios seleccionados
 	const [domiciliariosSeleccionados, setDomiciliariosSeleccionados] = useState([])
@@ -32,6 +32,7 @@ export const ContextProviderRecepcion = ({ children }) => {
 			const users = await userService.getByRole(ROLES.COURIER.value);
 			setUsers(users.body);
 		} catch (error) {
+			console.log("🚀 ~ findUser ~ error:", error)
 			toast.error(`Error al cargar los domiciliarios ${error?.response?.data?.message}`);
 		}
 	}
@@ -59,7 +60,7 @@ export const ContextProviderRecepcion = ({ children }) => {
 	//el filtro para buscar los domiciliarios
 	const [domiciliarioIdFilter, setDomiciliarioIdFilter] = useState(null)
 
-	const { item: openSidebarFilterDelivery, saveItem: setOpenSidebarFilterDelivery } = useLocalStorage({ itemName: 'openSidebarFilterDelivery', initialValue: false })
+	const [openSidebarFilterDelivery, setOpenSidebarFilterDelivery] = useLocalStorage('openSidebarFilterDelivery', false)
 	//setOpenSidebarFilterDelivery)
 	const toggleSidebar = () => {
 		setOpenSidebarFilterDelivery((prevState) => !prevState);

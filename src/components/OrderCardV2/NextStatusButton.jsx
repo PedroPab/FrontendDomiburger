@@ -10,7 +10,8 @@ function NextStatusButton({ data }) {
 	const { token } = useAuth();
 	const orderService = new OrderService(token);
 
-	const nameStatus = statusOrderCol[data.status]?.textNextStatus || null;
+	let nameStatus = statusOrderCol[data.status]?.textNextStatus || null;
+
 
 	const [loadChangeStatus, setLoadChangeStatus] = useState(false);
 	const [confirming, setConfirming] = useState(false);
@@ -18,7 +19,7 @@ function NextStatusButton({ data }) {
 	const nextStatus = useCallback(async () => {
 		const id = data.id;
 		const previousState = data.status;
-		const nextState = statusNext(previousState);
+		const nextState = statusNext(data);
 		setLoadChangeStatus(true);
 		try {
 			await orderService.changeStatus(id, previousState, nextState);
