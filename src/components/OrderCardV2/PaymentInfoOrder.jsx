@@ -5,16 +5,19 @@ import { OrderService } from "../../apis/clientV2/OrderService";
 import { useAuth } from "../../Context/AuthContext";
 import { useState } from "react"; // se importa useState
 import { PAYMENT_METHODS } from "../../Utils/const/paymentMethods";
+import { usePreferences } from "../../Context/PreferencesContext";
+import { checkUserRolesValidity } from "../../Utils/checkUserRolesValidity";
+import { ROLES } from "../../Utils/const/roles";
 
 const PaymentInfoOrder = ({ data }) => {
 	const { totalPrice, delivery, paymentMethod, payment } = data;
 	const paymentName = Object.values(PAYMENT_METHODS).find((method) => method.value === paymentMethod)?.name || "Método de pago desconocido";
 	const { token } = useAuth();
 	const orderService = new OrderService(token);
-
+	const { roleSelect } = usePreferences()
 	// Estado para gestionar la carga de la petición
 	const [loading, setLoading] = useState(false);
-	const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(paymentMethod);
+	const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
 
 	// Función para aprobar el pago
 	const updatePayment = async (id) => {
@@ -112,48 +115,57 @@ const PaymentInfoOrder = ({ data }) => {
 								</Col>
 							</Row>
 
-							{/* Botón para aprobar el pago */}
-							{payment.status !== "approved" && (
-								<button
-									className="btn btn-warning w-100"
-									onClick={approvePayment}
-									disabled={loading} // se desactiva el botón mientras se carga
-								>
-									{loading ? "Cargando..." : "Aprobar pago"}
-								</button>
-							)}
 
-							{/* select para cambiar de metodo de pago */}
-							<select
-								className="form-select mt-2"
-								value={selectedPaymentMethod}
-								onChange={handleChangePaymentMethod}
-								disabled={loading}
-							>
-								{Object.values(PAYMENT_METHODS).map((method) => {
-									if (!method.active) return null
-									return (
-										<option key={method.value} value={method.value}>
-											{method.name}
-										</option>
-									)
-								})}
-							</select>
 
-							{/* boton para confirmar el cambio */}
-							<button
-								className="btn btn-warning w-100 mt-2"
-								onClick={updatePaymentMethod}
-								disabled={loading}
-							>
-								{loading ? "Cargando..." : "Cambiar método de pago"}
-							</button>
+							{
+								!checkUserRolesValidity([roleSelect], [ROLES.ADMIN, ROLES.RECEPTION]) &&
+								<>
+									{/* Botón para aprobar el pago */}
+									{payment.status !== "approved" && (
+										<button
+											className="btn btn-warning w-100"
+											onClick={approvePayment}
+											disabled={loading} // se desactiva el botón mientras se carga
+										>
+											{loading ? "Cargando..." : "Aprobar pago"}
+										</button>
+									)}
+									{/* select para cambiar de metodo de pago */}
+									<select
+										className="form-select mt-2"
+										value={selectedPaymentMethod}
+										onChange={handleChangePaymentMethod}
+										disabled={loading}
+									>
+										{/* seleccionar una opcion */}
+										<option value={null}>Seleccionar un método de pago</option>
+										{Object.values(PAYMENT_METHODS).map((method) => {
+											if (!method.active) return null
+											return (
+												<option key={method.value} value={method.value}>
+													{method.name}
+												</option>
+											)
+										})}
+									</select>
+
+									{/* boton para confirmar el cambio */}
+									<button
+										className="btn btn-warning w-100 mt-2"
+										onClick={updatePaymentMethod}
+										disabled={loading}
+									>
+										{loading ? "Cargando..." : "Cambiar método de pago"}
+									</button>
+
+								</>
+							}
 
 						</ListGroup.Item>
 					</ListGroup>
 				</Accordion.Body>
 			</Accordion.Item>
-		</Accordion>
+		</Accordion >
 	);
 };
 

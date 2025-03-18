@@ -67,11 +67,11 @@ statusOrderCol[ORDER_STATUSES.DELIVERED] = {
 	icon: <FaCheckCircle />
 }
 
-statusOrderCol[ORDER_STATUSES.PENDING_TRANSFER] = {
+statusOrderCol[ORDER_STATUSES.PENDING_PAYMENT] = {
 	color: '#FFC107', // warning - amber
 	label: 'Pendiente de transferencia',
 	textNextStatus: 'Facturar',
-	name: ORDER_STATUSES.PENDING_TRANSFER,
+	name: ORDER_STATUSES.PENDING_PAYMENT,
 	icon: <FaExchangeAlt />
 }
 
@@ -91,7 +91,7 @@ const listStatusRecepcion = [
 	statusOrderCol[ORDER_STATUSES.READY_FOR_PICKUP],
 	statusOrderCol[ORDER_STATUSES.DISPATCHED],
 	statusOrderCol[ORDER_STATUSES.DELIVERED],
-	statusOrderCol[ORDER_STATUSES.PENDING_TRANSFER],
+	statusOrderCol[ORDER_STATUSES.PENDING_PAYMENT],
 	// statusOrderCol[ORDER_STATUSES.CODE_ERROR]
 ]
 

@@ -95,9 +95,13 @@ export const ContextProvider = ({ children }) => {
 			toast(newMessage);
 		});
 
-		socket.on('order/init', (pedido) => {
+		socket.on('order/init', (orders) => {
 			// toast(`Cargando pedidos iniciales 🚚, canidad de pedidos ${pedido.length}`);
-			setItems(filtrarPedidos(pedido, ROLE));
+			console.log('pedidos iniciales', orders.length);
+			console.log('pedidos iniciales', orders);
+			const processedOrders = filtrarPedidos(orders, ROLE);
+			console.log("🚀 ~ socket.on ~ processedOrders:", processedOrders)
+			setItems(processedOrders);
 		});
 
 		socket.on('order/create', (pedido) => {
