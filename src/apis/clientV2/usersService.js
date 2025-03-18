@@ -18,10 +18,9 @@ class UsersService {
 	async me() {
 		try {
 			const rta = await this.api.get(`/me`)
-			return rta
+			return rta.data.body
 		} catch (error) {
-			console.log(`[ ~ UsersService ~ me ~ error]`, error)
-			throw error;
+			throw error?.response?.data
 		}
 	}
 	async updatePhone(phone) {

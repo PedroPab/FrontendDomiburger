@@ -65,10 +65,14 @@ export const AuthProvider = ({ children }) => {
 	const usersService = new UsersService(token);
 	useEffect(() => {
 		const fetchUserData = async () => {
-			const response = await usersService.me();
-			const userData = response.data.body;
-			setUserData(userData);
-		};
+			try {
+				const response = await usersService.me();
+				setUserData(response);
+			}
+			catch (error) {
+				console.log(`[ ~ AuthProvider ~ fetchUserData ~ error]`, error);
+			}
+		}
 		fetchUserData();
 	}, [token]);
 
