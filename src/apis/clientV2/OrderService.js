@@ -30,7 +30,6 @@ class OrderService {
 			query.append('kitchenId', kitchenId);
 			query.append('startDate', startDate);
 			query.append('endDate', endDate);
-			console.log(query.toString(), 'query')
 			const rta = await this.api.get(`/day?${query.toString()}`)
 			return rta.data.body
 		} catch (error) {
