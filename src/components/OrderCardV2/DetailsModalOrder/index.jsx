@@ -136,7 +136,7 @@ const DetailsModalOrder = ({ showModal, setShowModal, order }) => {
 					<tbody>
 						<tr>
 							<td><strong>Creado en:</strong></td>
-							<td>{new Date(order.createAt).toLocaleString()}</td>
+							<td>{new Date(order.createdAt).toLocaleString()}</td>
 						</tr>
 						<tr>
 							<td><strong>Última actualización:</strong></td>

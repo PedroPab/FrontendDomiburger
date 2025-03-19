@@ -24,6 +24,19 @@ class OrderService {
 			throw error;
 		}
 	}
+	async getOrdersDay({ kitchenId, startDate, endDate }) {
+		try {
+			const query = new URLSearchParams();
+			query.append('kitchenId', kitchenId);
+			query.append('startDate', startDate);
+			query.append('endDate', endDate);
+			console.log(query.toString(), 'query')
+			const rta = await this.api.get(`/day?${query.toString()}`)
+			return rta.data.body
+		} catch (error) {
+			throw error.response.data
+		}
+	}
 	async delete(id) {
 		try {
 			const rta = await this.api.delete(`/${id}`);

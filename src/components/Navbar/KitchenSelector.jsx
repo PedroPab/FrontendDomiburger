@@ -9,7 +9,6 @@ const KitchenSelector = () => {
 	const { listKitchens } = useWorker()
 	const { changeKitchen, kitchenSelectId } = useMiContexto();
 	const { userData } = useAuth();
-	console.log("🚀 ~ KitchenSelector ~ userData:", userData)
 
 
 	const [showKitchens, setShowKitchens] = useState(false);

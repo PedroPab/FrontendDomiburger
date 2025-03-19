@@ -17,6 +17,7 @@ import { LOGIN_ROUTES, RECEPCION_ROUTES } from "../../../Utils/const/namesRutes"
 import Clientes from "../../Clientes/Clientes";
 import { WorkerProvider } from "../../../Context/WorkerContext";
 import { FormAdminV2 } from "../../Recepcion/FormAdminV2";
+import { ContabilidadV2 } from "../../Recepcion/ContabilidadV2";
 
 const routes = RECEPCION_ROUTES.routes;
 const RecepcionRoutes = () => {
@@ -37,7 +38,8 @@ const RecepcionRoutes = () => {
 			}
 		>
 			<Route path='' element={<Recepcion />} />
-			<Route path={routes.CONTABILIDAD} element={<Contabilidad />} />
+			{/* <Route path={routes.CONTABILIDAD} element={<Contabilidad />} /> */}
+			<Route path={routes.CONTABILIDAD} element={<ContabilidadV2 />} />
 			<Route path={routes.MAP_RECEPCION} element={<MapRecepcion />} />
 			<Route path={routes.FORM_ADMIN} element={<FormAdmin />} />
 			<Route path={routes.FORM_ADMIN_V2} element={<FormAdminV2 />} />
