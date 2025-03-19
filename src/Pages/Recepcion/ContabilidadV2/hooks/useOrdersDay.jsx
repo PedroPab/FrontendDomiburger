@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { OrderService } from "../../../../apis/clientV2/OrderService";
 import { useAuth } from "../../../../Context/AuthContext";
 import { useMiContexto } from "../../../../Context";
 
-const useOrdersDay = (startDate, endDate) => {
+const useOrdersDay = () => {
 	//transformamos la fecha a un formato que acepta el backend con solo el dia , mes y año
-	console.log('esto son las fechas', startDate, endDate)
 
 	const { token } = useAuth()
 	const orderService = new OrderService(token);
@@ -14,12 +13,11 @@ const useOrdersDay = (startDate, endDate) => {
 	const [ordenes, setOrdenes] = useState([]);
 
 	const { kitchenSelectId: kitchenId } = useMiContexto()
-	const fetchOrders = async () => {
+	const fetchOrders = async (startDate, endDate) => {
 		setLoading(true);
 		try {
 			const response = await orderService.getOrdersDay({ kitchenId, startDate, endDate });
 			setOrdenes(response);
-			console.log("🚀 ~ fetchOrders ~ response:", response)
 		} catch (error) {
 			setError(error.message);
 		}
