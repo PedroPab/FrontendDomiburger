@@ -44,7 +44,7 @@ const RecepcionRoutes = () => {
 			<Route path={routes.FORM_ADMIN} element={<FormAdmin />} />
 			<Route path={routes.FORM_ADMIN_V2} element={<FormAdminV2 />} />
 			<Route path={routes.PEDIDOS} element={<Pedidos />} />
-			<Route path={routes.PEDIDOS_DETAIL} element={<PedidosDetails />} />
+			<Route path={`${routes.PEDIDOS_DETAIL}/:id`} element={<PedidosDetails />} />
 			<Route path={routes.PRODUCTOS_ADMIN} element={<ProductosAdmin />} />
 			<Route path={routes.CREATE_PRODUCT} element={<CreateProduct />} />
 			<Route path={routes.CLIENTES} element={<Clientes />} />

@@ -17,7 +17,7 @@ class RecepcionRoutes extends RoutesClass {
 			FORM_ADMIN: `${this.path}/formAdmin`,
 			FORM_ADMIN_V2: `${this.path}/formAdminV2`,
 			PEDIDOS: `${this.path}/pedidos`,
-			PEDIDOS_DETAIL: `${this.path}/pedidos/:id`,
+			PEDIDOS_DETAIL: `${this.path}/pedidos`,
 			PRODUCTOS_ADMIN: `${this.path}/productosAdmin`,
 			CREATE_PRODUCT: `${this.path}/createProduct`,
 			CLIENTES: `${this.path}/clientes`

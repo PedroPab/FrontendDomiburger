@@ -1,4 +1,6 @@
 import { Row, Col, Badge, Accordion, ListGroup } from "react-bootstrap";
+import { RECEPCION_ROUTES } from "../../Utils/const/namesRutes";
+const routes = RECEPCION_ROUTES.routes;
 
 const OrderRow = ({ order }) => {
 	return (
@@ -35,6 +37,12 @@ const OrderRow = ({ order }) => {
 							</Badge>
 						</Col>
 
+						{/* Mas detalles (boton para abir una pestana nueva con la card de esta orden) */}
+						<Col xs={12} sm={12} md={2}>
+							<a href={`${routes.PEDIDOS_DETAIL}/${order.id}`} target="_blank" rel="noreferrer">
+								Ver Detalles
+							</a>
+						</Col>
 
 					</Row>
 				</Accordion.Header>

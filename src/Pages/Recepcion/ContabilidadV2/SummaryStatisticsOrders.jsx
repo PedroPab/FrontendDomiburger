@@ -9,6 +9,7 @@ import {
 	FaBoxOpen,
 	FaTruck
 } from "react-icons/fa";
+import { useRecepcion } from "../../../Context/RecepcionContex";
 
 const SummaryStatisticsOrders = ({ listOrders }) => {
 	// Función que calcula las estadísticas a partir de las órdenes.
@@ -83,7 +84,7 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 				}
 				salesByDelivery[deliveryId].quantity++;
 				salesByDelivery[deliveryId].totalSales
-					+= order.totalPrice || 0;
+					+= order.delivery.price || 0;
 			}
 
 
@@ -105,6 +106,8 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 	// Memorizar el cálculo para evitar recálculos innecesarios
 	const stats = useMemo(() => calculateStatistics(listOrders), [listOrders]);
 	const totalInvoicedOrders = listOrders.filter(order => order.status === ORDER_STATUSES.INVOICED).length;
+
+	const { listDomiciliarios } = useRecepcion()
 
 	return (
 		<Container className="my-4">
@@ -252,13 +255,16 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 										</tr>
 									</thead>
 									<tbody>
-										{Object.entries(stats.salesByDelivery).map(([deliveryId, data]) => (
-											<tr key={deliveryId}>
-												<td>{deliveryId}</td>
-												<td>{data.quantity}</td>
-												<td>${data.totalSales.toLocaleString()}</td>
-											</tr>
-										))}
+										{Object.entries(stats.salesByDelivery).map(([deliveryId, data]) => {
+											const nameDelivery = listDomiciliarios.find(domiciliario => domiciliario.id === deliveryId)?.name || "Desconocido";
+											return (
+												<tr key={deliveryId}>
+													<td>{nameDelivery}</td>
+													<td>{data.quantity}</td>
+													<td>${data.totalSales.toLocaleString()}</td>
+												</tr>
+											)
+										})}
 									</tbody>
 								</Table>
 							</ListGroup.Item>

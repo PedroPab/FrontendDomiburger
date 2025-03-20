@@ -14,6 +14,14 @@ class OrderService {
 			},
 		});
 	}
+	async getById(id) {
+		try {
+			const rta = await this.api.get(`/${id}`)
+			return rta.data.body
+		} catch (error) {
+			throw error.response.data
+		}
+	}
 	async getByIdUser(id) {
 		try {
 			const rta = await this.api.get(`/user/${id}`)

@@ -1,57 +1,57 @@
 import { Container, } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import orderService from "../../apis/client/OrderService";
 import { useParams } from "react-router-dom";
-import OrderCard from "../OrderCard";
 import { useAuth } from "../../Context/AuthContext";
+import { OrderService } from "../../apis/clientV2/OrderService";
+import { OrderCardV2 } from "../OrderCardV2";
 
 
 const PedidoDetalles = () => {
 
-  const { token } = useAuth()
+	const { token } = useAuth()
 
-  //sacar el id del pedido de la url
-  const { id } = useParams();
-  console.log(`[ ~ PedidoDetalles ~ id]`, id)
-  const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+	//sacar el id del pedido de la url
+	const { id } = useParams();
+	const [order, setOrder] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+
+	const orderService = new OrderService(token);
+
+	useEffect(() => {
+		const fetchOrder = async () => {
+			try {
+				const data = await orderService.getById(id);
+				console.log(data, 'data');
+				toast.success('Pedido cargado');
+				setOrder(data);
+			} catch (error) {
+				setError('Error fetching orders');
+				toast.error('Error al cargar los pedidos');
+				toast.error(error.message);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchOrder();
+	}, [id]);
 
 
+	return (
+		<Container >
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const data = await orderService.getId(id, token);
-        console.log(data);
-        setOrder(data?.body);
-      } catch (error) {
-        setError('Error fetching orders');
-        toast.error('Error al cargar los pedidos');
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+			<h1>Detalles del pedido</h1>
+			{loading && <p>Cargando...</p>}
+			{error && <p>{error}</p>}
+			{order && (
+				<OrderCardV2 data={order} />
 
-    fetchOrder();
-  }, [id]);
+			)}
 
-
-  return (
-    <Container >
-
-      <h1>Detalles del pedido</h1>
-      {loading && <p>Cargando...</p>}
-      {error && <p>{error}</p>}
-      {order && (
-        <OrderCard dataPedido={order.data} />
-
-      )}
-
-    </Container>
-  );
+		</Container>
+	);
 }
 
 export { PedidoDetalles };
