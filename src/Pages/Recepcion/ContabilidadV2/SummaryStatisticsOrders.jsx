@@ -21,6 +21,7 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 		let totalDeliverySales = 0;
 		let totalDeliveryCost = 0;
 		let totalSalesNotCounted = 0; // Órdenes no facturadas
+		let salesByDelivery = {}; // Ej: { "id": { quantity: 0, totalSales: 0 }, "2": { ... } }
 
 		orders.forEach((order) => {
 			// Solo se contarán las órdenes que estén en el estado de facturado.
@@ -73,6 +74,19 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 				totalDeliverySales += order.totalPrice || 0;
 				totalDeliveryCost += order.delivery.price || 0;
 			}
+
+			// Ventas por domicilio
+			if (order.assignedCourierUserId) {
+				const deliveryId = order.assignedCourierUserId
+				if (!salesByDelivery[deliveryId]) {
+					salesByDelivery[deliveryId] = { quantity: 0, totalSales: 0 };
+				}
+				salesByDelivery[deliveryId].quantity++;
+				salesByDelivery[deliveryId].totalSales
+					+= order.totalPrice || 0;
+			}
+
+
 		});
 
 		return {
@@ -82,6 +96,7 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 			productsCount,
 			deliveryCount,
 			totalDeliverySales,
+			salesByDelivery,
 			totalDeliveryCost,
 			totalSalesNotCounted
 		};
@@ -225,6 +240,27 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 							</ListGroup.Item>
 							<ListGroup.Item>
 								<strong>Total de costos de domicilios:</strong> ${stats.totalDeliveryCost.toLocaleString()}
+							</ListGroup.Item>
+							<ListGroup.Item>
+								<strong>Detalle de ventas por domicilio:</strong>
+								<Table striped bordered hover size="sm" className="mt-2">
+									<thead>
+										<tr>
+											<th>ID Domicilio</th>
+											<th>Cantidad</th>
+											<th>Ventas Totales</th>
+										</tr>
+									</thead>
+									<tbody>
+										{Object.entries(stats.salesByDelivery).map(([deliveryId, data]) => (
+											<tr key={deliveryId}>
+												<td>{deliveryId}</td>
+												<td>{data.quantity}</td>
+												<td>${data.totalSales.toLocaleString()}</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
 							</ListGroup.Item>
 						</ListGroup>
 					</Accordion.Body>
