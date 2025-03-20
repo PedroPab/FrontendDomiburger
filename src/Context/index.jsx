@@ -8,7 +8,8 @@ import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
 import { useAuth } from './AuthContext';
 import { toast } from 'react-toastify';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-
+import { useNotificationSound } from '../hooks/useNotificationSound';
+import sound from '../assets/music/livechat-alerte.mp3'
 export const MiContexto = createContext();
 
 export const ContextProvider = ({ children }) => {
@@ -29,6 +30,8 @@ export const ContextProvider = ({ children }) => {
 
 
 	const [kitchenSelectId, setKitchenSelectId] = useLocalStorage('kitchenSelectId', null);
+
+	const alertSound = useNotificationSound(sound);
 
 	const changeKitchen = (id) => {
 		setKitchenSelectId(id);
@@ -92,6 +95,7 @@ export const ContextProvider = ({ children }) => {
 
 		socket.on("message", (newMessage) => {
 			//ejecutmaos una aletrta 
+			alertSound();
 			toast(newMessage);
 		});
 
@@ -105,6 +109,9 @@ export const ContextProvider = ({ children }) => {
 		});
 
 		socket.on('order/create', (pedido) => {
+			toast(`Pedido creado 🚚, ${pedido.id}`)
+			// notificamos al usuario del nuevo pedido
+			alertSound();
 			setItems((itemsPrevios) => {
 				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
 				mapItems.set(pedido.id, pedido);
