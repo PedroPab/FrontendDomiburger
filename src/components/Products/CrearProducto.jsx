@@ -4,8 +4,11 @@ import { toast } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import productService from "../../apis/client/ProductService";
+import { useAuth } from "../../Context/AuthContext";
 
-const CrearProducto = ({ token }) => {
+const CrearProducto = () => {
+  const { token } = useAuth()
+
   const [imagePreview, setImagePreview] = useState("");
 
   const initialValues = {

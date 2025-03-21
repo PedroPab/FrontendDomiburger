@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { MiContexto } from '../../Context';
 import { RecepcionContexto } from '../../Context/RecepcionContex';
 import { Container, ToastContainer, Row, Col } from 'react-bootstrap';
@@ -14,11 +14,6 @@ const RecepcionContent = () => {
   // Contexto específico de recepción (para controlar el sidebar, etc.)
   const recepcionContext = useContext(RecepcionContexto);
   const showSidebar = recepcionContext.openSidebarFilterDelivery;
-  console.log(`[ ~ RecepcionContent ~ recepcionContext]`, recepcionContext)
-
-  useEffect(() => {
-    console.log(`showSidebar: ${showSidebar}`)
-  }, [showSidebar])
 
   return (
     <>
@@ -33,7 +28,7 @@ const RecepcionContent = () => {
           </Col>
         </Row>
       </Container>
-      <ToastContainer />
+      <ToastContainer position="bottom-center" />
       <SelectListDomiciliarios />
     </>
   );

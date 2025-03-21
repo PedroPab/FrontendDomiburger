@@ -1,15 +1,11 @@
-import { useContext, } from 'react'
-import { MiContexto } from '../../../Context'
 import LayoutRecepcion from '../../../Layout/Recepcion'
 import CrearCodigoReferidoYaCreadoComponent from '../../../components/Codigos/CrearCodigoReferido/CrearCodigoReferidoYaCreadoComponent'
-
+import { useAuth } from '../../../Context/AuthContext'
 
 const CrearCodigoReferidoYaCreado = () => {
 
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
-  const userId = context.tokenLogin.user.id
-
+  const { token } = useAuth()
+  const userId = useAuth()?.usuarioActual?.uid
   return (
     <>
       <LayoutRecepcion>

@@ -1,0 +1,7 @@
+@media (max-width: 576px) {
+    .popover {
+        max-width: 90%;
+        left: 5% !important;
+        right: 5% !important;
+    }
+}

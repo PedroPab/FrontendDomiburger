@@ -6,9 +6,13 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import orderService from "../../apis/client/OrderService";
 import ListOrders from "./ListOrders";
+import { useAuth } from "../../Context/AuthContext";
 
 
-const VisualizarPedidosComponente = ({ token }) => {
+const VisualizarPedidosComponente = () => {
+
+  const { token } = useAuth()
+
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

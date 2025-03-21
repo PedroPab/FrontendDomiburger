@@ -7,10 +7,14 @@ import { listaEstados } from '../../../../Utils/listEstados';
 import { agregarAlerta, retirarAlerta } from '../../../../Utils/alert';
 import { makeId } from '../../../../Utils/makeId';
 import { filtrarPedidos } from '../../../../Utils/filtrarPedidos';
+import { usePreferences } from '../../../../Context/PreferencesContext';
+import { useAuth } from '../../../../Context/AuthContext';
 
 
 const BotonAccionPedido = ({ dataPedido }) => {
   const context = useContext(MiContexto)
+  const { token } = useAuth()
+  const { roleSelect } = usePreferences()
 
   //miramos cual es el la accion que se va ha hacer 
   const [isVisible, setIsVisible] = useState(true);
@@ -23,12 +27,13 @@ const BotonAccionPedido = ({ dataPedido }) => {
     handleToggle()
     //ejecutamos la accion  del boton 
     // console.log(`el pedido ejecuta la funcion para el estado del id ${dataPedido.id} con el estado ${dataPedido.estado}`);
-    switchaFunctionMoviEstate({ id: dataPedido.id, estado: dataPedido.estado }, context)
+    switchaFunctionMoviEstate({ id: dataPedido.id, estado: dataPedido.estado }, context, token, roleSelect)
 
 
   }
 
-  const objBotonEvent = eventoBtn(dataPedido.estado, context.tokenLogin.user.role)
+  const ROLE = usePreferences().roleSelect
+  const objBotonEvent = eventoBtn(dataPedido.estado, ROLE)
 
 
   return (
@@ -50,12 +55,11 @@ const BotonAccionPedido = ({ dataPedido }) => {
   );
 }
 
-function switchaFunctionMoviEstate({ id, estado }, context) {
-
+function switchaFunctionMoviEstate({ id, estado }, context, token, role) {
   // por motivos de las desiciones del disenador de la api (yo) se ponen  el esto al que se va  a poner , y en minusculas , proximo a coreeccion
   const estadoAEnviar = listaEstados[listaEstados.findIndex(e => e.name == estado) + 1].name
   //ejecutamos el trapaso
-  traladarPedidoDeEstado({ id, estado: estadoAEnviar, token: context.tokenLogin.token })
+  traladarPedidoDeEstado({ id, estado: estadoAEnviar, token })
     // .then(data => { console.log(`la data del botonn `, data); return data })
     .then(data => {
       //remplazamos el pedido de nuetra lista de pedidos
@@ -71,7 +75,7 @@ function switchaFunctionMoviEstate({ id, estado }, context) {
         mapItems.set(data.id, data);
 
         const newArray = Array.from(mapItems.values());
-        return filtrarPedidos(newArray, context.tokenLogin.user.role);
+        return filtrarPedidos(newArray, role);
       });
       // context.setItems(() => [...newArrayItems])
 

@@ -1,6 +1,6 @@
 import LayoutCliente from '../../Layout/LayoutCliente';
 import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { ProductoList } from '../../components/OrderCard/ProductoList';
 import formatearNumeroConPuntos from '../../Utils/formatearNumeroConPuntos';
 import { Link } from 'react-router-dom';

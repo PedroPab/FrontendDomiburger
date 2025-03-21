@@ -1,19 +1,16 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { MiContexto } from '../../../../../Context';
 import { UtilsApi } from '../../../../../Utils/utilsApi';
+import { useAuth } from '../../../../../Context/AuthContext';
 
 // eslint-disable-next-line no-unused-vars
 const BotonConfirmarPagoPedido = ({ idOrder, handleClose }) => {
-  const context = useContext(MiContexto)
 
   const [confirmar, setConfirmar] = useState(false);
+  const { token } = useAuth()
 
   const handleConfirmar = () => {
     // Lógica para confirmar el pedido
-
-    const token = context.tokenLogin.token
-
     const url = `pedidos/confirmarPago/?id=${idOrder}`
     UtilsApi({ peticion: url, token, vervo: 'POST' })
       .then(() => handleClose())

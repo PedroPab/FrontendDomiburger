@@ -1,62 +1,65 @@
-import { useContext, useEffect, useRef } from 'react'
-import { MiContexto } from '../../Context'
-import { Col, Container, Row } from "react-bootstrap"
-import OrderCard from "../OrderCard"
+import { useEffect, useRef } from 'react';
+import { Col, Container, Row } from "react-bootstrap";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { FaBoxOpen } from 'react-icons/fa';
+import { OrderCardV2 } from '../OrderCardV2';
+import { useWorker } from '../../Context/WorkerContext';
 
 const CarouselListCards = ({ data }) => {
-  const context = useContext(MiContexto)
-  const sliderRef = useRef(null); // Crea una referencia para el Slider
-  //cada vez que se camien el index se cambian mualmente el
-  useEffect(() => {
-    sliderRef.current.slickGoTo(context.idItemSelect);
-  }, [context.idItemSelect])
+	const { idOrderSelect, setIdOrderSelect } = useWorker();
+	const sliderRef = useRef(null);
 
-  const settings = {
-    infinite: false,
-    speed: 200,
-    accessibility: false,
-    arrows: false
-  };
+	useEffect(() => {
+		const indexSlick = data.findIndex((pedido) => pedido.id === idOrderSelect);
+		if (indexSlick !== -1 && sliderRef.current) {
+			sliderRef.current.slickGoTo(indexSlick);
+		} else {
+			setIdOrderSelect(data[0]?.id);
+		}
+	}, [idOrderSelect, data]);
 
-  return (
-    <>
-      <Slider {...settings}
-        ref={sliderRef}
-        afterChange={(index) => context.setIdItemSelect(index)}
-      >
-        {
-          (data && data.length > 0) ?
-            data.map((pedido) => (
-              <div
-                key={pedido.id}
-              >
-                <div
-                  className="d-flex "
-                >
-                  <OrderCard
-                    dataPedido={pedido}
-                  />
-                </div>
-              </div>
-            )) :
-            <>
-              <Container fluid style={{ height: '40vh' }} className=" d-flex align-items-center justify-content-center">
-                <Row>
-                  <Col className="text-center">
-                    <FaBoxOpen size={50} />
-                    <h3>Sin pedidos</h3>
-                  </Col>
-                </Row>
-              </Container>
-            </>
-        }
-      </Slider>
-    </>
-  )
-}
+	const settings = {
+		infinite: false,
+		speed: 200,
+		accessibility: false,
+		arrows: false
+	};
 
-export default CarouselListCards
+	return (
+		<Container fluid className="py-3">
+			<Row className="justify-content-center">
+				{data && data.length > 0 ? (
+					<Col xs={12} md={10} lg={8} className="h-100">
+						<Slider
+							{...settings}
+							ref={sliderRef}
+							afterChange={(index) => {
+								const idSelect = data[index]?.id;
+								if (idSelect) setIdOrderSelect(idSelect);
+							}}
+						>
+							{data.map((pedido) => (
+								<div key={pedido.id} className="h-100 w-100">
+									<div className="d-flex align-items-center justify-content-center h-100">
+										<OrderCardV2 data={pedido} className="w-100" />
+									</div>
+								</div>
+							))}
+						</Slider>
+					</Col>
+				) : (
+					<Col xs={12} className="d-flex align-items-center justify-content-center" style={{ height: '40vh' }}>
+						<div className="text-center">
+							<FaBoxOpen size={50} />
+							<h3>Sin pedidos</h3>
+						</div>
+					</Col>
+				)}
+			</Row>
+		</Container>
+	);
+};
+
+export default CarouselListCards;

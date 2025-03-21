@@ -1,0 +1,27 @@
+.products-table {
+	width: 100%;
+}
+
+.products-table .col-quantity {
+	width: 5%;
+}
+
+.products-table .col-name {
+	width: 25%;
+}
+
+.products-table .col-complements {
+	width: 50%;
+}
+
+.products-table .col-total {
+	width: 20%;
+}
+
+.products-table .badge {
+	font-size: 0.9em;
+}
+
+.products-table .badge.m-1 {
+	margin: 0.2em;
+}

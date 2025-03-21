@@ -44,8 +44,13 @@ class UrlManager {
   static getSocketUrl() {
     return this.modifyUrl(ENV.VITE_HOST_WEB_SOCKET);
   }
+  static getAuthUrl() {
+    return this.modifyUrl(ENV.VITE_HOST_AUTH);
+  }
 }
 
 export const getUrlBackend = () => UrlManager.getBackendUrl();
 export const getUrlCodigos = () => UrlManager.getCodesUrl();
 export const getUrlSocket = () => UrlManager.getSocketUrl();
+export const getUrlAuth = () => UrlManager.getAuthUrl();
+

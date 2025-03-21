@@ -1,5 +1,6 @@
 import { Col, Row, Form, FormControl, InputGroup } from 'react-bootstrap';
 import { FaHouseUser } from "react-icons/fa";
+import { LOCATIONS } from './../../Utils/const/locations'; // Asegúrate de importar correctamente
 
 const TypeAndFloorInput = ({ floor, setFloor, errors, propertyType, setPropertyType }) => {
   const [errorFloor, errorType] = errors;
@@ -19,33 +20,31 @@ const TypeAndFloorInput = ({ floor, setFloor, errors, propertyType, setPropertyT
   return (
     <Row className="mb-3">
       <Col md={6}>
-        {/* Select con opciones de tipos de inmueble */}
-        <Form.Group controlId="propertyType" className="">
-          <Form.Label>
-            Tipo de Ubicación
-          </Form.Label>
+        <Form.Group controlId="propertyType">
+          <Form.Label>Tipo de Ubicación</Form.Label>
           <Form.Control required as="select" value={propertyType} onChange={handleTypeChange}>
-            <option value="house">Casa</option>
-            {/* <option value="building">Apartamento</option> */}
-            <option value="urbanization">Urbanización</option>
-            <option value="office">Oficina</option>
+            {Object.entries(LOCATIONS).map(([key, value]) => {
+              return (
+                <option key={key} value={value?.value}>{value.name}</option>
+              )
+            })}
           </Form.Control>
           {errorType && <Form.Text className="text-danger">{errorType}</Form.Text>}
         </Form.Group>
       </Col>
-      <Col md={6}>
 
-        <Form.Group className="">
-          <Form.Label> Piso o Apartamento</Form.Label>
+      <Col md={6}>
+        <Form.Group>
+          <Form.Label>Piso o Apartamento</Form.Label>
           <InputGroup>
             <InputGroup.Text>
               <FaHouseUser />
             </InputGroup.Text>
             <FormControl
               required
-              id='piso'
+              id="piso"
               type="text"
-              placeholder="Ej: 3"
+              placeholder="Ej: piso 2 apto 203"
               value={floor}
               onChange={handleChangeFloor}
               autoComplete="true"
@@ -54,6 +53,7 @@ const TypeAndFloorInput = ({ floor, setFloor, errors, propertyType, setPropertyT
           {errorFloor && <Form.Text className="text-danger">{errorFloor}</Form.Text>}
         </Form.Group>
       </Col>
+
       <Form.Text className="text-muted">
         Así entregaremos más rápido tu pedido
       </Form.Text>

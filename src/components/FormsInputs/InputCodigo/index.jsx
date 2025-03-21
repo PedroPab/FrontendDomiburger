@@ -1,14 +1,13 @@
 import { Button } from 'react-bootstrap';
 import InputCodigoText from '../../Codigos/CrearCodigoReferido/InputCodigoText';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { findCodigo } from '../../../Utils/api/codigos/findCodigo';
-import { MiContexto } from '../../../Context';
 import { toast } from 'react-toastify';
 import CodeCard from '../../Codigos/CodeCard';
+import { useAuth } from '../../../Context/AuthContext';
 
 const InputCodigo = ({ client, dataCode, setDataCode, agregarCodigo, retirarCodigo }) => {
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { token } = useAuth()
 
   const [code, setCode] = useState('');
   const [dataClient, setDataClient] = client

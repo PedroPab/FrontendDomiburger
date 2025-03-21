@@ -6,10 +6,13 @@ import PaginationComponent from "../../Pagination/index.jsx";
 import ListProducts from "./ListProducts.jsx";
 
 import productService from "../../../apis/client/ProductService";
+import { useAuth } from "../../../Context/AuthContext.jsx";
 
 
+const VisualizarProductos = () => {
 
-const VisualizarProductos = ({ token }) => {
+  const { token } = useAuth()
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -1,0 +1,25 @@
+/* Estilo para el menú de usuario */
+.user-profile {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  border: 2px solid transparent;
+  transition: border 0.3s ease-in-out;
+}
+
+.user-profile:hover .user-avatar {
+  border: 2px solid #007bff; /* Agrega un borde azul al pasar el mouse */
+}
+
+.user-name {
+  font-weight: 500;
+  color: inherit;
+}
+
+/* Oculta la flecha del dropdown */
+.user-menu .dropdown-toggle::after {
+  display: none !important;
+}

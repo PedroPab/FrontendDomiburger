@@ -1,14 +1,12 @@
-import { useContext, } from 'react'
-import { MiContexto } from '../../../Context'
 import { ContextProviderRecepcion } from '../../../Context/RecepcionContex';
 import LayoutRecepcion from '../../../Layout/Recepcion';
 import { VisualizarCodigoReferidoComponente } from '../../../components/Codigos/VisualizarCodigoReferidoComponte';
+import { useAuth } from '../../../Context/AuthContext';
 
 const VisualizarCodigoReferidos = () => {
 
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
-  const userId = context.tokenLogin.user.id
+  const { token } = useAuth()
+  const userId = useAuth()?.usuarioActual?.uid
 
   return (
     <>
@@ -18,7 +16,6 @@ const VisualizarCodigoReferidos = () => {
           <VisualizarCodigoReferidoComponente
             token={token}
             userId={userId} />
-
 
         </ContextProviderRecepcion>
 

@@ -1,18 +1,15 @@
-import { useContext, useEffect, useState } from 'react'
-import { MiContexto } from '../../../Context'
-import Layout from "../../../components/Layout";
-import { ContextProviderRecepcion } from '../../../Context/RecepcionContex';
+import { useEffect, useState } from 'react'
 import { UtilsApi } from '../../../Utils/utilsApi';
 import GraficaVentasHoy from '../../../components/GraficaVentasHoy';
 // eslint-disable-next-line no-unused-vars
 // import Pedido from '../../../Utils/class/Pedido';
 import { Container, Row } from 'react-bootstrap';
-import { NavbarRecepcion } from '../../../components/Navbar/NavbarRecepcion';
+import LayoutRecepcion from '../../../Layout/Recepcion';
+import { useAuth } from '../../../Context/AuthContext';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
 const EstadisticasVentasHoy = () => {
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { token } = useAuth()
 
   //los pedidos qeu se muestran en la tabla
   const [pedidos, setPedidos] = useState([])
@@ -181,34 +178,26 @@ const EstadisticasVentasHoy = () => {
 
   return (
     <>
-      <Layout>
-        <ContextProviderRecepcion>
-          <NavbarRecepcion
-            modoOscuro={context.modoOscuro}
-            alternarModo={context.alternarModo}
-          />
-          <Container>
-            <Row>
+      <LayoutRecepcion>
+        <Container>
+          <Row>
 
-              <GraficaVentasHoy
-                listPedidos={listPedidos.graps}
-                title={listPedidos.title}
-                nameValueY={listPedidos.nameValueY}
-              />
+            <GraficaVentasHoy
+              listPedidos={listPedidos.graps}
+              title={listPedidos.title}
+              nameValueY={listPedidos.nameValueY}
+            />
 
-              <GraficaVentasHoy
-                listPedidos={listPedidos2.graps}
-                title={listPedidos2.title}
-                nameValueY={listPedidos2.nameValueY}
-              />
-            </Row>
+            <GraficaVentasHoy
+              listPedidos={listPedidos2.graps}
+              title={listPedidos2.title}
+              nameValueY={listPedidos2.nameValueY}
+            />
+          </Row>
 
-          </Container>
+        </Container>
 
-
-        </ContextProviderRecepcion >
-
-      </Layout>
+      </LayoutRecepcion>
     </>
   )
 }

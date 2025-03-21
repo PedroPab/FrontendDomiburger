@@ -1,72 +1,65 @@
 import { useContext } from 'react'
 import { MiContexto } from '../../Context'
-import Layout from "../../components/Layout";
 import { Col, Container, Row } from 'react-bootstrap';
 import OrderCard from '../../components/OrderCard';
 import { FaBoxOpen } from 'react-icons/fa';
-import { NavbarCocinero } from '../../components/Navbar/NavbarCocinero';
+import LayoutCocina from '../../Layout/LayoutCocina';
+import { OrderCardV2 } from '../../components/OrderCardV2';
 
 
 const Cocina = () => {
-  const context = useContext(MiContexto)
+	const context = useContext(MiContexto)
 
-  const ListPedidos = () => {
+	const ListPedidos = () => {
 
-    if (!context.items) return (<></>)
+		if (!context.items) return (<></>)
 
-    if (context.items.length <= 0) {
-      return (
-        <Container fluid
-          style={{ height: '90vh' }}
-          className="d-flex align-items-center justify-content-center">
-          <Row>
-            <Col className="text-center">
-              <FaBoxOpen size={50} />
-              <h3>Sin pedidos</h3>
-            </Col>
-          </Row>
-        </Container>
-      )
-    }
+		if (context.items.length <= 0) {
+			return (
+				<Container fluid
+					style={{ height: '90vh' }}
+					className="d-flex align-items-center justify-content-center">
+					<Row>
+						<Col className="text-center">
+							<FaBoxOpen size={50} />
+							<h3>Sin pedidos</h3>
+						</Col>
+					</Row>
+				</Container>
+			)
+		}
 
-    return (
-      context.items.map((pedido) => (
-        <div
-          className=' col-md-4 col-lg-4'
-          key={pedido.id}
-        >
-          <div
-            className="d-flex "
-          >
-            <OrderCard
-              dataPedido={pedido}
-            />
-          </div>
-        </div>
-      ))
-    )
-  }
+		return (
+			context.items.map((pedido) => (
+				<div
+					className=' col-md-4 col-lg-4'
+					key={pedido.id}
+				>
+					<div
+						className="d-flex "
+					>
+						<OrderCardV2
+							data={pedido}
+						/>
+					</div>
+				</div>
+			))
+		)
+	}
 
 
 
-  return (
-    <>
-      <Layout>
-        <NavbarCocinero
-          modoOscuro={context.modoOscuro}
-          alternarModo={context.alternarModo}
-          pedidos={context.items}
-        />
-        <Container fluid  >
-
-          <Row className=''>
-
-            <ListPedidos />
-          </Row>
-        </Container>
-      </Layout >
-    </>
-  );
+	return (
+		<>
+			<LayoutCocina>
+				<Container fluid  >
+					<Row>
+						<ListPedidos />
+					</Row>
+				</Container>
+			</LayoutCocina>
+		</>
+	);
 };
 
 export default Cocina;

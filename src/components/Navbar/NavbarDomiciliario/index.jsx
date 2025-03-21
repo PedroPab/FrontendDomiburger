@@ -1,18 +1,19 @@
 /* eslint-disable react/prop-types */
-import { Container, Navbar, Nav, NavDropdown, Col, Row } from 'react-bootstrap';
-import { BsFillPersonFill, BsMoonStars } from 'react-icons/bs';
+import { Container, Navbar, Nav, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/logo.png';
 import { FaHome, FaHistory } from "react-icons/fa";
-import { BiLogIn } from "react-icons/bi";
 import { ConnectionStatusIndicator } from '../ConnectionStatusIndicator';
 import { OrderCountIndicator } from '../OrderCountIndicator';
-import { MdOutlineSettings } from 'react-icons/md';
+import { UserMenu } from '../../../Layout/UserMenu';
+import { useAuth } from '../../../Context/AuthContext';
+import { usePreferences } from '../../../Context/PreferencesContext';
 
-const NavbarDomiciliario = ({ modoOscuro, alternarModo }) => {
-
+const NavbarDomiciliario = () => {
+  const { isDarkMode } = usePreferences();
+  const { usuarioActual, handleLogout } = useAuth();
   return (
-    <Navbar expand="lg" className="sticky-top" bg={modoOscuro ? 'dark' : 'light'}>
+    <Navbar expand="lg" className="sticky-top" bg={isDarkMode ? 'dark' : 'light'}>
       <Container fluid className="m-1">
         <Row className="w-100 align-items-center justify-content-between">
           {/* 1. Logo */}
@@ -53,19 +54,10 @@ const NavbarDomiciliario = ({ modoOscuro, alternarModo }) => {
             <Nav.Link as={Link} to="/domiciliario/history">
               <FaHistory className="me-2" /> Mis pedidos
             </Nav.Link>
-
-
-
-            {/* Sección de Ajustes */}
-            <NavDropdown title={<><MdOutlineSettings className="me-2" />Ajustes</>} id="nav-dropdown-ajustes">
-              <NavDropdown.Item as={Link} to="/login">
-                <BsFillPersonFill className="me-2" /> Login
-              </NavDropdown.Item>
-              <NavDropdown.Item onClick={() => alternarModo()}>
-                <BsMoonStars className="me-2" /> Cambiar Tema
-              </NavDropdown.Item>
-            </NavDropdown>
           </Nav>
+
+          <UserMenu usuarioActual={usuarioActual} onLogout={handleLogout} />
+
         </Navbar.Collapse>
       </Container>
     </Navbar>

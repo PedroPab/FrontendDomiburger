@@ -1,28 +1,18 @@
 import { ToastContainer } from "react-toastify"
-import { useContext, } from 'react'
-import { MiContexto } from '../../Context'
-import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 import { NavbarRecepcion } from "../../components/Navbar/NavbarRecepcion";
 
 
 const LayoutRecepcion = ({ children }) => {
-  const context = useContext(MiContexto)
 
-  return (
-    <>
-      <ContextProviderRecepcion>
+	return (
+		<>
+			<NavbarRecepcion />
 
-        <NavbarRecepcion
-          modoOscuro={context.modoOscuro}
-          alternarModo={context.alternarModo}
-        />
+			{children}
 
-        {children}
-
-        <ToastContainer />
-      </ContextProviderRecepcion>
-    </>
-  )
+			<ToastContainer position="bottom-center" />
+		</>
+	)
 }
 
 export default LayoutRecepcion

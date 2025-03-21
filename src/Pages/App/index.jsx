@@ -1,38 +1,33 @@
 import { BrowserRouter as Router, Routes } from 'react-router-dom';
-import { ContextProvider } from "../../Context"
 import { RecepcionRoutes } from "./routes/RecepcionRoutes"
 import { CocinaRoutes } from "./routes/CocinaRoutes"
 import { GeneralRoutes } from './routes/GeneralRoutes';
 import { LoginRoutes } from './routes/LoginRoutes';
+import { AdminRoutes } from './routes/AdminRoutes';
 import { HomeRoutes } from './routes/HomeRoutes';
-import { EstadisticasRoutes } from './routes/EstadisticasRoutes';
-import { CodigoRoutes } from './routes/CodigoRoutes';
-import { ClientesRoutes } from './routes/ClientesRoutes';
 import { DomiciliarioRoutes } from './routes/DomiciliarioRoutes';
+import { PreferencesProvider } from '../../Context/PreferencesContext';
+import { UserRoutes } from './routes/UserRoutes';
+import { AuthProvider } from '../../Context/AuthContext';
 // import { UserRoutes } from './routes/UserRoutes';
 
 const AppRoutes = () => {
   return (
     <>
-
-
-      <ContextProvider>
-
-        <Routes>
-          {HomeRoutes()}
-          {LoginRoutes()}
-          {GeneralRoutes()}
-          {RecepcionRoutes()}
-          {EstadisticasRoutes()}
-          {CodigoRoutes()}
-          {CocinaRoutes()}
-          {ClientesRoutes()}
-          {DomiciliarioRoutes()}
-          {/* {UserRoutes()} */}
-
-        </Routes>
-      </ContextProvider>
-
+      <PreferencesProvider>
+        <AuthProvider>
+          <Routes>
+            {LoginRoutes()}
+            {HomeRoutes()}
+            {AdminRoutes()}
+            {RecepcionRoutes()}
+            {DomiciliarioRoutes()}
+            {CocinaRoutes()}
+            {UserRoutes()}
+            {GeneralRoutes()}
+          </Routes>
+        </AuthProvider>
+      </PreferencesProvider>
     </>
   );
 }

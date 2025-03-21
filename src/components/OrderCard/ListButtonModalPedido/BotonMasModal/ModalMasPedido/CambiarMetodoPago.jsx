@@ -1,21 +1,20 @@
-import { useContext, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { UtilsApi } from '../../../../../Utils/utilsApi';
-import { MiContexto } from '../../../../../Context';
+import { useAuth } from '../../../../../Context/AuthContext';
 
 const CambiarMetodoPago = ({ idOrder, handleClose }) => {
-  const context = useContext(MiContexto)
   const selectMetodoDePago = useRef();
   const [showButtons, setShowButtons] = useState(true);
 
   const handleEnviar = () => {
     setShowButtons(false);
   };
+  const { token } = useAuth()
 
   const handleConfirmar = () => {
     // Lógica para confirmar el cambio de método de pago
     //cambiamos el metodo de pago
-    const token = context.tokenLogin.token
 
     const url = `pedidos/cambiarFee?id=${idOrder}&fee=${selectMetodoDePago.current.value}`
     UtilsApi({ peticion: url, token, vervo: 'PATCH' })

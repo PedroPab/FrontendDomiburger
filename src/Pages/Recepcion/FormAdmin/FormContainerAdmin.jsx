@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import BuscadorCliente from '../../../components/Codigos/CrearCodigoReferido/BuscadorCliente';
 import NameInput from '../../../components/FormsInputs/NameInput';
@@ -16,6 +16,7 @@ import { useLoadScript } from '@react-google-maps/api';
 import NoteClientInput from '../../../components/FormsInputs/NoteClientInput';
 import DashboardProducts from '../../../components/Products/Dashboard/Dashboard';
 import { calculateDeliveryDetails } from '../../../Utils/maps/calculateDeliveryDetails';
+import { useAuth } from '../../../Context/AuthContext';
 
 const ENV = import.meta.env;
 
@@ -23,7 +24,9 @@ const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
 const libraries = ['places'];
 
 // eslint-disable-next-line no-unused-vars
-const FormContainerAdmin = ({ token, userId }) => {
+const FormContainerAdmin = () => {
+  const { token } = useAuth()
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: ENV.VITE_KEYMAPS,
     libraries,

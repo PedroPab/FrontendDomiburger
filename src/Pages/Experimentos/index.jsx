@@ -1,51 +1,25 @@
-import LayoutRecepcion from "../../Layout/Recepcion";
-import { getUrlBackend, getUrlCodigos, getUrlSocket } from "../../Utils/getUrlApiByOriginPath";
-import { getIdToken } from 'firebase/auth';
-import { FirebaseAuth } from '../../firebase/config';
-import { useEffect, useState } from "react";
+import { useShowNotification } from "../../hooks/useShowNotification";
+
 
 const Experimentos = () => {
-  const [token, setToken] = useState('');
-  useEffect(() => {
-    const getToken = async () => {
-      const getToken = await getIdToken(FirebaseAuth.currentUser);
-      console.log('Token:', getToken);
-      setToken(getToken);
-    };
-    getToken();
-  }, []);
+	const { notify, permission } = useShowNotification();
 
-  const apiUrl = getUrlBackend();
-  const urlSocket = getUrlSocket();
-  const urlCodigo = getUrlCodigos()
-  return (
-    <>
-      <LayoutRecepcion>
+	const handleClick = () => {
+		notify('Hola 👋', {
+			body: 'Esta es una notificación desde el custom hook',
+			icon: '/logo192.png'
+		});
+	};
+	return (
+		<div>
+			<h1>Experimentos</h1>
 
-        <h1>Experimentos</h1>
+			<button onClick={handleClick}>
+				Enviar Notificación
+			</button>
 
-        <p>Esta es una página de experimentos</p>
+		</div >
+	);
+}
 
-        <div className="alert alert-info">
-          <strong>API URL:</strong> {apiUrl}
-        </div>
-
-        <div className="alert alert-info">
-          <strong>Socket URL:</strong> {urlSocket}
-        </div>
-
-        <div className="alert alert-info">
-          <strong>Códigos URL:</strong> {urlCodigo}
-        </div>
-
-        <div className="alert alert-info">
-          <strong>Token:</strong> {token}
-        </div>
-
-
-      </LayoutRecepcion>
-    </>
-  );
-};
-
-export default Experimentos;
+export default Experimentos 

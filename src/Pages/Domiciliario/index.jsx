@@ -1,75 +1,80 @@
-import { useContext, useEffect, useState } from 'react'
-import { MiContexto } from '../../Context'
+import { useEffect, useState } from "react";
+import { useMiContexto } from "../../Context";
 import { NavbarDomiciliario } from "../../components/Navbar/NavbarDomiciliario";
 import Layout from "../../components/Layout";
-import Mapa from './../../components/MapsGoogle';
-import ListMarker from '../../components/ListMarker';
-import { Container, Row } from 'react-bootstrap';
-import CarouselListCards from '../../components/CarouselListCards';
-
+import Mapa from "../../components/MapsGoogle";
+import ListMarker from "../../components/ListMarker";
+import { Container, Row } from "react-bootstrap";
+import CarouselListCards from "../../components/CarouselListCards";
+import { useWorker } from "../../Context/WorkerContext";
+import { usePreferences } from "../../Context/PreferencesContext";
+import { LocationsService } from "../../apis/clientV2/LocationsService";
+import { useAuth } from "../../Context/AuthContext";
 
 const Domiciliario = () => {
-  const context = useContext(MiContexto)
+	const { items, zoomMaps, setZoomMaps } = useMiContexto();
+	const { idOrderSelect } = useWorker();
+	const { isDarkMode } = usePreferences();
+	const { token } = useAuth();
 
-  const [centerMaps, setCenterMaps] = useState({
-    lat: 6.29,
-    lng: -75.576
-  })
+	const [centerMaps, setCenterMaps] = useState({
+		lat: 6.29,
+		lng: -75.576,
+	});
 
-  useEffect(() => {
-    //cando cambie el index del pedido elegido se cambiara el center del mapa
-    if (context.idItemSelect !== null) {
-      console.log(`hola como estas`)
-      console.log(context.items)
-      setCenterMaps({
-        lat: context.items[context.idItemSelect].address.coordinates.lat,
-        lng: context.items[context.idItemSelect].address.coordinates.lng
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [context.idItemSelect])
+	useEffect(() => {
+		const fetchLocation = async () => {
+			if (idOrderSelect !== null && items?.length) {
+				const item = items.find((pedido) => pedido.id === idOrderSelect);
+				if (!item) return;
 
-  const containerStyle = {
-    width: '100%', // Establece el ancho al 100% del contenedor padre
-    height: '50vh', // Establece la altura al 100% de la altura de la ventana
-  };
+				try {
+					const locationService = new LocationsService(token);
+					const location = await locationService.getById(item.locationId);
 
-  return (
-    <>
-      <Layout>
-        <NavbarDomiciliario
-          modoOscuro={context.modoOscuro}
-          alternarModo={context.alternarModo}
-          pedidos={context.items}
-        // recargarOrdenes={context.recargarOrdenes}
-        />
-        <Container fluid  >
-          <Row className='mb-3'>
-            <Mapa
-              zoom={context.zoomMaps}
-              setZoomMaps={context.setZoomMaps}
-              modoOscuro={context.modoOscuro}
-              center={centerMaps}
-              setCenter={setCenterMaps}
-              containerStyle={containerStyle}
-            >
-              {
-                context.items ? (<ListMarker
-                  pedidos={context.items}
-                />) : (<></>)
-              }
-            </Mapa>
-          </Row>
-          <Row className=''>
-            <CarouselListCards
-              data={context.items}
-            >
-            </CarouselListCards>
-          </Row>
-        </Container>
-      </Layout >
-    </>
-  );
+					if (location?.body?.coordinates) {
+						setCenterMaps({
+							lat: location.body.coordinates.lat || centerMaps.lat,
+							lng: location.body.coordinates.lng || centerMaps.lng,
+						});
+					}
+				} catch (error) {
+					console.error("Error obteniendo la ubicación:", error);
+				}
+			}
+		};
+
+		fetchLocation();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [idOrderSelect, items, token]);
+
+	const containerStyle = {
+		width: "100%",
+		height: "50vh",
+	};
+
+	return (
+		<Layout>
+			<NavbarDomiciliario pedidos={items} />
+			<Container fluid>
+				<Row className="mb-3">
+					<Mapa
+						zoom={zoomMaps}
+						setZoomMaps={setZoomMaps}
+						modoOscuro={isDarkMode}
+						center={centerMaps}
+						setCenter={setCenterMaps}
+						containerStyle={containerStyle}
+					>
+						{items && <ListMarker pedidos={items} />}
+					</Mapa>
+				</Row>
+				<Row>
+					<CarouselListCards data={items} />
+				</Row>
+			</Container>
+		</Layout>
+	);
 };
 
 export default Domiciliario;

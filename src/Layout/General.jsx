@@ -9,7 +9,7 @@ const General = ({ children }) => {
 
       {children}
 
-      <ToastContainer />
+      <ToastContainer position="bottom-center" />
     </>
   )
 }

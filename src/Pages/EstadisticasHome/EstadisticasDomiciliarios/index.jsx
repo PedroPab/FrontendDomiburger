@@ -1,16 +1,16 @@
 import { useContext, useEffect, useState } from 'react'
-import { MiContexto } from '../../../Context'
-import Layout from "../../../components/Layout";
-import { ContextProviderRecepcion } from '../../../Context/RecepcionContex';
 import { UtilsApi } from '../../../Utils/utilsApi';
 import ListEstadisticasDomiciliarios from '../../../components/ListEstadisticasDomiciliarios';
 import { ConfigProvider, theme } from 'antd';
-import { NavbarRecepcion } from '../../../components/Navbar/NavbarRecepcion';
+import LayoutRecepcion from '../../../Layout/Recepcion';
+import { PreferencesContext } from '../../../Context/PreferencesContext';
+import { useAuth } from '../../../Context/AuthContext';
 
 //para mostra los pedidos en una tabla y tener las estadistica a la mano 
 const EstadisticasDomiciliarios = () => {
-  const context = useContext(MiContexto)
-  const token = context.tokenLogin.token
+  const { isDarkMode } = useContext(PreferencesContext);
+
+  const { token } = useAuth()
 
   //los pedidos qeu se muestran en la tabla
   const [pedidos, setPedidos] = useState([])
@@ -29,38 +29,17 @@ const EstadisticasDomiciliarios = () => {
 
   return (
     <>
-      <Layout>
-        <ContextProviderRecepcion
+      <LayoutRecepcion>
+        <ConfigProvider
           theme={{
-            // 1. Use dark algorithm
-            algorithm: context.modoOscuro ? theme.darkAlgorithm : null,
-            // 2. Combine dark algorithm and compact algorithm
-            // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+            algorithm: isDarkMode ? theme.darkAlgorithm : null,
           }}
         >
-
-          <NavbarRecepcion
-            modoOscuro={context.modoOscuro}
-            alternarModo={context.alternarModo}
+          <ListEstadisticasDomiciliarios
+            pedidos={pedidos}
           />
-
-          <ConfigProvider
-            theme={{
-              // 1. Use dark algorithm
-              algorithm: context.modoOscuro ? theme.darkAlgorithm : null,
-              // 2. Combine dark algorithm and compact algorithm
-              // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
-            }}
-          >
-
-            <ListEstadisticasDomiciliarios
-              pedidos={pedidos}
-            />
-          </ConfigProvider>
-
-        </ContextProviderRecepcion >
-
-      </Layout>
+        </ConfigProvider>
+      </LayoutRecepcion>
     </>
   )
 }
