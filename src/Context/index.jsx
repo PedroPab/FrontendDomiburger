@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNotificationSound } from '../hooks/useNotificationSound';
 import sound from '../assets/music/livechat-alerte.mp3'
+import { useShowNotification } from '../hooks/useShowNotification';
 export const MiContexto = createContext();
 
 export const ContextProvider = ({ children }) => {
@@ -32,6 +33,7 @@ export const ContextProvider = ({ children }) => {
 	const [kitchenSelectId, setKitchenSelectId] = useLocalStorage('kitchenSelectId', null);
 
 	const alertSound = useNotificationSound(sound);
+	const { notify } = useShowNotification();
 
 	const changeKitchen = (id) => {
 		setKitchenSelectId(id);
@@ -96,7 +98,10 @@ export const ContextProvider = ({ children }) => {
 		socket.on("message", (newMessage) => {
 			//analizar el mensaje
 			const { type, message } = newMessage;
-			if (type === 'alert') alertSound();
+			if (type === 'alert') {
+				alertSound();
+				notify('Nuevo mensaje', { body: message });
+			}
 			toast(message);
 		});
 
