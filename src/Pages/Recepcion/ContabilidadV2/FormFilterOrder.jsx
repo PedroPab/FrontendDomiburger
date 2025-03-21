@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap"
 
 const FormFilterOrder = ({ fetchOrders, loading }) => {
+
 	const [startDate, setStartDate] = useState(() => {
 		let date = new Date();
 		date.setHours(0 - 5, 0, 0, 0); // Inicio del día en hora local
@@ -39,6 +40,7 @@ const FormFilterOrder = ({ fetchOrders, loading }) => {
 
 	}
 	useEffect(() => {
+
 		fetchOrders(startDateUTC, endDateUTC);
 	}, []);
 

@@ -1,126 +1,25 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Card, ListGroup, Container, Row, Col, Accordion, Table } from "react-bootstrap";
-import { ORDER_STATUSES } from "../../../Utils/const/status";
-import {
-	FaShoppingCart,
-	FaMoneyBillWave,
-	FaFileInvoiceDollar,
-	FaCreditCard,
-	FaBoxOpen,
-	FaTruck
-} from "react-icons/fa";
+import { FaShoppingCart, FaMoneyBillWave, FaFileInvoiceDollar, FaCreditCard, FaBoxOpen, FaTruck } from "react-icons/fa";
 import { useRecepcion } from "../../../Context/RecepcionContex";
+import { calculateStatistics } from "./calculateStatistics";
+import { ORDER_STATUSES } from "../../../Utils/const/status";
 
 const SummaryStatisticsOrders = ({ listOrders }) => {
-	// Función que calcula las estadísticas a partir de las órdenes.
-	const calculateStatistics = (orders) => {
-		let totalSales = 0;
-		let salesByPaymentMethod = {}; // Ej: { cash: [], bancolombia: [] }
-		let totalProductsSold = 0;
-		let productsCount = {}; // Ej: { "1": { quantity: 0, totalSales: 0 }, "2": { ... } }
-		let deliveryCount = 0;
-		let totalDeliverySales = 0;
-		let totalDeliveryCost = 0;
-		let totalSalesNotCounted = 0; // Órdenes no facturadas
-		let salesByDelivery = {}; // Ej: { "id": { quantity: 0, totalSales: 0 }, "2": { ... } }
-
-		orders.forEach((order) => {
-			// Solo se contarán las órdenes que estén en el estado de facturado.
-			if (order.status !== ORDER_STATUSES.INVOICED) {
-				totalSalesNotCounted++;
-				return;
-			}
-
-			// Ventas
-			totalSales += order.totalPrice || 0;
-
-			// Consideramos pago confirmado si existe y es "approved", o si no existe se asume confirmado.
-			const isPaymentConfirmed = order.payment ? order.payment.status === "approved" : true;
-			if (isPaymentConfirmed) {
-				const paymentMethod = order.paymentMethod || "desconocido";
-				if (!salesByPaymentMethod[paymentMethod]) {
-					salesByPaymentMethod[paymentMethod] = [];
-				}
-				salesByPaymentMethod[paymentMethod].push(order);
-			}
-
-			// Productos
-			order.orderItems.forEach((item) => {
-				const quantity = item.quantity || 1;
-				totalProductsSold += quantity;
-
-				if (!productsCount[item.id]) {
-					productsCount[item.id] = { quantity: 0, totalSales: 0 };
-				}
-				productsCount[item.id].quantity += quantity;
-				productsCount[item.id].totalSales += item.price * quantity;
-
-				// Procesar adiciones o complementos si existen
-				if (item?.complements) {
-					item.complements.forEach((complement) => {
-						const compQuantity = complement.quantity || 1;
-						totalProductsSold += compQuantity;
-						if (!productsCount[complement.id]) {
-							productsCount[complement.id] = { quantity: 0, totalSales: 0 };
-						}
-						productsCount[complement.id].quantity += compQuantity;
-						productsCount[complement.id].totalSales += complement.price * compQuantity;
-					});
-				}
-			});
-
-			// Domicilios
-			if (order.delivery) {
-				deliveryCount++;
-				totalDeliverySales += order.totalPrice || 0;
-				totalDeliveryCost += order.delivery.price || 0;
-			}
-
-			// Ventas por domicilio
-			if (order.assignedCourierUserId) {
-				const deliveryId = order.assignedCourierUserId
-				if (!salesByDelivery[deliveryId]) {
-					salesByDelivery[deliveryId] = { quantity: 0, totalSales: 0 };
-				}
-				salesByDelivery[deliveryId].quantity++;
-				salesByDelivery[deliveryId].totalSales
-					+= order.delivery.price || 0;
-			}
-
-
-		});
-
-		return {
-			totalSales,
-			salesByPaymentMethod,
-			totalProductsSold,
-			productsCount,
-			deliveryCount,
-			totalDeliverySales,
-			salesByDelivery,
-			totalDeliveryCost,
-			totalSalesNotCounted
-		};
-	};
-
-	// Memorizar el cálculo para evitar recálculos innecesarios
 	const stats = useMemo(() => calculateStatistics(listOrders), [listOrders]);
 	const totalInvoicedOrders = listOrders.filter(order => order.status === ORDER_STATUSES.INVOICED).length;
-
-	const { listDomiciliarios } = useRecepcion()
+	const { listDomiciliarios } = useRecepcion();
 
 	return (
 		<Container className="my-4">
 			<h2 className="text-center mb-4">Resumen de Estadísticas de Órdenes</h2>
-
-			{/* Sección de resumen con tarjetas informativas */}
 			<Row className="mb-4">
 				<Col md={4} className="mb-3">
 					<Card className="shadow text-center">
 						<Card.Body>
 							<FaFileInvoiceDollar size={40} className="mb-2" />
 							<Card.Title>Órdenes Facturadas</Card.Title>
-							<Card.Text style={{ fontSize: '1.5rem' }}>
+							<Card.Text className="card-text-large">
 								{totalInvoicedOrders}
 							</Card.Text>
 						</Card.Body>
@@ -131,7 +30,7 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 						<Card.Body>
 							<FaMoneyBillWave size={40} className="mb-2" />
 							<Card.Title>Ventas Totales</Card.Title>
-							<Card.Text style={{ fontSize: '1.5rem' }}>
+							<Card.Text className="card-text-large">
 								${stats.totalSales.toLocaleString()}
 							</Card.Text>
 						</Card.Body>
@@ -142,17 +41,14 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 						<Card.Body>
 							<FaShoppingCart size={40} className="mb-2" />
 							<Card.Title>Productos Vendidos</Card.Title>
-							<Card.Text style={{ fontSize: '1.5rem' }}>
+							<Card.Text className="card-text-large">
 								{stats.totalProductsSold}
 							</Card.Text>
 						</Card.Body>
 					</Card>
 				</Col>
 			</Row>
-
-			{/* Accordion para seccionar la información detallada */}
 			<Accordion defaultActiveKey="0">
-				{/* Sección de Ventas */}
 				<Accordion.Item eventKey="0">
 					<Accordion.Header>
 						<FaCreditCard className="me-2" /> Ventas
@@ -192,8 +88,6 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 						</ListGroup>
 					</Accordion.Body>
 				</Accordion.Item>
-
-				{/* Sección de Productos */}
 				<Accordion.Item eventKey="1">
 					<Accordion.Header>
 						<FaBoxOpen className="me-2" /> Productos
@@ -227,8 +121,6 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 						</ListGroup>
 					</Accordion.Body>
 				</Accordion.Item>
-
-				{/* Sección de Domicilios */}
 				<Accordion.Item eventKey="2">
 					<Accordion.Header>
 						<FaTruck className="me-2" /> Domicilios

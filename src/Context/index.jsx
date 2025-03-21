@@ -94,9 +94,10 @@ export const ContextProvider = ({ children }) => {
 		});
 
 		socket.on("message", (newMessage) => {
-			//ejecutmaos una aletrta 
-			alertSound();
-			toast(newMessage);
+			//analizar el mensaje
+			const { type, message } = newMessage;
+			if (type === 'alert') alertSound();
+			toast(message);
 		});
 
 		socket.on('order/init', (orders) => {
