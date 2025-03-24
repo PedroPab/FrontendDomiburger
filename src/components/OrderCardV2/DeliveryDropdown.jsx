@@ -7,23 +7,20 @@ import { OrderService } from "../../apis/clientV2/OrderService";
 import { toast } from "react-toastify";
 
 const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
-	const { listDomiciliarios } = useRecepcion();
+	const { listDomiciliarios, openCloseModalAgregarDo } = useRecepcion();
 
 	const { token } = useAuth();
 	const userService = new UsersService(token);
 	const [loadUser, setLoadUser] = useState(false);
 	const [dataUserCourier, setDataUserCourier] = useState(null);
 	const [loadChangeCourier, setLoadChangeCourier] = useState(false);
-
 	const findUser = async () => {
 		try {
 			const user = await userService.getByIdUser(assignedCourierUserId);
-			console.log("🚀🚀🚀🚀 haciendo una petición :", user);
 			setDataUserCourier(user.body);
 			setLoadUser(false);
 		} catch (error) {
 			setLoadUser(false);
-			console.error("🚀🚀🚀🚀 error al hacer la petición :", error);
 		}
 	};
 
@@ -84,6 +81,13 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 					>
 						No asignar domiciliario
 					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={() => openCloseModalAgregarDo()}
+						style={{ backgroundColor: "#bcbeff", color: "#3b28e0" }}
+					>
+						Seleccionar de la lista
+					</Dropdown.Item>
+
 					{/* todos los domiciliarios disponibles */}
 					{listDomiciliarios.map((domiciliario) => (
 						<Dropdown.Item
@@ -94,15 +98,25 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 							key={domiciliario.id}
 							data-id={domiciliario.id}
 							disabled={domiciliario.id === assignedCourierUserId}
-							style={domiciliario.id === assignedCourierUserId ? { backgroundColor: "#d3d3d3" } : {}}
+							className={domiciliario.id === assignedCourierUserId ? "bg-primary active " : ""}
 						>
+							{/* foto pequena del domiciliario  */}
+							<Image
+								src={domiciliario.photoUrl}
+								style={{
+									width: "20px",
+									height: "20px",
+									marginRight: "10px",
+								}}
+								roundedCircle
+							/>
 							{domiciliario.name}
 
 						</Dropdown.Item>
 					))}
 				</Dropdown.Menu>
 			</Dropdown>
-		</div>
+		</div >
 	);
 }
 
