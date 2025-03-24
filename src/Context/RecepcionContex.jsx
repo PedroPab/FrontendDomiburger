@@ -30,6 +30,9 @@ export const ContextProviderRecepcion = ({ children }) => {
 	const findUser = async () => {
 		try {
 			const users = await userService.getByRole(ROLES.COURIER.value);
+			//filtramos los domiciliarios de la lista de listDomiciliarios para que que no muestre los que ya no están en la lista
+			const listDomiciliariosFilter = listDomiciliarios.filter(e => users.body.find(u => u.id === e.id))
+			setListDomiciliarios(listDomiciliariosFilter)
 			setUsers(users.body);
 		} catch (error) {
 			console.log("🚀 ~ findUser ~ error:", error)
