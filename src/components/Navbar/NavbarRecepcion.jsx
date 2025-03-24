@@ -141,6 +141,11 @@ const NavbarRecepcion = () => {
 						<OrderCountIndicator />
 					</Col>
 
+					{/* cambiar y mostar la cocina  */}
+					<Col xs="auto">
+						<KitchenSelector />
+					</Col>
+
 					{/* Toggle para móviles */}
 					<Col xs="auto" className="d-lg-none text-end">
 						<Navbar.Toggle aria-controls="navbar-nav" />

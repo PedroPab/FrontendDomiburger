@@ -74,19 +74,6 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 				</Dropdown.Toggle>
 
 				<Dropdown.Menu>
-					{/* opción para no asignar nada */}
-					<Dropdown.Item
-						onClick={() => updateCourierOrder(null)}
-						style={{ backgroundColor: "#f8d7da", color: "#721c24" }}
-					>
-						No asignar domiciliario
-					</Dropdown.Item>
-					<Dropdown.Item
-						onClick={() => openCloseModalAgregarDo()}
-						style={{ backgroundColor: "#bcbeff", color: "#3b28e0" }}
-					>
-						Seleccionar de la lista
-					</Dropdown.Item>
 
 					{/* todos los domiciliarios disponibles */}
 					{listDomiciliarios.map((domiciliario) => (
@@ -114,6 +101,22 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 
 						</Dropdown.Item>
 					))}
+
+					<Dropdown.Divider />
+
+					{/* opción para no asignar nada */}
+					<Dropdown.Item
+						onClick={() => updateCourierOrder(null)}
+						style={{ backgroundColor: "#f8d7da", color: "#721c24" }}
+					>
+						No asignar domiciliario
+					</Dropdown.Item>
+					<Dropdown.Item
+						onClick={() => openCloseModalAgregarDo()}
+						style={{ backgroundColor: "#bcbeff", color: "#3b28e0" }}
+					>
+						Seleccionar de la lista
+					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
 		</div >
