@@ -50,6 +50,11 @@ export const ContextProvider = ({ children }) => {
 			return
 		}
 
+		if (assignedKitchens.length === 1) {
+			changeKitchen(assignedKitchens[0]);
+			return
+		}
+
 		if (kitchenSelectId) {
 			const kitchen = assignedKitchens.find(kitchen => kitchen.id === kitchenSelectId);
 			if (kitchen) {

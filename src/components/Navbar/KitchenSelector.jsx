@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Button, Col, NavDropdown, Spinner } from 'react-bootstrap';
 import { MdOutlineSettings } from 'react-icons/md';
 import { useWorker } from '../../Context/WorkerContext';
@@ -6,22 +6,26 @@ import { useMiContexto } from '../../Context';
 import { useAuth } from '../../Context/AuthContext';
 
 const KitchenSelector = () => {
-	const { listKitchens } = useWorker()
+	const { listKitchens } = useWorker();
 	const { changeKitchen, kitchenSelectId } = useMiContexto();
 	const { userData } = useAuth();
-
 
 	const [showKitchens, setShowKitchens] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	// Lógica para manejar el click en el botón y mostrar las cocinas
-	const handleToggleKitchens = () => {
-		setShowKitchens(!showKitchens);
+	// Función para alternar la visualización de las cocinas con un retraso simulado
+	const handleToggleKitchens = useCallback(() => {
+		setShowKitchens(prev => !prev);
 		if (!isLoading) {
 			setIsLoading(true);
-			// Simula el retraso de carga de las cocinas
 			setTimeout(() => setIsLoading(false), 1000);
 		}
+	}, [isLoading]);
+
+	// Función auxiliar para obtener el nombre de la cocina o un valor por defecto
+	const getKitchenName = (kitchenId) => {
+		const kitchen = listKitchens?.find(k => k.id === kitchenId);
+		return kitchen ? kitchen.name : 'Sin cocina Seleccionada';
 	};
 
 	return (
@@ -35,28 +39,30 @@ const KitchenSelector = () => {
 				<MdOutlineSettings size={20} className="me-1" /> Seleccionar Cocina
 			</Button>
 
-			{/* Cocina seleccionada */}
+			{/* Muestra la cocina actualmente seleccionada */}
 			<span className="mx-2">
-				{listKitchens && listKitchens.find((k) => k.id === kitchenSelectId)?.name || 'Cocina'}
+				{getKitchenName(kitchenSelectId)}
 			</span>
 
-			{/* Mostrar el indicador de carga mientras se están cargando las cocinas */}
+			{/* Indicador de carga o menú de selección de cocinas */}
 			{isLoading ? (
 				<Spinner animation="border" size="sm" />
 			) : (
 				showKitchens && (
 					<NavDropdown show className="w-100">
 						{userData?.assignedKitchens?.length ? (
-							userData.assignedKitchens.map((kitchen) => (
+							userData.assignedKitchens.map((kitchenId) => (
 								<NavDropdown.Item
-									key={kitchen}
-									onClick={() => changeKitchen(kitchen)}
+									key={kitchenId}
+									onClick={() => changeKitchen(kitchenId)}
 								>
-									{listKitchens.find((k) => k.id === kitchen)?.name || 'Cocina'}
+									{getKitchenName(kitchenId)}
 								</NavDropdown.Item>
 							))
 						) : (
-							<NavDropdown.Item disabled>No tienes cocinas asignadas</NavDropdown.Item>
+							<NavDropdown.Item disabled>
+								No tienes cocinas asignadas
+							</NavDropdown.Item>
 						)}
 					</NavDropdown>
 				)
