@@ -10,13 +10,13 @@ const ENV = import.meta.env
 // Configuración de Firebase para tu aplicación web
 // Para Firebase JS SDK v7.20.0 y posteriores, measurementId es opcional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || ''
+	apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
+	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
+	projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
+	storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
+	messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
+	appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
+	measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || ''
 };
 
 console.log("Configuración de Firebase:", firebaseConfig);
@@ -26,21 +26,21 @@ const app = initializeApp(firebaseConfig);
 const FirebaseAuth = getAuth(app);
 
 // Conecta con el emulador de autenticación si estás en desarrollo (localhost)
-if (window.location.hostname === "localhost" || ENV.VITE_NODE_ENV == "development") {
-  console.log("Conectando con el emulador de autenticación...")
-  connectAuthEmulator(FirebaseAuth, getUrlAuth());
+if (ENV.VITE_NODE_ENV == "development") {
+	console.log("Conectando con el emulador de autenticación...")
+	connectAuthEmulator(FirebaseAuth, getUrlAuth());
 }
 
 const configureRecaptcha = () => {
-  window.recaptchaVerifier = new RecaptchaVerifier(FirebaseAuth, "recaptcha-container", {
-    size: "invisible",
-    callback: (response) => {
-      console.log("reCAPTCHA resuelto", response);
-    },
-    "expired-callback": () => {
-      console.log("reCAPTCHA expirado, recargar página");
-    },
-  });
+	window.recaptchaVerifier = new RecaptchaVerifier(FirebaseAuth, "recaptcha-container", {
+		size: "invisible",
+		callback: (response) => {
+			console.log("reCAPTCHA resuelto", response);
+		},
+		"expired-callback": () => {
+			console.log("reCAPTCHA expirado, recargar página");
+		},
+	});
 };
 
 
