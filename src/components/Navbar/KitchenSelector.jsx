@@ -11,6 +11,8 @@ const KitchenSelector = () => {
 	const { userData } = useAuth();
 
 	const [isLoading, setIsLoading] = useState(false);
+	const [toggleCount, setToggleCount] = useState(0);
+	const TOGGLE_THRESHOLD = 15;
 
 	// Función auxiliar para obtener el nombre de la cocina o un valor por defecto
 	const getKitchenName = (kitchenId) => {
@@ -32,12 +34,19 @@ const KitchenSelector = () => {
 		changeKitchen(kitchenId);
 	};
 
+	// Maneja el evento de apertura/cierre del Dropdown
+	const handleDropdownToggle = (isOpen) => {
+		// Si se cierra el dropdown y solo tiene una cocina asignada, incrementa el contador
+		if (!isOpen && userData?.assignedKitchens?.length === 1) {
+			setToggleCount((prev) => prev + 1);
+		}
+	};
+
 	return (
 		<Col xs="auto">
-			<Dropdown color='muted'>
+			<Dropdown onToggle={handleDropdownToggle}>
 				<Dropdown.Toggle
 					variant="secondary"
-					color='muted'
 					id="dropdown-kitchen"
 					className="d-flex align-items-center"
 					size="sm"
@@ -65,6 +74,14 @@ const KitchenSelector = () => {
 							No tienes cocinas asignadas
 						</Dropdown.Item>
 					)}
+
+					{/* Easter Egg: si solo tiene una cocina y se ha abierto/cerrado el dropdown suficientes veces */}
+					{userData?.assignedKitchens?.length === 1 &&
+						toggleCount >= TOGGLE_THRESHOLD && (
+							<Dropdown.Item onClick={() => { }}>
+								solo tienes una cocina 💩
+							</Dropdown.Item>
+						)}
 				</Dropdown.Menu>
 			</Dropdown>
 		</Col>

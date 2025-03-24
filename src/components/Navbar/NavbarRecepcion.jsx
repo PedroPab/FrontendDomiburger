@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Navbar, Nav, NavDropdown, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from './../../assets/logo.png';
@@ -12,17 +11,16 @@ import { KitchenSelector } from './KitchenSelector';
 import {
 	CODIGO_ROUTES,
 	ESTADISTICAS_ROUTES,
-	LOGIN_ROUTES,
 	RECEPCION_ROUTES
 } from '../../Utils/const/namesRutes';
-import { BsMoonStars, BsFillPersonFill, BsPeopleFill } from 'react-icons/bs';
+import { BsFillPersonFill, BsPeopleFill } from 'react-icons/bs';
 import { FaMapMarkerAlt, FaRegChartBar, FaCashRegister } from 'react-icons/fa';
-import { MdOutlineDeliveryDining, MdOutlineAdminPanelSettings, MdOutlineSettings, MdOutlineReceipt } from 'react-icons/md';
+import { MdOutlineDeliveryDining, MdOutlineAdminPanelSettings, MdOutlineReceipt } from 'react-icons/md';
 import { FiMapPin, FiList } from 'react-icons/fi';
 
 const NavbarRecepcion = () => {
 	const { toggleSidebar, openCloseModalAgregarDo } = useRecepcion();
-	const { isDarkMode, toggleTheme } = usePreferences();
+	const { isDarkMode } = usePreferences();
 	const { usuarioActual, handleLogout } = useAuth();
 
 	// Configuración de los elementos del menú
@@ -82,23 +80,6 @@ const NavbarRecepcion = () => {
 			title: 'Pedidos',
 			icon: <MdOutlineReceipt className="me-1" size={18} />,
 			route: RECEPCION_ROUTES.routes.PEDIDOS,
-		},
-	];
-
-	const ajustesItems = [
-		{
-			title: 'Login',
-			icon: <BsFillPersonFill className="me-1" size={18} />,
-			route: LOGIN_ROUTES.path,
-		},
-		{
-			title: 'Cambiar Tema',
-			icon: <BsMoonStars className="me-1" size={18} />,
-			onClick: toggleTheme,
-		},
-		{
-			title: 'Cambiar Cocina',
-			element: <KitchenSelector />,
 		},
 	];
 
@@ -204,29 +185,6 @@ const NavbarRecepcion = () => {
 							))}
 						</NavDropdown>
 
-						{/* Sección: Ajustes */}
-						<NavDropdown
-							title={
-								<span>
-									<MdOutlineSettings className="me-1" size={18} /> Ajustes
-								</span>
-							}
-							id="nav-dropdown-ajustes"
-							className="mx-2"
-						>
-							{ajustesItems.map((item, idx) => (
-								<NavDropdown.Item
-									key={idx}
-									as={item.route ? Link : item.element ? () => item.element : 'button'}
-									to={item.route || undefined}
-									onClick={item.onClick ? item.onClick : undefined}
-								>
-									{item.icon}
-									{item.title}
-									{item.element ? item.element : null}
-								</NavDropdown.Item>
-							))}
-						</NavDropdown>
 					</Nav>
 
 					{/* Menú de usuario */}
