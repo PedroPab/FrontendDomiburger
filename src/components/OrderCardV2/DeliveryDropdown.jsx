@@ -8,18 +8,20 @@ import { toast } from "react-toastify";
 
 const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 	const { listDomiciliarios, openCloseModalAgregarDo } = useRecepcion();
-
 	const { token } = useAuth();
 	const userService = new UsersService(token);
 	const [loadUser, setLoadUser] = useState(false);
 	const [dataUserCourier, setDataUserCourier] = useState(null);
 	const [loadChangeCourier, setLoadChangeCourier] = useState(false);
+
 	const findUser = async () => {
 		try {
+			setLoadUser(true);
 			const user = await userService.getByIdUser(assignedCourierUserId);
 			setDataUserCourier(user.body);
-			setLoadUser(false);
 		} catch (error) {
+			toast.error(`Error al cargar el usuario: ${error?.response?.data?.message}`);
+		} finally {
 			setLoadUser(false);
 		}
 	};
@@ -34,7 +36,6 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 		if (localUser) {
 			setDataUserCourier(localUser);
 		} else {
-			setLoadUser(true);
 			findUser();
 		}
 	}, [token, assignedCourierUserId, listDomiciliarios]);
@@ -45,17 +46,18 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 		try {
 			setLoadChangeCourier(true);
 			await orderService.updateCurrier(orderId, courierId);
-			setLoadChangeCourier(false);
 		} catch (error) {
-			setLoadChangeCourier(false);
 			toast.error(`Error al cambiar el domiciliario: ${error?.response?.data?.message}`);
+		} finally {
+			setLoadChangeCourier(false);
 		}
 	};
 
-
 	return (
 		<div className="d-flex align-items-center">
-			{
+			{loadUser ? (
+				<Spinner animation="border" size="sm" />
+			) : (
 				assignedCourierUserId && (
 					<Image
 						src={dataUserCourier?.photoUrl}
@@ -66,7 +68,7 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 						roundedCircle
 					/>
 				)
-			}
+			)}
 
 			<Dropdown className="m-2">
 				<Dropdown.Toggle variant={assignedCourierUserId ? "success" : "danger"} id="dropdown-basic">
@@ -74,7 +76,6 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 				</Dropdown.Toggle>
 
 				<Dropdown.Menu>
-
 					{/* todos los domiciliarios disponibles */}
 					{listDomiciliarios.map((domiciliario) => (
 						<Dropdown.Item
@@ -85,7 +86,7 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 							key={domiciliario.id}
 							data-id={domiciliario.id}
 							disabled={domiciliario.id === assignedCourierUserId}
-							className={domiciliario.id === assignedCourierUserId ? "bg-primary active " : ""}
+							className={domiciliario.id === assignedCourierUserId ? "bg-primary active" : ""}
 						>
 							{/* foto pequena del domiciliario  */}
 							<Image
@@ -98,7 +99,6 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 								roundedCircle
 							/>
 							{domiciliario.name}
-
 						</Dropdown.Item>
 					))}
 
@@ -119,7 +119,7 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 					</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
-		</div >
+		</div>
 	);
 }
 

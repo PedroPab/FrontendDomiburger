@@ -1,30 +1,37 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { Button, Col, Row, Spinner, Form } from "react-bootstrap";
+import { Button, Col, Row, Spinner, Form, Alert } from "react-bootstrap";
 import PhoneInput from "react-phone-number-input";
 import { ClientsService } from "../../apis/clientV2/ClientsService";
 import { useAuth } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 import NameInput from "../FormsInputs/NameInput";
+import { useFindLocationsByIdClient } from "../../hooks/api/useFindLocationsByIdClient";
+import { tr } from "faker/lib/locales";
+import { useImportLocation } from "../../hooks/api/useImportLocation";
 
 const CREATE_CLIENT = { CLOSED: "closed", OPEN: "open", INQUIRING: "inquiring" };
 
 const ClientSearchModule = ({ dataClient, setDataClient }) => {
 	const { token } = useAuth();
 	const [name, setName] = useState("");
-	const [phone, setPhone] = useState("+573054489598");
+	const [phone, setPhone] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingCreateClient, setIsLoadingCreateClient] = useState(false);
 	const [openCreateClient, setOpenCreateClient] = useState(CREATE_CLIENT.CLOSED);
 
 	// Memoizamos el servicio para que no se recree en cada render.
 	const clientsService = useMemo(() => new ClientsService(token), [token]);
+	const { locations, findLocationsByIdClient } = useFindLocationsByIdClient();
 
 	useEffect(() => {
 		if (dataClient === null) {
 			setName("");
 			setPhone("");
 			setOpenCreateClient(CREATE_CLIENT.CLOSED);
+			return;
 		}
+		findLocationsByIdClient(dataClient.id);
+
 	}, [dataClient]);
 
 	const findClientForPhone = useCallback(async () => {
@@ -48,12 +55,12 @@ const ClientSearchModule = ({ dataClient, setDataClient }) => {
 		}
 	}, [phone, clientsService, setDataClient]);
 
-	const importLocation = async () => {
-		//importar ubicación
-		console.log("importar ubicación...");
-		const rta = await clientsService.importLocation(dataClient.id);
-		console.log(`[ ~ rta]`, rta)
-	}
+	const { importLocation, loading: importLoading, error: errorImport, data: responseImport } = useImportLocation();
+
+	useEffect(() => {
+		if (responseImport) setDataClient((prevDataClient) => ({ ...prevDataClient }));
+	}, [responseImport]);
+
 	useEffect(() => {
 		if (dataClient) {
 			setName(dataClient.name);
@@ -127,15 +134,38 @@ const ClientSearchModule = ({ dataClient, setDataClient }) => {
 								<h4>Cliente Encontrado</h4>
 								<NameInput name={name} setName={setName} />
 
+								{/* solo si no tiene ubicaciones creadas */}
 								{/* boton para importar la ubicación de un cliente */}
-								<Button
-									type="button"
-									variant="warning"
-									onClick={importLocation}
-									className="w-100 my-2"
-								>
-									Importar Ubicación
-								</Button>
+								{locations && locations.length === 0 && (
+									<Button
+										type="button"
+										variant="warning"
+										onClick={() => importLocation(dataClient.id)}
+										className="w-100 my-2"
+										disabled={importLoading}
+									>
+										{importLoading ? (
+											<>
+												<Spinner animation="border" size="sm" className="me-2" />
+												Importando...
+											</>
+										) : (
+											"Importar Ubicación"
+										)}
+									</Button>
+								)}
+								{errorImport && (
+									<Col xs={12} className="text-center my-2">
+										<Alert variant="danger">
+											Error al importar ubicación: {errorImport.message}
+										</Alert>
+									</Col>
+								)}
+								{responseImport && (
+									<Col xs={12} className="text-center my-2">
+										<Alert variant="success">Ubicación importada exitosamente</Alert>
+									</Col>
+								)}
 
 								{/* // editar cliente */}
 

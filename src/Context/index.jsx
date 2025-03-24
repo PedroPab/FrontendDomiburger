@@ -140,9 +140,13 @@ export const ContextProvider = ({ children }) => {
 		});
 
 		socket.on('order/remove', (pedido) => {
-			// toast(`Pedido eliminado 🚚, ${pedido.id}`);
+			console.warn("🚀 ~ socket.on ~ pedido:", pedido)
+			toast(`Pedido removido 🚚, ${pedido.id}`);
 			setItems((itemsPrevios) => {
+				console.warn("🚀 ~ setItems ~ itemsPrevios:", itemsPrevios)
 				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
+				console.info("🚀 ~ setItems ~ mapItems:", mapItems)
+
 				mapItems.delete(pedido.id);
 				return filtrarPedidos(Array.from(mapItems.values()), ROLE);
 			});

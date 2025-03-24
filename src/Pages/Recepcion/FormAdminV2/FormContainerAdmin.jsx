@@ -105,6 +105,7 @@ const FormContainerAdmin = () => {
 				locationIdSelect={locationIdSelect}
 				setLocationIdSelect={setLocationIdSelect}
 				clientId={dataClient?.id}
+				dataClient={dataClient}
 				userId={null}
 			/>
 
