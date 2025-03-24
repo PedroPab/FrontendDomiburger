@@ -18,6 +18,7 @@ import { UsersService } from "../../apis/clientV2/usersService";
 import PhoneInputComponent from "../../components/FormsInputs/PhoneInput";
 import { FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 import JobsList from "../../components/JobsList";
+import photoGeneric from "../../assets/img/photoGeneric2.jpg";
 
 const MeProfile = () => {
 	const { usuarioActual, token } = useAuth();
@@ -77,7 +78,7 @@ const MeProfile = () => {
 							<Card.Body>
 								<div className="d-flex flex-column align-items-center">
 									<Image
-										src={usuarioActual.photoURL || "https://via.placeholder.com/150"}
+										src={usuarioActual.photoURL || photoGeneric}
 										roundedCircle
 										style={{
 											width: "120px",
