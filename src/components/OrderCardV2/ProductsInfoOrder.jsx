@@ -1,10 +1,12 @@
 import { Accordion, Badge } from "react-bootstrap";
 import { ProductsTable } from "./ProductsTable";
 import { useWorker } from "../../Context/WorkerContext";
+import { usePreferences } from "../../Context/PreferencesContext";
+import { ROLES } from "../../Utils/const/roles";
 
 const ProductsInfoOrder = ({ orderItems }) => {
-	console.log("🚀 ~ ProductsInfoOrder ~ orderItems:", orderItems);
 	const { listProducts } = useWorker();
+	const { roleSelect } = usePreferences();
 
 	const products = orderItems.map((item) => {
 		// Buscar el producto en la lista de productos
@@ -50,15 +52,14 @@ const ProductsInfoOrder = ({ orderItems }) => {
 	const hasComplements = products.some((item) => item.complements.length > 0);
 
 	return (
-		<Accordion>
+		<Accordion defaultActiveKey={roleSelect === ROLES.COOK.value ? "0" : ""}>
 			<Accordion.Item eventKey="0">
 				<Accordion.Header
-					// cambiar le color del alert dependiendo si hay complementos
-					bg={hasComplements ? "danger" : "success"}
+					style={{ color: "white" }}
 				>
-					{resumedItems}
+					{hasComplements && <Badge bg="danger">!!!</Badge>}	{resumedItems}
 				</Accordion.Header>
-				<Accordion.Body>
+				<Accordion.Body className="p-0">
 					<ProductsTable orderItems={products} />
 				</Accordion.Body>
 			</Accordion.Item>
