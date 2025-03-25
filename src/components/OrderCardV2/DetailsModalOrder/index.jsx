@@ -150,6 +150,7 @@ const DetailsModalOrder = ({ showModal, setShowModal, order }) => {
 
 				{/* boton para cambiar la cocina */}
 				<ButtonChangeKitchen id={order.id} changeSucceed={() => setShowModal(false)} />
+
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={() => setShowModal(false)}>

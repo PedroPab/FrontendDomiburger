@@ -44,8 +44,7 @@ const ButtonChangeKitchen = ({ id, changeSucceed }) => {
 								variant="primary"
 								onClick={() => changeKitchen(id, kitchenIdSelect)}
 								disabled={loading || data}
-								className="mt-3"
-								block
+								className="mt-3 w-100"
 							>
 								{loading ? (
 									<Spinner animation="border" size="sm" />
