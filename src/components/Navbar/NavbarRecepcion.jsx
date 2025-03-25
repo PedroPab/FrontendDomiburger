@@ -28,11 +28,6 @@ const NavbarRecepcion = () => {
 		{
 			title: 'Crear pedido',
 			icon: <MdOutlineReceipt className="me-1" size={18} />,
-			route: RECEPCION_ROUTES.routes.FORM_ADMIN,
-		},
-		{
-			title: 'Crear pedido versión 2',
-			icon: <MdOutlineReceipt className="me-1" size={18} />,
 			route: RECEPCION_ROUTES.routes.FORM_ADMIN_V2,
 		},
 	];

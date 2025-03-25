@@ -12,7 +12,7 @@ const KitchenSelector = () => {
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [toggleCount, setToggleCount] = useState(0);
-	const TOGGLE_THRESHOLD = 15;
+	const TOGGLE_THRESHOLD = 9;
 
 	// Función auxiliar para obtener el nombre de la cocina o un valor por defecto
 	const getKitchenName = (kitchenId) => {
@@ -37,7 +37,7 @@ const KitchenSelector = () => {
 	// Maneja el evento de apertura/cierre del Dropdown
 	const handleDropdownToggle = (isOpen) => {
 		// Si se cierra el dropdown y solo tiene una cocina asignada, incrementa el contador
-		if (!isOpen && userData?.assignedKitchens?.length === 1) {
+		if (!isOpen) {
 			setToggleCount((prev) => prev + 1);
 		}
 	};
@@ -76,10 +76,11 @@ const KitchenSelector = () => {
 					)}
 
 					{/* Easter Egg: si solo tiene una cocina y se ha abierto/cerrado el dropdown suficientes veces */}
-					{userData?.assignedKitchens?.length === 1 &&
+					{
+						// userData?.assignedKitchens?.length >= 1 &&
 						toggleCount >= TOGGLE_THRESHOLD && (
 							<Dropdown.Item onClick={() => { }}>
-								solo tienes una cocina 💩
+								Próxima Centauri B 🪐
 							</Dropdown.Item>
 						)}
 				</Dropdown.Menu>
