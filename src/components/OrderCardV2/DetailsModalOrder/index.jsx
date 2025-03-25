@@ -78,8 +78,8 @@ const DetailsModalOrder = ({ showModal, setShowModal, order }) => {
 						</tr>
 					</thead>
 					<tbody>
-						{order.orderItems.map((item) => (
-							<React.Fragment key={item.id}>
+						{order.orderItems.map((item, index) => (
+							<React.Fragment key={index}>
 								<tr>
 									<td>{item.id}</td>
 									<td>{item.quantity}</td>

@@ -1,50 +1,65 @@
-import { useState } from "react";
-import { Button, Spinner } from "react-bootstrap";
-import { OrderService } from "../../../apis/clientV2/OrderService";
-import { useAuth } from "../../../Context/AuthContext";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { Alert, Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { SelectKitchen } from "../../FormsInputs/SelectKitchen";
+import { useChangeKitchen } from "../../../hooks/api/changeKitchen";
+import { toast } from "react-toastify";
 
 const ButtonChangeKitchen = ({ id, changeSucceed }) => {
-	const { token } = useAuth();
-	const orderService = new OrderService(token);
-	const [isLoading, setIsLoading] = useState(false);
-	const [isChanged, setIsChanged] = useState(false);
 	const [kitchenIdSelect, setKitchenIdSelect] = useState(null);
 
-	const changeKitchen = async () => {
-		setIsLoading(true);
-		try {
-			console.log("id", id);
-			await orderService.updateKitchen(id, kitchenIdSelect);
-			setIsChanged(true);
-			toast.success("Cocina cambiada");
+	const { changeKitchen, loading, error, data } = useChangeKitchen()
+
+	useEffect(() => {
+		if (data) {
 			changeSucceed();
-		} catch (error) {
-			console.error("Error changing kitchen:", error);
-			toast.error(`Error al cambiar la cocina: ${error?.message}`);
-		} finally {
-			setIsLoading(false);
 		}
-	};
+	}, [data])
+
+	useEffect(() => {
+		if (error) {
+			toast.error(`Error al cambiar la cocina: ${error?.message}`);
+		}
+	}, [error])
 
 	return (
+		<Container className="mt-4">
+			<Row className="justify-content-md-center">
+				<Col md={6}>
+					<Card>
+						<Card.Header as="h5">Cambiar Cocina</Card.Header>
+						<Card.Body>
+							<SelectKitchen
+								kitchenIdSelect={kitchenIdSelect}
+								setKitchenIdSelect={setKitchenIdSelect}
+							/>
 
-		<>
-			<SelectKitchen kitchenIdSelect={kitchenIdSelect} setKitchenIdSelect={setKitchenIdSelect} />
+							{/* Alerta de error */}
+							{error && (
+								<Alert variant="danger" className="mt-3">
+									{error?.message}
+								</Alert>
+							)}
 
-
-			<Button
-				variant="primary"
-				onClick={() => {
-					changeKitchen();
-				}}
-				disabled={isLoading || isChanged}
-			>
-
-				{isLoading ? <Spinner animation="border" size="sm" /> : isChanged ? "Cambiado" : "Cambiar Cocina"}
-			</Button>
-		</>
+							<Button
+								variant="primary"
+								onClick={() => changeKitchen(id, kitchenIdSelect)}
+								disabled={loading || data}
+								className="mt-3"
+								block
+							>
+								{loading ? (
+									<Spinner animation="border" size="sm" />
+								) : data ? (
+									"Cambiado"
+								) : (
+									"Cambiar Cocina"
+								)}
+							</Button>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		</Container>
 	);
 }
 

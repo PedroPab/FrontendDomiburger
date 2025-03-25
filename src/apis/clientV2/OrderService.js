@@ -82,11 +82,15 @@ class OrderService {
 		return rta.data
 	}
 	async updateKitchen(id, kitchenId) {
-		const body = {
-			kitchenId: kitchenId
+		try {
+			const body = {
+				kitchenId: kitchenId
+			}
+			const rta = await this.api.patch(`/kitchen/${id}`, body);
+			return rta.data
+		} catch (error) {
+			throw error?.response?.data
 		}
-		const rta = await this.api.patch(`/kitchen/${id}`, body);
-		return rta.data
 	}
 	async updatePayment(id) {
 		try {

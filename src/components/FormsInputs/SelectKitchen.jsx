@@ -28,7 +28,7 @@ const SelectKitchen = ({ kitchenIdSelect, setKitchenIdSelect }) => {
 				as="select"
 				name="selectKitchen"
 				id="selectKitchen"
-				value={kitchenIdSelect}
+				value={kitchenIdSelect || ''}
 				onChange={(e) => setKitchenIdSelect(e.target.value)}
 			>
 				<option value="">Automático</option>
