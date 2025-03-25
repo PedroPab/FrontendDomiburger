@@ -23,6 +23,12 @@ const ViewListLocations = ({ locationIdSelect, setLocationIdSelect, clientId, us
 		}
 	}, [clientId, userId, dataClient]);
 
+	useEffect(() => {
+		if (!dataClient) {
+			setLocationIdSelect(null);
+		}
+	}, [dataClient]);
+
 	const openCreateLocationClient = () => {
 		toast.info("Abriendo formulario de creación de ubicación...");
 		setShowModal(true);
