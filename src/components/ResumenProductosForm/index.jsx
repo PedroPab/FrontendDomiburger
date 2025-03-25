@@ -46,6 +46,8 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
 		const newData = [...listaProducto];
 		newData[indexProducto] = dataProducto;
 		setListaProducto(newData);
+		console.log("🚀 ~ onClicAdicion ~ newData eseta es una diocn , cre", newData)
+
 	};
 
 	const onClicAdicion = (idInterAdicion, idInterProducto) => {

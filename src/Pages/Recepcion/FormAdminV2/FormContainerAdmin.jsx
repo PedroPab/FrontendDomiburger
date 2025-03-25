@@ -16,6 +16,7 @@ import { KitchenAndDeliveryInfo } from '../../../components/FormsInputs/KitchenA
 import { OrderService } from '../../../apis/clientV2/OrderService';
 import { useAuth } from '../../../Context/AuthContext';
 import { PAYMENT_METHODS } from '../../../Utils/const/paymentMethods';
+import id from 'faker/lib/locales/id_ID';
 
 const FormContainerAdmin = () => {
 	const { token } = useAuth();
@@ -51,13 +52,22 @@ const FormContainerAdmin = () => {
 			return;
 		}
 
+		const orderItems = productOrderList.map(product => {
+			console.log("🚀 ~ sendOrder ~ product:", product)
+
+			const r = { id: product.id }
+			if (product?.modifique && product?.modifique.length > 0) r.complements = product?.modifique.map(complement => ({ id: complement.id }))
+			//if(product.quantity) r.quantity = product.quantity
+			return r;
+		})
+		console.log("🚀 ~ sendOrder ~ orderItems:", orderItems)
 		// Se arma el objeto con la información necesaria para el pedido
 		const orderData = {
 			clientId: dataClient.id,
 			locationId: locationIdSelect,
 			comment,
 			paymentMethod,
-			orderItems: productOrderList.map(product => ({ id: product.id })),
+			orderItems: orderItems,
 			delivery,
 		};
 
