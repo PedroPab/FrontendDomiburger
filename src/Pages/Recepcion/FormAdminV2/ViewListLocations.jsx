@@ -25,7 +25,7 @@ const ViewListLocations = ({ locationIdSelect, setLocationIdSelect, clientId, us
 
 	useEffect(() => {
 		if (!dataClient) {
-			setLocationIdSelect(null);
+			findLocationsByIdClient(null);
 		}
 	}, [dataClient]);
 

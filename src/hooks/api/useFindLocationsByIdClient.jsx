@@ -12,6 +12,12 @@ const useFindLocationsByIdClient = () => {
 	const locationsService = new LocationsService(token);
 
 	const findLocationsByIdClient = async (idClient) => {
+		if (!idClient) {
+			setLocations([]);
+			setLoading(false);
+			setError(null);
+			return;
+		}
 		setLoading(true);
 		try {
 			const rta = await locationsService.getByIdClient(idClient);

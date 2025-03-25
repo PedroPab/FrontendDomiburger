@@ -16,7 +16,6 @@ import { KitchenAndDeliveryInfo } from '../../../components/FormsInputs/KitchenA
 import { OrderService } from '../../../apis/clientV2/OrderService';
 import { useAuth } from '../../../Context/AuthContext';
 import { PAYMENT_METHODS } from '../../../Utils/const/paymentMethods';
-import id from 'faker/lib/locales/id_ID';
 
 const FormContainerAdmin = () => {
 	const { token } = useAuth();
