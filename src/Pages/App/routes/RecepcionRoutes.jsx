@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
 import ProtectedRoute from "../../../components/ProtectedRoute";
-import { ROLES } from "../../../Utils/constList";
+import { ROLES } from "../../../Utils/const/roles";
 import { ContextProvider } from "../../../Context";
 import { ContextProviderRecepcion } from "../../../Context/RecepcionContex";
 import Recepcion from "../../Recepcion";
@@ -29,7 +29,7 @@ const RecepcionRoutes = () => {
 					<WorkerProvider>
 						<ContextProviderRecepcion>
 							<ProtectedRoute
-								roles={[ROLES.admin, ROLES.recepcion]}
+								roles={[ROLES.ADMIN.value, ROLES.RECEPTION.value]}
 								redirectTo={LOGIN_ROUTES.path}
 							/>
 						</ContextProviderRecepcion>
