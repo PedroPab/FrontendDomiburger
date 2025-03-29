@@ -23,7 +23,7 @@ const createProductSchema = Joi.object({
 	colorSecondary: Joi.string().required().messages({
 		'any.required': 'El color secundario es obligatorio',
 	}),
-	photos: Joi.array().items(Joi.string().uri()).min(1).required().messages({
+	photos: Joi.array().items(Joi.string().uri()).messages({
 		'any.required': 'Debe incluir al menos una foto',
 		'array.min': 'Debe incluir al menos una foto',
 		'string.uri': 'Cada foto debe ser una URL válida',
@@ -36,6 +36,7 @@ const createProductSchema = Joi.object({
 		'any.required': 'El tipo es obligatorio',
 		'any.only': 'El tipo debe ser "product" o "complement"',
 	}),
+	secret: Joi.boolean().optional(),
 	id: Joi.string().optional(),
 });
 
@@ -55,6 +56,7 @@ const CreateProduct = () => {
 	const [price, setPrice] = useState('');
 	const [type, setType] = useState('product');
 	const [id, setId] = useState('');
+	const [secret, setSecret] = useState(false);
 
 	const productService = new ProductsService(token);
 
@@ -69,9 +71,10 @@ const CreateProduct = () => {
 			description,
 			colorPrimary: colorPrimary.toString(),
 			colorSecondary: colorSecondary.toString(),
-			photos: photos.split(',').map((url) => url.trim()),
+			// photos: photos.split(',').map((url) => url.trim()) || [],
 			price: parseFloat(price),
 			type,
+			secret,
 		};
 
 		if (id) {
@@ -104,6 +107,7 @@ const CreateProduct = () => {
 			setPrice('');
 			setType('product');
 			setId('');
+			setSecret(false);
 
 			navigate(-1);
 		} catch (err) {
@@ -220,6 +224,17 @@ const CreateProduct = () => {
 								<option value="product">Producto</option>
 								<option value="complement">Complemento</option>
 							</select>
+						</div>
+
+						{/* Campo Secreto */}
+						<div className="mb-3 form-check">
+							<input
+								type="checkbox"
+								className="form-check-input"
+								checked={secret}
+								onChange={(e) => setSecret(e.target.checked)}
+							/>
+							<label className="form-check-label">¿Es un producto secreto?</label>
 						</div>
 
 						{/* Botón de Crear Producto */}

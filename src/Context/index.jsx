@@ -160,8 +160,8 @@ export const ContextProvider = ({ children }) => {
 				return filtrarPedidos(Array.from(mapItems.values()), ROLE);
 			});
 		});
-
 		return () => {
+			console.warn('Desconectando socket , adios socket. te extrañaremos');
 			socket.off("connect");
 			socket.off("disconnect");
 			socket.off("message");

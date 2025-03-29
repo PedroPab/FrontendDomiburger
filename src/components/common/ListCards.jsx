@@ -1,5 +1,5 @@
-import { Alert, Col, Row, Spinner } from "react-bootstrap"
-import CardCreate from "./CardCreate"
+import { Alert, Col, Row, Spinner } from "react-bootstrap";
+import CardCreate from "./CardCreate";
 
 const ListCardsElements = ({
 	elements = [],
@@ -10,11 +10,10 @@ const ListCardsElements = ({
 	messageText = 'Crear un nuevo elemento',
 	emptyMessage = 'No hay elementos para mostrar'
 }) => {
-
 	return (
 		<Row className="g-3 mt-4 mb-4">
-			{/* Tarjeta para crear un nuevo producto */}
-			<Col xs={12} sm={4} lg={3}>
+			{/* Tarjeta para crear un nuevo elemento */}
+			<Col xs={12} sm={6} md={4} lg={3}>
 				<CardCreate handleCardClick={handleCardClick} messageText={messageText} />
 			</Col>
 
@@ -36,7 +35,7 @@ const ListCardsElements = ({
 				</Col>
 			)}
 
-			{/* Lista de elementos */}
+			{/* Lista de elementos o mensaje vacío */}
 			{!loading && !error && elements.length === 0 ? (
 				<Col xs={12}>
 					<Alert variant="warning" className="text-center">
@@ -45,13 +44,13 @@ const ListCardsElements = ({
 				</Col>
 			) : (
 				elements.map((element) => (
-					<Col xs={12} sm={6} lg={4} key={element.id}>
+					<Col xs={12} sm={6} md={4} lg={3} key={element.id}>
 						<CardComponent element={element} />
 					</Col>
 				))
 			)}
 		</Row>
-	)
-}
+	);
+};
 
-export { ListCardsElements }
+export { ListCardsElements };

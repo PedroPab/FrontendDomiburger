@@ -1,35 +1,53 @@
+import { Card, Button, Badge, ListGroup } from 'react-bootstrap';
+import imgDefault from "../../assets/img/photoGeneric.jpg";
 
 const ProductCard = ({ element }) => {
-  return (
-    <div className="card shadow-sm" style={{ width: '18rem' }}>
-      {/* Mostrar la primera imagen si existe */}
-      {element.photos && element.photos.length > 0 && (
-        <img src={element?.photos[0] || null} className="card-img-top" alt={element.name} />
-      )}
+	// Asignar la imagen: se utiliza la primera foto o la imagen por defecto
+	const imageUrl = element?.photos?.[0] || imgDefault;
 
-      <div className="card-body">
-        <h5 className="card-title">{element.name}</h5>
-        <p className="card-text text-muted">{element.description}</p>
-        <p className="fw-bold text-primary">Precio: ${element.price.toFixed(2)}</p>
+	return (
+		<Card className="shadow-sm h-100">
+			<Card.Img
+				variant="top"
+				src={imageUrl}
+				alt={element.name}
+				className="img-fluid"
+				style={{ objectFit: "cover", aspectRatio: "1 / 1" }}
+			/>
 
-        {/* Estado del elemento */}
-        <span className={`badge ${element.status === "active" ? "bg-success" : "bg-danger"}`}>
-          {element.status}
-        </span>
+			<Card.Body>
+				<Card.Title className="text-center">{element.name}</Card.Title>
 
-        {/* Información adicional */}
-        <ul className="list-group list-group-flush mt-2">
-          <li className="list-group-item"><strong>Tipo:</strong> {element.type}</li>
-          <li className="list-group-item"><strong>Secreto:</strong> {element.secret ? "Sí" : "No"}</li>
-        </ul>
+				{/* Si el elemento tiene la propiedad "secret", se muestra el distintivo */}
+				{element.secret && (
+					<div className="d-flex justify-content-center mb-2">
+						<Badge bg="warning" className="text-dark">Secreto</Badge>
+					</div>
+				)}
 
-        {/* Botón de acción */}
-        <div className="mt-3">
-          <a href="#" className="btn btn-primary w-100">Ver detalles</a>
-        </div>
-      </div>
-    </div>
-  );
+				<Card.Text className="text-muted">{element.description}</Card.Text>
+				<Card.Text className="fw-bold text-primary">
+					Precio: ${element.price.toLocaleString()}
+				</Card.Text>
+
+				<div className="text-center my-2">
+					<Badge bg={element.status === "active" ? "success" : "danger"}>
+						{element.status}
+					</Badge>
+				</div>
+
+				<ListGroup variant="flush" className="mt-3">
+					<ListGroup.Item>
+						<strong>Tipo:</strong> {element.type}
+					</ListGroup.Item>
+				</ListGroup>
+
+				<div className="mt-3">
+					<Button variant="primary" className="w-100">Ver detalles</Button>
+				</div>
+			</Card.Body>
+		</Card>
+	);
 };
 
 export { ProductCard };
