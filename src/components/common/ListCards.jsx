@@ -43,8 +43,8 @@ const ListCardsElements = ({
 					</Alert>
 				</Col>
 			) : (
-				elements.map((element) => (
-					<Col xs={12} sm={6} md={4} lg={3} key={element.id}>
+				elements.map((element, i) => (
+					<Col xs={12} sm={6} md={4} lg={3} key={i}>
 						<CardComponent element={element} />
 					</Col>
 				))

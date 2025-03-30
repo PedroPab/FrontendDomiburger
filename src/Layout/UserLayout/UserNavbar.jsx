@@ -33,7 +33,7 @@ const UserNavbar = () => {
 				<Navbar.Collapse id="navbar-nav">
 					{/* SECCIÓN DE NAVEGACIÓN */}
 					<Nav className="me-auto">
-						{/* <Nav.Link as={Link} to="/" className="d-flex align-items-center gap-2">
+						<Nav.Link as={Link} to="/" className="d-flex align-items-center gap-2">
 							<FaShoppingCart /> Pedir ahora
 						</Nav.Link>
 
@@ -43,7 +43,7 @@ const UserNavbar = () => {
 
 						<Nav.Link as={Link} to={USER_ROUTES.routes.CREATE_ORDER} className="d-flex align-items-center gap-2">
 							<FaShoppingCart /> Pedir Ya Nuevo
-						</Nav.Link> */}
+						</Nav.Link>
 					</Nav>
 
 					{/* SECCIÓN DE USUARIO */}
