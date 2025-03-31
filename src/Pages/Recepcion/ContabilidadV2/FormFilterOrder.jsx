@@ -5,20 +5,20 @@ const FormFilterOrder = ({ fetchOrders, loading }) => {
 
 	const [startDate, setStartDate] = useState(() => {
 		let date = new Date();
-		date.setHours(0 - 5, 0, 0, 0); // Inicio del día en hora local
+		date.setHours(0, 0, 0, 0); // Inicio del día en hora local
 		return date;
 	});
 
 	const [endDate, setEndDate] = useState(() => {
 		let date = new Date();
-		date.setHours(23 - 5, 59, 59, 999); // Fin del día en hora local
+		date.setHours(23, 59, 59, 999); // Fin del día en hora local
 		return date;
 	});
 
 	// Función para convertir fecha local a UTC antes de enviarla
 	const toUTCISOString = (date) => {
-		const utcDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000); // Ajuste de zona horaria
-		return utcDate.toISOString();
+		const datep = new Date(date);
+		return datep.toGMTString();
 	};
 
 	// Formatear fechas para enviarlas en UTC al servidor
@@ -29,16 +29,15 @@ const FormFilterOrder = ({ fetchOrders, loading }) => {
 	const handleDateTimeChange = (e, setDateFunction) => {
 		let newDate = new Date(e.target.value);
 		// Ajustar la fecha para mantener la hora local
-		newDate.setMinutes(newDate.getMinutes() - newDate.getTimezoneOffset());
 		setDateFunction(newDate);
 	};
+
 	const handleFetchOrders = () => {
 		// Formatear fechas para enviarlas en UTC al servidor
 		// Pedir las órdenes del día con fechas formateadas en UTC
 		fetchOrders(startDateUTC, endDateUTC);
-
-
 	}
+
 	useEffect(() => {
 
 		fetchOrders(startDateUTC, endDateUTC);
