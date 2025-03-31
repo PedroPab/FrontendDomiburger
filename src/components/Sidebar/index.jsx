@@ -1,14 +1,18 @@
 import { Col } from 'react-bootstrap';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import SidebarElementDelivery from './SidebarElement';
-import { RecepcionContexto } from '../../Context/RecepcionContex';
+import { useRecepcion } from '../../Context/RecepcionContex';
 import InfoButton from '../InfoButton';
 import imageDefault from "../../assets/img/photoGeneric.jpg";
 
 const Sidebar = () => {
 	// Accedemos al contexto para obtener la visibilidad del sidebar y demás funciones
-	const contextRecepcion = useContext(RecepcionContexto);
-	const { openSidebarFilterDelivery } = contextRecepcion;
+	const {
+		openSidebarFilterDelivery,
+		setDomiciliarioIdFilter,
+		openCloseModalAgregarDo,
+		listDomiciliarios
+	} = useRecepcion();
 
 	// Estado local para saber qué sección (domiciliario) está activa
 	const [openSection, setOpenSection] = useState('dashboard');
@@ -18,10 +22,10 @@ const Sidebar = () => {
 		// en caso contrario, se activa y se establece el filtro correspondiente
 		setOpenSection(openSection === section ? '' : section);
 		if (openSection === section) {
-			contextRecepcion.setDomiciliarioIdFilter(null);
+			setDomiciliarioIdFilter(null);
 			return;
 		}
-		contextRecepcion.setDomiciliarioIdFilter(section);
+		setDomiciliarioIdFilter(section);
 	};
 
 	// Si el sidebar no debe mostrarse, no se renderiza nada
@@ -40,7 +44,7 @@ const Sidebar = () => {
 
 			<div className="overflow-auto" style={{ maxHeight: '70vh' }}>
 				<ul className="list-unstyled">
-					{contextRecepcion.listDomiciliarios.map((domiciliario) => (
+					{listDomiciliarios.map((domiciliario) => (
 						<SidebarElementDelivery
 							key={domiciliario.id}
 							handleToggle={handleToggle}
@@ -64,7 +68,7 @@ const Sidebar = () => {
 						<div className="position-relative">
 							<button
 								className="btn btn-success w-100"
-								onClick={() => contextRecepcion.openCloseModalAgregarDo()}
+								onClick={() => openCloseModalAgregarDo()}
 							>
 								Agregar domiciliario
 							</button>

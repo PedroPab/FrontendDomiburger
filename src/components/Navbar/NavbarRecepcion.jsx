@@ -83,6 +83,7 @@ const NavbarRecepcion = () => {
 		},
 	];
 
+	const { domiciliarioIdFilter } = useRecepcion();
 	return (
 		<Navbar
 			expand="lg"
@@ -103,12 +104,12 @@ const NavbarRecepcion = () => {
 					{/* Botón para alternar el filtro de domiciliarios */}
 					<Col xs="auto">
 						<Button
-							variant="link"
+							variant="button"
 							onClick={toggleSidebar}
-							className="p-2 text-primary d-flex align-items-center"
+							className={`p-2 d-flex align-items-center ${domiciliarioIdFilter ? 'text-danger' : 'text-primary'}`}
 							style={{ boxShadow: 'none', border: 'none' }}
 						>
-							<BsPeopleFill size={20} className="me-1" />
+							<BsPeopleFill size={20} className="me-1 " />
 						</Button>
 					</Col>
 

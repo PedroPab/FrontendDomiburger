@@ -66,6 +66,10 @@ export const ContextProviderRecepcion = ({ children }) => {
 	const [openSidebarFilterDelivery, setOpenSidebarFilterDelivery] = useLocalStorage('openSidebarFilterDelivery', false)
 	//setOpenSidebarFilterDelivery)
 	const toggleSidebar = () => {
+		if (domiciliarioIdFilter) {
+			toast.error("No puedes cerrar el filtro, primero debes quitar el filtro del domiciliario");
+			return
+		}
 		setOpenSidebarFilterDelivery((prevState) => !prevState);
 	};
 
