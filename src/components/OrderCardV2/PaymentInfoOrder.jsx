@@ -8,6 +8,7 @@ import { PAYMENT_METHODS } from "../../Utils/const/paymentMethods";
 import { usePreferences } from "../../Context/PreferencesContext";
 import { checkUserRolesValidity } from "../../Utils/checkUserRolesValidity";
 import { ROLES } from "../../Utils/const/roles";
+import { ConfirmActionButton } from "../common/ConfirmActionButton";
 
 const PaymentInfoOrder = ({ data }) => {
 	const { totalPrice, delivery, paymentMethod, payment } = data;
@@ -122,13 +123,15 @@ const PaymentInfoOrder = ({ data }) => {
 								<>
 									{/* Botón para aprobar el pago */}
 									{payment.status !== "approved" && (
-										<button
-											className="btn btn-warning w-100"
-											onClick={approvePayment}
-											disabled={loading} // se desactiva el botón mientras se carga
-										>
-											{loading ? "Cargando..." : "Aprobar pago"}
-										</button>
+										<ConfirmActionButton
+											buttonLabel="Aprobar pago"
+											isLoading={loading}
+											onConfirm={approvePayment}
+											variant="warning"
+											confirmVariant="success"
+											cancelVariant="danger"
+										/>
+
 									)}
 									{/* select para cambiar de metodo de pago */}
 									<select
@@ -150,13 +153,14 @@ const PaymentInfoOrder = ({ data }) => {
 									</select>
 
 									{/* boton para confirmar el cambio */}
-									<button
-										className="btn btn-warning w-100 mt-2"
-										onClick={updatePaymentMethod}
-										disabled={loading}
-									>
-										{loading ? "Cargando..." : "Cambiar método de pago"}
-									</button>
+									<ConfirmActionButton
+										buttonLabel="Cambiar método de pago"
+										isLoading={loading}
+										onConfirm={updatePaymentMethod}
+										variant="warning"
+										confirmVariant="success"
+										cancelVariant="danger"
+									/>
 
 								</>
 							}
