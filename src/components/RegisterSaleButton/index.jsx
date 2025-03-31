@@ -1,18 +1,18 @@
 function RegisterSaleButton({ onClick }) {
-  return (
-    <div className="d-flex justify-content-center mt-5 mb-5">
-      <button
-        className="btn btn-primary register-sale-button"
-        onClick={onClick}
-      >
-        Registrar Venta
-      </button>
-      <style>{`
+	return (
+		<div className="d-flex justify-content-center mt-5 mb-5">
+			<button
+				className="btn btn-primary register-sale-button"
+				onClick={onClick}
+			>
+				Registrar Venta
+			</button>
+			<style>{`
         .register-sale-button {
           border-radius: 30px;
           border: 2px solid #007bff;
-          padding: 12px 30px;
-          font-size: 18px;
+          padding: 24px 60px; /* Increased padding for larger size */
+          font-size: 36px; /* Increased font size */
           font-weight: bold;
           color: #fff;
           background: linear-gradient(90deg, #007bff, #0056b3);
@@ -20,6 +20,7 @@ function RegisterSaleButton({ onClick }) {
           transition: all 0.3s ease;
           position: relative;
           overflow: hidden;
+          margin: 40px 0; /* Increased margins */
         }
 
         .register-sale-button::before {
@@ -49,8 +50,8 @@ function RegisterSaleButton({ onClick }) {
           box-shadow: 0 3px 10px rgba(0, 123, 255, 0.4);
         }
       `}</style>
-    </div>
-  );
+		</div>
+	);
 }
 
 export default RegisterSaleButton;

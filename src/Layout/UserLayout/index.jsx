@@ -10,7 +10,7 @@ const UserLayout = ({ children }) => {
         <UserNavbar />
         <main className="content">{children}</main>
         {/* <Footer /> */}
-        <ToastContainer position="bottom-center" />
+        <ToastContainer position="bottom-left" />
       </HelmetProvider>
     </div>
   );

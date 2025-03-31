@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
         <ContextProviderClient>
           {children}
         </ContextProviderClient>
-        <ToastContainer position="bottom-center" />
+        <ToastContainer position="bottom-left" />
         <Footer />
       </HelmetProvider>
     </>
