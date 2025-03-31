@@ -28,6 +28,10 @@ const ContabilidadV2 = () => {
 				<SummaryStatisticsOrders listOrders={ordenes} />
 				{/* Mostrar filas de las órdenes */}
 				<OrdersRowsContainer listOrders={ordenes} />
+
+				<hr className="mb-5" />
+
+
 			</Container>
 		</LayoutRecepcion>
 	);
