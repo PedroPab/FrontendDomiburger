@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap"
+import { Button, Col, Form, Row } from "react-bootstrap";
 
 const FormFilterOrder = ({ fetchOrders, loading }) => {
-
 	const [startDate, setStartDate] = useState(() => {
 		let date = new Date();
 		date.setHours(0, 0, 0, 0); // Inicio del día en hora local
@@ -15,37 +14,26 @@ const FormFilterOrder = ({ fetchOrders, loading }) => {
 		return date;
 	});
 
-	// Función para convertir fecha local a UTC antes de enviarla
-	const toUTCISOString = (date) => {
-		const datep = new Date(date);
-		return datep.toGMTString();
-	};
-
-	// Formatear fechas para enviarlas en UTC al servidor
-	const startDateUTC = toUTCISOString(startDate);
-	const endDateUTC = toUTCISOString(endDate);
-
-	// Función para manejar cambios en la fecha y hora manteniendo la hora local
+	// Manejar cambios en el input de fecha y hora, interpretándolos como locales
 	const handleDateTimeChange = (e, setDateFunction) => {
-		let newDate = new Date(e.target.value);
-		// Ajustar la fecha para mantener la hora local
+		const newDate = new Date(e.target.value);
 		setDateFunction(newDate);
 	};
 
+	// Función para formatear la fecha y hora de forma local para el input
+	const formatLocalDateTime = (date) => {
+		const tzOffset = date.getTimezoneOffset() * 60000; // offset en milisegundos
+		return new Date(date.getTime() - tzOffset).toISOString().slice(0, 16);
+	};
+
+	// Al enviar, se convierte la fecha a formato ISO (UTC) para enviarla al servidor
 	const handleFetchOrders = () => {
-		// Formatear fechas para enviarlas en UTC al servidor
-		// Pedir las órdenes del día con fechas formateadas en UTC
-		fetchOrders(startDateUTC, endDateUTC);
-	}
+		fetchOrders(startDate.toISOString(), endDate.toISOString());
+	};
 
 	useEffect(() => {
-
-		fetchOrders(startDateUTC, endDateUTC);
+		fetchOrders(startDate.toISOString(), endDate.toISOString());
 	}, []);
-
-	const valueDate = (date) => {
-		return date.toISOString().slice(0, 16);
-	}
 
 	return (
 		<Form className="mb-3">
@@ -54,8 +42,8 @@ const FormFilterOrder = ({ fetchOrders, loading }) => {
 					<Form.Group>
 						<Form.Label>Seleccionar Fecha y Hora de Inicio:</Form.Label>
 						<Form.Control
-							type='datetime-local'
-							value={valueDate(startDate)} // Formato YYYY-MM-DDTHH:MM
+							type="datetime-local"
+							value={formatLocalDateTime(startDate)}
 							onChange={(e) => handleDateTimeChange(e, setStartDate)}
 						/>
 					</Form.Group>
@@ -67,7 +55,7 @@ const FormFilterOrder = ({ fetchOrders, loading }) => {
 						<Form.Label>Seleccionar Fecha y Hora de Fin:</Form.Label>
 						<Form.Control
 							type="datetime-local"
-							value={valueDate(endDate)} // Formato YYYY-MM-DDTHH:MM
+							value={formatLocalDateTime(endDate)}
 							onChange={(e) => handleDateTimeChange(e, setEndDate)}
 						/>
 					</Form.Group>
@@ -75,13 +63,13 @@ const FormFilterOrder = ({ fetchOrders, loading }) => {
 			</Row>
 			<Row className="justify-content-center mt-3">
 				<Col xs="auto">
-					<Button variant="primary	" onClick={handleFetchOrders} disabled={loading}>
+					<Button variant="primary" onClick={handleFetchOrders} disabled={loading}>
 						{loading ? "Buscando..." : "Buscar Órdenes"}
 					</Button>
 				</Col>
 			</Row>
 		</Form>
-	)
-}
+	);
+};
 
-export { FormFilterOrder }
+export { FormFilterOrder };
