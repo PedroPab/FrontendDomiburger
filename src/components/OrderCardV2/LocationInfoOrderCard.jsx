@@ -83,24 +83,51 @@ const LocationInfoOrderCard = ({ locationId }) => {
 								</Col>
 							</Row>
 							<hr className="my-3" />
+							<Row className="mb-2">
+								<Col xs={4} className="text-secondary">Comentario:</Col>
+								<Col xs={8} className="text-end">
+									{location.comment || "N/A"}
+								</Col>
+							</Row>
 
-							<div className="d-flex justify-content-between">
+							<div className="d-flex justify-content-between gap-2">
 								<Button
 									variant="outline-secondary"
 									size="sm"
+									className="flex-grow-1"
 									onClick={handleCopyAddress}
 									aria-label="Copiar dirección"
 								>
-									<FaCopy className="me-2" /> Copiar dirección
+									<FaCopy className="me-1" /> Copiar
 								</Button>
 
 								<Button
 									variant="outline-primary"
 									size="sm"
+									className="flex-grow-1"
 									onClick={handleOpenMaps}
 									aria-label="Abrir en Google Maps"
 								>
-									<FaMapMarkerAlt className="me-2" /> Ver en Maps
+									<FaMapMarkerAlt className="me-1" /> Maps
+								</Button>
+
+								<Button
+									variant="outline-success"
+									size="sm"
+									className="flex-grow-1"
+									onClick={() => {
+										if (location?.address) {
+											window.open(
+												`https://waze.com/ul?q=${urlAddress}`,
+												"_blank"
+											);
+										} else {
+											toast.error("No hay dirección disponible.");
+										}
+									}}
+									aria-label="Abrir en Waze"
+								>
+									<FaMapMarkerAlt className="me-1" /> Waze
 								</Button>
 							</div>
 						</>
