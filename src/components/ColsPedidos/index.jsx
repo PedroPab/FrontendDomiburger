@@ -131,8 +131,8 @@ export const ColsPedidos = ({ pedidos }) => {
 									onClick={() => toggleCollapse(index)}
 								/>
 							) : (
-								estado.pedidos.map((pedido, i) => (
-									<OrderCardV2 key={i} data={pedido} />
+								estado.pedidos.map((pedido) => (
+									<OrderCardV2 key={pedido.id} data={pedido} />
 								))
 							)}
 						</div>
