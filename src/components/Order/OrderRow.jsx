@@ -1,8 +1,11 @@
 import { Row, Col, Badge, Accordion, ListGroup } from "react-bootstrap";
 import { RECEPCION_ROUTES } from "../../Utils/const/namesRutes";
+import { statusOrderCol } from "../../Utils/listStatus";
 const routes = RECEPCION_ROUTES.routes;
 
 const OrderRow = ({ order }) => {
+
+	const colorStatus = statusOrderCol[order.status].color
 	return (
 		<Accordion className="border-bottom">
 			<Accordion.Item eventKey="0">
@@ -15,7 +18,15 @@ const OrderRow = ({ order }) => {
 
 						{/* Estado */}
 						<Col xs={6} sm={4} md={2}>
-							<Badge bg={order.status === "fresh" ? "success" : "warning"} className="text-uppercase">
+							<Badge
+								bg=""
+								style={{
+									backgroundColor: colorStatus,
+									color: "white",
+									fontSize: "0.85rem",
+									padding: "5px 10px",
+								}}
+								className="text-uppercase">
 								{order.status}
 							</Badge>
 						</Col>
@@ -82,7 +93,7 @@ const OrderRow = ({ order }) => {
 					</p>
 				</Accordion.Body>
 			</Accordion.Item>
-		</Accordion>
+		</Accordion >
 	);
 };
 

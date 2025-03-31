@@ -13,6 +13,7 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 	return (
 		<Container className="my-4">
 			<h2 className="text-center mb-4">Resumen de Estadísticas de Órdenes</h2>
+			<p className="text-muted text-center">Tener en cuenta que solo ven las estadisticas de los pedidos que están en el estado de facturados</p>
 			<Row className="mb-4">
 				<Col md={4} className="mb-3">
 					<Card className="shadow text-center">

@@ -4,7 +4,7 @@ import { ORDER_STATUSES } from "./const/status"
 const statusOrderCol = {}
 
 statusOrderCol[ORDER_STATUSES.PENDING_CONFIRMATION] = {
-	color: '#FFC107', // warning - amber
+	color: '#FF8C00', // Pendiente de confirmación: Dark Orange
 	label: 'Pendiente de confirmación',
 	textNextStatus: 'A Recientes',
 	name: ORDER_STATUSES.PENDING_CONFIRMATION,
@@ -12,7 +12,7 @@ statusOrderCol[ORDER_STATUSES.PENDING_CONFIRMATION] = {
 }
 
 statusOrderCol[ORDER_STATUSES.FRESH] = {
-	color: '#17A2B8', // info - teal
+	color: '#00BFFF', // Recién creado: Deep Sky Blue
 	label: 'Recién creado',
 	textNextStatus: 'Preparar',
 	name: ORDER_STATUSES.FRESH,
@@ -20,7 +20,7 @@ statusOrderCol[ORDER_STATUSES.FRESH] = {
 }
 
 statusOrderCol[ORDER_STATUSES.CONFIRMED] = {
-	color: '#28A745', // success - green
+	color: '#228B22', // Confirmado: Forest Green
 	label: 'Confirmado',
 	textNextStatus: 'En espera',
 	name: ORDER_STATUSES.CONFIRMED,
@@ -28,7 +28,7 @@ statusOrderCol[ORDER_STATUSES.CONFIRMED] = {
 }
 
 statusOrderCol[ORDER_STATUSES.ON_HOLD] = {
-	color: '#6C757D', // secondary - gray
+	color: '#808080', // En espera: Gray
 	label: 'En espera',
 	textNextStatus: 'A espera',
 	name: ORDER_STATUSES.ON_HOLD,
@@ -36,7 +36,7 @@ statusOrderCol[ORDER_STATUSES.ON_HOLD] = {
 }
 
 statusOrderCol[ORDER_STATUSES.PREPARING] = {
-	color: '#007BFF', // primary - blue
+	color: '#8A2BE2', // Preparando: Blue Violet
 	label: 'Preparando',
 	textNextStatus: 'Creado',
 	name: ORDER_STATUSES.PREPARING,
@@ -44,7 +44,7 @@ statusOrderCol[ORDER_STATUSES.PREPARING] = {
 }
 
 statusOrderCol[ORDER_STATUSES.READY_FOR_PICKUP] = {
-	color: '#17A2B8', // info - teal
+	color: '#FF69B4', // Listo para recoger: Hot Pink
 	label: 'Listo para recoger',
 	textNextStatus: 'Despachar',
 	name: ORDER_STATUSES.READY_FOR_PICKUP,
@@ -52,7 +52,7 @@ statusOrderCol[ORDER_STATUSES.READY_FOR_PICKUP] = {
 }
 
 statusOrderCol[ORDER_STATUSES.DISPATCHED] = {
-	color: '#FFC107', // warning - amber
+	color: '#D2691E', // Despachado: Chocolate
 	label: 'Despachado',
 	textNextStatus: 'Entregado',
 	name: ORDER_STATUSES.DISPATCHED,
@@ -60,7 +60,7 @@ statusOrderCol[ORDER_STATUSES.DISPATCHED] = {
 }
 
 statusOrderCol[ORDER_STATUSES.DELIVERED] = {
-	color: '#28A745', // success - green
+	color: '#008080', // Entregado: Teal
 	label: 'Entregado',
 	textNextStatus: 'Facturar',
 	name: ORDER_STATUSES.DELIVERED,
@@ -68,7 +68,7 @@ statusOrderCol[ORDER_STATUSES.DELIVERED] = {
 }
 
 statusOrderCol[ORDER_STATUSES.PENDING_PAYMENT] = {
-	color: '#FFC107', // warning - amber
+	color: '#800000', // Pendiente de transferencia: Maroon
 	label: 'Pendiente de transferencia',
 	textNextStatus: 'Facturar',
 	name: ORDER_STATUSES.PENDING_PAYMENT,
@@ -76,9 +76,16 @@ statusOrderCol[ORDER_STATUSES.PENDING_PAYMENT] = {
 }
 
 statusOrderCol[ORDER_STATUSES.CODE_ERROR] = {
-	color: '#DC3545', // danger - red
+	color: '#FF0000', // Error de código: Red
 	label: 'Error de código',
 	name: ORDER_STATUSES.CODE_ERROR,
+	icon: <FaBug />
+}
+
+statusOrderCol[ORDER_STATUSES.DELETED] = {
+	color: '#000000', // Eliminado: Black
+	label: 'Eliminado',
+	name: ORDER_STATUSES.DELETED,
 	icon: <FaBug />
 }
 
@@ -99,17 +106,3 @@ export {
 	statusOrderCol,
 	listStatusRecepcion
 }
-
-// [
-// 	ORDER_STATUSES.PENDING_CONFIRMATION,
-// 	ORDER_STATUSES.FRESH,
-// 	ORDER_STATUSES.CONFIRMED,
-// 	ORDER_STATUSES.ON_HOLD,
-// 	ORDER_STATUSES.PREPARING,
-// 	ORDER_STATUSES.READY_FOR_PICKUP,
-// 	ORDER_STATUSES.DISPATCHED,
-// 	ORDER_STATUSES.DELIVERED,
-// 	// ORDER_STATUSES.INVOICED,
-// 	ORDER_STATUSES.PENDING_TRANSFER,
-// 	ORDER_STATUSES.CODE_ERROR
-// ]
