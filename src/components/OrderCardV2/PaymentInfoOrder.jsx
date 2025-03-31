@@ -133,9 +133,12 @@ const PaymentInfoOrder = ({ data }) => {
 										/>
 
 									)}
+
+									<hr />
+									<hr />
 									{/* select para cambiar de metodo de pago */}
 									<select
-										className="form-select mt-2"
+										className="form-select mt-2 mb-3"
 										value={selectedPaymentMethod || ''}
 										onChange={handleChangePaymentMethod}
 										disabled={loading}
