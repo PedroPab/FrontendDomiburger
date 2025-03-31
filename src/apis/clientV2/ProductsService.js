@@ -16,7 +16,7 @@ class ProductsService {
 		});
 	}
 	async getAll(pagination, filter) {
-		const { page, limit } = pagination || {};
+		const { page, limit } = pagination || { page: 1, limit: 100 };
 		const query = new URLSearchParams();
 		if (page) query.append('page', page);
 		if (limit) query.append('limit', limit);

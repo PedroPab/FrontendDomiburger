@@ -1,38 +1,65 @@
-import { Container, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FaWhatsapp } from 'react-icons/fa';
 import img from '../assets/img/catPc.gif';
+import { UserLayout } from '../Layout/UserLayout';
 
 const TemporaryClosure = () => {
 	return (
-		<div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center p-4">
-			<Container>
-				<h1 className="display-4 mb-3">Estamos en mantenimiento 🛠️</h1>
-				<p className="lead mb-4">
-					Actualmente estamos trabajando para mejorar tu experiencia. Mientras tanto, puedes hacer tus pedidos por WhatsApp.
-				</p>
+		<UserLayout>
+			<Container
+				fluid
+				className="vh-100 d-flex flex-column justify-content-center align-items-center text-center p-4"
+			>
+				{/* Encabezado */}
+				<Row className="mb-4">
+					<Col>
+						<h1 className="display-4">Estamos en mantenimiento 🛠️</h1>
+						<p className="lead">
+							Actualmente estamos trabajando para mejorar tu experiencia. Mientras tanto, puedes hacer tus pedidos por WhatsApp.
+						</p>
+					</Col>
+				</Row>
 
-				<Button
-					variant="success"
-					size="lg"
-					href="https://wa.me/573506186772?text=Hola,%20para%20hacer%20un%20pedido"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="d-flex align-items-center gap-2 mb-4 mx-auto"
-				>
-					<FaWhatsapp size={24} />
-					Hacer pedido por WhatsApp
-				</Button>
+				{/* Botones */}
+				<Row className="mb-4">
+					<Col xs={12} md="auto" className="mb-3 mb-md-0">
+						<Button
+							variant="success"
+							size="lg"
+							href="https://wa.me/573506186772?text=Hola,%20para%20hacer%20un%20pedido"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="d-flex align-items-center gap-2"
+						>
+							<FaWhatsapp size={24} />
+							Hacer pedido por WhatsApp
+						</Button>
+					</Col>
+					<Col xs={12} md="auto">
+						<Button
+							variant="primary"
+							size="lg"
+							href="/login"
+							className="d-flex align-items-center gap-2"
+						>
+							Ir al Login
+						</Button>
+					</Col>
+				</Row>
 
-				<div className="w-100">
-					<img
-						src={img}
-						alt="Mantenimiento"
-						className="img-fluid rounded shadow-sm"
-						style={{ maxHeight: '400px' }}
-					/>
-				</div>
+				{/* Imagen */}
+				<Row>
+					<Col>
+						<img
+							src={img}
+							alt="Mantenimiento"
+							className="img-fluid rounded shadow-sm"
+							style={{ maxHeight: '400px' }}
+						/>
+					</Col>
+				</Row>
 			</Container>
-		</div>
+		</UserLayout>
 	);
 };
 
