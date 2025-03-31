@@ -16,6 +16,7 @@ import { KitchenAndDeliveryInfo } from '../../../components/FormsInputs/KitchenA
 import { OrderService } from '../../../apis/clientV2/OrderService';
 import { useAuth } from '../../../Context/AuthContext';
 import { PAYMENT_METHODS } from '../../../Utils/const/paymentMethods';
+import { TotalPrice } from '../../../components/TotalPrice';
 
 const FormContainerAdmin = () => {
 	const { token } = useAuth();
@@ -104,6 +105,18 @@ const FormContainerAdmin = () => {
 		}
 	}
 
+	useEffect(() => {
+		if (!dataClient) {
+			setLocationIdSelect(null);
+			setDelivery(null);
+		}
+	}, [dataClient]);
+	useEffect(() => {
+		if (!locationIdSelect) {
+			setDelivery(null);
+		}
+	}, [locationIdSelect]);
+
 	return (
 		<Container>
 			<LoadingSpinner isLoading={isLoading} />
@@ -145,11 +158,17 @@ const FormContainerAdmin = () => {
 				setPrecioDeliveryManual={setPrecioDeliveryManual}
 			/>
 
+			{/* total */}
+			<TotalPrice
+				productOrderList={productOrderList}
+				delivery={delivery}
+			/>
 			<RegisterSaleButton onClick={sendOrder} />
 
 			<hr />
 		</Container>
 	);
 };
+
 
 export default FormContainerAdmin;
