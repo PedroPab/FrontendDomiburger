@@ -2,8 +2,21 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FaWhatsapp } from 'react-icons/fa';
 import img from '../assets/img/catPc.gif';
 import { UserLayout } from '../Layout/UserLayout';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const TemporaryClosure = () => {
+	const [countClick, setCountClick] = useState(0);
+	const navigate = useNavigate();
+	const handleClick = () => {
+		setCountClick(countClick + 1);
+
+		if (countClick >= 5) {
+			// alert('¡Has hecho clic más de 5 veces!');
+			navigate('/login'); // Redirigir a la página de inicio
+			setCountClick(0);
+		}
+	};
 	return (
 		<UserLayout>
 			<Container
@@ -13,7 +26,11 @@ const TemporaryClosure = () => {
 				{/* Encabezado */}
 				<Row className="mb-4">
 					<Col>
-						<h1 className="display-4">Estamos en mantenimiento 🛠️</h1>
+						<h1 className="display-4">Estamos en mantenimiento
+							<span role="img" aria-label="cat" onClick={handleClick}>
+								🛠️
+							</span>
+						</h1>
 						<p className="lead">
 							Actualmente estamos trabajando para mejorar tu experiencia. Mientras tanto, puedes hacer tus pedidos por WhatsApp.
 						</p>
@@ -36,14 +53,7 @@ const TemporaryClosure = () => {
 						</Button>
 					</Col>
 					<Col xs={12} md="auto">
-						<Button
-							variant="primary"
-							size="lg"
-							href="/login"
-							className="d-flex align-items-center gap-2"
-						>
-							Ir al Login
-						</Button>
+
 					</Col>
 				</Row>
 
