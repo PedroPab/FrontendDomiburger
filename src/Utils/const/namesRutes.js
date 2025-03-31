@@ -20,7 +20,8 @@ class RecepcionRoutes extends RoutesClass {
 			PEDIDOS_DETAIL: `${this.path}/pedidos`,
 			PRODUCTOS_ADMIN: `${this.path}/productosAdmin`,
 			CREATE_PRODUCT: `${this.path}/createProduct`,
-			CLIENTES: `${this.path}/clientes`
+			CLIENTES: `${this.path}/clientes`,
+			HISTORY: `${this.path}/history`,
 		}
 	}
 }

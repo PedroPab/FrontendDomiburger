@@ -18,6 +18,7 @@ import Clientes from "../../Clientes/Clientes";
 import { WorkerProvider } from "../../../Context/WorkerContext";
 import { FormAdminV2 } from "../../Recepcion/FormAdminV2";
 import { ContabilidadV2 } from "../../Recepcion/ContabilidadV2";
+import { HistoryOrders } from "../../Recepcion/Historial";
 
 const routes = RECEPCION_ROUTES.routes;
 const RecepcionRoutes = () => {
@@ -43,6 +44,7 @@ const RecepcionRoutes = () => {
 			<Route path={routes.MAP_RECEPCION} element={<MapRecepcion />} />
 			<Route path={routes.FORM_ADMIN} element={<FormAdmin />} />
 			<Route path={routes.FORM_ADMIN_V2} element={<FormAdminV2 />} />
+			<Route path={routes.HISTORY} element={<HistoryOrders />} />
 			<Route path={routes.PEDIDOS} element={<Pedidos />} />
 			<Route path={`${routes.PEDIDOS_DETAIL}/:id`} element={<PedidosDetails />} />
 			<Route path={routes.PRODUCTOS_ADMIN} element={<ProductosAdmin />} />

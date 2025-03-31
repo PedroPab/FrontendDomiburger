@@ -44,6 +44,17 @@ class OrderService {
 			throw error.response.data
 		}
 	}
+	async getOrdersByUserCreate({ userCreateId, startDate, endDate }) {
+		try {
+			const query = new URLSearchParams();
+			query.append('startDate', startDate);
+			query.append('endDate', endDate);
+			const rta = await this.api.get(`/history/${userCreateId}?${query.toString()}`)
+			return rta.data.body
+		} catch (error) {
+			throw error.response.data
+		}
+	}
 	async delete(id) {
 		try {
 			const rta = await this.api.delete(`/${id}`);

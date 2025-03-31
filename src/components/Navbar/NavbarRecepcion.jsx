@@ -52,6 +52,11 @@ const NavbarRecepcion = () => {
 			route: RECEPCION_ROUTES.routes.CONTABILIDAD,
 		},
 		{
+			title: 'Historial',
+			icon: <MdOutlineReceipt className="me-1" size={18} />,
+			route: RECEPCION_ROUTES.routes.HISTORY,
+		},
+		{
 			title: 'Estadísticas',
 			icon: <FaRegChartBar className="me-1" size={18} />,
 			route: ESTADISTICAS_ROUTES.path,
