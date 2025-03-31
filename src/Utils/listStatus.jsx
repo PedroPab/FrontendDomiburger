@@ -89,6 +89,13 @@ statusOrderCol[ORDER_STATUSES.DELETED] = {
 	icon: <FaBug />
 }
 
+statusOrderCol[ORDER_STATUSES.INVOICED] = {
+	color: '#0000FF', // Facturado: Blue
+	label: 'Facturado',
+	name: ORDER_STATUSES.INVOICED,
+	icon: <FaBug />
+}
+
 const listStatusRecepcion = [
 	// statusOrderCol[ORDER_STATUSES.PENDING_CONFIRMATION],
 	statusOrderCol[ORDER_STATUSES.FRESH],

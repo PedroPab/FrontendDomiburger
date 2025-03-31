@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Card, ListGroup, Container, Row, Col, Accordion, Table } from "react-bootstrap";
+import { Card, ListGroup, Container, Row, Col, Accordion, Table, Image } from "react-bootstrap";
 import { FaShoppingCart, FaMoneyBillWave, FaFileInvoiceDollar, FaCreditCard, FaBoxOpen, FaTruck } from "react-icons/fa";
 import { useRecepcion } from "../../../Context/RecepcionContex";
 import { calculateStatistics } from "./calculateStatistics";
@@ -8,7 +8,7 @@ import { ORDER_STATUSES } from "../../../Utils/const/status";
 const SummaryStatisticsOrders = ({ listOrders }) => {
 	const stats = useMemo(() => calculateStatistics(listOrders), [listOrders]);
 	const totalInvoicedOrders = listOrders.filter(order => order.status === ORDER_STATUSES.INVOICED).length;
-	const { listDomiciliarios } = useRecepcion();
+	const { listDomiciliarios, listProducts } = useRecepcion();
 
 	return (
 		<Container className="my-4">
@@ -103,19 +103,40 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 								<Table striped bordered hover size="sm" className="mt-2">
 									<thead>
 										<tr>
-											<th>ID Producto</th>
+											<th>Producto</th>
 											<th>Cantidad</th>
 											<th>Ventas Totales</th>
 										</tr>
 									</thead>
 									<tbody>
-										{Object.entries(stats.productsCount).map(([productId, data]) => (
-											<tr key={productId}>
-												<td>{productId}</td>
-												<td>{data.quantity}</td>
-												<td>${data.totalSales.toLocaleString()}</td>
-											</tr>
-										))}
+										{Object.entries(stats.productsCount).map(([productId, data]) => {
+
+											console.group("PRODUCTO");
+											console.log("productId", productId);
+											console.log("data", data);
+											const product = listProducts.find(product => product.id === productId) || {};
+											console.log("product", product);
+											console.groupEnd();
+											return (
+												<tr key={productId}>
+													<td>
+														<div className="d-flex align-items-center">
+															<Image
+																src={product?.photoUrl}
+																style={{
+																	width: "40px",
+																	height: "40px",
+																}}
+																roundedCircle
+															/>
+															<span className="ms-2">{product.name}</span>
+														</div>
+													</td>
+													<td>{data.quantity}</td>
+													<td>${data.totalSales.toLocaleString()}</td>
+												</tr>
+											)
+										})}
 									</tbody>
 								</Table>
 							</ListGroup.Item>
@@ -149,10 +170,22 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 									</thead>
 									<tbody>
 										{Object.entries(stats.salesByDelivery).map(([deliveryId, data]) => {
-											const nameDelivery = listDomiciliarios.find(domiciliario => domiciliario.id === deliveryId)?.name || "Desconocido";
+											const dataUserCourier = listDomiciliarios.find(domiciliario => domiciliario.id === deliveryId) || {};
 											return (
 												<tr key={deliveryId}>
-													<td>{nameDelivery}</td>
+													<td>
+														<div className="d-flex align-items-center">
+															<Image
+																src={dataUserCourier?.photoUrl}
+																style={{
+																	width: "40px",
+																	height: "40px",
+																}}
+																roundedCircle
+															/>
+															<span className="ms-2">{dataUserCourier?.name || "Sin nombre?"}</span>
+														</div>
+													</td>
 													<td>{data.quantity}</td>
 													<td>${data.totalSales.toLocaleString()}</td>
 												</tr>

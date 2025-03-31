@@ -2,7 +2,6 @@ import { OrderRow } from "./OrderRow"
 import { FaRegSadCry } from "react-icons/fa"
 
 const OrdersRowsContainer = ({ listOrders }) => {
-	console.log("🚀 ~ OrdersRowsContainer ~ listOrders:", listOrders)
 
 	return (
 		<>
