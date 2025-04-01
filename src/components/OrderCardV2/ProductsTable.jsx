@@ -1,6 +1,7 @@
 import { Table, Badge } from "react-bootstrap";
 import "./ProductsTable.css";
 const ProductsTable = ({ orderItems }) => {
+	console.log("🚀 ~ ProductsTable ~ orderItems:", orderItems)
 
 
 	return (
@@ -28,7 +29,7 @@ const ProductsTable = ({ orderItems }) => {
 											{complement?.quantity || 1}
 										</Badge>
 										<span
-											style={{ backgroundColor: item?.colorPrimary }}
+											style={{ backgroundColor: complement?.colorPrimary }}
 											className="badge m-1">
 											{complement?.name}
 										</span>

@@ -1,12 +1,9 @@
 import { Accordion, Badge } from "react-bootstrap";
 import { ProductsTable } from "./ProductsTable";
 import { useWorker } from "../../Context/WorkerContext";
-import { usePreferences } from "../../Context/PreferencesContext";
-import { ROLES } from "../../Utils/const/roles";
 
 const ProductsInfoOrder = ({ orderItems }) => {
 	const { listProducts } = useWorker();
-	const { roleSelect } = usePreferences();
 
 	const products = orderItems.map((item) => {
 		// Buscar el producto en la lista de productos
@@ -52,7 +49,7 @@ const ProductsInfoOrder = ({ orderItems }) => {
 	const hasComplements = products.some((item) => item.complements.length > 0);
 
 	return (
-		<Accordion defaultActiveKey={roleSelect === ROLES.COOK.value ? "0" : ""}>
+		<Accordion defaultActiveKey={'0'}>
 			<Accordion.Item eventKey="0">
 				<Accordion.Header
 					style={{ color: "white" }}
