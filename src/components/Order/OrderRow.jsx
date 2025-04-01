@@ -6,6 +6,11 @@ const routes = RECEPCION_ROUTES.routes;
 const OrderRow = ({ order }) => {
 
 	const colorStatus = statusOrderCol[order?.status]?.color || "#000000"; // Default color if status is not found
+
+	//consultamos el cliente
+
+	//resumismo el los producots
+
 	return (
 		<Accordion className="border-bottom">
 			<Accordion.Item eventKey="0">

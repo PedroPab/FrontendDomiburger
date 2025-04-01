@@ -50,7 +50,11 @@ const UserNavbar = () => {
 					</Nav>
 
 					{/* SECCIÓN DE USUARIO */}
-					{/* <UserMenu usuarioActual={usuarioActual} onLogout={handleLogout} /> */}
+					{
+						usuarioActual && (
+							<UserMenu usuarioActual={usuarioActual} onLogout={handleLogout} />
+						)
+					}
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
