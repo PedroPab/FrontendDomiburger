@@ -4,6 +4,7 @@ import { FaShoppingCart, FaMoneyBillWave, FaFileInvoiceDollar, FaCreditCard, FaB
 import { useRecepcion } from "../../../Context/RecepcionContex";
 import { calculateStatistics } from "./calculateStatistics";
 import { ORDER_STATUSES } from "../../../Utils/const/status";
+import { NameAndPhoto } from "../../../components/common/users/NameAndPhoto";
 
 const SummaryStatisticsOrders = ({ listOrders }) => {
 	const stats = useMemo(() => calculateStatistics(listOrders), [listOrders]);
@@ -174,17 +175,10 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 											return (
 												<tr key={deliveryId}>
 													<td>
-														<div className="d-flex align-items-center">
-															<Image
-																src={dataUserCourier?.photoUrl}
-																style={{
-																	width: "40px",
-																	height: "40px",
-																}}
-																roundedCircle
-															/>
-															<span className="ms-2">{dataUserCourier?.name || "Sin nombre?"}</span>
-														</div>
+														<NameAndPhoto
+															name={dataUserCourier?.name}
+															photo={dataUserCourier?.photoUrl}
+														/>
 													</td>
 													<td>{data.quantity}</td>
 													<td>${data.totalSales.toLocaleString()}</td>
@@ -198,7 +192,7 @@ const SummaryStatisticsOrders = ({ listOrders }) => {
 					</Accordion.Body>
 				</Accordion.Item>
 			</Accordion>
-		</Container>
+		</Container >
 	);
 };
 

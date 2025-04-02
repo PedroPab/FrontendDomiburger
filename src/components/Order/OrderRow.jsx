@@ -1,6 +1,12 @@
 import { Row, Col, Badge, Accordion, ListGroup } from "react-bootstrap";
 import { RECEPCION_ROUTES } from "../../Utils/const/namesRutes";
 import { statusOrderCol } from "../../Utils/listStatus";
+import { useClientFindById } from "../../hooks/api/clients/useClientFindById";
+import { useEffect } from "react";
+import { useUserFindById } from "../../hooks/api/users/useUserFindById";
+import { NameAndPhoto } from "../common/users/NameAndPhoto";
+import { useWorker } from "../../Context/WorkerContext";
+import { ResumedItems } from "../common/products/ResumedItems";
 const routes = RECEPCION_ROUTES.routes;
 
 const OrderRow = ({ order }) => {
@@ -8,8 +14,27 @@ const OrderRow = ({ order }) => {
 	const colorStatus = statusOrderCol[order?.status]?.color || "#000000"; // Default color if status is not found
 
 	//consultamos el cliente
+	const { error: clientError, data: clientData, loading: clientLoad, fetchClient } = useClientFindById()
 
+
+	const { error: userError, data: userData, loading: userLoad, fetchUser } = useUserFindById()
+
+	useEffect(() => {
+		if (order.clientId) {
+			fetchClient(order.clientId)
+		}
+		if (order.assignedCourierUserId) {
+			fetchUser(order.assignedCourierUserId)
+		}
+	}
+		, [order.clientId, order.assignedCourierUserId])
 	//resumismo el los producots
+
+	const { listProducts } = useWorker();
+
+
+	const { component: resumedItems, hasComplements, products } = ResumedItems(order?.orderItems, listProducts);
+
 
 	return (
 		<Accordion className="border-bottom">
@@ -19,6 +44,15 @@ const OrderRow = ({ order }) => {
 						{/* Número de Orden */}
 						<Col xs={6} sm={4} md={2} className="fw-bold">
 							#{order.dailyOrderNumber}
+						</Col>
+
+						{/* Fecha */}
+						<Col xs={6} sm={4} md={2}>
+							{new Date(order.createdAt).toLocaleDateString("es-ES", {
+								day: "2-digit",
+								month: "2-digit",
+								year: "numeric",
+							})}
 						</Col>
 
 						{/* Estado */}
@@ -35,6 +69,32 @@ const OrderRow = ({ order }) => {
 								{statusOrderCol[order?.status].label}
 							</Badge>
 						</Col>
+						{/* Cliente */}
+						<Col xs={6} sm={4} md={2}>
+							{clientData &&
+								<NameAndPhoto
+									name={clientData.name}
+									photo={clientData.photoUrl}
+								/>
+							}
+						</Col>
+
+						{/* Domiciliario */}
+						<Col xs={6} sm={4} md={2}>
+							{userData &&
+								<NameAndPhoto
+									name={userData.name}
+									photo={userData.photoUrl}
+								/>
+							}
+						</Col>
+
+						{/* Resumen de Productos */}
+						<Col xs={6} sm={4} md={2}>
+							{resumedItems}
+							{hasComplements && <Badge bg="danger">!!!</Badge>}
+						</Col>
+
 
 						{/* Total Precio */}
 						<Col xs={6} sm={4} md={2}>
