@@ -1,164 +1,127 @@
-import { Row, Col, Badge, Accordion, ListGroup } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Table, Badge, Button, ListGroup } from "react-bootstrap";
 import { RECEPCION_ROUTES } from "../../Utils/const/namesRutes";
 import { statusOrderCol } from "../../Utils/listStatus";
 import { useClientFindById } from "../../hooks/api/clients/useClientFindById";
-import { useEffect } from "react";
 import { useUserFindById } from "../../hooks/api/users/useUserFindById";
 import { NameAndPhoto } from "../common/users/NameAndPhoto";
 import { useWorker } from "../../Context/WorkerContext";
 import { ResumedItems } from "../common/products/ResumedItems";
-const routes = RECEPCION_ROUTES.routes;
 
 const OrderRow = ({ order }) => {
+	const [open, setOpen] = useState(false);
+	const colorStatus = statusOrderCol[order?.status]?.color || "#000000";
 
-	const colorStatus = statusOrderCol[order?.status]?.color || "#000000"; // Default color if status is not found
-
-	//consultamos el cliente
-	const { error: clientError, data: clientData, loading: clientLoad, fetchClient } = useClientFindById()
-
-
-	const { error: userError, data: userData, loading: userLoad, fetchUser } = useUserFindById()
+	// Consultamos el cliente y el repartidor
+	const { data: clientData, fetchClient } = useClientFindById();
+	const { data: userData, fetchUser } = useUserFindById();
 
 	useEffect(() => {
-		if (order.clientId) {
-			fetchClient(order.clientId)
-		}
-		if (order.assignedCourierUserId) {
-			fetchUser(order.assignedCourierUserId)
-		}
-	}
-		, [order.clientId, order.assignedCourierUserId])
-	//resumismo el los producots
+		if (order.clientId) fetchClient(order.clientId);
+		if (order.assignedCourierUserId) fetchUser(order.assignedCourierUserId);
+	}, [order.clientId, order.assignedCourierUserId, fetchClient, fetchUser]);
 
+	// Resumimos los productos usando el hook correspondiente
 	const { listProducts } = useWorker();
-
-
-	const { component: resumedItems, hasComplements, products } = ResumedItems(order?.orderItems, listProducts);
-
+	const { component: resumedItems, hasComplements } = ResumedItems(order?.orderItems, listProducts);
 
 	return (
-		<Accordion className="border-bottom">
-			<Accordion.Item eventKey="0">
-				<Accordion.Header>
-					<Row className="w-100 align-items-center text-center">
-						{/* Número de Orden */}
-						<Col xs={6} sm={4} md={2} className="fw-bold">
-							#{order.dailyOrderNumber}
-						</Col>
-
-						{/* Fecha */}
-						<Col xs={6} sm={4} md={2}>
-							{new Date(order.createdAt).toLocaleDateString("es-ES", {
-								day: "2-digit",
-								month: "2-digit",
-								year: "numeric",
-							})}
-						</Col>
-
-						{/* Estado */}
-						<Col xs={6} sm={4} md={2}>
-							<Badge
-								bg=""
-								style={{
-									backgroundColor: colorStatus,
-									color: "white",
-									fontSize: "0.85rem",
-									padding: "5px 10px",
-								}}
-								className="text-uppercase">
-								{statusOrderCol[order?.status].label}
-							</Badge>
-						</Col>
-						{/* Cliente */}
-						<Col xs={6} sm={4} md={2}>
-							{clientData &&
-								<NameAndPhoto
-									name={clientData.name}
-									photo={clientData.photoUrl}
-								/>
-							}
-						</Col>
-
-						{/* Domiciliario */}
-						<Col xs={6} sm={4} md={2}>
-							{userData &&
-								<NameAndPhoto
-									name={userData.name}
-									photo={userData.photoUrl}
-								/>
-							}
-						</Col>
-
-						{/* Resumen de Productos */}
-						<Col xs={6} sm={4} md={2}>
-							{resumedItems}
-							{hasComplements && <Badge bg="danger">!!!</Badge>}
-						</Col>
-
-
-						{/* Total Precio */}
-						<Col xs={6} sm={4} md={2}>
-							<strong>${order.totalPrice.toLocaleString()}</strong>
-						</Col>
-
-						{/* Método de Pago */}
-						<Col xs={6} sm={4} md={2} className="text-muted">
-							{order.paymentMethod}
-						</Col>
-
-						{/* Estado de Pago */}
-						<Col xs={6} sm={4} md={2}>
-							<Badge bg={order.payment?.status === "approved" ? "primary" : "secondary"}>
-								{order.payment?.status || "N/A"}
-							</Badge>
-						</Col>
-
-						{/* Mas detalles (boton para abir una pestana nueva con la card de esta orden) */}
-						<Col xs={12} sm={12} md={2}>
-							<a href={`${routes.PEDIDOS_DETAIL}/${order.id}`} target="_blank" rel="noreferrer">
-								Ver Detalles
-							</a>
-						</Col>
-
-					</Row>
-				</Accordion.Header>
-
-				<Accordion.Body>
-					{/* Sección de Entrega */}
-					<Row className="mb-3">
-						<Col xs={6} className="fw-bold">Distancia:</Col>
-						<Col xs={6}>{order.delivery.distance > 0 ? `${order.delivery.distance}m` : "N/A"}</Col>
-					</Row>
-					<Row className="mb-3">
-						<Col xs={6} className="fw-bold">Costo de Entrega:</Col>
-						<Col xs={6}>${order.delivery.price.toLocaleString()}</Col>
-					</Row>
-
-					{/* Lista de Productos */}
-					<h6>Productos:</h6>
-					<ListGroup>
-						{order.orderItems.map((item, index) => (
-							<ListGroup.Item key={index} className="d-flex justify-content-between">
-								<span>Producto ID: {item.id}</span>
-								<strong>${item.price.toLocaleString()}</strong>
-							</ListGroup.Item>
-						))}
-					</ListGroup>
-
-					{/* Comentario */}
-					{order.comment && (
-						<p className="mt-3">
-							<strong>Comentario:</strong> {order.comment}
-						</p>
+		<>
+			{/* Fila principal de la orden */}
+			<tr>
+				<td>#{order.dailyOrderNumber}</td>
+				<td>
+					{new Date(order.createdAt).toLocaleDateString("es-ES", {
+						day: "2-digit",
+						month: "2-digit",
+						year: "numeric",
+					})}
+				</td>
+				<td>
+					<Badge
+						style={{
+							backgroundColor: colorStatus,
+							color: "white",
+							fontSize: "0.85rem",
+							padding: "5px 10px",
+						}}
+					>
+						{statusOrderCol[order?.status].label}
+					</Badge>
+				</td>
+				<td>
+					{clientData && (
+						<NameAndPhoto name={clientData.name} photo={clientData.photoUrl} />
 					)}
+				</td>
+				<td>
+					{userData && (
+						<NameAndPhoto name={userData.name} photo={userData.photoUrl} />
+					)}
+				</td>
+				<td>
+					{resumedItems} {hasComplements && <Badge bg="danger">!!!</Badge>}
+				</td>
+				<td>
+					<strong>${order.totalPrice.toLocaleString()}</strong>
+				</td>
+				<td>{order.paymentMethod}</td>
+				<td>
+					<Badge bg={order.payment?.status === "approved" ? "primary" : "secondary"}>
+						{order.payment?.status || "N/A"}
+					</Badge>
+				</td>
+				<td>
+					<Button variant="link" onClick={() => setOpen(!open)}>
+						{open ? "Ocultar" : "Detalles"}
+					</Button>
+					<a
+						href={`${RECEPCION_ROUTES.routes.PEDIDOS_DETAIL}/${order.id}`}
+						target="_blank"
+						rel="noreferrer"
+					>
+						Ver Detalles
+					</a>
+				</td>
+			</tr>
 
-					{/* Repartidor Asignado */}
-					<p>
-						<strong>Repartidor Asignado:</strong> {order.assignedCourierUserId || "No asignado"}
-					</p>
-				</Accordion.Body>
-			</Accordion.Item>
-		</Accordion >
+			{/* Fila de detalle, visible al hacer clic en "Detalles" */}
+			{open && (
+				<tr>
+					<td colSpan="10">
+						<div className="p-2">
+							<div className="mb-2">
+								<strong>Distancia:</strong>{" "}
+								{order.delivery.distance > 0 ? `${order.delivery.distance}m` : "N/A"}
+							</div>
+							<div className="mb-2">
+								<strong>Costo de Entrega:</strong> ${order.delivery.price.toLocaleString()}
+							</div>
+							<div className="mb-2">
+								<strong>Productos:</strong>
+								<ListGroup className="mt-1">
+									{order.orderItems.map((item, index) => (
+										<ListGroup.Item key={index} className="d-flex justify-content-between">
+											<span>Producto ID: {item.id}</span>
+											<strong>${item.price.toLocaleString()}</strong>
+										</ListGroup.Item>
+									))}
+								</ListGroup>
+							</div>
+							{order.comment && (
+								<div className="mb-2">
+									<strong>Comentario:</strong> {order.comment}
+								</div>
+							)}
+							<div>
+								<strong>Repartidor Asignado:</strong>{" "}
+								{order.assignedCourierUserId || "No asignado"}
+							</div>
+						</div>
+					</td>
+				</tr>
+			)}
+		</>
 	);
 };
 
