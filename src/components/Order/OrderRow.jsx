@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table, Badge, Button, ListGroup } from "react-bootstrap";
+import { Badge, Button, ListGroup } from "react-bootstrap";
 import { RECEPCION_ROUTES } from "../../Utils/const/namesRutes";
 import { statusOrderCol } from "../../Utils/listStatus";
 import { useClientFindById } from "../../hooks/api/clients/useClientFindById";
@@ -7,6 +7,7 @@ import { useUserFindById } from "../../hooks/api/users/useUserFindById";
 import { NameAndPhoto } from "../common/users/NameAndPhoto";
 import { useWorker } from "../../Context/WorkerContext";
 import { ResumedItems } from "../common/products/ResumedItems";
+import { ProductsTable } from "../OrderCardV2/ProductsTable";
 
 const OrderRow = ({ order }) => {
 	const [open, setOpen] = useState(false);
@@ -39,6 +40,7 @@ const OrderRow = ({ order }) => {
 				</td>
 				<td>
 					<Badge
+						bg=""
 						style={{
 							backgroundColor: colorStatus,
 							color: "white",
@@ -89,40 +91,27 @@ const OrderRow = ({ order }) => {
 			{open && (
 				<tr>
 					<td colSpan="10">
-						<div className="p-2">
-							<div className="mb-2">
-								<strong>Distancia:</strong>{" "}
-								{order.delivery.distance > 0 ? `${order.delivery.distance}m` : "N/A"}
-							</div>
-							<div className="mb-2">
-								<strong>Costo de Entrega:</strong> ${order.delivery.price.toLocaleString()}
-							</div>
-							<div className="mb-2">
-								<strong>Productos:</strong>
-								<ListGroup className="mt-1">
-									{order.orderItems.map((item, index) => (
-										<ListGroup.Item key={index} className="d-flex justify-content-between">
-											<span>Producto ID: {item.id}</span>
-											<strong>${item.price.toLocaleString()}</strong>
-										</ListGroup.Item>
-									))}
-								</ListGroup>
-							</div>
-							{order.comment && (
-								<div className="mb-2">
-									<strong>Comentario:</strong> {order.comment}
-								</div>
-							)}
-							<div>
-								<strong>Repartidor Asignado:</strong>{" "}
-								{order.assignedCourierUserId || "No asignado"}
-							</div>
-						</div>
+						<Details order={order} client={clientData} delivery={order.delivery} user={userData} />
 					</td>
 				</tr>
 			)}
 		</>
 	);
 };
+
+const Details = ({ order, client, delivery, user }) => {
+	const { listProducts } = useWorker();
+	const { component: resumedItems, hasComplements, products } = ResumedItems(order?.orderItems, listProducts);
+
+	return (
+		<div className="p-2">
+			{/* Productos */}
+			{resumedItems}
+			<ProductsTable orderItems={products} />
+
+
+		</div>
+	)
+}
 
 export { OrderRow };
