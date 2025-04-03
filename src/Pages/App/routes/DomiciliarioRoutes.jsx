@@ -6,6 +6,7 @@ import { ROLES } from "../../../Utils/constList";
 import { ContextProvider } from "../../../Context";
 import { DOMICILIARIO_ROUTES, LOGIN_ROUTES } from "../../../Utils/const/namesRutes";
 import { WorkerProvider } from "../../../Context/WorkerContext";
+import { CourierHistory } from "../../Domiciliario/CourierHistory";
 
 const DomiciliarioRoutes = () => {
 	return (
@@ -21,7 +22,8 @@ const DomiciliarioRoutes = () => {
 				</ContextProvider>
 			}>
 			<Route index element={<Domiciliario />} />
-			<Route path={DOMICILIARIO_ROUTES.routes.DOMICILIARIO_HISTORY} element={<DomiciliarioHistory />} />
+			<Route path={DOMICILIARIO_ROUTES.routes.DOMICILIARIO_HISTORY} element={<CourierHistory />} />
+			{/* <Route path={DOMICILIARIO_ROUTES.routes.DOMICILIARIO_HISTORY} element={<DomiciliarioHistory />} /> */}
 		</Route>
 	);
 }

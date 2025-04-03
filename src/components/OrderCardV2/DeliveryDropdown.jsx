@@ -45,7 +45,7 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
 	const updateCourierOrder = async (courierId) => {
 		try {
 			setLoadChangeCourier(true);
-			await orderService.updateCurrier(orderId, courierId);
+			await orderService.updateCourier(orderId, courierId);
 		} catch (error) {
 			toast.error(`Error al cambiar el domiciliario: ${error?.response?.data?.message}`);
 		} finally {

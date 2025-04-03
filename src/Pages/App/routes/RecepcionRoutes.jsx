@@ -39,7 +39,7 @@ const RecepcionRoutes = () => {
 			}
 		>
 			<Route path='' element={<Recepcion />} />
-			{/* <Route path={routes.CONTABILIDAD} element={<Contabilidad />} /> */}
+			<Route path={`${routes.CONTABILIDAD}Last`} element={<Contabilidad />} />
 			<Route path={routes.CONTABILIDAD} element={<ContabilidadV2 />} />
 			<Route path={routes.MAP_RECEPCION} element={<MapRecepcion />} />
 			<Route path={routes.FORM_ADMIN} element={<FormAdmin />} />

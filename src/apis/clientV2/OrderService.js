@@ -22,6 +22,33 @@ class OrderService {
 			throw error.response.data
 		}
 	}
+	async getFilters(filters) {
+		try {
+			//por cada filtro se crea un query
+			const query = new URLSearchParams();
+			Object.keys(filters).forEach((key) => {
+				if (filters[key]) {
+					query.append(key, filters[key]);
+				}
+			});
+			const rta = await this.api.get(`/filter?${query.toString()}`)
+			return rta.data.body
+		} catch (error) {
+			console.log("🚀 ~ OrderService ~ getFilters ~ error:", error)
+			throw error?.response?.data
+		}
+	}
+	async getOrderByCourier({ startDate, endDate, id }) {
+		try {
+			const query = new URLSearchParams();
+			query.append('startDate', startDate);
+			query.append('endDate', endDate);
+			const rta = await this.api.get(`/history/courier/${id}?${query.toString()}`)
+			return rta.data.body
+		} catch (error) {
+			throw error?.response?.data
+		}
+	}
 	async getByIdUser(id) {
 		try {
 			const rta = await this.api.get(`/user/${id}`)
@@ -85,7 +112,7 @@ class OrderService {
 			throw error?.response?.data
 		}
 	}
-	async updateCurrier(id, courierId) {
+	async updateCourier(id, courierId) {
 		const body = {
 			courierUserId: courierId
 		}
