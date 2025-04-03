@@ -1,5 +1,5 @@
 // context/OrdersContext.js
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
 // import { socket } from '../Utils/socket';
 import { usePreferences } from './PreferencesContext';
@@ -15,8 +15,7 @@ export const MiContexto = createContext();
 
 export const ContextProvider = ({ children }) => {
 	const apiUrl = getUrlSocket();
-
-	const socket = io(`${apiUrl}/apiV2`);
+	const socket = useRef();
 
 	const { roleSelect: ROLE } = usePreferences()
 
@@ -69,38 +68,40 @@ export const ContextProvider = ({ children }) => {
 
 	const reconnectSocket = () => {
 		if (!isConnected) {
-			socket.connect();
+			socket.current.connect();
 			console.log("Intentando reconectar...");
 		}
 	};
 
 	useEffect(() => {
+		socket.current = io(`${apiUrl}/apiV2`);
+
 		console.log('intentando conectar socket');
-		socket.connect();
+		socket.current.connect();
 		// Manejamos la conexión inicial
-		socket.on("connect", () => {
-			console.log(`Socket conectado 🏁, ID: ${socket.id}`);
+		socket.current.on("connect", () => {
+			console.log(`Socket conectado 🏁, ID: ${socket.current.id}`);
 			setIsConnected(true); // Indicamos que el socket está conectado
 			if (ROLE) {
-				// socket.emit('api/v2/pedidos/role', ROLE, ID);
+				// socket.current.emit('api/v2/pedidos/role', ROLE, ID);
 				const params = {
 					token: token,
 					role: ROLE,
 					kitchenId: kitchenSelectId
 				}
-				socket.emit('login', params)
+				socket.current.emit('login', params)
 			}
 			console.log("Señor debugeador , estas son mi variables, no me haga daño")
 			console.log(ROLE)
 		});
 
 		// Manejo de desconexión
-		socket.on('disconnect', (reason) => {
+		socket.current.on('disconnect', (reason) => {
 			console.log(`Socket desconectado 🥊, razón: ${reason}`);
 			setIsConnected(false); // Indicamos que el socket está desconectado
 		});
 
-		socket.on("message", (newMessage) => {
+		socket.current.on("message", (newMessage) => {
 			//analizar el mensaje
 			const { type, message } = newMessage;
 			if (type === 'alert') {
@@ -110,16 +111,16 @@ export const ContextProvider = ({ children }) => {
 			toast(message);
 		});
 
-		socket.on('order/init', (orders) => {
+		socket.current.on('order/init', (orders) => {
 			// toast(`Cargando pedidos iniciales 🚚, canidad de pedidos ${pedido.length}`);
 			console.log('pedidos iniciales', orders.length);
 			console.log('pedidos iniciales', orders);
 			const processedOrders = filtrarPedidos(orders, ROLE);
-			console.log("🚀 ~ socket.on ~ processedOrders:", processedOrders)
+			console.log("🚀 ~ socket.current.on ~ processedOrders:", processedOrders)
 			setItems(processedOrders);
 		});
 
-		socket.on('order/create', (pedido) => {
+		socket.current.on('order/create', (pedido) => {
 			toast(`Pedido creado 🚚, ${pedido.id}`)
 			// notificamos al usuario del nuevo pedido
 			alertSound();
@@ -130,7 +131,7 @@ export const ContextProvider = ({ children }) => {
 			});
 		});
 
-		socket.on('order/update', (pedido) => {
+		socket.current.on('order/update', (pedido) => {
 			// toast(`Pedido actualizado 🚚, ${pedido.id}`);
 			setItems((itemsPrevios) => {
 				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
@@ -139,8 +140,8 @@ export const ContextProvider = ({ children }) => {
 			});
 		});
 
-		socket.on('order/remove', (pedido) => {
-			console.warn("🚀 ~ socket.on ~ pedido:", pedido)
+		socket.current.on('order/remove', (pedido) => {
+			console.warn("🚀 ~ socket.current.on ~ pedido:", pedido)
 			toast(`Pedido removido 🚚, ${pedido.id}`);
 			setItems((itemsPrevios) => {
 				console.warn("🚀 ~ setItems ~ itemsPrevios:", itemsPrevios)
@@ -152,7 +153,7 @@ export const ContextProvider = ({ children }) => {
 			});
 		});
 
-		socket.on('order/delete', (pedido) => {
+		socket.current.on('order/delete', (pedido) => {
 			toast(`Pedido eliminado 🚚, ${pedido.id}`);
 			setItems((itemsPrevios) => {
 				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
@@ -161,13 +162,13 @@ export const ContextProvider = ({ children }) => {
 			});
 		});
 		return () => {
-			console.warn('Desconectando socket , adios socket. te extrañaremos');
-			socket.off("connect");
-			socket.off("disconnect");
-			socket.off("message");
-			socket.off('pedidosIniciales');
-			socket.off('pedidos/added');
-			socket.off('pedidos/modified');
+			console.warn('Desconectando socket , adios socket.current. te extrañaremos');
+			socket.current.off("connect");
+			socket.current.off("disconnect");
+			socket.current.off("message");
+			socket.current.off('pedidosIniciales');
+			socket.current.off('pedidos/added');
+			socket.current.off('pedidos/modified');
 		};
 	}, [usuarioActual, ROLE, kitchenSelectId]);
 
