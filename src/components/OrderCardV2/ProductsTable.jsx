@@ -18,26 +18,21 @@ const ProductsTable = ({ orderItems }) => {
 				{orderItems?.map((item, index) => {
 
 					const ItemsComplements = ({ complements }) => {
-						if (complements.length == 0) return (
-							<> </>
-						)
-						return (
-							<>
-								{complements?.map((complement, index) => (
-									<div key={index}>
-										<Badge className="badge m-2 badge-primary">
-											{complement?.quantity || 1}
-										</Badge>
-										<span
-											style={{ backgroundColor: complement?.colorPrimary }}
-											className="badge m-1">
-											{complement?.name}
-										</span>
-									</div>
-								))}
-							</>
-						)
-					}
+						if (!complements || complements.length === 0) return null;
+
+						return complements.map((complement, index) => (
+							<div key={index}>
+								<Badge className="badge m-2 badge-primary">
+									{complement?.quantity || 1}
+								</Badge>
+								<span
+									style={{ backgroundColor: complement?.colorPrimary }}
+									className="badge m-1">
+									{complement?.name}
+								</span>
+							</div>
+						));
+					};
 
 					return (
 						<tr key={index}>

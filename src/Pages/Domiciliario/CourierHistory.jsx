@@ -1,11 +1,12 @@
-import { Alert, Button, Container, Spinner } from "react-bootstrap";
+import { Alert, Container, Spinner } from "react-bootstrap";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { OrdersRowsContainer } from "../../components/Order/OrdersRowsContainer.jsx";
 import { useOrderFindHistoryByCourier } from "../../hooks/api/order/useOrderFindHistoryByCourier.jsx";
 import { useAuth } from "../../Context/AuthContext.jsx";
 import { CourierLayout } from "../../Layout/CourierLayout.jsx";
 import { Progress } from "antd";
+import { useCalculateDataDelivery } from "./useCalculateDataDelivery.jsx";
 
 const CourierHistory = () => {
 
@@ -13,7 +14,8 @@ const CourierHistory = () => {
 	const { error, data: ordenes, loading, fetchOrders } = useOrderFindHistoryByCourier();
 	const { userData } = useAuth()
 
-	const [pagoTotal, setPagoTotal] = useState(0);
+	const { priceDeliveryTotal, distanceTotal, countDelivery } = useCalculateDataDelivery(ordenes);
+
 
 	const fetchData = async () => {
 		console.group('fetchData date');
@@ -31,20 +33,15 @@ const CourierHistory = () => {
 
 		await fetchOrders({ startDate, endDate, id: userData.id });
 	};
+
 	useEffect(() => {
+		// Evitar múltiples llamadas a fetchData si userData no está disponible aún
+		if (!userData?.id) return;
+
+		// Llamar a fetchData solo si userData.id cambia
 		fetchData();
-	}, []);
-
-	useEffect(() => {
-		if (!ordenes) return;
-
-		//caculamos el total de los domicilios
-		let pagoTotalPre = 0;
-		ordenes.forEach((order) => {
-			pagoTotalPre += order.delivery.price || 0;
-		});
-		setPagoTotal(pagoTotalPre);
-	}, [ordenes]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [userData?.id]);
 
 
 	return (
@@ -61,16 +58,13 @@ const CourierHistory = () => {
 				{/* Mostrar si está cargando */}
 				{loading && <div className="text-center"><Spinner animation="border" /></div>}
 
-				{pagoTotal}
-				<div className=''>
-					<Progress size={250} type="dashboard" percent={80} format={() => (<><div className='m-2'>{pagoTotal}</div>
-						<small >{4} </small><span style={{ fontSize: '0.8rem' }}> {4}km</span></>)} />
+				<div >
+					<Progress size={250} type="dashboard" percent={(priceDeliveryTotal * 100 / 80000)} format={() => (<><div className='m-2'>{priceDeliveryTotal}</div>
+						<small >{countDelivery} </small><span style={{ fontSize: '0.8rem' }}> {parseInt(distanceTotal / 1000)}km</span></>)} />
 				</div>
 				{/* Mostrar filas de las órdenes */}
 				<OrdersRowsContainer listOrders={ordenes} />
 
-				{/* boton para reintertar */}
-				<Button variant="primary" onClick={fetchData}>Reintentar</Button>
 
 			</Container>
 		</CourierLayout >

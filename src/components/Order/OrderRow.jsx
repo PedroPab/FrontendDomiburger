@@ -18,9 +18,10 @@ const OrderRow = ({ order }) => {
 	const { data: userData, fetchUser } = useUserFindById();
 
 	useEffect(() => {
+		// Evitar llamadas innecesarias si no hay IDs
 		if (order.clientId) fetchClient(order.clientId);
 		if (order.assignedCourierUserId) fetchUser(order.assignedCourierUserId);
-	}, [order.clientId, order.assignedCourierUserId, fetchClient, fetchUser]);
+	}, [order.clientId, order.assignedCourierUserId]);
 
 	// Resumimos los productos usando el hook correspondiente
 	const { listProducts } = useWorker();
@@ -106,10 +107,7 @@ const Details = ({ order, client, delivery, user }) => {
 	return (
 		<div className="p-2">
 			{/* Productos */}
-			{resumedItems}
 			<ProductsTable orderItems={products} />
-
-
 		</div>
 	)
 }
