@@ -5,15 +5,14 @@ const ENV = import.meta.env;
 
 // Adaptación de LocationCardReduce para mostrar solo mapa, dirección y comentario
 const LocationCardReduce = ({ location, isSelect, onClick }) => {
+	console.log("🚀 ~ LocationCardReduce ~ location:", location)
 	const { address, comment, coordinates } = location;
-	console.log("🚀 ~ LocationCardReduce ~ coordinates:", coordinates)
 
 	const { isDarkMode } = usePreferences(); // Obtiene el estado del tema
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: ENV.VITE_KEYMAPS,
 		libraries: ["places"],
 	});
-	console.log("🚀 ~ LocationCardReduce ~ isLoaded:", isLoaded)
 	const mapStyles = {
 		dark: [
 			{ elementType: "geometry", stylers: [{ color: "#212121" }] },
