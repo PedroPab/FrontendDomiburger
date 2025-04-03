@@ -2,30 +2,51 @@ import { useState } from "react";
 import { Card, Table, Button, Collapse } from "react-bootstrap";
 import { Marker } from "@react-google-maps/api";
 import { FaInfoCircle, FaEdit } from "react-icons/fa";
-import { useGoogleMapsCustomHook } from "./useGoogleMapsCustomHook"; // Importa el hook personalizado
+import { useGoogleMapsCustomHook } from "./useGoogleMapsCustomHook"; // tu custom hook
 
-const LocationCard = ({ location, onEdit }) => {
-	const { address, comment, coordinates, floor, city, state, country, postalCode, propertyType } = location;
+const LocationCard = ({ location, onEdit, isSelect }) => {
+	const {
+		address,
+		comment,
+		coordinates,
+		floor,
+		city,
+		state,
+		country,
+		postalCode,
+		propertyType
+	} = location;
 
 	const [MapsGoogle, isLoaded] = useGoogleMapsCustomHook();
-
 	const [showMore, setShowMore] = useState(false);
 
+	// Clases de la tarjeta según si está seleccionada o no
+	// (Bootstrap 5.2+ incluye clases "bg-primary-subtle", "border-primary", etc.)
+	const cardClasses = isSelect
+		? "shadow-sm rounded-4 border border-primary bg-primary-subtle"
+		: "shadow-sm rounded-4 border border-light";
+
 	return (
-		<Card className="shadow-sm rounded-4" style={{ transition: "0.3s" }}>
+		<Card className={cardClasses} style={{ transition: "0.3s", cursor: "pointer" }}>
 			<Card.Body>
 				{/* Dirección Principal */}
 				<h6>{address || "Dirección no disponible"}</h6>
 				<p className="text-muted fst-italic">{comment || "Sin comentarios"}</p>
+
 				{/* Mapa */}
 				{isLoaded && MapsGoogle ? (
-					<div className="rounded-3 overflow-hidden mt-2" style={{ height: "150px", width: "100%" }}>
+					<div
+						className="rounded-3 overflow-hidden mt-2"
+						style={{ height: "150px", width: "100%" }}
+					>
 						<MapsGoogle
 							center={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }}
 							zoom={16}
 						>
-
-							<Marker position={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }} label="🌟" />
+							<Marker
+								position={{ lat: coordinates?.lat || 0, lng: coordinates?.lng || 0 }}
+								label="🌟"
+							/>
 						</MapsGoogle>
 					</div>
 				) : (
@@ -43,7 +64,12 @@ const LocationCard = ({ location, onEdit }) => {
 						{showMore ? "Ocultar info" : "Ver más"}
 					</Button>
 
-					<Button variant="outline-success" className="rounded-pill px-4" onClick={onEdit}>
+					<Button
+						disabled
+						variant="outline-success"
+						className="rounded-pill px-4"
+						onClick={onEdit}
+					>
 						<FaEdit className="me-2" />
 						Editar
 					</Button>
@@ -55,32 +81,46 @@ const LocationCard = ({ location, onEdit }) => {
 						<Table responsive bordered hover className="mb-0 rounded-3 overflow-hidden">
 							<tbody>
 								<tr>
-									<td className="fw-bold bg-light">Piso/Apt</td>
+									<td className="fw-bold">Piso/Apt</td>
 									<td>{floor || "N/A"}</td>
 								</tr>
+								{/* Ejemplo: Si quieres mostrar más campos
+                  <tr>
+                    <td className="fw-bold">Ciudad</td>
+                    <td>{city || "N/A"}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Estado</td>
+                    <td>{state || "N/A"}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">País</td>
+                    <td>{country || "N/A"}</td>
+                  </tr>
+                  <tr>
+                    <td className="fw-bold">Código Postal</td>
+                    <td>{postalCode || "N/A"}</td>
+                  </tr>
+                */}
 								<tr>
-									<td className="fw-bold bg-light">Ciudad</td>
-									<td>{city || "N/A"}</td>
-								</tr>
-								<tr>
-									<td className="fw-bold bg-light">Estado</td>
-									<td>{state || "N/A"}</td>
-								</tr>
-								<tr>
-									<td className="fw-bold bg-light">País</td>
-									<td>{country || "N/A"}</td>
-								</tr>
-								<tr>
-									<td className="fw-bold bg-light">Código Postal</td>
-									<td>{postalCode || "N/A"}</td>
-								</tr>
-								<tr>
-									<td className="fw-bold bg-light">Tipo de Propiedad</td>
+									<td className="fw-bold">Tipo de Propiedad</td>
 									<td>{propertyType || "N/A"}</td>
 								</tr>
 								<tr>
-									<td className="fw-bold bg-light">Id</td>
+									<td className="fw-bold">Id</td>
 									<td>{location.id}</td>
+								</tr>
+								<tr>
+									<td className="fw-bold">Google Maps</td>
+									<td>
+										<a
+											href={`https://www.google.com/maps/search/?api=1&query=${coordinates?.lat},${coordinates?.lng}`}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											Ver en Google Maps
+										</a>
+									</td>
 								</tr>
 							</tbody>
 						</Table>
@@ -91,4 +131,4 @@ const LocationCard = ({ location, onEdit }) => {
 	);
 };
 
-export { LocationCard }
+export { LocationCard };
