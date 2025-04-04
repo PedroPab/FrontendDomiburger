@@ -2,21 +2,23 @@ import { Card } from "react-bootstrap";
 import PropTypes from 'prop-types';
 
 const CardCreate = ({ handleCardClick, messageText }) => {
-  return (
-    <Card className="h-100 shadow-sm border-10" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
-      <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-        <Card.Title className="fs-1">+</Card.Title>
-        <Card.Text className="text-muted text-center">
-          {messageText}
-        </Card.Text>
-      </Card.Body>
-    </Card>
-  );
+	return (
+		<Card
+			as={"button"}
+			className="h-100 w-100 " onClick={handleCardClick} >
+			<Card.Body className="d-flex flex-column justify-content-center align-items-center">
+				<Card.Title className="fs-1">+</Card.Title>
+				<Card.Text className="text-muted text-center">
+					{messageText}
+				</Card.Text>
+			</Card.Body>
+		</Card>
+	);
 };
 
 CardCreate.propTypes = {
-  handleCardClick: PropTypes.func.isRequired,
-  messageText: PropTypes.string.isRequired,
+	handleCardClick: PropTypes.func.isRequired,
+	messageText: PropTypes.string.isRequired,
 };
 
 export default CardCreate;

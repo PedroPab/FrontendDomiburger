@@ -5,7 +5,6 @@ const ENV = import.meta.env;
 
 // Adaptación de LocationCardReduce para mostrar solo mapa, dirección y comentario
 const LocationCardReduce = ({ location, isSelect, onClick }) => {
-	console.log("🚀 ~ LocationCardReduce ~ location:", location)
 	const { address, comment, coordinates } = location;
 
 	const { isDarkMode } = usePreferences(); // Obtiene el estado del tema

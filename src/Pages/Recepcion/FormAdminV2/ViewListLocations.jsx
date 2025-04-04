@@ -129,13 +129,6 @@ const ViewListLocations = ({
 						</>
 					)}
 				</div>
-
-				{/* Botón para enviar el formulario (ej. confirmar selección) */}
-				<div className="text-end mt-3">
-					<Button type="submit" variant="primary">
-						Guardar selección
-					</Button>
-				</div>
 			</Form>
 
 			{/* Modal para crear nueva ubicación */}

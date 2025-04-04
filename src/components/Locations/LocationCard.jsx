@@ -23,8 +23,8 @@ const LocationCard = ({ location, onEdit, isSelect }) => {
 	// Clases de la tarjeta según si está seleccionada o no
 	// (Bootstrap 5.2+ incluye clases "bg-primary-subtle", "border-primary", etc.)
 	const cardClasses = isSelect
-		? "shadow-sm rounded-4 border border-primary bg-primary-subtle"
-		: "shadow-sm rounded-4 border border-light";
+		? "shadow-sm rounded border border-primary bg-primary-subtle"
+		: "shadow-sm rounded border ";
 
 	return (
 		<Card className={cardClasses} style={{ transition: "0.3s", cursor: "pointer" }}>
@@ -57,7 +57,7 @@ const LocationCard = ({ location, onEdit, isSelect }) => {
 				<div className="d-flex justify-content-between mt-3">
 					<Button
 						variant={showMore ? "primary" : "outline-primary"}
-						className="rounded-pill px-4"
+						className="rounded-pill"
 						onClick={() => setShowMore(!showMore)}
 					>
 						<FaInfoCircle className="me-2" />
@@ -67,7 +67,7 @@ const LocationCard = ({ location, onEdit, isSelect }) => {
 					<Button
 						disabled
 						variant="outline-success"
-						className="rounded-pill px-4"
+						className="rounded-pill"
 						onClick={onEdit}
 					>
 						<FaEdit className="me-2" />
