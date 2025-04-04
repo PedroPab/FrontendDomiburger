@@ -10,7 +10,6 @@ const SubTitleNamePayment = ({ paymentMethod }) => {
 
 	return (
 		<span
-
 			className="fw-bold fs-5   rounded px-2 py-1"
 			style={{ color }}
 		>
