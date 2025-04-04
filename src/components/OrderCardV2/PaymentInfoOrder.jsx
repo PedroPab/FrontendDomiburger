@@ -9,10 +9,13 @@ import { usePreferences } from "../../Context/PreferencesContext";
 import { checkUserRolesValidity } from "../../Utils/checkUserRolesValidity";
 import { ROLES } from "../../Utils/const/roles";
 import { ConfirmActionButton } from "../common/ConfirmActionButton";
+import SubTitleNamePayment from "./SubTitleNamePayment";
+
 
 const PaymentInfoOrder = ({ data }) => {
 	const { totalPrice, delivery, paymentMethod, payment } = data;
-	const paymentName = Object.values(PAYMENT_METHODS).find((method) => method.value === paymentMethod)?.name || "Método de pago desconocido";
+
+
 	const { token } = useAuth();
 	const orderService = new OrderService(token);
 	const { roleSelect } = usePreferences()
@@ -59,13 +62,15 @@ const PaymentInfoOrder = ({ data }) => {
 		updateChangePayment(data.id, selectedPaymentMethod);
 	};
 
+
+
 	return (
 		<Accordion>
 			<Accordion.Item eventKey="0">
 				<Accordion.Header>
 					<div className="w-100 d-flex justify-content-between align-items-center">
-						<span className="fw-bold text-primary fs-5">{paymentName}</span>
-						<Badge bg="success" className="fs-6">
+						<SubTitleNamePayment paymentMethod={paymentMethod} />
+						<Badge bg={payment.status == 'approved' ? "success" : "danger"} className="fs-6">
 							{formatearNumeroConPuntos(totalPrice)}
 						</Badge>
 					</div>
