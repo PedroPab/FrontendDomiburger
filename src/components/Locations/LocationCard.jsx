@@ -57,7 +57,6 @@ const LocationCard = ({ location, onEdit, isSelect }) => {
 				<div className="d-flex justify-content-between mt-3">
 					<Button
 						variant={showMore ? "primary" : "outline-primary"}
-						className="rounded-pill"
 						onClick={() => setShowMore(!showMore)}
 					>
 						<FaInfoCircle className="me-2" />
@@ -67,7 +66,6 @@ const LocationCard = ({ location, onEdit, isSelect }) => {
 					<Button
 						disabled
 						variant="outline-success"
-						className="rounded-pill"
 						onClick={onEdit}
 					>
 						<FaEdit className="me-2" />
