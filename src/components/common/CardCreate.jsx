@@ -5,6 +5,7 @@ const CardCreate = ({ handleCardClick, messageText }) => {
 	return (
 		<Card
 			as={"button"}
+			type="button"
 			className="h-100 w-100 " onClick={handleCardClick} >
 			<Card.Body className="d-flex flex-column justify-content-center align-items-center">
 				<Card.Title className="fs-1">+</Card.Title>

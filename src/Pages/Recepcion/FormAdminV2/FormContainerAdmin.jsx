@@ -53,14 +53,12 @@ const FormContainerAdmin = () => {
 		}
 
 		const orderItems = productOrderList.map(product => {
-			console.log("🚀 ~ sendOrder ~ product:", product)
 
 			const r = { id: product.id }
 			if (product?.modifique && product?.modifique.length > 0) r.complements = product?.modifique.map(complement => ({ id: complement.id }))
 			//if(product.quantity) r.quantity = product.quantity
 			return r;
 		})
-		console.log("🚀 ~ sendOrder ~ orderItems:", orderItems)
 		// Se arma el objeto con la información necesaria para el pedido
 		const orderData = {
 			clientId: dataClient.id,

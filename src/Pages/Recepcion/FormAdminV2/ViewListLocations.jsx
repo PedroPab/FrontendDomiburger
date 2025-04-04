@@ -37,6 +37,10 @@ const ViewListLocations = ({
 	}, [dataClient]);
 
 	const openCreateLocationClient = () => {
+		if (!clientId) {
+			toast.warning("No se ha seleccionado un cliente.");
+			return;
+		}
 		toast.info("Abriendo formulario de creación de ubicación...");
 		setShowModal(true);
 	};
@@ -48,23 +52,13 @@ const ViewListLocations = ({
 		findLocationsByIdClient(clientId);
 	};
 
-	// Ejemplo de submit del formulario para confirmar la ubicación seleccionada
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (!locationIdSelect) {
-			toast.warning("Seleccione una ubicación antes de continuar.");
-			return;
-		}
-		toast.success(`Has seleccionado la ubicación con ID: ${locationIdSelect}`);
-		// Aquí podrías llamar a alguna función para guardar o procesar la selección
-	};
 
 	return (
 		<Container className="my-4">
 			<h2 className="text-center mb-4">Gestión de Ubicaciones</h2>
 
 			{/* Convertimos todo en un formulario */}
-			<Form onSubmit={handleSubmit} aria-label="Selección de ubicaciones">
+			<Form aria-label="Selección de ubicaciones">
 				<div style={{ maxHeight: "500px", overflowY: "auto" }}>
 					{loading && (
 						<div
