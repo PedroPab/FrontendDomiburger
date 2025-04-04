@@ -13,14 +13,16 @@ const generateSvgColor = (color) => {
 const iconMarker = (estado) => {
 	//cambia el color del marker (svg) según  el estado
 	const markerColorStates = (estate) => {
-		const color = statusOrderCol[estate]
+		const color = statusOrderCol[estate].color
 		if (!color) return generateSvgColor("#000000")
 
-		return generateSvgColor(color).color
+		const rta = generateSvgColor(color)
+		return rta
 	}
 	if (!estado) return generateSvgColor("#000000")
 
 	const icon = markerColorStates(estado)
+	console.groupEnd()
 	return icon
 }
 

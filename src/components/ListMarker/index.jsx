@@ -1,4 +1,4 @@
-import { Marker } from "@react-google-maps/api";
+import { Marker, InfoWindow } from "@react-google-maps/api";
 import { iconMarker } from "./iconMarker";
 import { useWorker } from "../../Context/WorkerContext";
 import { LocationsService } from "../../apis/clientV2/LocationsService";
@@ -32,15 +32,14 @@ const ListMarker = ({ pedidos }) => {
 				<Marker
 					key={index}
 					position={order.location.coordinates}
-					title="title"
+					title="Pedido"
 					animation="DROP"
 					label={`${order?.dailyOrderNumber}`}
 					clickable={true}
 					icon={iconMarker(order?.status)}
 					visible={true}
 					onClick={() => {
-						console.log("order", order);
-						setIdOrderSelect(order?.id)
+						setIdOrderSelect(order?.id);
 					}}
 				/>
 			))}
