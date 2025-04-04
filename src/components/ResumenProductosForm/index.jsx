@@ -36,7 +36,6 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
 
 	const onChangeSelectAdicion = (idAdicion, idProducto) => {
 		const indexAdicion = adiciones.findIndex(e => e.id == idAdicion);
-		console.log("🚀 ~ onChangeSelectAdicion ~ adiciones:", adiciones, indexAdicion)
 
 		const dataAdicion = new Adiciones(adiciones[indexAdicion]);
 		// dataAdicion.idInter = makeId();
@@ -46,7 +45,6 @@ const ResumenProductosForm = ({ listaProducto, setListaProducto, domicilio, addr
 		const newData = [...listaProducto];
 		newData[indexProducto] = dataProducto;
 		setListaProducto(newData);
-		console.log("🚀 ~ onClicAdicion ~ newData eseta es una diocn , cre", newData)
 
 	};
 

@@ -2,7 +2,6 @@ import { SelectAdicionClient } from '../../SelectAdicionClient';
 import formatearNumeroConPuntos from './../../../Utils/formatearNumeroConPuntos';
 
 const ProductoRow = ({ producto, adiciones, onClicAdicion, onChangeSelectAdicion }) => {
-	console.log(`[ ~ ProductoRow ~ producto]`, producto)
 	// Define las funciones onChangeSelectAdicion y onClicAdicion aquí
 
 	let totalProducto = producto.price;
@@ -17,7 +16,6 @@ const ProductoRow = ({ producto, adiciones, onClicAdicion, onChangeSelectAdicion
 					{producto.name}
 					<div>
 						{producto?.modifique && producto.modifique.map(modifique => {
-							console.log("🚀 ~ ProductoRow ~ modifique:", modifique)
 
 							return (
 								<span
