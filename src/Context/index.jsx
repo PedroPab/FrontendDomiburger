@@ -9,7 +9,6 @@ import { useAuth } from './AuthContext';
 import { toast } from 'react-toastify';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNotificationSound } from '../hooks/useNotificationSound';
-import sound from '../assets/music/livechat-alerte.mp3'
 import { useShowNotification } from '../hooks/useShowNotification';
 export const MiContexto = createContext();
 
@@ -31,7 +30,7 @@ export const ContextProvider = ({ children }) => {
 
 	const [kitchenSelectId, setKitchenSelectId] = useLocalStorage('kitchenSelectId', null);
 
-	const alertSound = useNotificationSound(sound);
+	const { alertSound, errorCriticalSound, successSound } = useNotificationSound();
 	const { notify } = useShowNotification();
 
 	const changeKitchen = (id) => {
@@ -80,6 +79,7 @@ export const ContextProvider = ({ children }) => {
 		socket.current.connect();
 		// Manejamos la conexión inicial
 		socket.current.on("connect", () => {
+			successSound();
 			console.log(`Socket conectado 🏁, ID: ${socket.current.id}`);
 			setIsConnected(true); // Indicamos que el socket está conectado
 			if (ROLE) {
@@ -98,6 +98,7 @@ export const ContextProvider = ({ children }) => {
 		// Manejo de desconexión
 		socket.current.on('disconnect', (reason) => {
 			console.log(`Socket desconectado 🥊, razón: ${reason}`);
+			errorCriticalSound();
 			setIsConnected(false); // Indicamos que el socket está desconectado
 		});
 
@@ -112,6 +113,7 @@ export const ContextProvider = ({ children }) => {
 		});
 
 		socket.current.on('order/init', (orders) => {
+
 			// toast(`Cargando pedidos iniciales 🚚, canidad de pedidos ${pedido.length}`);
 			console.log('pedidos iniciales', orders.length);
 			console.log('pedidos iniciales', orders);

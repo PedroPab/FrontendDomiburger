@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:prod": "vite build --mode production",
+		"build:dev": "vite build --mode development",
+		"build:test": "vite build --mode test",
     "deploy": "vite build;firebase deploy",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
