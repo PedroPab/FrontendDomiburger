@@ -38,7 +38,10 @@ const ListMarker = ({ pedidos }) => {
 					clickable={true}
 					icon={iconMarker(order?.status)}
 					visible={true}
-					onClick={() => setIdOrderSelect(order?.id)}
+					onClick={() => {
+						console.log("order", order);
+						setIdOrderSelect(order?.id)
+					}}
 				/>
 			))}
 		</>
