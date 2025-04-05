@@ -216,7 +216,7 @@ const FormContainer = () => {
 			<DashboardProducts
 				listaProductosOrder={listaProductosOrder}
 				setListaProductosOrder={setListaProductosOrder}
-				dataDomicilio={dataDomicilio}
+				delivery={delivery}
 				setDataDomicilio={setDataDomicilio}
 				precioDeliveryManual={precioDeliveryManual}
 				setPrecioDeliveryManual={setPrecioDeliveryManual}

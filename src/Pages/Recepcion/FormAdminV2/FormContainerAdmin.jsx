@@ -29,8 +29,6 @@ const FormContainerAdmin = () => {
 	const [locationIdSelect, setLocationIdSelect] = useState(null);
 	const [comment, setComment] = useState('');
 	const [kitchenIdSelect, setKitchenIdSelect] = useState('');
-	const [dataDomicilio, setDataDomicilio] = useState({});
-	const [precioDeliveryManual, setPrecioDeliveryManual] = useState(null);
 	const [productOrderList, setProductOrderList] = useState([]);
 	const [delivery, setDelivery] = useState(null);
 	const [kitchen, setKitchen] = useState(null);
@@ -115,6 +113,17 @@ const FormContainerAdmin = () => {
 		}
 	}, [locationIdSelect]);
 
+	useEffect(() => {
+		if (delivery) {
+			console.group("🚚 Delivery Info")
+			console.log("delivery", delivery);
+			console.log("kitchenIdSelect", kitchenIdSelect);
+			console.log("kitchen", kitchen);
+			console.groupEnd()
+		}
+	}
+		, [delivery]);
+
 	return (
 		<Container>
 			<LoadingSpinner isLoading={isLoading} />
@@ -150,10 +159,7 @@ const FormContainerAdmin = () => {
 			<DashboardProducts
 				listaProductosOrder={productOrderList}
 				setListaProductosOrder={setProductOrderList}
-				dataDomicilio={dataDomicilio}
-				setDataDomicilio={setDataDomicilio}
-				precioDeliveryManual={precioDeliveryManual}
-				setPrecioDeliveryManual={setPrecioDeliveryManual}
+				delivery={delivery}
 			/>
 
 			{/* total */}
