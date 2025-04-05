@@ -8,6 +8,7 @@ import { NameAndPhoto } from "../common/users/NameAndPhoto";
 import { useWorker } from "../../Context/WorkerContext";
 import { ResumedItems } from "../common/products/ResumedItems";
 import { ProductsTable } from "../OrderCardV2/ProductsTable";
+import { Timestamp } from "firebase/firestore";
 
 const OrderRow = ({ order }) => {
 	const [open, setOpen] = useState(false);
@@ -27,17 +28,23 @@ const OrderRow = ({ order }) => {
 	const { listProducts } = useWorker();
 	const { component: resumedItems, hasComplements } = ResumedItems(order?.orderItems, listProducts);
 
+	const createdAt = new Timestamp(order.createdAt._seconds, order.createdAt._nanoseconds);
 	return (
 		<>
 			{/* Fila principal de la orden */}
 			<tr>
 				<td>#{order.dailyOrderNumber}</td>
 				<td>
-					{new Date(order.createdAt).toLocaleDateString("es-ES", {
+					{new Date(createdAt.toDate()).toLocaleTimeString("es-CO", {
+						hour: "2-digit",
+						minute: "2-digit",
+					})}{" -- "}
+					{new Date(createdAt.toDate()).toLocaleDateString("es-ES", {
 						day: "2-digit",
 						month: "2-digit",
 						year: "numeric",
 					})}
+
 				</td>
 				<td>
 					<Badge
