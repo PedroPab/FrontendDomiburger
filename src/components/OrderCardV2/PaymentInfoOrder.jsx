@@ -140,34 +140,37 @@ const PaymentInfoOrder = ({ data }) => {
 
 									<hr />
 									<hr />
-									{/* select para cambiar de metodo de pago */}
-									<select
-										className="form-select mt-2 mb-3"
-										value={selectedPaymentMethod || ''}
-										onChange={handleChangePaymentMethod}
-										disabled={loading}
-									>
-										{/* seleccionar una opcion */}
-										<option value={null}>Seleccionar un método de pago</option>
-										{Object.values(PAYMENT_METHODS).map((method) => {
-											if (!method.active) return null
-											return (
-												<option key={method.value} value={method.value}>
-													{method.name}
-												</option>
-											)
-										})}
-									</select>
 
-									{/* boton para confirmar el cambio */}
-									<ConfirmActionButton
-										buttonLabel="Cambiar método de pago"
-										isLoading={loading}
-										onConfirm={updatePaymentMethod}
-										variant="warning"
-										confirmVariant="success"
-										cancelVariant="danger"
-									/>
+									{/* select para cambiar de metodo de pago */}
+									{payment.status !== "approved" && (
+										<>
+											< select
+												className="form-select mt-2 mb-3"
+												value={selectedPaymentMethod || ''}
+												onChange={handleChangePaymentMethod}
+												disabled={loading}
+											>
+												<option value={null}>Seleccionar un método de pago</option>
+												{Object.values(PAYMENT_METHODS).map((method) => {
+													if (!method.active) return null
+													return (
+														<option key={method.value} value={method.value}>
+															{method.name}
+														</option>
+													)
+												})}
+											</select>
+
+											<ConfirmActionButton
+												buttonLabel="Cambiar método de pago"
+												isLoading={loading}
+												onConfirm={updatePaymentMethod}
+												variant="warning"
+												confirmVariant="success"
+												cancelVariant="danger"
+											/>
+										</>
+									)}
 
 								</>
 							}
