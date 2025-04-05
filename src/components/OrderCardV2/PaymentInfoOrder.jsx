@@ -144,6 +144,7 @@ const PaymentInfoOrder = ({ data }) => {
 									{/* select para cambiar de metodo de pago */}
 									{payment.status !== "approved" && (
 										<>
+
 											< select
 												className="form-select mt-2 mb-3"
 												value={selectedPaymentMethod || ''}

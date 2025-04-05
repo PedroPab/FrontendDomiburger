@@ -9,8 +9,8 @@ const HomeRoutes = () => {
 	return (
 		<>
 
-			{/* <Route path="/" element={<FormClient />} /> */}
-			<Route path="/*" element={<TemporaryClosure />} />
+			<Route path="/" element={<FormClient />} />
+			{/* <Route path="/*" element={<TemporaryClosure />} /> */}
 			{/* 
 			<Route path="/gracias" element={<ThankYou />} />
 			<Route path="/mi-pedido" element={<MiPedido />} />
