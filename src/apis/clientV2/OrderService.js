@@ -2,16 +2,19 @@ import axios from 'axios';
 import { getUrlBackend } from '../../Utils/getUrlApiByOriginPath';
 
 class OrderService {
-	constructor(token) {
+	constructor(token = null) {
 		this.BASE_URL = getUrlBackend();
 		this.element = 'orders'
 
+		const headers = token ? {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${token}`,
+		} : {
+			'Content-Type': 'application/json',
+		}
 		this.api = axios.create({
 			baseURL: `${this.BASE_URL}/api/v2/${this.element}`, // Reemplaza con la URL de tu API
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}`,
-			},
+			headers,
 		});
 	}
 	async getById(id) {
@@ -93,6 +96,10 @@ class OrderService {
 	}
 	async create(data) {
 		const rta = await this.api.post(`/ `, data);
+		return rta
+	}
+	async createPublic(data) {
+		const rta = await this.api.post(`/public `, data);
 		return rta
 	}
 	async createPublicAdmin(data) {
