@@ -5,6 +5,7 @@ import { OrderService } from "../../apis/clientV2/OrderService";
 import { statusOrderCol } from "../../Utils/listStatus";
 import { useAuth } from "../../Context/AuthContext";
 import { ConfirmActionButton } from "./../common/ConfirmActionButton";
+import { useIsValidChangeStatus } from "./useIsValidChangeStatus";
 
 function NextStatusButton({ data }) {
 	const { token } = useAuth();
@@ -31,15 +32,28 @@ function NextStatusButton({ data }) {
 		}
 	}, [data.id, data.status, orderService]);
 
+	//analizamos si el usuario puede cambiar el estado de la orden según su rol
+	const isValidChange = useIsValidChangeStatus(data.status);
+
 	return (
-		<ConfirmActionButton
-			buttonLabel={buttonLabel}
-			isLoading={isLoading}
-			onConfirm={nextStatus}
-			variant="primary"
-			confirmVariant="success"
-			cancelVariant="danger"
-		/>
+		<>
+			{isValidChange == false ? (
+				<>
+				</>
+			) :
+				(
+					<ConfirmActionButton
+						buttonLabel={buttonLabel}
+						isLoading={isLoading}
+						onConfirm={nextStatus}
+						variant="primary"
+						confirmVariant="success"
+						cancelVariant="danger"
+					/>
+				)}
+
+		</>
+
 	);
 }
 

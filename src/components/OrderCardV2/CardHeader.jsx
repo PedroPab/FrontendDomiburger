@@ -1,17 +1,21 @@
 import { memo, useEffect, useState } from "react";
-import { Card, Badge, Image, Spinner, OverlayTrigger, Popover, Button, Modal } from "react-bootstrap";
+import { Card, Badge, Image, Spinner, OverlayTrigger, Popover } from "react-bootstrap";
 import { useAuth } from "../../Context/AuthContext";
 import { UsersService } from "../../apis/clientV2/usersService";
 import { ClientsService } from "../../apis/clientV2/ClientsService";
 import photoGeneric from "../../assets/img/photoGeneric.jpg";
 import { DetailsModalOrder } from "./DetailsModalOrder/index";
+import { useWorker } from "../../Context/WorkerContext";
 
 const CardHeaderComponent = memo(({ order }) => {
+
+	const { listKitchens } = useWorker()
+	const kitchen = listKitchens.find(kitchen => kitchen.id === order?.assignedKitchenId);
+
 	const { userId, dailyOrderNumber, clientId } = order;
 	const [userClient, setUserClient] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [showModal, setShowModal] = useState(false);
-	const [selectedOrder, setSelectedOrder] = useState(null);
 
 	const { token } = useAuth();
 	const usersService = new UsersService(token);
@@ -58,10 +62,16 @@ const CardHeaderComponent = memo(({ order }) => {
 	);
 
 
-
 	return (
 		<>
 			<Card.Header className={`bg-${headerVariant} text-white d-flex justify-content-between align-items-center`}>
+
+				{kitchen && (
+					<div style={{ position: "absolute", top: "-5px", left: "50%", transform: "translateX(-50%)", zIndex: 1 }}>
+						<span className="badge ">{kitchen.name}</span>
+					</div>
+				)}
+
 				<Badge
 					bg="light"
 					text="dark"
