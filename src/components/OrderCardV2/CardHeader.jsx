@@ -66,11 +66,11 @@ const CardHeaderComponent = memo(({ order }) => {
 		<>
 			<Card.Header className={`bg-${headerVariant} text-white d-flex justify-content-between align-items-center`}>
 
-				{kitchen && (
+				{/* {kitchen && (
 					<div style={{ position: "absolute", top: "-5px", left: "50%", transform: "translateX(-50%)", zIndex: 1 }}>
 						<span className="badge ">{kitchen.name}</span>
 					</div>
-				)}
+				)} */}
 
 				<Badge
 					bg="light"

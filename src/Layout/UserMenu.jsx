@@ -45,7 +45,7 @@ const UserMenu = ({ usuarioActual, onLogout }) => {
 					<FaSignOutAlt className="me-2" /> Cerrar Sesión
 				</NavDropdown.Item>
 				<NavDropdown.Divider />
-				<NavDropdown.Item as={Link} to="/login">
+				<NavDropdown.Item>
 					<ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
 				</NavDropdown.Item>
 			</NavDropdown>

@@ -1,7 +1,6 @@
 import { Table, Badge } from "react-bootstrap";
 import "./ProductsTable.css";
 const ProductsTable = ({ orderItems }) => {
-	console.log("🚀 ~ ProductsTable ~ orderItems:", orderItems)
 
 
 	return (
