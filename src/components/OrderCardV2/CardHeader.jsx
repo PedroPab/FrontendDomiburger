@@ -72,64 +72,52 @@ const CardHeaderComponent = memo(({ order }) => {
 
 	return (
 		<>
-			<Badge
-				bg=""
-				style={{
-					backgroundColor: 'red',
-					color: "white",
-					fontSize: "0.85rem",
-					padding: "5px 10px",
-				}}
-			>
-				{/* hora de creación */}
-				{
-					new Date(createdAt).toLocaleTimeString('Es-Co', { hour: '2-digit', minute: '2-digit' })
-				}
-				{kitchen && (
-					<div style={{ position: "absolute", top: "-5px", left: "50%", transform: "translateX(-50%)", zIndex: 1 }}>
-						<span className="badge ">{kitchen.name}</span>
+			<Card.Header className={`bg-${headerVariant} text-white`}>
+				<div className="d-flex flex-column gap-2">
+
+					{/* Cocina y hora */}
+					<div className="d-flex justify-content-between">
+						<span className="text-white small">
+							{new Date(createdAt).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })}
+						</span>
+						<span className="badge ">{kitchen?.name || 'Sin cocina'}</span>
+
 					</div>
-				)}
-			</Badge>
-			<Card.Header className={`bg-${headerVariant} text-white d-flex justify-content-between align-items-center`}>
 
-				{/* {kitchen && (
-					<div style={{ position: "absolute", top: "-5px", left: "50%", transform: "translateX(-50%)", zIndex: 1 }}>
-						<span className="badge ">{kitchen.name}</span>
+					{/* Cliente y acciones */}
+					<div className="d-flex justify-content-between align-items-center">
+						<Badge
+							bg="light"
+							text="dark"
+							onClick={() => setShowModal(true)}
+							className="rounded-pill"
+							style={{ fontSize: "1rem", padding: "0.5rem 0.7rem", cursor: "pointer" }}
+						>
+							<small>{orderNumber}</small>
+						</Badge>
+
+						<h5 className="mb-0">{loading ? <Spinner animation="border" size="sm" /> : userName}</h5>
+
+						<div className="d-flex align-items-center">
+							{loading ? (
+								<Spinner animation="border" size="sm" />
+							) : (
+								<OverlayTrigger trigger="click" placement="auto" overlay={popover}>
+									<Image
+										src={profilePicture}
+										alt="Foto de perfil"
+										className="rounded-circle"
+										width="40"
+										height="40"
+										style={{ cursor: "pointer" }}
+									/>
+								</OverlayTrigger>
+							)}
+						</div>
 					</div>
-				)} */}
-
-				<Badge
-					bg="light"
-					text="dark"
-					onClick={() => setShowModal(true)}
-					className="rounded-pill"
-					style={{ fontSize: "1rem", padding: "0.5rem 0.7rem", cursor: "pointer" }}
-				>
-					<small>{orderNumber}</small>
-				</Badge>
-
-				<h5 className="mb-0 ml-2">
-					{loading ? <Spinner animation="border" size="sm" /> : userName}
-				</h5>
-
-				<div className="d-flex align-items-center">
-					{loading ? (
-						<Spinner animation="border" size="sm" />
-					) : (
-						<OverlayTrigger trigger="click" placement="auto" overlay={popover}>
-							<Image
-								src={profilePicture}
-								alt="Foto de perfil"
-								className="rounded-circle"
-								width="40"
-								height="40"
-								style={{ cursor: "pointer" }}
-							/>
-						</OverlayTrigger>
-					)}
 				</div>
 			</Card.Header>
+
 
 			<DetailsModalOrder showModal={showModal} setShowModal={setShowModal} order={order} />
 
