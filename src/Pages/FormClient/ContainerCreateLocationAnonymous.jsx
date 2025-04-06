@@ -8,26 +8,27 @@ const ContainerCreateLocationAnonymous = ({ location, setLocation }) => {
 	const [showModal, setShowModal] = useState(false)
 
 	const successForm = (location) => {
-		console.group("🚚 Location Info")
-		console.log("🚀 ~ successForm ~ location:", location)
-		console.groupEnd()
 		setShowModal(false)
-
 		setLocation(location)
-
 	}
 
 	if (!location) {
 		return (
-			<Card
-				as={Button}
-				className="mb-4 h-100 w-100"
-				onClick={() => setShowModal(true)}
-				bg=""
-			>
+			<Card className="mb-4 p-4 shadow-sm border-0 text-center h-100 d-flex justify-content-center align-items-center">
 				<Container>
-					<h3 className="text-center">Agregar una Dirección</h3>
-					<p className="text-center">Por favor, completa la información de tu ubicación.</p>
+					<h4 className="fw-bold mb-3">📍 ¡Necesitamos tu dirección!</h4>
+					<p className="mb-4 text-muted">
+						Aún no has agregado una dirección. Para continuar, por favor haz clic en el botón.
+					</p>
+					<Button
+						type="button"
+						variant="primary"
+						size="lg"
+						className="px-4 py-2"
+						onClick={() => setShowModal(true)}
+					>
+						📬 Crear Dirección
+					</Button>
 
 					{/* Modal para crear nueva ubicación */}
 					<ReusableModal
@@ -37,7 +38,6 @@ const ContainerCreateLocationAnonymous = ({ location, setLocation }) => {
 					>
 						<CreateLocationComponent successForm={successForm} />
 					</ReusableModal>
-
 				</Container>
 			</Card>
 		)
@@ -48,7 +48,6 @@ const ContainerCreateLocationAnonymous = ({ location, setLocation }) => {
 			<LocationCard location={location} />
 		</>
 	)
-
 }
 
 export { ContainerCreateLocationAnonymous }

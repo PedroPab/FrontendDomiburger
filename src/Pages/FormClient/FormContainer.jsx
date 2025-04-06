@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 
 import NameInput from '../../components/FormsInputs/NameInput';
@@ -12,31 +12,62 @@ import { ContainerCreateLocationAnonymous } from './ContainerCreateLocationAnony
 import { KitchenAndDeliveryInfo } from '../../components/FormsInputs/KitchenAndDeliveryInfo';
 import { usePaymentMethodCom } from '../Recepcion/FormAdminV2/usePaymentMethodCom';
 import { ORIGINS } from '../../Utils/const/order/origins';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 const FormContainer = () => {
-
+	const navigate = useNavigate();
 	//estados del los datos del formulario
 	const [name, setName] = useState('');
 	const [phone, setPhone] = useState('');
 	const [comment, setComment] = useState('');
-	const { Component: PaymentMethodInput, paymentMethod, setPaymentValueDefault } = usePaymentMethodCom();
+	const { Component: PaymentMethodInput, paymentMethod } = usePaymentMethodCom();
 	const [listaProductosOrder, setListaProductosOrder] = useState([]);
 	// const [storedOrder, setStoredOrder] = useLocalStorage('order', {});
 
 	const [delivery, setDelivery] = useState(null);
 	const [location, setLocation] = useState(null);
-	const [kitchenIdSelect, setKitchenIdSelect] = useState(null);
 	const [kitchen, setKitchen] = useState(null);
 
 	const { isLoading, error, response, sendOrder } = useSendOrderClientAnonymous()
 
 	const sendOrderHandler = async () => {
+		//miramos  que este los datos nesesarios para enviar la orden
+		if (!name) {
+			toast.error("Por favor, ingrese su nombre.");
+			return;
+		}
+		if (!phone) {
+			toast.error("Por favor, ingrese su número de teléfono.");
+			return;
+		}
+		if (!location) {
+			toast.error("Por favor, cree una dirección.");
+			return;
+		}
+
+		if (!listaProductosOrder || listaProductosOrder.length === 0) {
+			toast.error("Agregue al menos un producto a la orden.");
+			return;
+		}
+
+		if (!kitchen) {
+			toast.error("Por favor, seleccione una cocina.");
+			return;
+		}
+		if (!delivery) {
+			toast.error("Por favor, seleccione un domiciliario.");
+			return;
+		}
+		// Se arma el objeto con la información necesaria para el pedido
+
 		const orderItems = listaProductosOrder.map(product => {
 			const r = { id: product.id }
 			if (product?.modifique && product?.modifique.length > 0) r.complements = product?.modifique.map(complement => ({ id: complement.id }))
 			return r;
 		})
+		console.log('orderItems', orderItems)
 		sendOrder({
 			delivery,
 			assignedKitchenId: kitchen?.id,
@@ -48,8 +79,33 @@ const FormContainer = () => {
 			name,
 			origin: ORIGINS.PUBLIC
 		});
-
 	}
+
+	useEffect(() => {
+		if (error) {
+			toast.error(error);
+		}
+	}
+		, [error]);
+
+	//exito en el pedido
+	useEffect(() => {
+		if (response.data.statusCode === 201) {
+			toast.success('Pedido creado con éxito.');
+			// Opcional: Resetear estados o limpiar formulario aquí
+			//ponemos los estados en su estado original
+			setName('');
+			setPhone('');
+			setComment('');
+			setLocation(null);
+			setDelivery(null);
+			setKitchen(null);
+			setListaProductosOrder([]);
+			//los mandamos a la pagina de gracias
+			navigate('/gracias');
+		}
+	}, [response]);
+
 
 	return (
 		<Container>
@@ -72,14 +128,17 @@ const FormContainer = () => {
 				setLocation={setLocation}
 			/>
 
-			<KitchenAndDeliveryInfo
-				kitchen={kitchen}
-				setKitchen={setKitchen}
-				delivery={delivery}
-				setDelivery={setDelivery}
-				locationIdSelect={location?.id}
-				kitchenIdSelect={kitchenIdSelect}
-			/>
+			<div style={{ display: 'none' }}>
+
+				<KitchenAndDeliveryInfo
+					kitchen={kitchen}
+					setKitchen={setKitchen}
+					delivery={delivery}
+					setDelivery={setDelivery}
+					locationIdSelect={location?.id}
+				/>
+			</div>
+
 			<hr />
 
 			<CommentInput
@@ -99,18 +158,6 @@ const FormContainer = () => {
 				onClick={() => sendOrderHandler()}
 				disabled={isLoading}
 			/>
-
-			{error && (
-				<div className="alert alert-danger" role="alert">
-					{error.message}
-				</div>
-			)}
-
-			{response && (
-				<div className="alert alert-success" role="alert">
-					Pedido realizado con éxito. ID: {response.id}
-				</div>
-			)}
 
 			<LoadingSpinner isLoading={isLoading} />
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
@@ -6,7 +6,6 @@ import LoadingSpinner from '../../../components/LoadingSpinner';
 import { ClientSearchModule } from '../../../components/Client/ClientSearchModule';
 import { ViewListLocations } from './ViewListLocations';
 import CommentInput from '../../../components/FormsInputs/CommentInput';
-import { PaymentMethodInput } from '../../User/CreateOrder/PaymentMethodAndComments';
 import SelectDomiciliario from '../../../components/FormsInputs/SelectDomiciliario';
 import { SelectKitchen } from '../../../components/FormsInputs/SelectKitchen';
 import DashboardProducts from '../../../components/Products/Dashboard/Dashboard';
@@ -15,7 +14,6 @@ import { KitchenAndDeliveryInfo } from '../../../components/FormsInputs/KitchenA
 
 import { OrderService } from '../../../apis/clientV2/OrderService';
 import { useAuth } from '../../../Context/AuthContext';
-import { PAYMENT_METHODS } from '../../../Utils/const/paymentMethods';
 import { TotalPrice } from '../../../components/TotalPrice';
 import { usePaymentMethodCom } from './usePaymentMethodCom';
 
