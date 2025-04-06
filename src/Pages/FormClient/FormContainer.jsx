@@ -9,6 +9,7 @@ import DashboardProducts from '../../components/Products/Dashboard/Dashboard';
 import RegisterSaleButton from '../../components/RegisterSaleButton';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useSendOrderClientAnonymous } from '../../hooks/api/order/useSendOrderClientAnonymous';
+import { ContainerCreateLocationAnonymous } from './ContainerCreateLocationAnonymous';
 
 
 const FormContainer = () => {
@@ -57,6 +58,10 @@ const FormContainer = () => {
 
 			{/* crear una location anónima */}
 
+			<ContainerCreateLocationAnonymous
+				locationIdSelect={locationIdSelect}
+				setLocationIdSelect={setLocationIdSelect}
+			/>
 			<hr />
 
 			<CommentInput

@@ -128,7 +128,7 @@ const ViewListLocations = ({
 			{/* Modal para crear nueva ubicación */}
 			<ReusableModal
 				show={showModal}
-				handleClose={() => setShowModal(false)}
+				handle Close={() => setShowModal(false)}
 				title="Crear nueva ubicación"
 			>
 				<CreateLocationComponent successForm={successForm} clientId={clientId} />

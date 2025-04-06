@@ -4,15 +4,13 @@ import { Container, Row, Col, Button, Alert, Spinner } from 'react-bootstrap';
 import { useLoadScript } from '@react-google-maps/api';
 import { toast } from 'react-toastify';
 
-import { LocationsService } from '../../apis/clientV2/LocationsService';
-import { useAuth } from '../../Context/AuthContext';
 import MapComponent from '../../components/MapComponent/MapComponent';
 import { TypeAndFloorInput } from '../../components/FormsInputs/TypeAndFloorInput';
 import { NotesInput } from '../../components/FormsInputs/NotesInput';
 import { UserLayout } from '../../Layout/UserLayout';
-import { useNavigate } from 'react-router-dom';
 import { LOCATIONS } from '../../Utils/const/locations';
 import { useConfetti } from '../../hooks/useConfetti';
+import { useCreateLocation } from '../../hooks/api/locations/useCreateLocation';
 
 const ENV = import.meta.env;
 
@@ -56,9 +54,7 @@ const CreateLocation = () => {
 };
 
 const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
-	const { token } = useAuth();
 
-	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [errors, setErrors] = useState({});
 
@@ -80,12 +76,10 @@ const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
 	const [propertyType, setPropertyType] = useState('house');
 	const [notes, setNotes] = useState('');
 
-	const locationsService = new LocationsService(token);
+	const { sendLocation, error: errorApi, loading, data } = useCreateLocation();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setLoading(true);
-		setError(null);
 		setValidationErrors([]);
 		setErrors({});
 
@@ -104,7 +98,6 @@ const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
 			const formattedErrors = error.details.reduce((acc, curr) => ({ ...acc, [curr.context.key]: curr.message }), {});
 			setErrors(formattedErrors);
 			toast.error("Error en la validación del formulario");
-			setLoading(false);
 			return;
 		}
 
@@ -114,26 +107,27 @@ const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
 			if (clientId) {
 				formData.clientId = clientId;
 			}
-			await locationsService.create(formData, token);
+
+			const rta = await sendLocation(formData)
+
 			setFloor('');
 			setPropertyType('');
 			setNotes('');
 			setCoordinates({});
 			setInputDataDireccion({ address_complete: "", valid: false });
-			successForm();
+
+			successForm(rta.body);
 			// setTimeout(() => navigate(-1), 2000); // Redirige a la página anterior después de 2 segundos
 
 		} catch (err) {
 			toast.error(`Error: ${err.message}`);
 			setError(err);
-		} finally {
-			setLoading(false);
 		}
 	};
+
 	return (
 		<Col  >
 			<h1 className="mb-4">Crear Nueva Ubicación</h1>
-
 			{
 				validationErrors.length > 0 && (
 					<Alert variant="danger">
@@ -190,7 +184,7 @@ const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
 					)}
 				</Button>
 			</div>
-			{error && <Alert variant="danger">Error: {error.message}</Alert>}
+			{error || errorApi && <Alert variant="danger">Error: {error.message || errorApi.message}</Alert>}
 		</Col >
 	)
 }

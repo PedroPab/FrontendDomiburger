@@ -6,12 +6,15 @@ class LocationsService {
 		this.BASE_URL = getUrlBackend();
 		this.element = 'locations'
 
+		const headers = token ? {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json'
+		} : {
+			'Content-Type': 'application/json'
+		}
 		this.api = axios.create({
 			baseURL: `${this.BASE_URL}/api/v2/${this.element}`, // Reemplaza con la URL de tu API
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${token}`,
-			},
+			headers,
 		});
 	}
 	async getByIdUser(id) {

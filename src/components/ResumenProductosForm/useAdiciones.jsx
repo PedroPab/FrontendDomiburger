@@ -23,7 +23,7 @@ const useAdiciones = () => {
 		};
 
 		fetchAdiciones();
-	}, [productsService]);
+	}, []);
 
 	return adiciones;
 };
