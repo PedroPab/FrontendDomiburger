@@ -4,7 +4,6 @@ import { Container } from 'react-bootstrap';
 import NameInput from '../../components/FormsInputs/NameInput';
 import PhoneInputComponent from '../../components/FormsInputs/PhoneInput';
 import CommentInput from '../../components/FormsInputs/CommentInput';
-import PaymentMethodInput from '../../components/FormsInputs/PaymentMethodInput';
 import DashboardProducts from '../../components/Products/Dashboard/Dashboard';
 import RegisterSaleButton from '../../components/RegisterSaleButton';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -12,6 +11,7 @@ import { useSendOrderClientAnonymous } from '../../hooks/api/order/useSendOrderC
 import { ContainerCreateLocationAnonymous } from './ContainerCreateLocationAnonymous';
 import { KitchenAndDeliveryInfo } from '../../components/FormsInputs/KitchenAndDeliveryInfo';
 import { usePaymentMethodCom } from '../Recepcion/FormAdminV2/usePaymentMethodCom';
+import { ORIGINS } from '../../Utils/const/order/origins';
 
 
 const FormContainer = () => {
@@ -25,22 +25,28 @@ const FormContainer = () => {
 	// const [storedOrder, setStoredOrder] = useLocalStorage('order', {});
 
 	const [delivery, setDelivery] = useState(null);
-	const [locationIdSelect, setLocationIdSelect] = useState(null);
+	const [location, setLocation] = useState(null);
 	const [kitchenIdSelect, setKitchenIdSelect] = useState(null);
 	const [kitchen, setKitchen] = useState(null);
 
 	const { isLoading, error, response, sendOrder } = useSendOrderClientAnonymous()
 
 	const sendOrderHandler = async () => {
+		const orderItems = listaProductosOrder.map(product => {
+			const r = { id: product.id }
+			if (product?.modifique && product?.modifique.length > 0) r.complements = product?.modifique.map(complement => ({ id: complement.id }))
+			return r;
+		})
 		sendOrder({
 			delivery,
-			kitchenId: kitchenIdSelect,
+			assignedKitchenId: kitchen?.id,
 			comment,
 			paymentMethod,
-			orderItems: listaProductosOrder,
-			locationId: locationIdSelect,
+			orderItems,
+			locationId: location?.id,
 			phone,
 			name,
+			origin: ORIGINS.PUBLIC
 		});
 
 	}
@@ -62,8 +68,8 @@ const FormContainer = () => {
 			{/* crear una location anónima */}
 
 			<ContainerCreateLocationAnonymous
-				locationIdSelect={locationIdSelect}
-				setLocationIdSelect={setLocationIdSelect}
+				location={location}
+				setLocation={setLocation}
 			/>
 
 			<KitchenAndDeliveryInfo
@@ -71,7 +77,7 @@ const FormContainer = () => {
 				setKitchen={setKitchen}
 				delivery={delivery}
 				setDelivery={setDelivery}
-				locationIdSelect={locationIdSelect}
+				locationIdSelect={location?.id}
 				kitchenIdSelect={kitchenIdSelect}
 			/>
 			<hr />

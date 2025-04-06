@@ -6,6 +6,8 @@ import { ClientsService } from "../../apis/clientV2/ClientsService";
 import photoGeneric from "../../assets/img/photoGeneric.jpg";
 import { DetailsModalOrder } from "./DetailsModalOrder/index";
 import { useWorker } from "../../Context/WorkerContext";
+import { ORIGINS } from "../../Utils/const/order/origins";
+import { convertToTimestamp } from "../../Utils/formatTime";
 
 const CardHeaderComponent = memo(({ order }) => {
 
@@ -40,7 +42,12 @@ const CardHeaderComponent = memo(({ order }) => {
 	const userName = userClient?.name || "Sin nombre";
 	const profilePicture = userClient?.photoUrl || photoGeneric;
 	const orderNumber = dailyOrderNumber || "#";
-	const headerVariant = userId ? "primary" : clientId ? "success" : "secondary";
+
+	const colorHeaderByOrder = (order) => {
+		if (order?.origin === ORIGINS.PUBLIC) return "warning"
+		return userId ? "primary" : clientId ? "success" : "secondary";
+	}
+	const headerVariant = colorHeaderByOrder(order)
 
 	const popover = (
 		<Popover id="popover-profile">
@@ -61,9 +68,29 @@ const CardHeaderComponent = memo(({ order }) => {
 		</Popover>
 	);
 
+	const createdAt = convertToTimestamp(order.createdAt);
 
 	return (
 		<>
+			<Badge
+				bg=""
+				style={{
+					backgroundColor: 'red',
+					color: "white",
+					fontSize: "0.85rem",
+					padding: "5px 10px",
+				}}
+			>
+				{/* hora de creación */}
+				{
+					new Date(createdAt).toLocaleTimeString('Es-Co', { hour: '2-digit', minute: '2-digit' })
+				}
+				{kitchen && (
+					<div style={{ position: "absolute", top: "-5px", left: "50%", transform: "translateX(-50%)", zIndex: 1 }}>
+						<span className="badge ">{kitchen.name}</span>
+					</div>
+				)}
+			</Badge>
 			<Card.Header className={`bg-${headerVariant} text-white d-flex justify-content-between align-items-center`}>
 
 				{/* {kitchen && (

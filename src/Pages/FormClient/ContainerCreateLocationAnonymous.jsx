@@ -4,9 +4,8 @@ import { CreateLocationComponent } from "../User/CreateLocation"
 import { useState } from "react"
 import { LocationCard } from "../../components/Locations/LocationCard"
 
-const ContainerCreateLocationAnonymous = ({ locationIdSelect, setLocationIdSelect }) => {
+const ContainerCreateLocationAnonymous = ({ location, setLocation }) => {
 	const [showModal, setShowModal] = useState(false)
-	const [location, setLocation] = useState(null)
 
 	const successForm = (location) => {
 		console.group("🚚 Location Info")
@@ -15,12 +14,10 @@ const ContainerCreateLocationAnonymous = ({ locationIdSelect, setLocationIdSelec
 		setShowModal(false)
 
 		setLocation(location)
-		const locationId = location?.id
-		setLocationIdSelect(locationId)
 
 	}
 
-	if (!locationIdSelect) {
+	if (!location) {
 		return (
 			<Card
 				as={Button}

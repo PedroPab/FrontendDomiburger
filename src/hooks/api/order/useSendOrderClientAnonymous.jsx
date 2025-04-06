@@ -10,13 +10,14 @@ const useSendOrderClientAnonymous = () => {
 
 	const sendOrder = async ({
 		delivery,
-		kitchenIdSelect,
+		assignedKitchenId,
 		comment,
 		paymentMethod,
-		productOrderList,
-		locationIdSelect,
+		orderItems,
+		locationId,
 		phone,
 		name,
+		origin,
 	}) => {
 		setIsLoading(true);
 		setError(null);
@@ -25,13 +26,14 @@ const useSendOrderClientAnonymous = () => {
 		try {
 			const order = {
 				delivery,
-				kitchenIdSelect,
+				assignedKitchenId,
 				comment,
 				paymentMethod,
-				productOrderList,
-				locationIdSelect,
+				orderItems,
+				locationId,
 				phone,
 				name,
+				origin,
 			};
 
 			const response = await service.createPublic(order);
