@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Joi from 'joi';
 import { Container, Row, Col, Button, Alert, Spinner } from 'react-bootstrap';
 import { useLoadScript } from '@react-google-maps/api';
@@ -53,7 +53,7 @@ const CreateLocation = () => {
 	);
 };
 
-const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
+const CreateLocationComponent = ({ successForm, isAnonymous, clientId }) => {
 
 	const [error, setError] = useState(null);
 	const [errors, setErrors] = useState({});
@@ -76,7 +76,14 @@ const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
 	const [propertyType, setPropertyType] = useState('house');
 	const [notes, setNotes] = useState('');
 
-	const { sendLocation, error: errorApi, loading, data } = useCreateLocation();
+	const { sendLocation, sendLocationAnonymous, error: errorApi, loading } = useCreateLocation();
+
+	useEffect(() => {
+		if (errorApi) {
+			toast.error(`Error: ${errorApi}`);
+			setError({ message: errorApi });
+		}
+	}, [errorApi]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -103,12 +110,13 @@ const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
 
 
 		try {
-			if (clientId === null) throw new Error('debes de tener un cliente');
+
+			if (clientId === null && !isAnonymous) throw new Error('debes de tener un cliente');
 			if (clientId) {
 				formData.clientId = clientId;
 			}
 
-			const rta = await sendLocation(formData)
+			const rta = isAnonymous ? await sendLocation(formData) : await sendLocationAnonymous(formData);
 
 			setFloor('');
 			setPropertyType('');
@@ -184,7 +192,7 @@ const CreateLocationComponent = ({ successForm, isAnonimus, clientId }) => {
 					)}
 				</Button>
 			</div>
-			{error || errorApi && <Alert variant="danger">Error: {error.message || errorApi.message}</Alert>}
+			{error && <Alert variant="danger">Error: {error.message}</Alert>}
 		</Col >
 	)
 }

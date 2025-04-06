@@ -10,24 +10,41 @@ const useCreateLocation = () => {
 	const [data, setData] = useState([]);
 
 	const sendLocation = async (data) => {
-		let rta
 		setLoading(true);
 		try {
 			const response = await service.create(data);
 			setData(response.data);
-			rta = response.data
+			const rta = response.data
+			setLoading(false);
+			return rta
 		} catch (error) {
-			setError(error.message);
+			setLoading(false);
+			setError(error);
+			throw new Error(error.message);
 		}
-		setLoading(false);
-		return rta
+	}
+
+	const sendLocationAnonymous = async (data) => {
+		setLoading(true);
+		try {
+			const response = await service.createPublic(data);
+			setData(response.data);
+			setLoading(false);
+			const rta = response.data
+			return rta
+		} catch (error) {
+			setLoading(false);
+			setError(error.message);
+			throw new Error(error);
+		}
 	}
 
 	return {
 		error,
 		data,
 		loading,
-		sendLocation
+		sendLocation,
+		sendLocationAnonymous,
 	}
 }
 

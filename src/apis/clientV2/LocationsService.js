@@ -51,6 +51,15 @@ class LocationsService {
 			throw error;
 		}
 	}
+	async createPublic(data) {
+		try {
+			const rta = await this.api.post(`/public`, data);
+			return rta
+		} catch (error) {
+			console.log(`[~LocationsService ~createPublic ~error]`, error)
+			throw error;
+		}
+	}
 }
 
 export { LocationsService }
