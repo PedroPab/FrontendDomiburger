@@ -17,6 +17,7 @@ import { OrderService } from '../../../apis/clientV2/OrderService';
 import { useAuth } from '../../../Context/AuthContext';
 import { PAYMENT_METHODS } from '../../../Utils/const/paymentMethods';
 import { TotalPrice } from '../../../components/TotalPrice';
+import { usePaymentMethodCom } from './usePaymentMethodCom';
 
 const FormContainerAdmin = () => {
 	const { token } = useAuth();
@@ -24,7 +25,7 @@ const FormContainerAdmin = () => {
 	// Estados
 	const [dataClient, setDataClient] = useState(null);
 	const [selectDomiciliario, setSelectDomiciliario] = useState('');
-	const [paymentMethod, setPaymentMethod] = useState(PAYMENT_METHODS.CASH.value);
+	const { Component: PaymentMethodInput, paymentMethod, setPaymentValueDefault } = usePaymentMethodCom();
 	const [isLoading, setIsLoading] = useState(false);
 	const [locationIdSelect, setLocationIdSelect] = useState(null);
 	const [comment, setComment] = useState('');
@@ -82,12 +83,10 @@ const FormContainerAdmin = () => {
 			setDataClient(null);
 
 			setSelectDomiciliario('');
-			setPaymentMethod(PAYMENT_METHODS.CASH.value);
+			setPaymentValueDefault()
 			setLocationIdSelect(null);
 			setComment('');
 			setKitchenIdSelect('');
-			setDataDomicilio({});
-			setPrecioDeliveryManual(null);
 			setProductOrderList([]);
 			setDelivery(null);
 			setKitchen(null);
@@ -140,8 +139,7 @@ const FormContainerAdmin = () => {
 
 			<CommentInput comment={comment} setComment={setComment} />
 
-			<PaymentMethodInput paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
-
+			<PaymentMethodInput />
 			<SelectDomiciliario
 				selectDomiciliario={selectDomiciliario}
 				setSelectDomiciliario={setSelectDomiciliario}

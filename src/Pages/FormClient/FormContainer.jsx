@@ -10,6 +10,8 @@ import RegisterSaleButton from '../../components/RegisterSaleButton';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useSendOrderClientAnonymous } from '../../hooks/api/order/useSendOrderClientAnonymous';
 import { ContainerCreateLocationAnonymous } from './ContainerCreateLocationAnonymous';
+import { KitchenAndDeliveryInfo } from '../../components/FormsInputs/KitchenAndDeliveryInfo';
+import { usePaymentMethodCom } from '../Recepcion/FormAdminV2/usePaymentMethodCom';
 
 
 const FormContainer = () => {
@@ -18,24 +20,25 @@ const FormContainer = () => {
 	const [name, setName] = useState('');
 	const [phone, setPhone] = useState('');
 	const [comment, setComment] = useState('');
-	const [paymentMethod, setPaymentMethod] = useState('Efectivo'); // El valor inicial debe coincidir con una de las opciones
+	const { Component: PaymentMethodInput, paymentMethod, setPaymentValueDefault } = usePaymentMethodCom();
 	const [listaProductosOrder, setListaProductosOrder] = useState([]);
 	// const [storedOrder, setStoredOrder] = useLocalStorage('order', {});
 
 	const [delivery, setDelivery] = useState(null);
 	const [locationIdSelect, setLocationIdSelect] = useState(null);
 	const [kitchenIdSelect, setKitchenIdSelect] = useState(null);
+	const [kitchen, setKitchen] = useState(null);
 
 	const { isLoading, error, response, sendOrder } = useSendOrderClientAnonymous()
 
 	const sendOrderHandler = async () => {
 		sendOrder({
 			delivery,
-			kitchenIdSelect: kitchenIdSelect,
+			kitchenId: kitchenIdSelect,
 			comment,
 			paymentMethod,
-			productOrderList: listaProductosOrder,
-			locationIdSelect: locationIdSelect,
+			orderItems: listaProductosOrder,
+			locationId: locationIdSelect,
 			phone,
 			name,
 		});
@@ -62,6 +65,15 @@ const FormContainer = () => {
 				locationIdSelect={locationIdSelect}
 				setLocationIdSelect={setLocationIdSelect}
 			/>
+
+			<KitchenAndDeliveryInfo
+				kitchen={kitchen}
+				setKitchen={setKitchen}
+				delivery={delivery}
+				setDelivery={setDelivery}
+				locationIdSelect={locationIdSelect}
+				kitchenIdSelect={kitchenIdSelect}
+			/>
 			<hr />
 
 			<CommentInput
@@ -69,10 +81,7 @@ const FormContainer = () => {
 				setComment={setComment}
 			/>
 
-			<PaymentMethodInput
-				paymentMethod={paymentMethod}
-				setPaymentMethod={setPaymentMethod}
-			/>
+			<PaymentMethodInput />
 
 			<DashboardProducts
 				listaProductosOrder={listaProductosOrder}
