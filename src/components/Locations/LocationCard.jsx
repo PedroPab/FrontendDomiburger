@@ -4,7 +4,7 @@ import { Marker } from "@react-google-maps/api";
 import { FaInfoCircle, FaEdit } from "react-icons/fa";
 import { useGoogleMapsCustomHook } from "./useGoogleMapsCustomHook"; // tu custom hook
 
-const LocationCard = ({ location, onEdit, isSelect }) => {
+const LocationCard = ({ location, onEdit, onDeled, isSelect }) => {
 	const {
 		address,
 		comment,
@@ -64,6 +64,14 @@ const LocationCard = ({ location, onEdit, isSelect }) => {
 					</Button>
 
 					<Button
+						variant="outline-danger"
+						onClick={onDeled}
+					>
+						<FaEdit className="me-2" />
+						Eliminar
+					</Button>
+
+					<Button
 						disabled
 						variant="outline-success"
 						onClick={onEdit}
@@ -71,6 +79,7 @@ const LocationCard = ({ location, onEdit, isSelect }) => {
 						<FaEdit className="me-2" />
 						Editar
 					</Button>
+
 				</div>
 
 				{/* Sección Colapsable con más información */}

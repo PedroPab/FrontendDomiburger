@@ -45,7 +45,11 @@ const ContainerCreateLocationAnonymous = ({ location, setLocation }) => {
 
 	return (
 		<>
-			<LocationCard location={location} />
+			<LocationCard
+				location={location}
+				onDeled={() => setLocation(null)}
+
+			/>
 		</>
 	)
 }
