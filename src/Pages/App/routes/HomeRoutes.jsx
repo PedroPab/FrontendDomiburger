@@ -13,10 +13,11 @@ const HomeRoutes = () => {
 			{/* <Route path="/*" element={<TemporaryClosure />} /> */}
 			{/* 
 			
-			<Route path="/mi-pedido" element={<MiPedido />} />
+			
 			<Route path="/nosotros" element={<Nosotros />} />
 			 */}
 			<Route path="/gracias" element={<ThankYou />} />
+			<Route path="/mi-pedido" element={<MiPedido />} />
 		</>
 	);
 }
