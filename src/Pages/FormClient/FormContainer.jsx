@@ -14,6 +14,7 @@ import { usePaymentMethodCom } from '../Recepcion/FormAdminV2/usePaymentMethodCo
 import { ORIGINS } from '../../Utils/const/order/origins';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 
 const FormContainer = () => {
@@ -88,9 +89,12 @@ const FormContainer = () => {
 	}
 		, [error]);
 
+	const [orderCreateLocal, setOrderCreateLocal] = useLocalStorage('orderCreate', null); // Modo oscuro por defecto
+
+
 	//exito en el pedido
 	useEffect(() => {
-		if (response.data.statusCode === 201) {
+		if (response?.data?.statusCode === 201) {
 			toast.success('Pedido creado con éxito.');
 			// Opcional: Resetear estados o limpiar formulario aquí
 			//ponemos los estados en su estado original
@@ -102,6 +106,8 @@ const FormContainer = () => {
 			setKitchen(null);
 			setListaProductosOrder([]);
 			//los mandamos a la pagina de gracias
+			//guradamos la orden en el local storage
+			setOrderCreateLocal(response.data.body);
 			navigate('/gracias');
 		}
 	}, [response]);

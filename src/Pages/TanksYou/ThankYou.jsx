@@ -1,61 +1,57 @@
-import LayoutCliente from '../../Layout/LayoutCliente';
-import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import Confetti from '../../components/Confetti';
 import imgGracias from '../../assets/img/catWithHeart.jpg';
 import { useNavigate } from 'react-router-dom';
+import { UserLayout } from '../../Layout/UserLayout';
 
 const ThankYou = () => {
-  const navigate = useNavigate()
+	const navigate = useNavigate()
 
-  return (
-    <>
-      <LayoutCliente>
-        <NavbarCliente />
+	return (
+		<UserLayout>
 
-        {/* Contenido Principal */}
-        <div className="container text-center my-5">
-          {/* Imagen de Agradecimiento */}
-          <img
-            src={imgGracias}
-            alt="Un gato dando un corazón como lo coreanos Gracias"
-            className="img-fluid mb-4 shadow-lg rounded"
-            style={{ maxWidth: '250px' }}
-          />
+			{/* Contenido Principal */}
+			<div className="container text-center my-5">
+				{/* Imagen de Agradecimiento */}
+				<img
+					src={imgGracias}
+					alt="Un gato dando un corazón como lo coreanos Gracias"
+					className="img-fluid mb-4 shadow-lg rounded"
+					style={{ maxWidth: '250px' }}
+				/>
 
-          {/* Mensaje Principal */}
-          <h1 className="display-4 fw-bold mb-3 text-success">¡Gracias por tu compra!</h1>
-          <p className="lead text-muted">
-            Tu pedido ha sido recibido y está siendo procesado.
-          </p>
-          <p className="text-muted">
-            Te notificaremos cuando tu pedido esté en camino. Mientras tanto, puedes
-            revisar los detalles del pedido o explorar otros productos.
-          </p>
+				{/* Mensaje Principal */}
+				<h1 className="display-4 fw-bold mb-3 text-success">¡Gracias por tu compra!</h1>
+				<p className="lead text-muted">
+					Tu pedido ha sido recibido y está siendo procesado.
+				</p>
+				<p className="text-muted">
+					Te notificaremos cuando tu pedido esté en camino. Mientras tanto, puedes
+					revisar los detalles del pedido o explorar otros productos.
+				</p>
 
-          {/* Botones de Acción */}
-          <div className="d-flex justify-content-center gap-3 mt-4">
-            <button
-              className="btn btn-primary btn-lg shadow"
-              onClick={() =>
-                navigate(`/mi-pedido`)
-              }
-            >
-              Ver detalles del pedido
-            </button>
-            {/* <button
+				{/* Botones de Acción */}
+				<div className="d-flex justify-content-center gap-3 mt-4">
+					<button
+						className="btn btn-primary btn-lg shadow"
+						onClick={() =>
+							navigate(`/mi-pedido`)
+						}
+					>
+						Ver detalles del pedido
+					</button>
+					{/* <button
               className="btn btn-outline-secondary btn-lg shadow"
               onClick={() => window.location.href = '/productos'}
             >
               Seguir explorando
             </button> */}
-          </div>
+				</div>
 
-          {/* Efecto de Confeti */}
-          <Confetti />
-        </div>
-      </LayoutCliente>
-    </>
-  );
+				{/* Efecto de Confeti */}
+				<Confetti />
+			</div>
+		</UserLayout>
+	);
 };
 
 export default ThankYou;
