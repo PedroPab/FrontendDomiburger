@@ -1,5 +1,3 @@
-import LayoutCliente from '../../Layout/LayoutCliente';
-import { NavbarCliente } from '../../components/Navbar/NavbarCliente';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { ProductoList } from '../../components/OrderCard/ProductoList';
 import formatearNumeroConPuntos from '../../Utils/formatearNumeroConPuntos';
@@ -8,7 +6,7 @@ import img from '../../assets/img/Wtf.jpg'
 import { UserLayout } from '../../Layout/UserLayout';
 
 const MiPedido = () => {
-	const [storedOrder] = useLocalStorage('order', {});
+	const [storedOrder] = useLocalStorage('orderCreate', null);
 	console.log(`[ ~ MiPedido ~ storedOrder]`, storedOrder);
 
 	const { name, phone, address, priceTotal, estado, order } = storedOrder;
@@ -57,7 +55,7 @@ const MiPedido = () => {
 					<div className="text-center">
 						{/* Espacio para imagen cómica */}
 						<img
-							src={img} // Reemplazar con la ruta de la imagen
+							src={img} // Reemplazar con la ruta de la im	agen
 							alt="Sin pedido"
 							className="img-fluid mb-4"
 							style={{ maxWidth: '90%', borderRadius: '8px' }}

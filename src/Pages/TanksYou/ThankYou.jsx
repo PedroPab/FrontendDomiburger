@@ -32,6 +32,7 @@ const ThankYou = () => {
 				{/* Botones de Acción */}
 				<div className="d-flex justify-content-center gap-3 mt-4">
 					<button
+						disabled
 						className="btn btn-primary btn-lg shadow"
 						onClick={() =>
 							navigate(`/mi-pedido`)
@@ -39,12 +40,13 @@ const ThankYou = () => {
 					>
 						Ver detalles del pedido
 					</button>
-					{/* <button
-              className="btn btn-outline-secondary btn-lg shadow"
-              onClick={() => window.location.href = '/productos'}
-            >
-              Seguir explorando
-            </button> */}
+					<button
+						className="btn btn-outline-secondary btn-lg shadow"
+						onClick={() =>
+							navigate(`/`)
+						}					>
+						Seguir explorando
+					</button>
 				</div>
 
 				{/* Efecto de Confeti */}

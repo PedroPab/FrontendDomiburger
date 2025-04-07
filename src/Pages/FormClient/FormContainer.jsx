@@ -108,7 +108,10 @@ const FormContainer = () => {
 			//los mandamos a la pagina de gracias
 			//guradamos la orden en el local storage
 			setOrderCreateLocal(response.data.body);
+			console.log("🚀 ~ useEffect ~ response.data.body:", response.data.body)
 			navigate('/gracias');
+
+
 		}
 	}, [response]);
 
