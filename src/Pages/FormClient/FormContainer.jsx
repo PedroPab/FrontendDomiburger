@@ -9,12 +9,12 @@ import RegisterSaleButton from '../../components/RegisterSaleButton';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useSendOrderClientAnonymous } from '../../hooks/api/order/useSendOrderClientAnonymous';
 import { ContainerCreateLocationAnonymous } from './ContainerCreateLocationAnonymous';
-import { KitchenAndDeliveryInfo } from '../../components/FormsInputs/KitchenAndDeliveryInfo';
 import { usePaymentMethodCom } from '../Recepcion/FormAdminV2/usePaymentMethodCom';
 import { ORIGINS } from '../../Utils/const/order/origins';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { KitchenAndDeliveryInfoClient } from './KitchenAndDeliveryInfoClient';
 
 
 const FormContainer = () => {
@@ -137,16 +137,16 @@ const FormContainer = () => {
 				setLocation={setLocation}
 			/>
 
-			<div style={{ display: 'none' }}>
+			<br />
 
-				<KitchenAndDeliveryInfo
-					kitchen={kitchen}
-					setKitchen={setKitchen}
-					delivery={delivery}
-					setDelivery={setDelivery}
-					locationIdSelect={location?.id}
-				/>
-			</div>
+			{/* mostrar datos de la cocina de donde se va ha mandar */}
+			<KitchenAndDeliveryInfoClient
+				kitchen={kitchen}
+				setKitchen={setKitchen}
+				delivery={delivery}
+				setDelivery={setDelivery}
+				locationIdSelect={location?.id}
+			/>
 
 			<hr />
 
