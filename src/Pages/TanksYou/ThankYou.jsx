@@ -2,6 +2,7 @@ import Confetti from '../../components/Confetti';
 import imgGracias from '../../assets/img/catWithHeart.jpg';
 import { useNavigate } from 'react-router-dom';
 import { UserLayout } from '../../Layout/UserLayout';
+import { DisabledComponent } from '../../components/common/DisabledComponent';
 
 const ThankYou = () => {
 	const navigate = useNavigate()
@@ -31,15 +32,17 @@ const ThankYou = () => {
 
 				{/* Botones de Acción */}
 				<div className="d-flex justify-content-center gap-3 mt-4">
-					<button
-						disabled
-						className="btn btn-primary btn-lg shadow"
-						onClick={() =>
-							navigate(`/mi-pedido`)
-						}
-					>
-						Ver detalles del pedido
-					</button>
+					<DisabledComponent message={'Próximamente'}>
+						<button
+							disabled
+							className="btn btn-primary btn-lg shadow"
+							onClick={() =>
+								navigate(`/mi-pedido`)
+							}
+						>
+							Ver detalles del pedido
+						</button>
+					</DisabledComponent>
 					<button
 						className="btn btn-outline-secondary btn-lg shadow"
 						onClick={() =>
