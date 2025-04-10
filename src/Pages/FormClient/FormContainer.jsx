@@ -118,7 +118,15 @@ const FormContainer = () => {
 
 	return (
 		<Container>
-			<h2 className="text-center">Realiza tu pedido</h2>
+			{/* <h2 className="text-center my-4 display-4 text-primary">Realiza tu pedido</h2> */}
+
+			<DashboardProducts
+				listaProductosOrder={listaProductosOrder}
+				setListaProductosOrder={setListaProductosOrder}
+				delivery={delivery}
+			/>
+
+			<br />
 
 			<NameInput
 				name={name}
@@ -157,11 +165,6 @@ const FormContainer = () => {
 
 			<PaymentMethodInput />
 
-			<DashboardProducts
-				listaProductosOrder={listaProductosOrder}
-				setListaProductosOrder={setListaProductosOrder}
-				delivery={delivery}
-			/>
 
 			<RegisterSaleButton
 				onClick={() => sendOrderHandler()}
