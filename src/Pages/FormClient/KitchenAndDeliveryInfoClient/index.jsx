@@ -21,9 +21,18 @@ const KitchenAndDeliveryInfoClient = ({
 	}, [locationIdSelect, kitchenIdSelect]);
 
 	useEffect(() => {
-		if (responseKitchenAndDelivery?.kitchen) setKitchen(responseKitchenAndDelivery.kitchen);
+		console.log("🚀 ~ useEffect ~ responseKitchenAndDelivery:", responseKitchenAndDelivery)
+
+		if (responseKitchenAndDelivery?.kitchen) {
+			setKitchen(responseKitchenAndDelivery.kitchen);
+			setKitchenNotAvailable(false);
+		}
 		if (responseKitchenAndDelivery?.delivery) setDelivery(responseKitchenAndDelivery.delivery);
-		if (!responseKitchenAndDelivery?.kitchen) setKitchenNotAvailable(true);
+
+		if (responseKitchenAndDelivery?.kitchen === null) {
+			setKitchenNotAvailable(true);
+		}
+
 	}, [responseKitchenAndDelivery]);
 
 	return (
@@ -97,7 +106,7 @@ const KitchenAndDeliveryInfoClient = ({
 					</ListGroup.Item>
 				</ListGroup>
 
-				{!kitchenNotAvailable && (
+				{kitchenNotAvailable && (
 					<Alert variant="danger" className="mt-3">
 						No se encontraron cocinas disponibles en este horario. Consulta nuestros horarios de las cocinas
 					</Alert>
