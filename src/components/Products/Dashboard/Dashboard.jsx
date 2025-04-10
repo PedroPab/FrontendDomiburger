@@ -9,6 +9,7 @@ const DashboardProducts = ({
 	precioDeliveryManual, setPrecioDeliveryManual,
 	isAdmin = false,
 	delivery,
+	viewType = 'STANDARD',
 }) => {
 	// const [listaProductosOrder, setListaProductosOrder] = useState([]);
 	// const [dataDomicilio, setDataDomicilio] = useState({});
@@ -38,16 +39,43 @@ const DashboardProducts = ({
 
 		setListaProductosOrder(listaProducts.reverse())
 	};
-	return (
-		<>
 
+	const viewTypeConst = ['STANDARD', 'PRODUCTS', 'SUMMARY']
+
+	if (viewType == 'STANDARD' || !viewTypeConst.includes(viewType))
+		return (
+			<>
+
+
+				<ProductsSection
+					listaProductosOrder={listaProductosOrder}
+					incrementCount={incrementCount}
+					decrementCount={decrementCount}
+
+				/>
+
+				<ResumenProductosForm
+					listaProducto={listaProductosOrder}
+					setListaProducto={setListaProductosOrder}
+					delivery={delivery}
+					addressPrice={[precioDeliveryManual, setPrecioDeliveryManual]}
+					isAdmin={isAdmin}
+				/>
+			</>
+		);
+
+	if (viewType == 'PRODUCTS')
+		return (
 			<ProductsSection
 				listaProductosOrder={listaProductosOrder}
 				incrementCount={incrementCount}
 				decrementCount={decrementCount}
 
 			/>
+		)
 
+	if (viewType == 'SUMMARY')
+		return (
 			<ResumenProductosForm
 				listaProducto={listaProductosOrder}
 				setListaProducto={setListaProductosOrder}
@@ -55,8 +83,7 @@ const DashboardProducts = ({
 				addressPrice={[precioDeliveryManual, setPrecioDeliveryManual]}
 				isAdmin={isAdmin}
 			/>
-		</>
-	);
+		)
 }
 
 

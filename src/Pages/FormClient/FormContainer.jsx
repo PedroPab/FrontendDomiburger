@@ -124,6 +124,7 @@ const FormContainer = () => {
 				listaProductosOrder={listaProductosOrder}
 				setListaProductosOrder={setListaProductosOrder}
 				delivery={delivery}
+				viewType='PRODUCTS'
 			/>
 
 			<br />
@@ -164,6 +165,14 @@ const FormContainer = () => {
 			/>
 
 			<PaymentMethodInput />
+			<br />
+
+			<DashboardProducts
+				listaProductosOrder={listaProductosOrder}
+				setListaProductosOrder={setListaProductosOrder}
+				delivery={delivery}
+				viewType='SUMMARY'
+			/>
 
 
 			<RegisterSaleButton

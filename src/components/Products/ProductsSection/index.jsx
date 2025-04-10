@@ -1,4 +1,3 @@
-import React from 'react';
 import CardProduct from '../../CardProduct';
 
 // React Bootstrap
