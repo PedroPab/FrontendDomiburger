@@ -43,11 +43,11 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
 	];
 
 	return (
-		<Container className="my-5">
-			<h2 className="text-center mb-5 mt-5 fw-bold text">Nuestros Productos</h2>
+		<Container className="my-3">
+			<h2 className="text-center mb-5 fw-bold text fs-1">Nuestros Productos</h2>
 			<Row className="g-3 text-center">
 				{products.map(({ title, description, img, productKey, isNew, moreInfo }) => (
-					<Col key={productKey} xs={12} sm={6} md={4} lg={4} className="d-flex justify-content-center text-center">
+					<Col key={productKey} xs={12} sm={12} md={6} lg={4} className="d-flex justify-content-center text-center">
 						<CardProduct
 							title={title}
 							description={description}
