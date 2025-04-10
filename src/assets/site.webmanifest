@@ -13,7 +13,7 @@
       "auto"
     ]
   },
-  "description": "¡Haz tu pedido de hamburguesas , creamos nuestro porpio sabor!",
+  "description": "¡Haz tu pedido de hamburguesas , creamos nuestro propio sabor!",
   "orientation": "natural",
   "start_url": "/",
   "display": "fullscreen",
@@ -21,14 +21,34 @@
   "theme_color": "#ffffffff",
   "icons": [
     {
-      "src": "/otros/logo_32x32-05.png",
+      "src": "/src/assets/img/logo/Icono32x32.png",
       "sizes": "32x32",
       "type": "image/png"
-    },
-    {
-      "src": "/otros/LOGO_DOMI-03.png",
-      "sizes": "1074x1015",
+    },	
+		{
+      "src": "/src/assets/img/logo/Icono128x128.png",
+      "sizes": "128x128",
       "type": "image/png"
+    },	
+    {
+      "src": "/src/assets/img/logo/Icono258x258.png",
+      "sizes": "258x258",
+      "type": "image/png"	
     }
-  ]
+  ],
+	"shortcuts": [
+		{
+			"name": "Pedir ya!!!",
+			"short_name": "Pedir ya!!!",
+			"description": "Haz tu pedido en Domiburguer de manera rápida",
+			"url": "/",
+			"icons": [
+				{
+					"src": "/src/assets/img/logo/Icono32x32.png",
+					"sizes": "32x32",
+					"type": "image/png"
+				}
+			]
+		}
+	]
 }
