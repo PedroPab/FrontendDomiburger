@@ -2,13 +2,16 @@ import axios from 'axios';
 import { getUrlBackend } from '../../Utils/getUrlApiByOriginPath';
 
 class ProductsService {
-	constructor(token = '') {
+	constructor(token) {
 		this.BASE_URL = getUrlBackend();
 		this.element = 'products'
-		const headers = {
+
+		const headers = token ? {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json'
+		} : {
 			'Content-Type': 'application/json'
 		}
-		if (token) headers.Authorization = `Bearer ${token}`
 
 		this.api = axios.create({
 			baseURL: `${this.BASE_URL}/api/v2/${this.element}`, // Reemplaza con la URL de tu API

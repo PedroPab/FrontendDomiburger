@@ -1,11 +1,33 @@
 import { Card, Table } from 'react-bootstrap';
 import ProductoRow from './../../components/Products/ProductoRow';
-import useAdiciones from './useAdiciones';
 import useProductosModificaciones from './useProductosModificaciones';
 import DeliveryRow from './DeliveryRow';
+import { useGetAllProducts } from '../../hooks/api/products/useGetAllProducts';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const ResumenProductosForm = ({ listaProducto, setListaProducto, delivery }) => {
-	const adiciones = useAdiciones();
+	const [adiciones, setAdiciones] = useState([])
+
+	const { data: products, error, fetchProducts } = useGetAllProducts()
+	useEffect(() => {
+		fetchProducts()
+	}, [])
+
+	useEffect(() => {
+		if (products) {
+			const newAdiciones = products.filter(e => e.type === 'complement');
+			setAdiciones(newAdiciones)
+		}
+	}, [products])
+
+	useEffect(() => {
+		if (error) {
+			console.log("🚀 ~ useEffect ~ error:", error)
+			toast.error('Error obteniendo las adiciones.');
+		}
+	}, [error])
+
 
 	const { onChangeSelectAdicion, onClicAdicion, calcularTotalProductos } =
 		useProductosModificaciones(listaProducto, setListaProducto, adiciones);
