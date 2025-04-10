@@ -2,6 +2,7 @@ import { Card, Button, Spinner, Alert, ListGroup, Badge } from "react-bootstrap"
 import { useGetKitchenByLocation } from "../../../hooks/api/kitchens/useGetKitchenByLocation";
 import { useEffect, useState } from "react";
 import InfoButton from "../../../components/InfoButton";
+import { DisabledComponent } from "../../../components/common/DisabledComponent";
 
 const KitchenAndDeliveryInfoClient = ({
 	kitchen,
@@ -59,20 +60,22 @@ const KitchenAndDeliveryInfoClient = ({
 						<span>
 							<strong>Nombre de la Cocina:</strong>
 						</span>
-						<span style={{ fontSize: "1.5rem" }}>
-							{kitchen ? kitchen.name : <Badge bg="secondary">No disponible</Badge>}
+						<span className="fs-4">
+							{kitchen ?
+								<Badge bg="primary" className="fs-5">{kitchen.name}</Badge> :
+								<Badge bg="secondary">No disponible</Badge>}
 						</span>
 					</ListGroup.Item>
 					<ListGroup.Item className="d-flex justify-content-between align-items-center">
 						<span>
 							<strong>Distancia:</strong>
 						</span>
-						<span style={{ fontSize: "1.5rem" }}>
-							{delivery && delivery.distance ? (
-								<Badge bg="secondary">{parseInt(delivery.distance / 1000)} km</Badge>
-							) : (
+						<span className="fs-5">
+							{delivery && delivery.distance ?
+								<Badge bg="secondary">{parseFloat(delivery.distance / 1000).toFixed(2)} km</Badge>
+								:
 								<Badge bg="secondary">N/A</Badge>
-							)}
+							}
 						</span>
 					</ListGroup.Item>
 					<ListGroup.Item className="d-flex justify-content-between align-items-center position-relative">
@@ -85,33 +88,36 @@ const KitchenAndDeliveryInfoClient = ({
 								/>:</strong>
 
 						</span>
-						<span style={{ fontSize: "1.5rem" }}>
-							{delivery && delivery.price !== undefined ? (
-								<Badge bg="secondary">${delivery.price.toLocaleString()}</Badge>
-							) : (
+						<span className="fs-6">
+							{delivery && delivery.price !== undefined ?
+								<Badge bg="secondary">${delivery.price.toLocaleString()}</Badge> :
 								<Badge bg="secondary">No disponible</Badge>
-							)}
+							}
 						</span>
 					</ListGroup.Item>
 				</ListGroup>
 
 				{!kitchenNotAvailable && (
 					<Alert variant="danger" className="mt-3">
-						No se encontraron cocinas disponibles para esta ubicación.
+						No se encontraron cocinas disponibles en este horario. Consulta nuestros horarios de las cocinas
 					</Alert>
 				)}
 			</Card.Body>
 
-			<Card.Footer className="text-end bg-light">
-				<Button
-					variant=""
-					onClick={onViewSchedulesAndKitchens}
-					className="btn-outline-primary"
-				>
-					Ver Horarios y Cocinas
-				</Button>
-			</Card.Footer>
-		</Card>
+			<Card.Footer className="text-end">
+				<DisabledComponent
+					message={'Esta funcionalidad estará disponible próximamente'}>
+					<Button
+						disabled
+						variant=""
+						onClick={onViewSchedulesAndKitchens}
+						className="btn-outline-primary"
+					>
+						Ver Horarios y Cocinas
+					</Button>
+				</DisabledComponent>
+			</Card.Footer >
+		</Card >
 	);
 };
 
