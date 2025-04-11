@@ -95,7 +95,7 @@ class Combo extends Producto {
 
 class SalsaDeAjo extends Producto {
 	constructor(props) {
-		super({ ...props, applyModifications: false })
+		super({ ...props, applyModifications: true })
 		this.name = PRODUCTS.SalsaDeAjo
 		this.id = `38`
 		this.type = `product`
