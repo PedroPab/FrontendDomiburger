@@ -1,7 +1,6 @@
 // context/OrdersContext.js
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
-// import { socket } from '../Utils/socket';
 import { usePreferences } from './PreferencesContext';
 import { io } from 'socket.io-client';
 import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
@@ -10,26 +9,24 @@ import { toast } from 'react-toastify';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNotificationSound } from '../hooks/useNotificationSound';
 import { useShowNotification } from '../hooks/useShowNotification';
+
 export const MiContexto = createContext();
 
 export const ContextProvider = ({ children }) => {
 	const apiUrl = getUrlSocket();
 	const socket = useRef();
 
-	const { roleSelect: ROLE } = usePreferences()
+	const { roleSelect: ROLE } = usePreferences();
+	const { usuarioActual, token, userData } = useAuth();
 
 	const [items, setItems] = useState([]);
 	const [alerts, setAlerts] = useState([]);
 	const [idItemSelect, setIdItemSelect] = useState(null);
 	const [zoomMaps, setZoomMaps] = useState(15);
 	const [alertaActiva, setAlertaActiva] = useState(false);
-	const [isConnected, setIsConnected] = useState(false); // Nuevo estado para indicar si está conectado
-
-	const { usuarioActual, token, userData } = useAuth()
-
+	const [isConnected, setIsConnected] = useState(false);
 
 	const [kitchenSelectId, setKitchenSelectId] = useLocalStorage('kitchenSelectId', null);
-
 	const { alertSound, errorCriticalSound, successSound } = useNotificationSound();
 	const { notify } = useShowNotification();
 
@@ -37,33 +34,40 @@ export const ContextProvider = ({ children }) => {
 		setKitchenSelectId(id);
 	};
 
-	// al comienzo de la aplicación, se  escoje una cocina
-	useEffect(() => {
-		//miramos cules son las cocinas que tiene asisgndas el usuario
-		const assignedKitchens = userData?.assignedKitchens || [];
+	// Función que ordena los pedidos por fecha de creación y les asigna un número secuencial.
+	// Se asume que cada pedido tiene la propiedad "createdAt" (por ejemplo, en formato ISO).
+	const ordenarYNumerarPedidos = (orders) => {
+		const sorted = orders.sort((a, b) => (a.dailyOrderNumber) - (b.dailyOrderNumber));
+		return sorted.map((order, index) => ({ ...order, orderNumber: index + 1 }));
+	};
 
+	// Función que filtra los pedidos según el rol, y luego los ordena y numera.
+	const actualizarPedidos = (orders) => {
+		const pedidosFiltrados = filtrarPedidos(orders, ROLE);
+		return ordenarYNumerarPedidos(pedidosFiltrados);
+	};
+
+	// Al inicio de la aplicación se asigna la cocina
+	useEffect(() => {
+		const assignedKitchens = userData?.assignedKitchens || [];
 		if (assignedKitchens.length < 0) {
 			toast.error('No tiene cocinas asignadas');
 			changeKitchen(null);
-			return
+			return;
 		}
-
 		if (assignedKitchens.length === 1) {
 			changeKitchen(assignedKitchens[0]);
-			return
+			return;
 		}
-
 		if (kitchenSelectId) {
 			const kitchen = assignedKitchens.find(kitchen => kitchen.id === kitchenSelectId);
 			if (kitchen) {
 				changeKitchen(kitchen);
-				return
+				return;
 			}
 		}
-		// si tiene cocinas asignadas, se escoge la primera
+		// Si tiene varias cocinas asignadas, se selecciona la primera
 	}, [usuarioActual]);
-
-
 
 	const reconnectSocket = () => {
 		if (!isConnected) {
@@ -75,35 +79,34 @@ export const ContextProvider = ({ children }) => {
 	useEffect(() => {
 		socket.current = io(`${apiUrl}/apiV2`);
 
-		console.log('intentando conectar socket');
+		console.log('Intentando conectar socket');
 		socket.current.connect();
-		// Manejamos la conexión inicial
+
+		// Conexión inicial
 		socket.current.on("connect", () => {
 			successSound();
 			console.log(`Socket conectado 🏁, ID: ${socket.current.id}`);
-			setIsConnected(true); // Indicamos que el socket está conectado
+			setIsConnected(true);
 			if (ROLE) {
-				// socket.current.emit('api/v2/pedidos/role', ROLE, ID);
 				const params = {
 					token: token,
 					role: ROLE,
 					kitchenId: kitchenSelectId
-				}
-				socket.current.emit('login', params)
+				};
+				socket.current.emit('login', params);
 			}
-			console.log("Señor debugeador , estas son mi variables, no me haga daño")
-			console.log(ROLE)
+			console.log("Variables de conexión:", ROLE);
 		});
 
 		// Manejo de desconexión
 		socket.current.on('disconnect', (reason) => {
 			console.log(`Socket desconectado 🥊, razón: ${reason}`);
 			errorCriticalSound();
-			setIsConnected(false); // Indicamos que el socket está desconectado
+			setIsConnected(false);
 		});
 
+		// Manejo de mensajes generales
 		socket.current.on("message", (newMessage) => {
-			//analizar el mensaje
 			const { type, message } = newMessage;
 			if (type === 'alert') {
 				alertSound();
@@ -112,68 +115,67 @@ export const ContextProvider = ({ children }) => {
 			toast(message);
 		});
 
+		// Pedido inicial: se filtran, ordenan y numeran
 		socket.current.on('order/init', (orders) => {
-
-			// toast(`Cargando pedidos iniciales 🚚, canidad de pedidos ${pedido.length}`);
-			console.log('pedidos iniciales', orders.length);
-			console.log('pedidos iniciales', orders);
-			const processedOrders = filtrarPedidos(orders, ROLE);
-			console.log("🚀 ~ socket.current.on ~ processedOrders:", processedOrders)
+			console.log('Pedidos iniciales recibidos:', orders.length);
+			const processedOrders = actualizarPedidos(orders);
 			setItems(processedOrders);
 		});
 
+		// Cuando se crea un pedido
 		socket.current.on('order/create', (pedido) => {
-			toast(`Pedido creado 🚚, ${pedido.id}`)
-			// notificamos al usuario del nuevo pedido
+			toast(`Pedido creado 🚚, ${pedido.id}`);
 			alertSound();
-			setItems((itemsPrevios) => {
-				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
+			setItems((prevItems) => {
+				const mapItems = new Map(prevItems.map((item) => [item.id, item]));
 				mapItems.set(pedido.id, pedido);
-				return filtrarPedidos(Array.from(mapItems.values()), ROLE);
+				return actualizarPedidos(Array.from(mapItems.values()));
 			});
 		});
 
+		// Cuando se actualiza un pedido
 		socket.current.on('order/update', (pedido) => {
-			// toast(`Pedido actualizado 🚚, ${pedido.id}`);
-			setItems((itemsPrevios) => {
-				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
+			setItems((prevItems) => {
+				const mapItems = new Map(prevItems.map((item) => [item.id, item]));
 				mapItems.set(pedido.id, pedido);
-				return filtrarPedidos(Array.from(mapItems.values()), ROLE);
+				return actualizarPedidos(Array.from(mapItems.values()));
 			});
 		});
 
+		// Cuando se remueve un pedido
 		socket.current.on('order/remove', (pedido) => {
-			console.warn("🚀 ~ socket.current.on ~ pedido:", pedido)
+			console.warn("Pedido removido:", pedido);
 			toast(`Pedido removido 🚚, ${pedido.id}`);
-			setItems((itemsPrevios) => {
-				console.warn("🚀 ~ setItems ~ itemsPrevios:", itemsPrevios)
-				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
-				console.info("🚀 ~ setItems ~ mapItems:", mapItems)
-
+			setItems((prevItems) => {
+				const mapItems = new Map(prevItems.map((item) => [item.id, item]));
 				mapItems.delete(pedido.id);
-				return filtrarPedidos(Array.from(mapItems.values()), ROLE);
+				return actualizarPedidos(Array.from(mapItems.values()));
 			});
 		});
 
+		// Cuando se elimina un pedido
 		socket.current.on('order/delete', (pedido) => {
 			toast(`Pedido eliminado 🚚, ${pedido.id}`);
-			setItems((itemsPrevios) => {
-				const mapItems = new Map(itemsPrevios.map((item) => [item.id, item]));
+			setItems((prevItems) => {
+				const mapItems = new Map(prevItems.map((item) => [item.id, item]));
 				mapItems.delete(pedido.id);
-				return filtrarPedidos(Array.from(mapItems.values()), ROLE);
+				return actualizarPedidos(Array.from(mapItems.values()));
 			});
 		});
+
+		// Limpiamos los listeners al desmontar
 		return () => {
-			console.warn('Desconectando socket , adios socket.current. te extrañaremos');
+			console.warn('Desconectando socket...');
 			socket.current.off("connect");
 			socket.current.off("disconnect");
 			socket.current.off("message");
-			socket.current.off('pedidosIniciales');
-			socket.current.off('pedidos/added');
-			socket.current.off('pedidos/modified');
+			socket.current.off('order/init');
+			socket.current.off('order/create');
+			socket.current.off('order/update');
+			socket.current.off('order/remove');
+			socket.current.off('order/delete');
 		};
 	}, [usuarioActual, ROLE, kitchenSelectId]);
-
 
 	return (
 		<MiContexto.Provider
@@ -188,9 +190,8 @@ export const ContextProvider = ({ children }) => {
 				setZoomMaps,
 				alertaActiva,
 				setAlertaActiva,
-				isConnected, // Exportamos el estado de conexión
-				reconnectSocket, // Exportamos la función de reconexión
-
+				isConnected,
+				reconnectSocket,
 				kitchenSelectId,
 				changeKitchen
 			}}
@@ -200,4 +201,4 @@ export const ContextProvider = ({ children }) => {
 	);
 };
 
-export const useMiContexto = () => useContext(MiContexto)
+export const useMiContexto = () => useContext(MiContexto);
