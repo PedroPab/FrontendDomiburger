@@ -6,17 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const TemporaryClosure = () => {
-	const [countClick, setCountClick] = useState(0);
-	const navigate = useNavigate();
-	const handleClick = () => {
-		setCountClick(countClick + 1);
 
-		if (countClick >= 5) {
-			// alert('¡Has hecho clic más de 5 veces!');
-			navigate('/login'); // Redirigir a la página de inicio
-			setCountClick(0);
-		}
-	};
 	return (
 		<UserLayout>
 			<Container

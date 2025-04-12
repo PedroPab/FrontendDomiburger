@@ -10,7 +10,7 @@ const UserMenu = ({ usuarioActual, onLogout }) => {
 	const { isDarkMode, toggleTheme } = usePreferences();
 
 	if (!usuarioActual) return (
-		<Nav className="d-flex align-items-center">
+		<Nav className="d-flex">
 			<Nav.Link as={Link} to="/login">
 				<Button variant="primary" className="px-4">Iniciar Sesión</Button>
 			</Nav.Link>
@@ -18,7 +18,7 @@ const UserMenu = ({ usuarioActual, onLogout }) => {
 	)
 
 	return (
-		<Nav className="d-flex align-items-center">
+		<Nav className="d-flex">
 			<NavDropdown
 				bsPrefix="nav-link"
 				title={
