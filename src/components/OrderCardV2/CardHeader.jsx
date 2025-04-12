@@ -68,7 +68,7 @@ const CardHeaderComponent = memo(({ order }) => {
 		</Popover>
 	);
 
-	const createdAt = convertToTimestamp(order.createdAt);
+	const createdAt = convertToTimestamp(order?.createdAt);
 
 	return (
 		<>

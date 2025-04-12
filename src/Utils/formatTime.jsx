@@ -53,7 +53,12 @@ function convertirHoraDeUnixADate(tiempoUnix) {
 }
 
 
-function convertToTimestamp({ seconds, nanoseconds, _seconds, _nanoseconds }) {
+function convertToTimestamp(content) {
+	const { seconds, nanoseconds, _seconds, _nanoseconds } = content || {};
+	if (!seconds && !_seconds && !nanoseconds && !_nanoseconds) {
+		return new Date(content)
+	}
+
 	const time = new Timestamp(seconds || _seconds, nanoseconds || _nanoseconds);
 	return time.toDate()
 }
