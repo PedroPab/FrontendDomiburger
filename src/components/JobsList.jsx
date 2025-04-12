@@ -1,38 +1,38 @@
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+import JobCard from "./JobCard";
 import { usePreferences } from "../Context/PreferencesContext";
 import { ROLES } from "../Utils/const/roles";
 
 const JobsList = ({ rolesOptions }) => {
 	const { roleSelect, setRoleSelect } = usePreferences();
-	if (!rolesOptions || rolesOptions.length === 0) return null;
 
+	// En caso de que no haya opciones disponibles, se muestra un mensaje amigable
+	if (!rolesOptions || rolesOptions.length === 0) {
+		return (
+			<Container className="mt-4">
+				<p className="text-center">No hay trabajos disponibles actualmente.</p>
+			</Container>
+		);
+	}
 
 	return (
 		<Container className="mt-4">
-			<h3 className="text-center mb-4">Trabajos</h3>
+			<h3 className="text-center mb-4">Trabajos Disponibles</h3>
 			<Row className="g-4">
 				{rolesOptions.map((role) => {
+					// Se extrae la información correspondiente del rol utilizando la constante ROLES
+					const roleData = Object.values(ROLES).find((rol) => rol.value === role);
+					if (!roleData) return null;
 					const isSelected = roleSelect === role;
-					const rolPath = Object.values(ROLES).find((rol) => rol.value === role)?.name
+
 					return (
-						<Col xs={12} md={6} lg={4} key={role}>
-							<Card
-								className={`shadow-lg border-0 rounded text-center h-100 
-                  ${isSelected == false ? "border-primary" : ""}`} // Resalta el rol seleccionado
-							>
-								<Card.Body className="d-flex flex-column align-items-center justify-content-center">
-									<Card.Title className="mb-3">{role}</Card.Title>
-									<Link to={`/${rolPath}`}>
-										<Button
-											variant={!isSelected ? "outline-primary" : "primary"}
-											onClick={() => setRoleSelect(role)} // Cambia la selección al hacer clic
-										>
-											{isSelected ? "Seleccionado" : "Ver más"}
-										</Button>
-									</Link>
-								</Card.Body>
-							</Card>
+						<Col xs={6} md={4} lg={3} key={role}>
+							<JobCard
+								role={role}
+								roleData={roleData}
+								isSelected={isSelected}
+								onSelect={setRoleSelect}
+							/>
 						</Col>
 					);
 				})}
