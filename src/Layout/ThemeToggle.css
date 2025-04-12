@@ -17,8 +17,8 @@
 
 /* Brillo azul para la luna */
 .dark-mode .icon-glow {
-  color: #8899ff;
-  text-shadow: 0 0 10px #8899ff, 0 0 20px #5566ff;
+  color: #000000;
+  text-shadow: 0 0 10px #000000, 0 0 20px #22185c;
 }
 
 /* Animación de brillo */

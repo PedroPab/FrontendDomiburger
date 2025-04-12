@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { usePreferences } from "../../Context/PreferencesContext";
 import { useAuth } from "../../Context/AuthContext";
 import logo from "./../../assets/logo.png";
-import { FaShoppingCart, FaMapMarkerAlt } from "react-icons/fa";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa"; // Importamos el icono de Instagram
 import "./UserNavbar.css";
-import { USER_ROUTES } from "../../Utils/const/namesRutes";
 import { UserMenu } from "../UserMenu";
+import ThemeToggle from "../ThemeToggle";
 
 const UserNavbar = () => {
-	const { isDarkMode } = usePreferences();
+	const { isDarkMode, toggleTheme } = usePreferences();
 	const { usuarioActual, handleLogout } = useAuth();
 
 	return (
@@ -33,20 +33,35 @@ const UserNavbar = () => {
 				<Navbar.Collapse id="navbar-nav">
 					{/* SECCIÓN DE NAVEGACIÓN */}
 					<Nav className="me-auto">
-						{/* Ejemplo de enlaces (comentados) */}
-						{/*
-            <Nav.Link as={Link} to="/" className="d-flex align-items-center gap-2">
-              <FaShoppingCart /> Pedir ahora
-            </Nav.Link>
 
-            <Nav.Link as={Link} to={USER_ROUTES.routes.LOCATIONS} className="d-flex align-items-center gap-2">
-              <FaMapMarkerAlt /> Ubicaciones
-            </Nav.Link>
+						<Nav.Link className="d-flex align-items-center gap-2">
+							<ThemeToggle isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+						</Nav.Link>
 
-            <Nav.Link as={Link} to={USER_ROUTES.routes.CREATE_ORDER} className="d-flex align-items-center gap-2">
-              <FaShoppingCart /> Pedir Ya Nuevo
-            </Nav.Link>
-            */}
+
+
+						<Nav.Link
+							href="https://www.instagram.com/domiburguer_/"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="d-flex align-items-center gap-2 ms-1" // Agregamos margen a la izquierda
+						>
+							<FaInstagram size={20} />
+							<span>@domiburguer_</span>
+						</Nav.Link>
+
+
+						<Nav.Link
+							href="https://wa.me/+573506186772?text=holis"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="d-flex align-items-center gap-2 ms-1" // Agregamos margen a la izquierda
+						>
+							<FaWhatsapp size={20} />
+							<span>Nuestro WhatsApp</span>
+						</Nav.Link>
+
+
 					</Nav>
 
 					{/* SECCIÓN DE USUARIO */}
