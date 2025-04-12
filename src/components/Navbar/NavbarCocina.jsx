@@ -47,7 +47,7 @@ const NavbarCocina = () => {
 					</Col>
 
 					{/* 3. Selector de Cocina */}
-					<Col xs="auto" className="d-none d-md-block">
+					<Col xs="auto" className="">
 						<KitchenSelector />
 					</Col>
 
@@ -59,11 +59,8 @@ const NavbarCocina = () => {
 
 				{/* 5. Menú de Navegación */}
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="ms-auto align-items-center">
+					<UserMenu usuarioActual={usuarioActual} onLogout={handleLogout} />
 
-						<UserMenu usuarioActual={usuarioActual} onLogout={handleLogout} />
-
-					</Nav>
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>

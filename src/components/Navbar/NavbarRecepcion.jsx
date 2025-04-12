@@ -43,14 +43,14 @@ const NavbarRecepcion = () => {
 			icon: <FaMapMarkerAlt className="me-1" size={18} />,
 			route: RECEPCION_ROUTES.routes.MAP_RECEPCION,
 		},
-	];
-
-	const administracionItems = [
 		{
 			title: 'Contabilidad',
 			icon: <FaCashRegister className="me-1" size={18} />,
 			route: RECEPCION_ROUTES.routes.CONTABILIDAD,
 		},
+	];
+
+	const administracionItems = [
 		{
 			title: 'Historial',
 			icon: <MdOutlineReceipt className="me-1" size={18} />,
@@ -135,32 +135,23 @@ const NavbarRecepcion = () => {
 				</Row>
 
 				<Navbar.Collapse id="navbar-nav">
-					<Nav className="ms-auto align-items-center">
+					<Nav className="ms-auto ">
 						{/* Sección: Crear Pedido */}
 						{crearPedidoItems.map((item, idx) => (
-							<NavDropdown.Item key={idx} as={Link} to={item.route} className="mx-2">
+							<Nav.Link key={idx} as={Link} to={item.route} className="d-flex align-items-center gap-2 ms-1">
 								{item.icon}
 								{item.title}
-							</NavDropdown.Item>
+							</Nav.Link>
 						))}
 
 						{/* Sección: Seguimiento */}
-						<NavDropdown
-							title={
-								<span>
-									<FiMapPin className="me-1" size={18} /> Seguimiento
-								</span>
-							}
-							id="nav-dropdown-seguimiento"
-							className="mx-2"
-						>
-							{seguimientoItems.map((item, idx) => (
-								<NavDropdown.Item key={idx} as={Link} to={item.route}>
-									{item.icon}
-									{item.title}
-								</NavDropdown.Item>
-							))}
-						</NavDropdown>
+
+						{seguimientoItems.map((item, idx) => (
+							<Nav.Link key={idx} as={Link} to={item.route} className='d-flex align-items-center gap-2 ms-1'>
+								{item.icon}
+								{item.title}
+							</Nav.Link>
+						))}
 
 						{/* Sección: Administración */}
 						<NavDropdown
@@ -192,7 +183,7 @@ const NavbarRecepcion = () => {
 					<UserMenu usuarioActual={usuarioActual} onLogout={handleLogout} />
 				</Navbar.Collapse>
 			</Container>
-		</Navbar>
+		</Navbar >
 	);
 };
 
