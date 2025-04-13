@@ -14,13 +14,15 @@ import { useWorker } from '../../../Context/WorkerContext';
 const MapRecepcionContent = () => {
 	const { idOrderSelect } = useWorker()
 	// Uso de los contextos dentro del componente contenido, ya que aquí se encuentran envueltos por el Provider.
-	const { items, zoomMaps, setZoomMaps, idItemSelect } = useMiContexto();
+	const { items, zoomMaps, setZoomMaps, idItemSelect, kitchenSelectId } = useMiContexto();
 	const { openSidebarFilterDelivery } = useRecepcion();
+	//el centro es donde esta la cocina seleccionada
+	const { listKitchens } = useWorker();
+	const kitchen = listKitchens.find((kitchen) => kitchen.id === kitchenSelectId);
+	const origin = kitchen?.location?.coordinates
+	const [centerMaps, setCenterMaps] = useState(origin)
 
-	const [centerMaps, setCenterMaps] = useState({
-		lat: 6.29,
-		lng: -75.576,
-	});
+
 
 	const containerStyle = {
 		width: '100%', // El mapa ocupará el 100% del ancho del contenedor padre
