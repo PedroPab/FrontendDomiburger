@@ -1,4 +1,4 @@
-import { SelectAdicionClient } from '../../SelectAdicionClient';
+import { AdditionSelector } from '../../AdditionSelector';
 import formatearNumeroConPuntos from './../../../Utils/formatearNumeroConPuntos';
 
 const ProductoRow = ({ producto, adiciones, onClicAdicion, onChangeSelectAdicion }) => {
@@ -34,7 +34,7 @@ const ProductoRow = ({ producto, adiciones, onClicAdicion, onChangeSelectAdicion
 			<td>
 				{
 					producto?.applyModifications &&
-					<SelectAdicionClient
+					<AdditionSelector
 						producto={producto}
 						onChangeSelect={onChangeSelectAdicion}
 						adiciones={adiciones}
