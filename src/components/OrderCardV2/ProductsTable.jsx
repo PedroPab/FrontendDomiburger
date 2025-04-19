@@ -1,5 +1,6 @@
 import { Table, Badge } from "react-bootstrap";
 import "./ProductsTable.css";
+import { ItemProductBadge } from "../Products/ItemProductBadge";
 const ProductsTable = ({ orderItems }) => {
 
 
@@ -24,11 +25,7 @@ const ProductsTable = ({ orderItems }) => {
 								<Badge className="badge m-2 badge-primary">
 									{complement?.quantity || 1}
 								</Badge>
-								<span
-									style={{ backgroundColor: complement?.colorPrimary }}
-									className="badge m-1">
-									{complement?.name}
-								</span>
+								<ItemProductBadge name={complement?.name} color={complement?.colorPrimary} />
 							</div>
 						));
 					};
