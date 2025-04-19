@@ -65,7 +65,7 @@ const AdminProducts = () => {
 
 				{/* Contenido */}
 				<Row>
-					<Col xs={12}>
+					<Col md={10} lg={10} className="mx-auto">
 						{loading ? (
 							<div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
 								<Spinner animation="border" variant="primary" />
@@ -90,7 +90,7 @@ const AdminProducts = () => {
 					</Col>
 				</Row>
 			</Container>
-		</LayoutAdmin>
+		</LayoutAdmin >
 	);
 };
 

@@ -1,51 +1,62 @@
-import { Card, Button, Badge, ListGroup } from 'react-bootstrap';
-import imgDefault from "../../assets/img/photoGeneric.jpg";
-
+import { Card } from 'react-bootstrap';
+import imgDefault from '../../assets/img/photoGeneric.jpg'; // Importa la imagen por defecto
+import { DisabledComponent } from '../common/DisabledComponent';
 const ProductCard = ({ element }) => {
+	const product = element;
 	// Asignar la imagen: se utiliza la primera foto o la imagen por defecto
 	const imageUrl = element?.photos?.[0] || imgDefault;
 
 	return (
-		<Card className="shadow-sm h-100">
-			<Card.Img
-				variant="top"
-				src={imageUrl}
-				alt={element.name}
-				className="img-fluid"
-				style={{ objectFit: "cover", aspectRatio: "1 / 1" }}
-			/>
-
+		<Card>
+			{/* header */}
+			<Card.Header className="d-flex justify-content-center align-items-center">
+				{/* imagen */}
+				<Card.Img
+					variant="top"
+					src={imageUrl || 'https://via.placeholder.com/150'}
+					alt={product.name}
+					style={{ width: '100%', height: '200px', objectFit: 'cover' }}
+				/>
+			</Card.Header>
 			<Card.Body>
-				<Card.Title className="text-center">{element.name}</Card.Title>
+				<Card.Title>{product.name}</Card.Title>
+				<Card.Text className="mb-1">{product.description}</Card.Text>
+				<Card.Text className="fw-bold">${product.price.toLocaleString()}</Card.Text>
 
-				{/* Si el elemento tiene la propiedad "secret", se muestra el distintivo */}
-				{element.secret && (
-					<div className="d-flex justify-content-center mb-2">
-						<Badge bg="warning" className="text-dark">Secreto</Badge>
-					</div>
+				{/* si es secreto */}
+				{product.secret && (
+					<Card.Text className="text-danger fw-bold">¡SECRETO!</Card.Text>
 				)}
 
-				<Card.Text className="text-muted">{element.description}</Card.Text>
-				<Card.Text className="fw-bold text-primary">
-					Precio: ${element.price.toLocaleString()}
-				</Card.Text>
-
-				<div className="text-center my-2">
-					<Badge bg={element.status === "active" ? "success" : "danger"}>
-						{element.status}
-					</Badge>
-				</div>
-
-				<ListGroup variant="flush" className="mt-3">
-					<ListGroup.Item>
-						<strong>Tipo:</strong> {element.type}
-					</ListGroup.Item>
-				</ListGroup>
-
-				<div className="mt-3">
-					<Button variant="primary" className="w-100">Ver detalles</Button>
-				</div>
+				{/* color primary */}
+				<div
+					className='mb-1'
+					style={{
+						backgroundColor: product.colorPrimary,
+						width: '100%',
+						height: '6px',
+						borderRadius: '3px',
+					}}
+				/>
+				{/* color secondary */}
+				<div
+					style={{
+						backgroundColor: product.colorSecondary,
+						width: '100%',
+						height: '6px',
+						borderRadius: '3px',
+					}}
+				/>
 			</Card.Body>
+			{/* footer */}
+			<Card.Footer className="d-flex justify-content-between align-items-center">
+				{/* ver mas */}
+				<DisabledComponent
+					message={'Esta funcionalidad estará disponible próximamente'}>
+					<button className="btn btn-outline-primary" onClick={() => { }}> Ver mas </button>
+				</DisabledComponent>
+				<button className="btn btn-outline-success">Editar</button>
+			</Card.Footer>
 		</Card>
 	);
 };
