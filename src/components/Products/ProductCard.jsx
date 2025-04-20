@@ -4,6 +4,7 @@ import { DisabledComponent } from '../common/DisabledComponent';
 import ReusableModal from '../common/ReusableModal';
 import { useState } from 'react';
 import { ItemProductBadge } from './ItemProductBadge';
+import { UpdateProduct } from './UpdateProduct';
 const ProductCard = ({ element }) => {
 	const product = element;
 	// Asignar la imagen: se utiliza la primera foto o la imagen por defecto
@@ -31,6 +32,10 @@ const ProductCard = ({ element }) => {
 				<Card.Text className="mb-1">{product.description}</Card.Text>
 				<Card.Text className="fw-bold">${product.price.toLocaleString()}</Card.Text>
 
+				{/* type */}
+				<Card.Text className="text-muted">
+					{product.type === 'complement' ? 'Adición' : 'Producto'}
+				</Card.Text>
 				{/* si es secreto */}
 				{product.secret && (
 					<Card.Text className="text-danger fw-bold">¡SECRETO!</Card.Text>
@@ -67,7 +72,7 @@ const ProductCard = ({ element }) => {
 			</Card.Footer>
 			<ReusableModal show={show} handleClose={handleClose} title="Editar Producto">
 				{/* Aquí puedes agregar el contenido del modal */}
-
+				<UpdateProduct product={product} handleClose={handleClose} />
 			</ReusableModal>
 		</Card>
 	);

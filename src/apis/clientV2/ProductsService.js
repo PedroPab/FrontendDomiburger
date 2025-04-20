@@ -55,6 +55,14 @@ class ProductsService {
 			throw error;
 		}
 	}
+	async update(id, data) {
+		try {
+			const rta = await this.api.put(`/${id}`, data);
+			return rta.data
+		} catch (error) {
+			throw error.response.data
+		}
+	}
 }
 
 export { ProductsService }
