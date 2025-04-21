@@ -1,0 +1,60 @@
+/* src/components/FancyTimeline.css */
+.fancy-tl {
+  position: relative;
+  padding: 2rem 0;
+}
+.fancy-tl::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 4px;
+  top: 0;
+  bottom: 0;
+  background: #ddd;
+}
+.fancy-item {
+  position: relative;
+  width: 50%;
+  padding: 1rem 2rem;
+}
+.fancy-item.pos-0 {
+  left: 0;
+  text-align: right;
+}
+.fancy-item.pos-1 {
+  left: 50%;
+  text-align: left;
+}
+.fancy-card {
+  display: inline-block;
+  border-left: 4px solid;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: relative;
+}
+.fancy-card::after {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  width: 0; height: 0;
+  border: 8px solid transparent;
+}
+.fancy-item.pos-0 .fancy-card::after {
+  right: -16px;
+  border-left-color: #fff;
+}
+.fancy-item.pos-1 .fancy-card::after {
+  left: -16px;
+  border-right-color: #fff;
+}
+.fancy-label {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  color: #fff;
+  border-radius: 0.25rem;
+}
+.fancy-body p {
+  margin: 0.25rem 0;
+  font-size: 0.8rem;
+}

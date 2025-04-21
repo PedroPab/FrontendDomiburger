@@ -1,5 +1,4 @@
-import React from "react";
-import { Modal, Button, Table } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { ButtonDeleteOrder } from "./ButtonDeleteOrder";
 import { ButtonChangeKitchen } from "./ButtonChangeKitchen";
 import { OrderTimeline } from "./OrderTimeline";
