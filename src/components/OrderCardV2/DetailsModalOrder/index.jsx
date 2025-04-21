@@ -4,7 +4,6 @@ import { ButtonChangeKitchen } from "./ButtonChangeKitchen";
 import { OrderTimeline } from "./OrderTimeline";
 
 const DetailsModalOrder = ({ showModal, setShowModal, order }) => {
-	console.log("🚀 ~ DetailsModalOrder ~ order:", order)
 	if (!order) return null; // Si no hay orden, no renderiza el modal
 
 	return (

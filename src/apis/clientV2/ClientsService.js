@@ -45,6 +45,16 @@ class ClientsService {
 			throw error;
 		}
 	}
+	async update(id, data) {
+		try {
+			const rta = await this.api.put(`/${id}`, data)
+			console.log("🚀 ~ ClientsService ~ update ~ rta:", rta)
+
+			return rta.data
+		} catch (error) {
+			throw error.response.data
+		}
+	}
 	async getById(id) {
 		const rta = await this.api.get(`/${id}`)
 		return rta.data

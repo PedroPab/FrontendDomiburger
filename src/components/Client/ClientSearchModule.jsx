@@ -8,6 +8,8 @@ import NameInput from "../FormsInputs/NameInput";
 import { useFindLocationsByIdClient } from "../../hooks/api/useFindLocationsByIdClient";
 import { tr } from "faker/lib/locales";
 import { useImportLocation } from "../../hooks/api/useImportLocation";
+import ReusableModal from "../common/ReusableModal";
+import { EditClient } from "./EditCllient";
 
 const CREATE_CLIENT = { CLOSED: "closed", OPEN: "open", INQUIRING: "inquiring" };
 
@@ -18,7 +20,7 @@ const ClientSearchModule = ({ dataClient, setDataClient }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoadingCreateClient, setIsLoadingCreateClient] = useState(false);
 	const [openCreateClient, setOpenCreateClient] = useState(CREATE_CLIENT.CLOSED);
-
+	const [openEditClient, setOpenEditClient] = useState(false);
 	// Memoizamos el servicio para que no se recree en cada render.
 	const clientsService = useMemo(() => new ClientsService(token), [token]);
 	const { locations, findLocationsByIdClient } = useFindLocationsByIdClient();
@@ -172,11 +174,19 @@ const ClientSearchModule = ({ dataClient, setDataClient }) => {
 								<Button
 									type="button"
 									variant="primary"
-									onClick={() => toast.info("Funcionalidad no implementada,,, pero imaginese que si")}
+									onClick={() => setOpenEditClient(true)}
 									className="w-100 my-2"
 								>
 									Editar Cliente
 								</Button>
+								{/* iditar cliente */}
+								<ReusableModal
+									show={openEditClient}
+									handleClose={() => setOpenEditClient(false)}
+									title="Editar Cliente"
+								>
+									<EditClient client={dataClient} setClient={setDataClient} />
+								</ReusableModal>
 							</>
 
 						)}
