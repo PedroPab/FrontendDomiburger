@@ -23,7 +23,7 @@ function NextStatusButton({ data }) {
 		setIsLoading(true);
 		try {
 			await orderService.changeStatus(id, previousState, nextState);
-			toast.success("Order status updated");
+			// toast.success("Order status updated");
 		} catch (error) {
 			console.error("Error updating order status:", error);
 			toast.error(`Error changing order status: ${error?.message}`);
