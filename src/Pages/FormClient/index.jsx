@@ -7,14 +7,14 @@ import { UserLayout } from '../../Layout/UserLayout';
 const FormClient = () => {
 
 
-	return (
-		<>
-			<UserLayout>
-				<HelmetClientHome />
-				<FormContainer />
-			</UserLayout>
-		</>
-	);
+  return (
+    <>
+      <UserLayout>
+        <HelmetClientHome />
+        <FormContainer />
+      </UserLayout>
+    </>
+  );
 };
 
 export default FormClient;

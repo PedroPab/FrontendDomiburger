@@ -1,13 +1,10 @@
 // src/pages/Contabilidad.jsx
-import React, { useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { Container, Row, Spinner, Alert } from 'react-bootstrap';
 import { MiContexto } from '../../Context';
 import TablaListaPedidos from "../../components/TablaListaPedidos";
-import Layout from "../../components/Layout";
-import { ContextProviderRecepcion } from '../../Context/RecepcionContex';
 import { UtilsApi } from '../../Utils/utilsApi';
 import FormulariFiltros from '../../components/FormulariFiltros';
-import { NavbarRecepcion } from '../../components/Navbar/NavbarRecepcion';
 import EstadisticasDashboard from '../../components/EstadisticasDashboard';
 import LayoutRecepcion from '../../Layout/Recepcion';
 
@@ -59,22 +56,22 @@ const calcularEstadisticas = (pedidosData) => {
 
     element.order.forEach(producto => {
       switch (producto.id) {
-        case '1':
-          comboContador += 1;
-          TotalDeCostosProductos += producto.price || 0;
-          break;
-        case '2':
-          hamburguesaContador += 1;
-          TotalDeCostosProductos += producto.price || 0;
-          break;
-        case '38':
-          salsaDeAjoContador += 1;
-          break;
-        default:
-          if (producto.type === 'domicilio') {
-            domicilioContador += producto.price || 0;
-          }
-          break;
+      case '1':
+        comboContador += 1;
+        TotalDeCostosProductos += producto.price || 0;
+        break;
+      case '2':
+        hamburguesaContador += 1;
+        TotalDeCostosProductos += producto.price || 0;
+        break;
+      case '38':
+        salsaDeAjoContador += 1;
+        break;
+      default:
+        if (producto.type === 'domicilio') {
+          domicilioContador += producto.price || 0;
+        }
+        break;
       }
       const { contadorProducto, contadorCosteProducto } = contieneAdicionGaseosa(producto.modifique || [], ['9', '10']);
       totalDeGaseosas += contadorProducto;

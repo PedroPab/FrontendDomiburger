@@ -4,28 +4,28 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../../Context/AuthContext';
 
 const useAdiciones = () => {
-	const [adiciones, setAdiciones] = useState([]);
-	const token = useAuth();
-	const productsService = new ProductsService(token);
+  const [adiciones, setAdiciones] = useState([]);
+  const token = useAuth();
+  const productsService = new ProductsService(token);
 
-	useEffect(() => {
-		const fetchAdiciones = async () => {
-			try {
-				const response = await productsService.getAll();
-				let data = response.body;
-				// Filtramos solo las adiciones
-				data = data.filter(e => e.type === 'complement');
-				setAdiciones(data);
-			} catch (error) {
-				console.error(error);
-				toast.error('Error obteniendo las adiciones.');
-			}
-		};
+  useEffect(() => {
+    const fetchAdiciones = async () => {
+      try {
+        const response = await productsService.getAll();
+        let data = response.body;
+        // Filtramos solo las adiciones
+        data = data.filter(e => e.type === 'complement');
+        setAdiciones(data);
+      } catch (error) {
+        console.error(error);
+        toast.error('Error obteniendo las adiciones.');
+      }
+    };
 
-		fetchAdiciones();
-	}, []);
+    fetchAdiciones();
+  }, []);
 
-	return adiciones;
+  return adiciones;
 };
 
 export default useAdiciones;

@@ -1,7 +1,6 @@
 import { Container, Spinner, Row, Col } from 'react-bootstrap';
 import LayoutAdmin from '../../Layout/Admin.jsx';
 import PaginationComponent from '../../components/Pagination/index.jsx';
-import { KitchensList } from '../../components/Kitchens/KitchensList.jsx';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { KitchenService } from '../../apis/clientV2/KitchenService.js';

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import useSocket from '../hooks/useSocket';
 
 const Chat = () => {
-  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const socket = useSocket('http://localhost:8087'); // URL del servidor de WebSocket
 

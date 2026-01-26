@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { UtilsApi } from '../../../../../Utils/utilsApi';
 import { useAuth } from '../../../../../Context/AuthContext';
 
-// eslint-disable-next-line no-unused-vars
+ 
 const BotonConfirmarPagoPedido = ({ idOrder, handleClose }) => {
 
   const [confirmar, setConfirmar] = useState(false);

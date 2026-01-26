@@ -6,14 +6,14 @@ import SelectListDomiciliarios from '../../../components/SelectListDomiciliarios
 
 const FormAdminV2 = () => {
 
-	return (
-		<LayoutRecepcion>
+  return (
+    <LayoutRecepcion>
 
-			<FormContainerAdmin />
-			<SelectListDomiciliarios />
+      <FormContainerAdmin />
+      <SelectListDomiciliarios />
 
-		</LayoutRecepcion>
-	)
+    </LayoutRecepcion>
+  )
 }
 
 export { FormAdminV2 }

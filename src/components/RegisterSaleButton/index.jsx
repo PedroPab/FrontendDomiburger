@@ -1,13 +1,13 @@
 function RegisterSaleButton({ onClick }) {
-	return (
-		<div className="d-flex justify-content-center mt-5 mb-5">
-			<button
-				className="btn btn-primary register-sale-button"
-				onClick={onClick}
-			>
-				Registrar Venta
-			</button>
-			<style>{`
+  return (
+    <div className="d-flex justify-content-center mt-5 mb-5">
+      <button
+        className="btn btn-primary register-sale-button"
+        onClick={onClick}
+      >
+        Registrar Venta
+      </button>
+      <style>{`
         .register-sale-button {
           border-radius: 30px;
           border: 2px solid #007bff;
@@ -50,8 +50,8 @@ function RegisterSaleButton({ onClick }) {
           box-shadow: 0 3px 10px rgba(0, 123, 255, 0.4);
         }
       `}</style>
-		</div>
-	);
+    </div>
+  );
 }
 
 export default RegisterSaleButton;

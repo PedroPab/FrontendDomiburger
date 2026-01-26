@@ -18,156 +18,156 @@ import { TotalPrice } from '../../../components/TotalPrice';
 import { usePaymentMethodCom } from './usePaymentMethodCom';
 
 const FormContainerAdmin = () => {
-	const { token } = useAuth();
+  const { token } = useAuth();
 
-	// Estados
-	const [dataClient, setDataClient] = useState(null);
-	const [selectDomiciliario, setSelectDomiciliario] = useState('');
-	const { Component: PaymentMethodInput, paymentMethod, setPaymentValueDefault } = usePaymentMethodCom();
-	const [isLoading, setIsLoading] = useState(false);
-	const [locationIdSelect, setLocationIdSelect] = useState(null);
-	const [comment, setComment] = useState('');
-	const [kitchenIdSelect, setKitchenIdSelect] = useState('');
-	const [productOrderList, setProductOrderList] = useState([]);
-	const [delivery, setDelivery] = useState(null);
-	const [kitchen, setKitchen] = useState(null);
+  // Estados
+  const [dataClient, setDataClient] = useState(null);
+  const [selectDomiciliario, setSelectDomiciliario] = useState('');
+  const { Component: PaymentMethodInput, paymentMethod, setPaymentValueDefault } = usePaymentMethodCom();
+  const [isLoading, setIsLoading] = useState(false);
+  const [locationIdSelect, setLocationIdSelect] = useState(null);
+  const [comment, setComment] = useState('');
+  const [kitchenIdSelect, setKitchenIdSelect] = useState('');
+  const [productOrderList, setProductOrderList] = useState([]);
+  const [delivery, setDelivery] = useState(null);
+  const [kitchen, setKitchen] = useState(null);
 
-	const ordersService = useMemo(() => new OrderService(token), [token]);
+  const ordersService = useMemo(() => new OrderService(token), [token]);
 
-	// Función para enviar la orden
-	const sendOrder = async () => {
-		if (!dataClient) {
-			toast.error("Por favor, seleccione un cliente.");
-			return;
-		}
-		if (!locationIdSelect) {
-			toast.error("Por favor, seleccione una dirección.");
-			return;
-		}
-		if (productOrderList.length === 0) {
-			toast.error("Agregue al menos un producto a la orden.");
-			return;
-		}
+  // Función para enviar la orden
+  const sendOrder = async () => {
+    if (!dataClient) {
+      toast.error("Por favor, seleccione un cliente.");
+      return;
+    }
+    if (!locationIdSelect) {
+      toast.error("Por favor, seleccione una dirección.");
+      return;
+    }
+    if (productOrderList.length === 0) {
+      toast.error("Agregue al menos un producto a la orden.");
+      return;
+    }
 
-		const orderItems = productOrderList.map(product => {
+    const orderItems = productOrderList.map(product => {
 
-			const r = { id: product.id }
-			if (product?.modifique && product?.modifique.length > 0) r.complements = product?.modifique.map(complement => ({ id: complement.id }))
-			//if(product.quantity) r.quantity = product.quantity
-			return r;
-		})
-		// Se arma el objeto con la información necesaria para el pedido
-		const orderData = {
-			clientId: dataClient.id,
-			locationId: locationIdSelect,
-			comment,
-			paymentMethod,
-			orderItems: orderItems,
-			delivery,
-		};
+      const r = { id: product.id }
+      if (product?.modifique && product?.modifique.length > 0) r.complements = product?.modifique.map(complement => ({ id: complement.id }))
+      //if(product.quantity) r.quantity = product.quantity
+      return r;
+    })
+    // Se arma el objeto con la información necesaria para el pedido
+    const orderData = {
+      clientId: dataClient.id,
+      locationId: locationIdSelect,
+      comment,
+      paymentMethod,
+      orderItems: orderItems,
+      delivery,
+    };
 
-		// Si se ha seleccionado un domiciliario y cocina, se agrega la información
-		if (kitchenIdSelect) {
-			orderData.assignedKitchenId = kitchenIdSelect;
-		}
+    // Si se ha seleccionado un domiciliario y cocina, se agrega la información
+    if (kitchenIdSelect) {
+      orderData.assignedKitchenId = kitchenIdSelect;
+    }
 
-		setIsLoading(true);
-		try {
-			const response = await ordersService.createPublicAdmin(orderData);
-			console.log("Pedido enviado:", response);
-			toast.success("Pedido creado con éxito.");
-			// Opcional: Resetear estados o limpiar formulario aquí
-			//ponemos los estados en su estado original
-			setDataClient(null);
+    setIsLoading(true);
+    try {
+      const response = await ordersService.createPublicAdmin(orderData);
+      console.log("Pedido enviado:", response);
+      toast.success("Pedido creado con éxito.");
+      // Opcional: Resetear estados o limpiar formulario aquí
+      //ponemos los estados en su estado original
+      setDataClient(null);
 
-			setSelectDomiciliario('');
-			setPaymentValueDefault()
-			setLocationIdSelect(null);
-			setComment('');
-			setKitchenIdSelect('');
-			setProductOrderList([]);
-			setDelivery(null);
-			setKitchen(null);
+      setSelectDomiciliario('');
+      setPaymentValueDefault()
+      setLocationIdSelect(null);
+      setComment('');
+      setKitchenIdSelect('');
+      setProductOrderList([]);
+      setDelivery(null);
+      setKitchen(null);
 
 
-		} catch (error) {
-			console.error("Error al crear el pedido:", error);
-			toast.error("Error al crear el pedido");
-		} finally {
-			setIsLoading(false);
-		}
-	}
+    } catch (error) {
+      console.error("Error al crear el pedido:", error);
+      toast.error("Error al crear el pedido");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
-	useEffect(() => {
-		if (!dataClient) {
-			setLocationIdSelect(null);
-			setDelivery(null);
-		}
-	}, [dataClient]);
-	useEffect(() => {
-		if (!locationIdSelect) {
-			setDelivery(null);
-		}
-	}, [locationIdSelect]);
+  useEffect(() => {
+    if (!dataClient) {
+      setLocationIdSelect(null);
+      setDelivery(null);
+    }
+  }, [dataClient]);
+  useEffect(() => {
+    if (!locationIdSelect) {
+      setDelivery(null);
+    }
+  }, [locationIdSelect]);
 
-	useEffect(() => {
-		if (delivery) {
-			console.group("🚚 Delivery Info")
-			console.log("delivery", delivery);
-			console.log("kitchenIdSelect", kitchenIdSelect);
-			console.log("kitchen", kitchen);
-			console.groupEnd()
-		}
-	}
-		, [delivery]);
+  useEffect(() => {
+    if (delivery) {
+      console.group("🚚 Delivery Info")
+      console.log("delivery", delivery);
+      console.log("kitchenIdSelect", kitchenIdSelect);
+      console.log("kitchen", kitchen);
+      console.groupEnd()
+    }
+  }
+  , [delivery]);
 
-	return (
-		<Container>
-			<LoadingSpinner isLoading={isLoading} />
+  return (
+    <Container>
+      <LoadingSpinner isLoading={isLoading} />
 
-			<ClientSearchModule setDataClient={setDataClient} dataClient={dataClient} />
+      <ClientSearchModule setDataClient={setDataClient} dataClient={dataClient} />
 
-			<ViewListLocations
-				locationIdSelect={locationIdSelect}
-				setLocationIdSelect={setLocationIdSelect}
-				clientId={dataClient?.id}
-				dataClient={dataClient}
-				userId={null}
-			/>
+      <ViewListLocations
+        locationIdSelect={locationIdSelect}
+        setLocationIdSelect={setLocationIdSelect}
+        clientId={dataClient?.id}
+        dataClient={dataClient}
+        userId={null}
+      />
 
-			<CommentInput comment={comment} setComment={setComment} />
+      <CommentInput comment={comment} setComment={setComment} />
 
-			<PaymentMethodInput />
-			<SelectDomiciliario
-				selectDomiciliario={selectDomiciliario}
-				setSelectDomiciliario={setSelectDomiciliario}
-			/>
+      <PaymentMethodInput />
+      <SelectDomiciliario
+        selectDomiciliario={selectDomiciliario}
+        setSelectDomiciliario={setSelectDomiciliario}
+      />
 
-			<SelectKitchen kitchenIdSelect={kitchenIdSelect} setKitchenIdSelect={setKitchenIdSelect} />
-			<KitchenAndDeliveryInfo
-				kitchen={kitchen}
-				setKitchen={setKitchen}
-				delivery={delivery}
-				setDelivery={setDelivery}
-				locationIdSelect={locationIdSelect}
-				kitchenIdSelect={kitchenIdSelect}
-			/>
-			<DashboardProducts
-				listaProductosOrder={productOrderList}
-				setListaProductosOrder={setProductOrderList}
-				delivery={delivery}
-			/>
+      <SelectKitchen kitchenIdSelect={kitchenIdSelect} setKitchenIdSelect={setKitchenIdSelect} />
+      <KitchenAndDeliveryInfo
+        kitchen={kitchen}
+        setKitchen={setKitchen}
+        delivery={delivery}
+        setDelivery={setDelivery}
+        locationIdSelect={locationIdSelect}
+        kitchenIdSelect={kitchenIdSelect}
+      />
+      <DashboardProducts
+        listaProductosOrder={productOrderList}
+        setListaProductosOrder={setProductOrderList}
+        delivery={delivery}
+      />
 
-			{/* total */}
-			<TotalPrice
-				productOrderList={productOrderList}
-				delivery={delivery}
-			/>
-			<RegisterSaleButton onClick={sendOrder} />
+      {/* total */}
+      <TotalPrice
+        productOrderList={productOrderList}
+        delivery={delivery}
+      />
+      <RegisterSaleButton onClick={sendOrder} />
 
-			<hr />
-		</Container>
-	);
+      <hr />
+    </Container>
+  );
 };
 
 

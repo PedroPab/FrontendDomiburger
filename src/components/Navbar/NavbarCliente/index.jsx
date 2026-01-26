@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+ 
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import { BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';

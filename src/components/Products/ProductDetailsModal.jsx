@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal, Button, Carousel, Card, Row, Col, ListGroup, Badge } from 'react-bootstrap';
 import { FaLock } from 'react-icons/fa'; // Icono de candado
 

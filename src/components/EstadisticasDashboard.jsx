@@ -1,5 +1,4 @@
 // src/components/EstadisticasDashboard.jsx
-import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import EstadisticaCard from './EstadisticaCard.jsx';
 // Importamos algunos íconos para ilustrar cada métrica

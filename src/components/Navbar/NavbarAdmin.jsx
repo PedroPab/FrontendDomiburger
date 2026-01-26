@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+ 
 import { Container, Navbar, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from './../../assets/logo.png';

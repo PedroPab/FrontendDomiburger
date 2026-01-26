@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { BsFillGeoAltFill } from 'react-icons/bs';
 import { Form, FormControl, InputGroup } from 'react-bootstrap';
@@ -121,7 +121,7 @@ const MapComponent = ({ objAdrees, setObjAdrees }) => {
 
   // Función para obtener la matriz de distancia
   const getDistanceMatrix = (destino) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const service = new window.google.maps.DistanceMatrixService();
       const modoTransporte = window.google.maps.TravelMode.TWO_WHEELER;
       service.getDistanceMatrix(

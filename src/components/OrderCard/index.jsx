@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+ 
 // OrderCard.js
 import { useContext } from "react";
 import { Card, Badge } from "react-bootstrap";
@@ -14,7 +14,7 @@ import CopiableText from "./CopiableText";
 import { usePreferences } from "../../Context/PreferencesContext";
 
 const OrderCard = ({ dataPedido }) => {
-  const context = useContext(MiContexto);
+  useContext(MiContexto);
   const { roleSelect } = usePreferences()
   const indexEstado = listaEstados.findIndex(e => e.name === dataPedido?.estado);
   const objEstado = listaEstados[indexEstado];

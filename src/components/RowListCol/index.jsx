@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+ 
 import { Row } from "react-bootstrap"
 
 const RowListCol = ({ children }) => {

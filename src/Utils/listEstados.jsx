@@ -1,5 +1,5 @@
 import { ESTADOS, ROLES } from "./constList";
-import { FaHourglassStart, FaFire, FaUtensils, FaClock, FaTruck, FaCheckCircle, FaReceipt, FaMoneyCheckAlt } from "react-icons/fa"; // Ejemplo de íconos de react-icons
+import { FaFire, FaUtensils, FaClock, FaTruck, FaCheckCircle, FaReceipt, FaMoneyCheckAlt } from "react-icons/fa"; // Ejemplo de íconos de react-icons
 
 export const listaEstados = [
   {

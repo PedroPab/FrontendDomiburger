@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+ 
 import { Container, Navbar, Nav, NavDropdown, Col, Row } from 'react-bootstrap';
 import { BsFillPersonFill, BsMoonStars } from 'react-icons/bs';
 import { Link } from 'react-router-dom';

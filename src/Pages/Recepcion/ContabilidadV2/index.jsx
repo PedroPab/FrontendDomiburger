@@ -7,34 +7,34 @@ import { SummaryStatisticsOrders } from "./SummaryStatisticsOrders";
 
 const ContabilidadV2 = () => {
 
-	// Pedir las órdenes del día con fechas formateadas en UTCz
-	const { error, data: ordenes, loading, fetchOrders } = useOrdersDay();
+  // Pedir las órdenes del día con fechas formateadas en UTCz
+  const { error, data: ordenes, loading, fetchOrders } = useOrdersDay();
 
-	return (
-		<LayoutRecepcion>
-			<Container fluid>
-				<h1 className="text-center my-3">Contabilidad</h1>
+  return (
+    <LayoutRecepcion>
+      <Container fluid>
+        <h1 className="text-center my-3">Contabilidad</h1>
 
-				{/* form filter order */}
-				<FormFilterOrder fetchOrders={fetchOrders} loading={loading} />
+        {/* form filter order */}
+        <FormFilterOrder fetchOrders={fetchOrders} loading={loading} />
 
-				{/* Mostrar si hay un error */}
-				{error && <Alert variant="danger">{error}</Alert>}
+        {/* Mostrar si hay un error */}
+        {error && <Alert variant="danger">{error}</Alert>}
 
-				{/* Mostrar si está cargando */}
-				{loading && <div className="text-center"><Spinner animation="border" /></div>}
+        {/* Mostrar si está cargando */}
+        {loading && <div className="text-center"><Spinner animation="border" /></div>}
 
-				{/* Mostrar datos estadísticos */}
-				<SummaryStatisticsOrders listOrders={ordenes} />
-				{/* Mostrar filas de las órdenes */}
-				<OrdersRowsContainer listOrders={ordenes} />
+        {/* Mostrar datos estadísticos */}
+        <SummaryStatisticsOrders listOrders={ordenes} />
+        {/* Mostrar filas de las órdenes */}
+        <OrdersRowsContainer listOrders={ordenes} />
 
-				<hr className="mb-5" />
+        <hr className="mb-5" />
 
 
-			</Container>
-		</LayoutRecepcion>
-	);
+      </Container>
+    </LayoutRecepcion>
+  );
 };
 
 export { ContabilidadV2 };

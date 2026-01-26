@@ -12,71 +12,71 @@ import { OrderCardV2 } from '../../../components/OrderCardV2';
 import { useWorker } from '../../../Context/WorkerContext';
 
 const MapRecepcionContent = () => {
-	const { idOrderSelect } = useWorker()
-	// Uso de los contextos dentro del componente contenido, ya que aquí se encuentran envueltos por el Provider.
-	const { items, zoomMaps, setZoomMaps, idItemSelect, kitchenSelectId } = useMiContexto();
-	const { openSidebarFilterDelivery } = useRecepcion();
-	//el centro es donde esta la cocina seleccionada
-	const { listKitchens } = useWorker();
-	const kitchen = listKitchens.find((kitchen) => kitchen.id === kitchenSelectId);
-	const origin = kitchen?.location?.coordinates
-	const [centerMaps, setCenterMaps] = useState(origin)
+  const { idOrderSelect } = useWorker()
+  // Uso de los contextos dentro del componente contenido, ya que aquí se encuentran envueltos por el Provider.
+  const { items, zoomMaps, setZoomMaps, idItemSelect, kitchenSelectId } = useMiContexto();
+  const { openSidebarFilterDelivery } = useRecepcion();
+  //el centro es donde esta la cocina seleccionada
+  const { listKitchens } = useWorker();
+  const kitchen = listKitchens.find((kitchen) => kitchen.id === kitchenSelectId);
+  const origin = kitchen?.location?.coordinates
+  const [centerMaps, setCenterMaps] = useState(origin)
 
 
 
-	const containerStyle = {
-		width: '100%', // El mapa ocupará el 100% del ancho del contenedor padre
-		height: '90vh', // El mapa ocupará el 90% de la altura de la ventana
-	};
+  const containerStyle = {
+    width: '100%', // El mapa ocupará el 100% del ancho del contenedor padre
+    height: '90vh', // El mapa ocupará el 90% de la altura de la ventana
+  };
 
-	useEffect(() => {
-		if (idItemSelect) {
-			console.log('idItemSelect', idItemSelect)
-		}
-	}
-		, [idItemSelect]);
+  useEffect(() => {
+    if (idItemSelect) {
+      console.log('idItemSelect', idItemSelect)
+    }
+  }
+  , [idItemSelect]);
 
-	return (
-		<>
-			<Container fluid>
-				<Row>
-					{/* Si showSidebar es true, se renderiza el Sidebar; de lo contrario, el contenido ocupará todo el ancho */}
-					{openSidebarFilterDelivery && <Sidebar />}
-					<Col xs={openSidebarFilterDelivery ? 9 : 12} md={openSidebarFilterDelivery ? 10 : 12}>
-						<Mapa
-							zoom={zoomMaps}
-							setZoomMaps={setZoomMaps}
-							center={centerMaps}
-							setCenter={setCenterMaps}
-							containerStyle={containerStyle}
-						>
-							<ListOrder items={items || []} />
-						</Mapa>
-					</Col>
-				</Row>
-			</Container>
+  return (
+    <>
+      <Container fluid>
+        <Row>
+          {/* Si showSidebar es true, se renderiza el Sidebar; de lo contrario, el contenido ocupará todo el ancho */}
+          {openSidebarFilterDelivery && <Sidebar />}
+          <Col xs={openSidebarFilterDelivery ? 9 : 12} md={openSidebarFilterDelivery ? 10 : 12}>
+            <Mapa
+              zoom={zoomMaps}
+              setZoomMaps={setZoomMaps}
+              center={centerMaps}
+              setCenter={setCenterMaps}
+              containerStyle={containerStyle}
+            >
+              <ListOrder items={items || []} />
+            </Mapa>
+          </Col>
+        </Row>
+      </Container>
 
 
 
-			{idOrderSelect && (
-				<StickyCard show={true}>
-					{/* Aquí puedes agregar contenido adicional al StickyCard si lo requieres */}
-					<OrderCardV2 data={items.find((pedido) => pedido.id === idOrderSelect)} />
-				</StickyCard>
-			)}
+      {idOrderSelect && (
+        <StickyCard show={true}>
+          {/* Aquí puedes agregar contenido adicional al StickyCard si lo requieres */}
+          <OrderCardV2 data={items.find((pedido) => pedido.id === idOrderSelect)} />
+        </StickyCard>
+      )}
 
-			<SelectListDomiciliarios />
-		</>
-	);
+      <SelectListDomiciliarios />
+    </>
+  );
 };
 
 const MapRecepcion = () => {
-	return (
-		<LayoutRecepcion>
-			{/* Se envuelve el contenido con el Provider correspondiente para que los hooks useContext funcionen correctamente */}
-			<MapRecepcionContent />
-		</LayoutRecepcion>
-	);
+  return (
+    <LayoutRecepcion>
+      {/* Se envuelve el contenido con el Provider correspondiente para que los hooks useContext funcionen correctamente */}
+      <MapRecepcionContent />
+    </LayoutRecepcion>
+  );
 };
 
 export default MapRecepcion;

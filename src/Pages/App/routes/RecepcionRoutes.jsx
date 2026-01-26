@@ -22,39 +22,39 @@ import { HistoryOrders } from "../../Recepcion/Historial";
 
 const routes = RECEPCION_ROUTES.routes;
 const RecepcionRoutes = () => {
-	return (
-		<Route
-			path={RECEPCION_ROUTES.path} // Usamos la constante para la ruta principal
-			element={
-				<ContextProvider>
-					<WorkerProvider>
-						<ContextProviderRecepcion>
-							<ProtectedRoute
-								roles={[ROLES.ADMIN.value, ROLES.RECEPTION.value]}
-								redirectTo={LOGIN_ROUTES.path}
-							/>
-						</ContextProviderRecepcion>
-					</WorkerProvider>
-				</ContextProvider>
-			}
-		>
-			<Route path='' element={<Recepcion />} />
-			<Route path={`${routes.CONTABILIDAD}Last`} element={<Contabilidad />} />
-			<Route path={routes.CONTABILIDAD} element={<ContabilidadV2 />} />
-			<Route path={routes.MAP_RECEPCION} element={<MapRecepcion />} />
-			<Route path={routes.FORM_ADMIN} element={<FormAdmin />} />
-			<Route path={routes.FORM_ADMIN_V2} element={<FormAdminV2 />} />
-			<Route path={routes.HISTORY} element={<HistoryOrders />} />
-			<Route path={routes.PEDIDOS} element={<Pedidos />} />
-			<Route path={`${routes.PEDIDOS_DETAIL}/:id`} element={<PedidosDetails />} />
-			<Route path={routes.PRODUCTOS_ADMIN} element={<ProductosAdmin />} />
-			<Route path={routes.CREATE_PRODUCT} element={<CreateProduct />} />
-			<Route path={routes.CLIENTES} element={<Clientes />} />
+  return (
+    <Route
+      path={RECEPCION_ROUTES.path} // Usamos la constante para la ruta principal
+      element={
+        <ContextProvider>
+          <WorkerProvider>
+            <ContextProviderRecepcion>
+              <ProtectedRoute
+                roles={[ROLES.ADMIN.value, ROLES.RECEPTION.value]}
+                redirectTo={LOGIN_ROUTES.path}
+              />
+            </ContextProviderRecepcion>
+          </WorkerProvider>
+        </ContextProvider>
+      }
+    >
+      <Route path='' element={<Recepcion />} />
+      <Route path={`${routes.CONTABILIDAD}Last`} element={<Contabilidad />} />
+      <Route path={routes.CONTABILIDAD} element={<ContabilidadV2 />} />
+      <Route path={routes.MAP_RECEPCION} element={<MapRecepcion />} />
+      <Route path={routes.FORM_ADMIN} element={<FormAdmin />} />
+      <Route path={routes.FORM_ADMIN_V2} element={<FormAdminV2 />} />
+      <Route path={routes.HISTORY} element={<HistoryOrders />} />
+      <Route path={routes.PEDIDOS} element={<Pedidos />} />
+      <Route path={`${routes.PEDIDOS_DETAIL}/:id`} element={<PedidosDetails />} />
+      <Route path={routes.PRODUCTOS_ADMIN} element={<ProductosAdmin />} />
+      <Route path={routes.CREATE_PRODUCT} element={<CreateProduct />} />
+      <Route path={routes.CLIENTES} element={<Clientes />} />
 
-			{EstadisticasRoutes()}
-			{CodigoRoutes()}
-		</Route>
-	);
+      {EstadisticasRoutes()}
+      {CodigoRoutes()}
+    </Route>
+  );
 };
 
 export { RecepcionRoutes };

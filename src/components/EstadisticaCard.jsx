@@ -1,5 +1,4 @@
 // src/components/EstadisticaCard.jsx
-import React from 'react';
 import { Card } from 'react-bootstrap';
 
 const EstadisticaCard = ({ title, value, icon: Icon }) => (

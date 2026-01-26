@@ -1,5 +1,4 @@
-import React from 'react';
-import { Alert, Card } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import InfoIcon from '../../InfoIcon';
 import { FaAward, FaUsers } from 'react-icons/fa';
 

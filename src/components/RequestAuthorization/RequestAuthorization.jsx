@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Spinner } from 'react-bootstrap';
 import useFetchIntegrameloApi from '../../Hooks/useFetchIntegrameloApi';
 import CardStoreRequestAutorization from '../RequestAuthorization/CardStoreRequestAutorization';

@@ -10,7 +10,7 @@ const InputCodigo = ({ client, dataCode, setDataCode, agregarCodigo, retirarCodi
   const { token } = useAuth()
 
   const [code, setCode] = useState('');
-  const [dataClient, setDataClient] = client
+  const [dataClient] = client
 
   // const agregarCodigo = () => {
   //   toast.success('...Simulando Codigo agregado');

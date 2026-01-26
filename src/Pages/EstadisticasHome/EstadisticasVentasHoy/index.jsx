@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { UtilsApi } from '../../../Utils/utilsApi';
 import GraficaVentasHoy from '../../../components/GraficaVentasHoy';
-// eslint-disable-next-line no-unused-vars
+ 
 // import Pedido from '../../../Utils/class/Pedido';
 import { Container, Row } from 'react-bootstrap';
 import LayoutRecepcion from '../../../Layout/Recepcion';
@@ -74,25 +74,25 @@ const EstadisticasVentasHoy = () => {
         // if (producto.type !== `Producto`) return
         pedidos += 1
         switch (producto.id) {
-          case `1`:
-            combos += 1
-            break
-          case `2`:
-            haburguesas += 1
-            break
-          default:
-            break
+        case `1`:
+          combos += 1
+          break
+        case `2`:
+          haburguesas += 1
+          break
+        default:
+          break
         }
       })
     })
 
     switch (producto) {
-      case 'combo':
-        return combos
-      case 'haburguesa':
-        return haburguesas
-      default:
-        return combos + haburguesas
+    case 'combo':
+      return combos
+    case 'haburguesa':
+      return haburguesas
+    default:
+      return combos + haburguesas
     }
   }
 

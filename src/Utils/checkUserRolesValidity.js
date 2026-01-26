@@ -6,11 +6,11 @@
  * @returns {boolean} - Retorna true si el usuario no tiene ninguno de los roles, de lo contrario false.
  */
 function checkUserRolesValidity(userRoles, roles) {
-	// roles puede ser un array o un string
-	if (!Array.isArray(roles)) {
-		roles = [roles];
-	}
-	return roles.some(role => userRoles.includes(role));
+  // roles puede ser un array o un string
+  if (!Array.isArray(roles)) {
+    roles = [roles];
+  }
+  return roles.some(role => userRoles.includes(role));
 }
 
 export { checkUserRolesValidity };

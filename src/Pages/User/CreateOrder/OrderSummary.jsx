@@ -16,7 +16,7 @@ const OrderSummary = ({ onPrev, location, productOrderList = [], comment, paymen
   const [loadingDelivery, setLoadingDelivery] = useState(true);
   const [errorDelivery, setErrorDelivery] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
 
   const { usuarioActual, token } = useAuth();
   const kitchenService = useMemo(() => new KitchenService(token), [token]);

@@ -6,136 +6,136 @@ import { toast } from "react-toastify";
 import { FaCopy, FaMapMarkerAlt } from "react-icons/fa"; // Íconos para mejor UX
 
 const LocationInfoOrderCard = ({ locationId }) => {
-	const { token } = useAuth();
-	const locationService = new LocationsService(token);
-	const [location, setLocation] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
+  const { token } = useAuth();
+  const locationService = new LocationsService(token);
+  const [location, setLocation] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-	useEffect(() => {
-		const fetchLocation = async () => {
-			try {
-				setLoading(true);
-				const response = await locationService.getById(locationId);
-				setLocation(response.body);
-			} catch (error) {
-				setError("No se pudo cargar la ubicación. Inténtalo de nuevo.");
-			} finally {
-				setLoading(false);
-			}
-		};
-		fetchLocation();
-	}, [locationId]);
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        setLoading(true);
+        const response = await locationService.getById(locationId);
+        setLocation(response.body);
+      } catch (error) {
+        setError("No se pudo cargar la ubicación. Inténtalo de nuevo.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLocation();
+  }, [locationId]);
 
-	const urlAddress = encodeURIComponent(location?.address);
+  const urlAddress = encodeURIComponent(location?.address);
 
-	// Copiar dirección al portapapeles
-	const handleCopyAddress = () => {
-		if (location?.address) {
-			navigator.clipboard.writeText(location.address);
-			toast.success("Dirección copiada al portapapeles.");
-		} else {
-			toast.error("No hay dirección disponible.");
-		}
-	};
+  // Copiar dirección al portapapeles
+  const handleCopyAddress = () => {
+    if (location?.address) {
+      navigator.clipboard.writeText(location.address);
+      toast.success("Dirección copiada al portapapeles.");
+    } else {
+      toast.error("No hay dirección disponible.");
+    }
+  };
 
-	// Redirigir a Google Maps
-	const handleOpenMaps = () => {
-		if (location?.address) {
-			window.open(`https://www.google.com/maps/dir/?api=1&destination=${urlAddress}`, "_blank");
-		} else {
-			toast.error("No hay dirección disponible.");
-		}
-	};
+  // Redirigir a Google Maps
+  const handleOpenMaps = () => {
+    if (location?.address) {
+      window.open(`https://www.google.com/maps/dir/?api=1&destination=${urlAddress}`, "_blank");
+    } else {
+      toast.error("No hay dirección disponible.");
+    }
+  };
 
-	return (
-		<Accordion>
-			<Accordion.Item eventKey="0">
-				<Accordion.Header>{location?.address || "Ubicación desconocida"}</Accordion.Header>
-				<Accordion.Body>
-					{loading && (
-						<div className="text-center my-3">
-							<Spinner animation="border" variant="primary" role="status">
-								<span className="visually-hidden">Cargando ubicación...</span>
-							</Spinner>
-						</div>
-					)}
+  return (
+    <Accordion>
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>{location?.address || "Ubicación desconocida"}</Accordion.Header>
+        <Accordion.Body>
+          {loading && (
+            <div className="text-center my-3">
+              <Spinner animation="border" variant="primary" role="status">
+                <span className="visually-hidden">Cargando ubicación...</span>
+              </Spinner>
+            </div>
+          )}
 
-					{error && (
-						<Alert variant="danger" className="text-center">
-							{error}
-						</Alert>
-					)}
+          {error && (
+            <Alert variant="danger" className="text-center">
+              {error}
+            </Alert>
+          )}
 
-					{!loading && !error && location && (
-						<>
-							<Row className="mb-2">
-								<Col xs={8} className="text-secondary">Tipo de ubicación:</Col>
-								<Col xs={4} className="text-end">
-									{location.propertyType || "N/A"}
-								</Col>
-							</Row>
-							<hr className="my-2" />
-							<Row className="mb-2">
-								<Col xs={4} className="text-secondary">Piso:</Col>
-								<Col xs={8} className="text-end">
-									{location.floor || "N/A"}
-								</Col>
-							</Row>
-							<hr className="my-3" />
-							<Row className="mb-2">
-								<Col xs={4} className="text-secondary">Comentario:</Col>
-								<Col xs={8} className="text-end">
-									{location.comment || "N/A"}
-								</Col>
-							</Row>
+          {!loading && !error && location && (
+            <>
+              <Row className="mb-2">
+                <Col xs={8} className="text-secondary">Tipo de ubicación:</Col>
+                <Col xs={4} className="text-end">
+                  {location.propertyType || "N/A"}
+                </Col>
+              </Row>
+              <hr className="my-2" />
+              <Row className="mb-2">
+                <Col xs={4} className="text-secondary">Piso:</Col>
+                <Col xs={8} className="text-end">
+                  {location.floor || "N/A"}
+                </Col>
+              </Row>
+              <hr className="my-3" />
+              <Row className="mb-2">
+                <Col xs={4} className="text-secondary">Comentario:</Col>
+                <Col xs={8} className="text-end">
+                  {location.comment || "N/A"}
+                </Col>
+              </Row>
 
-							<div className="d-flex justify-content-between gap-2">
-								<Button
-									variant="outline-secondary"
-									size="sm"
-									className="flex-grow-1"
-									onClick={handleCopyAddress}
-									aria-label="Copiar dirección"
-								>
-									<FaCopy className="me-1" /> Copiar
-								</Button>
+              <div className="d-flex justify-content-between gap-2">
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  className="flex-grow-1"
+                  onClick={handleCopyAddress}
+                  aria-label="Copiar dirección"
+                >
+                  <FaCopy className="me-1" /> Copiar
+                </Button>
 
-								<Button
-									variant="outline-primary"
-									size="sm"
-									className="flex-grow-1"
-									onClick={handleOpenMaps}
-									aria-label="Abrir en Google Maps"
-								>
-									<FaMapMarkerAlt className="me-1" /> Maps
-								</Button>
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  className="flex-grow-1"
+                  onClick={handleOpenMaps}
+                  aria-label="Abrir en Google Maps"
+                >
+                  <FaMapMarkerAlt className="me-1" /> Maps
+                </Button>
 
-								<Button
-									variant="outline-success"
-									size="sm"
-									className="flex-grow-1"
-									onClick={() => {
-										if (location?.address) {
-											window.open(
-												`https://waze.com/ul?q=${urlAddress}`,
-												"_blank"
-											);
-										} else {
-											toast.error("No hay dirección disponible.");
-										}
-									}}
-									aria-label="Abrir en Waze"
-								>
-									<FaMapMarkerAlt className="me-1" /> Waze
-								</Button>
-							</div>
-						</>
-					)}
-				</Accordion.Body>
-			</Accordion.Item>
-		</Accordion>
-	);
+                <Button
+                  variant="outline-success"
+                  size="sm"
+                  className="flex-grow-1"
+                  onClick={() => {
+                    if (location?.address) {
+                      window.open(
+                        `https://waze.com/ul?q=${urlAddress}`,
+                        "_blank"
+                      );
+                    } else {
+                      toast.error("No hay dirección disponible.");
+                    }
+                  }}
+                  aria-label="Abrir en Waze"
+                >
+                  <FaMapMarkerAlt className="me-1" /> Waze
+                </Button>
+              </div>
+            </>
+          )}
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+  );
 };
 
 export { LocationInfoOrderCard };

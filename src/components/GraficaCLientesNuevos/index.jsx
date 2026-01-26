@@ -1,4 +1,4 @@
-import { Chart, Line, } from 'react-chartjs-2';
+import { Line, } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
-// eslint-disable-next-line no-unused-vars
+
 // import Pedido from '../../Utils/class/Pedido';
 import { convertirHoraDeUnixADate } from '../../Utils/formatTime';
 import { Lapso } from '../../Utils/class/LapsoEstadisticas';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal, Button, Carousel, ListGroup } from 'react-bootstrap';
 
 const ProductModal = ({ show, handleClose, product }) => {

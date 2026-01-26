@@ -9,49 +9,49 @@ import { OrderCardV2 } from "../OrderCardV2";
 
 const PedidoDetalles = () => {
 
-	const { token } = useAuth()
+  const { token } = useAuth()
 
-	//sacar el id del pedido de la url
-	const { id } = useParams();
-	const [order, setOrder] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
+  //sacar el id del pedido de la url
+  const { id } = useParams();
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-	const orderService = new OrderService(token);
+  const orderService = new OrderService(token);
 
-	useEffect(() => {
-		const fetchOrder = async () => {
-			try {
-				const data = await orderService.getById(id);
-				console.log(data, 'data');
-				toast.success('Pedido cargado');
-				setOrder(data);
-			} catch (error) {
-				setError('Error fetching orders');
-				toast.error('Error al cargar los pedidos');
-				toast.error(error.message);
-			} finally {
-				setLoading(false);
-			}
-		};
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const data = await orderService.getById(id);
+        console.log(data, 'data');
+        toast.success('Pedido cargado');
+        setOrder(data);
+      } catch (error) {
+        setError('Error fetching orders');
+        toast.error('Error al cargar los pedidos');
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-		fetchOrder();
-	}, [id]);
+    fetchOrder();
+  }, [id]);
 
 
-	return (
-		<Container >
+  return (
+    <Container >
 
-			<h1>Detalles del pedido</h1>
-			{loading && <p>Cargando...</p>}
-			{error && <p>{error}</p>}
-			{order && (
-				<OrderCardV2 data={order} />
+      <h1>Detalles del pedido</h1>
+      {loading && <p>Cargando...</p>}
+      {error && <p>{error}</p>}
+      {order && (
+        <OrderCardV2 data={order} />
 
-			)}
+      )}
 
-		</Container>
-	);
+    </Container>
+  );
 }
 
 export { PedidoDetalles };

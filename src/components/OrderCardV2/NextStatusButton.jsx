@@ -8,53 +8,53 @@ import { ConfirmActionButton } from "./../common/ConfirmActionButton";
 import { useIsValidChangeStatus } from "./useIsValidChangeStatus";
 
 function NextStatusButton({ data }) {
-	const { token } = useAuth();
-	const orderService = new OrderService(token);
+  const { token } = useAuth();
+  const orderService = new OrderService(token);
 
-	// Se obtiene el label del botón a partir del estado actual de la orden.
-	const buttonLabel = statusOrderCol[data.status]?.textNextStatus || "Change Status";
+  // Se obtiene el label del botón a partir del estado actual de la orden.
+  const buttonLabel = statusOrderCol[data.status]?.textNextStatus || "Change Status";
 
-	const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-	const nextStatus = useCallback(async () => {
-		const id = data.id;
-		const previousState = data.status;
-		const nextState = statusNext(data);
-		setIsLoading(true);
-		try {
-			await orderService.changeStatus(id, previousState, nextState);
-			// toast.success("Order status updated");
-		} catch (error) {
-			console.error("Error updating order status:", error);
-			toast.error(`Error changing order status: ${error?.message}`);
-		} finally {
-			setIsLoading(false);
-		}
-	}, [data.id, data.status, orderService]);
+  const nextStatus = useCallback(async () => {
+    const id = data.id;
+    const previousState = data.status;
+    const nextState = statusNext(data);
+    setIsLoading(true);
+    try {
+      await orderService.changeStatus(id, previousState, nextState);
+      // toast.success("Order status updated");
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      toast.error(`Error changing order status: ${error?.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [data.id, data.status, orderService]);
 
-	//analizamos si el usuario puede cambiar el estado de la orden según su rol
-	const isValidChange = useIsValidChangeStatus(data.status);
+  //analizamos si el usuario puede cambiar el estado de la orden según su rol
+  const isValidChange = useIsValidChangeStatus(data.status);
 
-	return (
-		<>
-			{isValidChange == false ? (
-				<>
-				</>
-			) :
-				(
-					<ConfirmActionButton
-						buttonLabel={buttonLabel}
-						isLoading={isLoading}
-						onConfirm={nextStatus}
-						variant="primary"
-						confirmVariant="success"
-						cancelVariant="danger"
-					/>
-				)}
+  return (
+    <>
+      {isValidChange == false ? (
+        <>
+        </>
+      ) :
+        (
+          <ConfirmActionButton
+            buttonLabel={buttonLabel}
+            isLoading={isLoading}
+            onConfirm={nextStatus}
+            variant="primary"
+            confirmVariant="success"
+            cancelVariant="danger"
+          />
+        )}
 
-		</>
+    </>
 
-	);
+  );
 }
 
 export { NextStatusButton };

@@ -1,5 +1,5 @@
 // LoginExp.js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { registerWithEmail, loginWithEmail, logout } from './../../firebase/services';
 import { useAuth } from '../../Context/AuthContext';
 

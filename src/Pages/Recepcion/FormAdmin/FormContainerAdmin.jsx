@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import BuscadorCliente from '../../../components/Codigos/CrearCodigoReferido/BuscadorCliente';
 import NameInput from '../../../components/FormsInputs/NameInput';
@@ -23,7 +23,7 @@ const ENV = import.meta.env;
 const centerOrigin = { lat: 6.3017314, lng: -75.5743796 };
 const libraries = ['places'];
 
-// eslint-disable-next-line no-unused-vars
+ 
 const FormContainerAdmin = () => {
   const { token } = useAuth()
 
@@ -87,7 +87,7 @@ const FormContainerAdmin = () => {
   const [listaProductosOrder, setListaProductosOrder] = useState([]);
   const [dataDomicilio, setDataDomicilio] = useState({});
 
-  const [prevCoordinates, setPrevCoordinates] = useState(null);
+  const [, setPrevCoordinates] = useState(null);
 
   //para calcular las distancia y el costo del domicilio
   useEffect(() => {

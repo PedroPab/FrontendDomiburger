@@ -2,7 +2,7 @@ import { Card, Button, Dropdown } from 'react-bootstrap';
 import { BsThreeDots } from 'react-icons/bs';
 
 const CardCodigo = ({ data }) => {
-  const { id, type, dateCreate, dateUpdate, active, userCreate, used, products, productsReward, reward, clientId, phoneClient } = data;
+  const { id, type, dateCreate, products, productsReward } = data;
   const product = products.length > 0 ? products[0] : null;
   const productReward = productsReward.length > 0 ? productsReward[0] : null;
 

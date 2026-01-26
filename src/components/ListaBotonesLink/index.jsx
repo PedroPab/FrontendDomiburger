@@ -13,7 +13,7 @@ import iconos from './Icons';
 const ListaBotonesLink = ({ lista }) => {
   //creamos una el link dentro de un botón , se debe de usar de forma provisional
   const getRandomIcon = () => {
-    // eslint-disable-next-line react/jsx-key
+     
     const icons = iconos;
     const randomIndex = Math.floor(Math.random() * icons.length);
     return icons[randomIndex];
