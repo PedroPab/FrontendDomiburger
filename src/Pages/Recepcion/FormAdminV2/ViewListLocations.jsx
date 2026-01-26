@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Row, Container, Spinner, Alert, Form, Button } from "react-bootstrap";
+import { Col, Row, Container, Spinner, Alert, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import CardCreate from "../../../components/common/CardCreate";
 import ReusableModal from "../../../components/common/ReusableModal";
@@ -128,7 +128,7 @@ const ViewListLocations = ({
 			{/* Modal para crear nueva ubicación */}
 			<ReusableModal
 				show={showModal}
-				handle Close={() => setShowModal(false)}
+				handleClose={() => setShowModal(false)}
 				title="Crear nueva ubicación"
 			>
 				<CreateLocationComponent successForm={successForm} clientId={clientId} />
