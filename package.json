@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "vite build --mode production",
     "build:prod": "npm run build",
-		"build:dev": "vite build --mode development",
-		"build:test": "vite build --mode test",
+    "build:dev": "vite build --mode development",
+    "build:test": "vite build --mode test",
     "deploy": "vite build;firebase deploy",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -49,9 +49,9 @@
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
     "depcheck": "^1.4.7",
-    "eslint": "^8.45.0",
+    "eslint": "^9.39.2",
     "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.3",
     "vite": "^6.2.0"
   }
