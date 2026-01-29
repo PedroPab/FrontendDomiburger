@@ -60,6 +60,16 @@ class LocationsService {
       throw error;
     }
   }
+  //delete location by id
+  async delete(id) {
+    try {
+      const rta = await this.api.delete(`/${id}`);
+      return rta
+    } catch (error) {
+      console.log(`[~LocationsService ~delete ~error]`, error)
+      throw error;
+    }
+  }
 }
 
 export { LocationsService }

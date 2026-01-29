@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, Table, Button, Collapse } from "react-bootstrap";
 import { Marker } from "@react-google-maps/api";
-import { FaInfoCircle, FaEdit } from "react-icons/fa";
+import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 import { useGoogleMapsCustomHook } from "./useGoogleMapsCustomHook"; // tu custom hook
 
 const LocationCard = ({ location, onEdit, onDeled, isSelect }) => {
@@ -67,7 +67,7 @@ const LocationCard = ({ location, onEdit, onDeled, isSelect }) => {
             variant="outline-danger"
             onClick={onDeled}
           >
-            <FaEdit className="me-2" />
+            <FaTrash className="me-2" />
             Eliminar
           </Button>
 
