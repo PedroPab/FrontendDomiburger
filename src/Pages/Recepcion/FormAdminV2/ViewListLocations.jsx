@@ -135,20 +135,24 @@ const ViewListLocations = ({
                   />
                 </Col>
 
-                {/* Render de ubicaciones como radios */}
+                {/* Render de ubicaciones como radios - Accesible */}
                 {locations?.map((location) => (
                   <Col key={location.id} xs={12} sm={6} md={4}>
-                    <Form.Check
-                      type="radio"
-                      name="locationsGroup" // mismo nombre para que funcionen como grupo
-                      id={`location-${location.id}`}
-                      value={location.id}
-                      // Si coincide con el seleccionado en el estado
-                      checked={locationIdSelect === location.id}
-                      // Actualiza el seleccionado al cambiar
-                      onChange={() => setLocationIdSelect(location.id)}
-                      // Usa label para renderizar tu card
-                      label={
+                    <div className="position-relative">
+                      <Form.Check
+                        type="radio"
+                        name="locationsGroup"
+                        id={`location-${location.id}`}
+                        value={location.id}
+                        checked={locationIdSelect === location.id}
+                        onChange={() => setLocationIdSelect(location.id)}
+                        className="visually-hidden"
+                      />
+                      <label
+                        htmlFor={`location-${location.id}`}
+                        className="w-100"
+                        style={{ cursor: 'pointer' }}
+                      >
                         <LocationCard
                           location={location}
                           isSelect={locationIdSelect === location.id}
@@ -157,8 +161,8 @@ const ViewListLocations = ({
                           }}
                           onDeled={() => handleDeleteClick(location)}
                         />
-                      }
-                    />
+                      </label>
+                    </div>
                   </Col>
                 ))}
               </Row>
