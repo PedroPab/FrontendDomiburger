@@ -1,13 +1,13 @@
-import { Route } from "react-router-dom";
-import FormClient from "../../FormClient";
-import ThankYou from "../../TanksYou/ThankYou"; // Importar la nueva página de agradecimiento
+import { Route, Navigate } from "react-router-dom";
+import ThankYou from "../../TanksYou/ThankYou";
 import MiPedido from "../../MiPedido";
+import { USER_ROUTES } from "../../../Utils/const/namesRutes";
 
 const HomeRoutes = () => {
   return (
     <>
 
-      <Route path="/" element={<FormClient />} />
+      <Route path="/" element={<Navigate to={USER_ROUTES.path} replace />} />
       {/* <Route path="/*" element={<TemporaryClosure />} /> */}
       {/* 
 			
