@@ -4,45 +4,48 @@ import { useRecepcion } from '../../../Context/RecepcionContex';
 import { Col, Container, Row } from 'react-bootstrap';
 import Mapa from '../../../components/MapsGoogle';
 import SelectListDomiciliarios from '../../../components/SelectListDomiciliarios';
-import StickyCard from '../../../components/StickyCard';
 import Sidebar from '../../../components/Sidebar';
 import ListOrder from './ListOrder';
 import LayoutRecepcion from '../../../Layout/Recepcion';
-import { OrderCardV2 } from '../../../components/OrderCardV2';
+import CarouselListCards from '../../../components/CarouselListCards';
 import { useWorker } from '../../../Context/WorkerContext';
+import { useResponsive } from '../../../hooks/useResponsive';
 
 const MapRecepcionContent = () => {
-  const { idOrderSelect } = useWorker()
+  const { isDesktop } = useResponsive();
   // Uso de los contextos dentro del componente contenido, ya que aquí se encuentran envueltos por el Provider.
   const { items, zoomMaps, setZoomMaps, idItemSelect, kitchenSelectId } = useMiContexto();
   const { openSidebarFilterDelivery } = useRecepcion();
   //el centro es donde esta la cocina seleccionada
   const { listKitchens } = useWorker();
   const kitchen = listKitchens.find((kitchen) => kitchen.id === kitchenSelectId);
-  const origin = kitchen?.location?.coordinates
-  const [centerMaps, setCenterMaps] = useState(origin)
+  const origin = kitchen?.location?.coordinates;
+  const [centerMaps, setCenterMaps] = useState(origin);
 
-
-
+  // Altura del mapa responsiva: 50vh en móvil, 90vh en desktop
   const containerStyle = {
-    width: '100%', // El mapa ocupará el 100% del ancho del contenedor padre
-    height: '90vh', // El mapa ocupará el 90% de la altura de la ventana
+    width: '100%',
+    height: isDesktop ? '90vh' : '50vh',
   };
 
   useEffect(() => {
     if (idItemSelect) {
-      console.log('idItemSelect', idItemSelect)
+      console.log('idItemSelect', idItemSelect);
     }
-  }
-  , [idItemSelect]);
+  }, [idItemSelect]);
 
   return (
     <>
-      <Container fluid>
-        <Row>
-          {/* Si showSidebar es true, se renderiza el Sidebar; de lo contrario, el contenido ocupará todo el ancho */}
+      <Container fluid className="px-0 px-lg-2">
+        <Row className="g-0 flex-column flex-lg-row">
+          {/* Sidebar de filtros - solo visible en desktop */}
           {openSidebarFilterDelivery && <Sidebar />}
-          <Col xs={openSidebarFilterDelivery ? 9 : 12} md={openSidebarFilterDelivery ? 10 : 12}>
+
+          {/* Sección del Mapa */}
+          <Col
+            xs={12}
+            lg={openSidebarFilterDelivery ? 7 : 9}
+          >
             <Mapa
               zoom={zoomMaps}
               setZoomMaps={setZoomMaps}
@@ -53,17 +56,13 @@ const MapRecepcionContent = () => {
               <ListOrder items={items || []} />
             </Mapa>
           </Col>
+
+          {/* Sección de Órdenes - derecha en desktop, abajo en móvil */}
+          <Col xs={12} lg={openSidebarFilterDelivery ? 3 : 3}>
+            <CarouselListCards data={items || []} vertical={isDesktop} />
+          </Col>
         </Row>
       </Container>
-
-
-
-      {idOrderSelect && (
-        <StickyCard show={true}>
-          {/* Aquí puedes agregar contenido adicional al StickyCard si lo requieres */}
-          <OrderCardV2 data={items.find((pedido) => pedido.id === idOrderSelect)} />
-        </StickyCard>
-      )}
 
       <SelectListDomiciliarios />
     </>
