@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Row,
@@ -13,15 +14,19 @@ import {
   Badge
 } from "react-bootstrap";
 import { useAuth } from "../../Context/AuthContext";
+import { usePreferences } from "../../Context/PreferencesContext";
 import { UserLayout } from "../../Layout/UserLayout";
 import { UsersService } from "../../apis/clientV2/usersService";
 import PhoneInputComponent from "../../components/FormsInputs/PhoneInput";
 import { FaEnvelope, FaPhone, FaPen, FaBriefcase } from "react-icons/fa";
 import JobsList from "../../components/JobsList";
 import photoGeneric from "../../assets/img/photoGeneric2.jpg";
+import { ROLES } from "../../Utils/const/roles";
 
 const MeProfile = () => {
+  const navigate = useNavigate();
   const { usuarioActual, token } = useAuth();
+  const { setRoleSelect } = usePreferences();
   const usersService = new UsersService(token);
 
   const rolesOptions = usuarioActual?.roles || [];
@@ -36,6 +41,18 @@ const MeProfile = () => {
   const [phone, setPhone] = useState("");
   const [updating, setUpdating] = useState(false);
   const [updateError, setUpdateError] = useState(null);
+
+  // Redirección automática si el usuario tiene un solo rol
+  useEffect(() => {
+    if (rolesOptions.length === 1) {
+      const singleRole = rolesOptions[0];
+      const roleData = Object.values(ROLES).find((r) => r.value === singleRole);
+      if (roleData) {
+        setRoleSelect(singleRole);
+        navigate(`/${roleData.name}`, { replace: true });
+      }
+    }
+  }, [rolesOptions, navigate, setRoleSelect]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -79,6 +96,20 @@ const MeProfile = () => {
     setUpdateError(null);
     setShowModal(false);
   };
+
+  // Mostrar loading mientras se redirecciona (usuario con un solo rol)
+  if (rolesOptions.length === 1) {
+    return (
+      <UserLayout>
+        <Container className="py-5">
+          <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: "50vh" }}>
+            <Spinner animation="border" variant="primary" className="mb-3" />
+            <p className="text-muted">Redirigiendo...</p>
+          </div>
+        </Container>
+      </UserLayout>
+    );
+  }
 
   return (
     <UserLayout>
