@@ -1,6 +1,5 @@
 // components/PaymentInfoOrder.jsx
-import { Accordion, Row, Col, ListGroup, Badge } from "react-bootstrap";
-import { useState } from "react";
+import { Accordion, Row, Col, ListGroup, Badge, Spinner } from "react-bootstrap";
 import { usePreferences } from "../../../Context/PreferencesContext";
 import { checkUserRolesValidity } from "../../../Utils/checkUserRolesValidity";
 import { ROLES } from "../../../Utils/const/roles";
@@ -16,7 +15,6 @@ import SubTitleNamePayment from "../SubTitleNamePayment";
 const PaymentInfoOrder = ({ data }) => {
   const { totalPrice, delivery, paymentMethod, payment } = data;
   const { roleSelect } = usePreferences();
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
 
   // Usamos los custom hooks
   const { updatePayment, updateChangePayment, loading } = usePaymentActions();
@@ -28,11 +26,10 @@ const PaymentInfoOrder = ({ data }) => {
   };
 
   const handleChangePaymentMethod = (e) => {
-    setSelectedPaymentMethod(e.target.value);
-  };
-
-  const updatePaymentMethod = () => {
-    updateChangePayment(data.id, paymentMethod, selectedPaymentMethod);
+    const newPaymentMethod = e.target.value;
+    if (newPaymentMethod && newPaymentMethod !== paymentMethod) {
+      updateChangePayment(data.id, paymentMethod, newPaymentMethod);
+    }
   };
 
   return (
@@ -98,16 +95,16 @@ const PaymentInfoOrder = ({ data }) => {
                   <hr />
 
                   {payment.status !== "approved" && (
-                    <>
+                    <div className="position-relative">
+                      <label className="form-label small text-muted mb-1">
+                        Cambiar método de pago
+                      </label>
                       <select
-                        className="form-select mt-2 mb-3"
-                        value={selectedPaymentMethod || ""}
+                        className="form-select"
+                        value={paymentMethod}
                         onChange={handleChangePaymentMethod}
                         disabled={loading}
                       >
-                        <option value={null}>
-                          Seleccionar un método de pago
-                        </option>
                         {Object.values(PAYMENT_METHODS).map((method) => {
                           if (!method.active) return null;
                           return (
@@ -117,16 +114,12 @@ const PaymentInfoOrder = ({ data }) => {
                           );
                         })}
                       </select>
-
-                      <ConfirmActionButton
-                        buttonLabel="Cambiar método de pago"
-                        isLoading={loading}
-                        onConfirm={updatePaymentMethod}
-                        variant="warning"
-                        confirmVariant="success"
-                        cancelVariant="danger"
-                      />
-                    </>
+                      {loading && (
+                        <div className="position-absolute top-50 end-0 translate-middle-y me-4">
+                          <Spinner animation="border" size="sm" />
+                        </div>
+                      )}
+                    </div>
                   )}
                 </>
               )}
