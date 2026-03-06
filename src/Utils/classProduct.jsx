@@ -109,7 +109,7 @@ class PapasVaquera extends Producto {
     this.name = PRODUCTS.PapaVaquera
     this.id = `39`
     this.type = 'product'
-    this.price = 23500
+    this.price = 23900
   }
 }
 
@@ -119,7 +119,7 @@ class PapasTroyana extends Producto {
     this.name = PRODUCTS.PapaTroyana
     this.id = `40`
     this.type = 'product'
-    this.price = 33500
+    this.price = 33900
   }
 }
 
