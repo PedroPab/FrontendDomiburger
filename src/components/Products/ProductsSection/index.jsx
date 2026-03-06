@@ -43,13 +43,13 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
       title: 'Papas Vaquera',
       description: 'Deliciosas papas vaquera.',
       img: imgHamburguesa,
-      productKey: PRODUCTS.PapasVaquera,
+      productKey: PRODUCTS.PapaVaquera,
     },
     {
       title: 'Papas Troyana',
       description: 'Papas troyana especiales.',
       img: imgHamburguesa,
-      productKey: PRODUCTS.PapasTroyana,
+      productKey: PRODUCTS.PapaTroyana,
     },
   ];
 

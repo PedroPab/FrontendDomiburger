@@ -21,8 +21,8 @@ const DashboardProducts = ({
     productClass[`${PRODUCTS.Hamburguesa}`] = Hamburguesa
     productClass[`${PRODUCTS.Combo}`] = Combo
     productClass[`${PRODUCTS.SalsaDeAjo}`] = SalsaDeAjo
-    productClass[`${PRODUCTS.PapasVaquera}`] = PapasVaquera
-    productClass[`${PRODUCTS.PapasTroyana}`] = PapasTroyana
+    productClass[`${PRODUCTS.PapaVaquera}`] = PapasVaquera
+    productClass[`${PRODUCTS.PapaTroyana}`] = PapasTroyana
 
     const listaProducts = [...listaProductosOrder]
     const producto = new productClass[product]({})
