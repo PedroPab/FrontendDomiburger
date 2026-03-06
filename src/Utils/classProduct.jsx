@@ -102,10 +102,33 @@ class SalsaDeAjo extends Producto {
     this.price = 27000
   }
 }
+
+class PapasVaquera extends Producto {
+  constructor(props) {
+    super({ ...props, applyModifications: false })
+    this.name = PRODUCTS.PapaVaquera
+    this.id = `39`
+    this.type = 'product'
+    this.price = 23500
+  }
+}
+
+class PapasTroyana extends Producto {
+  constructor(props) {
+    super({ ...props, applyModifications: false })
+    this.name = PRODUCTS.PapaTroyana
+    this.id = `40`
+    this.type = 'product'
+    this.price = 33500
+  }
+}
+
 export {
   Producto,
   Hamburguesa,
   Combo,
   SalsaDeAjo,
+  PapasVaquera,
+  PapasTroyana,
   Adiciones
 }

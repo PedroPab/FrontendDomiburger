@@ -44,6 +44,8 @@ const PRODUCTS = {
   Hamburguesa: 'Hamburguesa',
   Combo: 'Combo',
   SalsaDeAjo: 'Salsa De Ajo',
+  PapaVaquera: 'Papa Vaquera',
+  PapaTroyana: 'Papa Troyana',
 }
 
 export { COLLECTIONS, ESTADOS, ROLES, FORMA_DE_PAGO, PRODUCTS }
