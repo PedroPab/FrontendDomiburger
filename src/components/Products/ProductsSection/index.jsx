@@ -7,7 +7,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import imgHamburguesa from '../../../assets/img/hamburguesa.png';
 import imgCombo from '../../../assets/img/combo.png';
 import salsaDeAjo from '../../../assets/img/salsaDeAjo2.jpeg';
-
+import PapaVaquera from '../../../assets/img/papaVaquera.png';
+import PapaTroyana from '../../../assets/img/papaTroyana.png';
 // Constantes
 import { PRODUCTS } from '../../../Utils/constList';
 
@@ -42,13 +43,13 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
     {
       title: 'Papas Vaquera',
       description: 'Deliciosas papas vaquera.',
-      img: imgHamburguesa,
+      img: PapaVaquera,
       productKey: PRODUCTS.PapaVaquera,
     },
     {
       title: 'Papas Troyana',
       description: 'Papas troyana especiales.',
-      img: imgHamburguesa,
+      img: PapaTroyana,
       productKey: PRODUCTS.PapaTroyana,
     },
   ];
