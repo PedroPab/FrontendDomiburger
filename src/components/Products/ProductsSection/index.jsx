@@ -7,8 +7,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import imgHamburguesa from '../../../assets/img/hamburguesa.png';
 import imgCombo from '../../../assets/img/combo.png';
 import salsaDeAjo from '../../../assets/img/salsaDeAjo2.jpeg';
-import PapaVaquera from '../../../assets/img/papaVaquera.png';
-import PapaTroyana from '../../../assets/img/papaTroyana.png';
+import PapaVaquera from '../../../assets/img/Vaquero.jpeg';
+import PapaTroyana from '../../../assets/img/Troyana.jpeg';
 // Constantes
 import { PRODUCTS } from '../../../Utils/constList';
 

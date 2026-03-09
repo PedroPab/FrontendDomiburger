@@ -105,7 +105,7 @@ class SalsaDeAjo extends Producto {
 
 class PapasVaquera extends Producto {
   constructor(props) {
-    super({ ...props, applyModifications: false })
+    super({ ...props, applyModifications: true })
     this.name = PRODUCTS.PapaVaquera
     this.id = `39`
     this.type = 'product'
@@ -115,7 +115,7 @@ class PapasVaquera extends Producto {
 
 class PapasTroyana extends Producto {
   constructor(props) {
-    super({ ...props, applyModifications: false })
+    super({ ...props, applyModifications: true })
     this.name = PRODUCTS.PapaTroyana
     this.id = `40`
     this.type = 'product'
