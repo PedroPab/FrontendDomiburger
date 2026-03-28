@@ -15,10 +15,12 @@ import { EstadisticasRoutes } from "./EstadisticasRoutes";
 import { CodigoRoutes } from "./CodigoRoutes";
 import { LOGIN_ROUTES, RECEPCION_ROUTES } from "../../../Utils/const/namesRutes"; // Importamos las rutas constantes
 import Clientes from "../../Clientes/Clientes";
+import ClienteInfo from "../../Clientes/ClientesInfo";
 import { WorkerProvider } from "../../../Context/WorkerContext";
 import { FormAdminV2 } from "../../Recepcion/FormAdminV2";
 import { ContabilidadV2 } from "../../Recepcion/ContabilidadV2";
 import { HistoryOrders } from "../../Recepcion/Historial";
+import { UsersManagementRecepcion } from "../../UsersManagement/UsersManagementRecepcion";
 
 const routes = RECEPCION_ROUTES.routes;
 const RecepcionRoutes = () => {
@@ -50,6 +52,8 @@ const RecepcionRoutes = () => {
       <Route path={routes.PRODUCTOS_ADMIN} element={<ProductosAdmin />} />
       <Route path={routes.CREATE_PRODUCT} element={<CreateProduct />} />
       <Route path={routes.CLIENTES} element={<Clientes />} />
+      <Route path={routes.CLIENTE_DETAIL} element={<ClienteInfo />} />
+      <Route path={routes.USUARIOS} element={<UsersManagementRecepcion />} />
 
       {EstadisticasRoutes()}
       {CodigoRoutes()}

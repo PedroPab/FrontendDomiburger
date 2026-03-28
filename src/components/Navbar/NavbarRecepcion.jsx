@@ -77,6 +77,11 @@ const NavbarRecepcion = () => {
       route: RECEPCION_ROUTES.routes.CLIENTES,
     },
     {
+      title: 'Usuarios',
+      icon: <BsPeopleFill className="me-1" size={18} />,
+      route: RECEPCION_ROUTES.routes.USUARIOS,
+    },
+    {
       title: 'Pedidos',
       icon: <MdOutlineReceipt className="me-1" size={18} />,
       route: RECEPCION_ROUTES.routes.PEDIDOS,

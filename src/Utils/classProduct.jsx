@@ -123,6 +123,28 @@ class PapasTroyana extends Producto {
   }
 }
 
+//postre chessecake de fresa id 43
+class CheesecakeFresa extends Producto {
+  constructor(props) {
+    super({ ...props, applyModifications: true })
+    this.name = PRODUCTS.CheesecakeFresa
+    this.id = `43`
+    this.type = 'product'
+    this.price = 13500
+  }
+}
+
+//jugo de mora id 44
+class JugoMora extends Producto {
+  constructor(props) {
+    super({ ...props, applyModifications: true })
+    this.name = PRODUCTS.JugoMora
+    this.id = `44`
+    this.type = 'product'
+    this.price = 7000
+  }
+}
+
 export {
   Producto,
   Hamburguesa,
@@ -130,5 +152,7 @@ export {
   SalsaDeAjo,
   PapasVaquera,
   PapasTroyana,
-  Adiciones
+  Adiciones,
+  CheesecakeFresa,
+  JugoMora,
 }

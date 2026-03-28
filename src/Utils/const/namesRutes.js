@@ -21,6 +21,8 @@ class RecepcionRoutes extends RoutesClass {
       PRODUCTOS_ADMIN: `${this.path}/productosAdmin`,
       CREATE_PRODUCT: `${this.path}/createProduct`,
       CLIENTES: `${this.path}/clientes`,
+      CLIENTE_DETAIL: `${this.path}/clientes/:id`,
+      USUARIOS: `${this.path}/usuarios`,
       HISTORY: `${this.path}/history`,
     }
   }

@@ -87,6 +87,18 @@ class UsersService {
     const rta = await this.getAll({ page: 1, limit: 100 }, { key: 'roles', value: role, option: 'array-contains' })
     return rta
   }
+
+  async searchByEmail(email, pagination = { page: 1, limit: 12 }) {
+    return this.getAll(pagination, { key: 'email', value: email, option: '==' })
+  }
+
+  async searchByPhone(phone, pagination = { page: 1, limit: 12 }) {
+    return this.getAll(pagination, { key: 'phone', value: phone, option: '==' })
+  }
+
+  async searchByName(name, pagination = { page: 1, limit: 12 }) {
+    return this.getAll(pagination, { key: 'name', value: name, option: 'contains' })
+  }
 }
 
 export { UsersService }

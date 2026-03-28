@@ -52,6 +52,18 @@ function ProductsSection({ listaProductosOrder, incrementCount, decrementCount }
       img: PapaTroyana,
       productKey: PRODUCTS.PapaTroyana,
     },
+    {
+      title: 'Cheesecake de Fresa',
+      description: 'Delicioso cheesecake de fresa.',
+      img: 'https://res.cloudinary.com/dzcmadjlq/image/upload/v1700000000/cheesecake_fresa.jpg',
+      productKey: PRODUCTS.CheesecakeFresa,
+    },
+    {
+      title: 'Jugo de Mora',
+      description: 'Refrescante jugo de mora natural.',
+      img: 'https://res.cloudinary.com/dzcmadjlq/image/upload/v1700000000/jugo_mora.jpg',
+      productKey: PRODUCTS.JugoMora,
+    }
   ];
 
   return (

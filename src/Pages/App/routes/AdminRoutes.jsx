@@ -4,7 +4,7 @@ import { ROLES } from "../../../Utils/constList";
 import { ContextProvider } from "../../../Context";
 import { LOGIN_ROUTES, ADMIN_ROUTES } from "../../../Utils/const/namesRutes"; // Importamos las rutas constantes
 import { AdminDashboard } from "../../Admin";
-import { AdminUser } from "../../Admin/AdminUser";
+import { UsersManagementAdmin } from "../../UsersManagement/UsersManagementAdmin";
 import { AdminKitchens } from "../../Admin/AdminKitchens";
 import { CreateKitchen } from "../../Admin/CreateKitchen";
 import { CreateProduct } from "../../Admin/CreateProduct";
@@ -27,7 +27,7 @@ const AdminRoutes = () => {
     >
       <Route path={`${ADMIN_ROUTES.path}`} element={<AdminDashboard />} />
       <Route path={`${routes.KITCHEN_MANAGEMENT}`} element={<AdminKitchens />} />
-      <Route path={`${routes.USER_MANAGEMENT}`} element={<AdminUser />} />
+      <Route path={`${routes.USER_MANAGEMENT}`} element={<UsersManagementAdmin />} />
       <Route path={`${routes.KITCHEN_CREATE}`} element={<CreateKitchen />} />
       <Route path={`${routes.PRODUCT_MANAGEMENT}`} element={<AdminProducts />} />
       <Route path={`${routes.CREATE_PRODUCT}`} element={<CreateProduct />} />

@@ -159,6 +159,20 @@ class OrderService {
       throw error?.response?.data
     }
   }
+
+  async getByClientId(clientId, pagination = { page: 1, limit: 20 }) {
+    try {
+      const query = new URLSearchParams();
+      query.append('clientId', clientId);
+      if (pagination.page) query.append('page', pagination.page);
+      if (pagination.limit) query.append('limit', pagination.limit);
+      const rta = await this.api.get(`/client/${clientId}?${query.toString()}`);
+      return rta.data.body || rta.data;
+    } catch (error) {
+      console.log("OrderService ~ getByClientId ~ error:", error);
+      throw error?.response?.data;
+    }
+  }
 }
 
 export { OrderService }
