@@ -1,53 +1,120 @@
-const ResumedItems = (orderItems, listProducts) => {
+/**
+ * Enriquece un complemento con datos del catálogo de productos,
+ * preservando los valores originales del item (precio, nota, nombre personalizado)
+ */
+const enrichComplement = (complement, listProducts) => {
+  const catalogProduct = listProducts.find((p) => p.id === complement.id);
+  console.log("enrichComplement ~ complement:", complement)
+  console.log("enrichComplement ~ catalogProduct:", catalogProduct)
+  console.log("enrichComplement ~ listProducts:", {
+    ...catalogProduct,      // Datos base del catálogo (colorPrimary, imagen, etc.)
+    ...complement,          // Valores originales del complemento (sobrescriben el catálogo)
+    catalogPrice: catalogProduct.price,  // Precio del catálogo como referencia
+  })
+  if (!catalogProduct) {
+    return complement;
+  }
 
-  const products = orderItems.map((item) => {
-    // Buscar el producto en la lista de productos
-    const product = listProducts.find((product) => product.id === item.id);
+  return {
+    ...catalogProduct,      // Datos base del catálogo (colorPrimary, imagen, etc.)
+    ...complement,          // Valores originales del complemento (sobrescriben el catálogo)
+    catalogPrice: catalogProduct.price,  // Precio del catálogo como referencia
+  };
+};
 
-    if (item.complements) {
-      item.complements = item.complements.map((complement) => {
-        const complementProduct = listProducts.find((product) => product.id === complement.id);
-        return {
-          ...complement,
-          ...complementProduct
-        };
-      });
-    } else {
-      item.complements = [];
-    }
+/**
+ * Enriquece un item de orden con datos del catálogo de productos,
+ * preservando los valores originales del item (precio, nota, nombre personalizado)
+ */
+const enrichOrderItem = (item, listProducts) => {
+  const catalogProduct = listProducts.find((p) => p.id === item.id);
 
+  const enrichedComplements = item.complements
+    ? item.complements.map((complement) => enrichComplement(complement, listProducts))
+    : [];
+
+  if (!catalogProduct) {
     return {
       ...item,
-      ...product
+      complements: enrichedComplements,
     };
-  });
+  }
 
-  // Separar los productos para los distintos tipos de productos que hay y su cantidad, para mostrar un solo string de los productos
-  const listResumed = new Map();
-  products.map((item) => {
-    const product = listResumed.get(item.id);
-    if (product) {
-      product.quantity += item?.quantity || 1;
+  return {
+    ...catalogProduct,      // Datos base del catálogo (colorPrimary, imagen, etc.)
+    ...item,                // Valores originales del item (sobrescriben el catálogo)
+    catalogPrice: catalogProduct.price,  // Precio del catálogo como referencia
+    complements: enrichedComplements,
+  };
+};
+
+/**
+ * Agrupa productos por ID y suma sus cantidades
+ */
+const groupProductsById = (products) => {
+  const grouped = new Map();
+
+  for (const item of products) {
+    const existing = grouped.get(item.id);
+
+    if (existing) {
+      existing.quantity += item.quantity || 1;
     } else {
-      listResumed.set(item.id, { ...item, quantity: item?.quantity || 1 });
+      grouped.set(item.id, { ...item, quantity: item.quantity || 1 });
     }
-  });
+  }
 
-  const Resuemn = Array.from(listResumed.values()).map((item) => (
-    <span key={item.id} className="badge m-1" style={{ backgroundColor: item?.colorPrimary }}>
+  return grouped;
+};
+
+/**
+ * Genera componentes badge para mostrar el resumen de productos
+ */
+const ProductBadges = ({ groupedProducts }) => {
+  return Array.from(groupedProducts.values()).map((item) => (
+    <span
+      key={item.id}
+      className="badge m-1"
+      style={{ backgroundColor: item.colorPrimary }}
+    >
       {item.quantity} {item.name}
     </span>
   ));
-  const hasComplements = products.some((item) => item.complements.length > 0);
-
-
-  return {
-    component: Resuemn,
-    hasComplements,
-    listResumed,
-    products
-  }
-
 };
 
-export { ResumedItems };
+/**
+ * Procesa los items de una orden y los enriquece con datos del catálogo
+ * Preserva: price, note, name, quantity del item original
+ * Agrega: colorPrimary, imagen, y otros datos del catálogo
+ */
+const ResumedItems = (orderItems, listProducts) => {
+  if (!orderItems || !listProducts) {
+    return {
+      component: null,
+      hasComplements: false,
+      listResumed: new Map(),
+      products: [],
+    };
+  }
+
+  // Enriquecer cada item con datos del catálogo
+  const products = orderItems.map((item) => enrichOrderItem(item, listProducts));
+
+  // Agrupar productos por ID para el resumen
+  const listResumed = groupProductsById(products);
+
+  // Verificar si hay complementos
+  const hasComplements = products.some((item) => item.complements?.length > 0);
+
+  // Generar componente de badges
+  const component = <ProductBadges groupedProducts={listResumed} />;
+
+  return {
+    component,
+    hasComplements,
+    listResumed,
+    products,
+  };
+};
+
+export { ResumedItems, enrichOrderItem, enrichComplement, groupProductsById };

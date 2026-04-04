@@ -13,7 +13,7 @@ import formatearNumeroConPuntos from "../../../Utils/formatearNumeroConPuntos";
 import SubTitleNamePayment from "../SubTitleNamePayment";
 
 const PaymentInfoOrder = ({ data }) => {
-  const { totalPrice, delivery, paymentMethod, payment } = data;
+  const { totalPrice, delivery, paymentMethod, payment, orderItems } = data;
   const { roleSelect } = usePreferences();
 
   // Usamos los custom hooks
@@ -53,7 +53,7 @@ const PaymentInfoOrder = ({ data }) => {
         <Accordion.Body>
           <ListGroup variant="flush">
             <ListGroup.Item className="border-0 py-2">
-              <PaymentBreakdown totalPrice={totalPrice} delivery={delivery} />
+              <PaymentBreakdown totalPrice={totalPrice} delivery={delivery} orderItems={orderItems} />
 
               {paymentMethod.toLowerCase() === "cash" && (
                 <PaymentCashDetails
@@ -80,49 +80,49 @@ const PaymentInfoOrder = ({ data }) => {
                 [roleSelect],
                 [ROLES.ADMIN.value, ROLES.RECEPTION.value]
               ) && (
-                <>
-                  {payment.status !== "approved" && (
-                    <ConfirmActionButton
-                      buttonLabel="Aprobar pago"
-                      isLoading={loading}
-                      onConfirm={approvePayment}
-                      variant="warning"
-                      confirmVariant="success"
-                      cancelVariant="danger"
-                    />
-                  )}
+                  <>
+                    {payment.status !== "approved" && (
+                      <ConfirmActionButton
+                        buttonLabel="Aprobar pago"
+                        isLoading={loading}
+                        onConfirm={approvePayment}
+                        variant="warning"
+                        confirmVariant="success"
+                        cancelVariant="danger"
+                      />
+                    )}
 
-                  <hr />
+                    <hr />
 
-                  {payment.status !== "approved" && (
-                    <div className="position-relative">
-                      <label className="form-label small text-muted mb-1">
-                        Cambiar método de pago
-                      </label>
-                      <select
-                        className="form-select"
-                        value={paymentMethod}
-                        onChange={handleChangePaymentMethod}
-                        disabled={loading}
-                      >
-                        {Object.values(PAYMENT_METHODS).map((method) => {
-                          if (!method.active) return null;
-                          return (
-                            <option key={method.value} value={method.value}>
-                              {method.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                      {loading && (
-                        <div className="position-absolute top-50 end-0 translate-middle-y me-4">
-                          <Spinner animation="border" size="sm" />
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </>
-              )}
+                    {payment.status !== "approved" && (
+                      <div className="position-relative">
+                        <label className="form-label small text-muted mb-1">
+                          Cambiar método de pago
+                        </label>
+                        <select
+                          className="form-select"
+                          value={paymentMethod}
+                          onChange={handleChangePaymentMethod}
+                          disabled={loading}
+                        >
+                          {Object.values(PAYMENT_METHODS).map((method) => {
+                            if (!method.active) return null;
+                            return (
+                              <option key={method.value} value={method.value}>
+                                {method.name}
+                              </option>
+                            );
+                          })}
+                        </select>
+                        {loading && (
+                          <div className="position-absolute top-50 end-0 translate-middle-y me-4">
+                            <Spinner animation="border" size="sm" />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
             </ListGroup.Item>
           </ListGroup>
         </Accordion.Body>

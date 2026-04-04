@@ -23,7 +23,6 @@ const PedidoDetalles = () => {
     const fetchOrder = async () => {
       try {
         const data = await orderService.getById(id);
-        console.log(data, 'data');
         toast.success('Pedido cargado');
         setOrder(data);
       } catch (error) {
