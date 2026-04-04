@@ -3,7 +3,7 @@ import "./ProductsTable.css";
 import { ItemProductBadge } from "../Products/ItemProductBadge";
 const ProductsTable = ({ orderItems }) => {
 
-
+  console.log(orderItems, 'orderItems en ProductsTable')
   return (
     <Table striped bordered hover responsive className="products-table">
       <thead>
@@ -20,15 +20,19 @@ const ProductsTable = ({ orderItems }) => {
           const ItemsComplements = ({ complements }) => {
             if (!complements || complements.length === 0) return null;
 
-            return complements.map((complement, index) => (
-              <div key={index}>
-                <Badge className="badge m-2 badge-primary">
-                  {complement?.quantity || 1}
-                </Badge>
-                <ItemProductBadge name={complement?.name} color={complement?.colorPrimary} />
-              </div>
-            ));
-          };
+            return complements.map((complement, index) => {
+              const name = complement.codes ? complement?.name + " (" + complement?.codes.join(", ") + ")" : complement?.name;
+
+              return (
+                <div key={index}>
+                  <Badge className="badge m-2 badge-primary">
+                    {complement?.quantity || 1}
+                  </Badge>
+                  <ItemProductBadge name={name} color={complement?.colorPrimary} />
+                </div>
+              );
+            });
+          }
 
           return (
             <tr key={index}>
