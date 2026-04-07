@@ -46,7 +46,7 @@ const PaymentBreakdown = ({ totalPrice, delivery, orderItems }) => {
               {item.quantity || 1}x {item.name}
             </span>
             <span className="small text-nowrap">
-              {formatearNumeroConPuntos(item.price || 0)}
+              {formatearNumeroConPuntos(item?.price || 0)}
             </span>
           </div>
           {item.complements?.map((complement, cIndex) => (

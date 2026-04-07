@@ -9,7 +9,7 @@ const enrichComplement = (complement, listProducts) => {
   console.log("enrichComplement ~ listProducts:", {
     ...catalogProduct,      // Datos base del catálogo (colorPrimary, imagen, etc.)
     ...complement,          // Valores originales del complemento (sobrescriben el catálogo)
-    catalogPrice: catalogProduct.price,  // Precio del catálogo como referencia
+    catalogPrice: catalogProduct?.price,  // Precio del catálogo como referencia
   })
   if (!catalogProduct) {
     return complement;
@@ -18,7 +18,7 @@ const enrichComplement = (complement, listProducts) => {
   return {
     ...catalogProduct,      // Datos base del catálogo (colorPrimary, imagen, etc.)
     ...complement,          // Valores originales del complemento (sobrescriben el catálogo)
-    catalogPrice: catalogProduct.price,  // Precio del catálogo como referencia
+    catalogPrice: catalogProduct?.price,  // Precio del catálogo como referencia
   };
 };
 
@@ -43,7 +43,7 @@ const enrichOrderItem = (item, listProducts) => {
   return {
     ...catalogProduct,      // Datos base del catálogo (colorPrimary, imagen, etc.)
     ...item,                // Valores originales del item (sobrescriben el catálogo)
-    catalogPrice: catalogProduct.price,  // Precio del catálogo como referencia
+    catalogPrice: catalogProduct?.price,  // Precio del catálogo como referencia
     complements: enrichedComplements,
   };
 };
