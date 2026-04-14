@@ -1,10 +1,11 @@
 // components/Chat.js
 import { useEffect, useState } from 'react';
 import useSocket from '../hooks/useSocket';
+import { getUrlSocket } from '../Utils/getUrlApiByOriginPath';
 
 const Chat = () => {
   const [newMessage, setNewMessage] = useState('');
-  const socket = useSocket('http://localhost:8087'); // URL del servidor de WebSocket
+  const socket = useSocket(getUrlSocket());
 
   useEffect(() => {
     if (!socket) return;

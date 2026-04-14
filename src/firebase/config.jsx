@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, connectAuthEmulator, RecaptchaVerifier } from "firebase/auth";
 import { getUrlAuth } from "../Utils/getUrlApiByOriginPath";
-const ENV = import.meta.env
+const ENV = import.meta.env;
 
 // TODO: Agrega otros SDKs de productos de Firebase que necesites
 // Más información: https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,8 +26,8 @@ const app = initializeApp(firebaseConfig);
 const FirebaseAuth = getAuth(app);
 
 // Conecta con el emulador de autenticación si estás en desarrollo (localhost)
-if (ENV.VITE_NODE_ENV == "development") {
-  console.log("Conectando con el emulador de autenticación...")
+if (ENV.DEV || ENV.VITE_NODE_ENV === "development") {
+  console.log("Conectando con el emulador de autenticación...");
   connectAuthEmulator(FirebaseAuth, getUrlAuth());
 }
 
