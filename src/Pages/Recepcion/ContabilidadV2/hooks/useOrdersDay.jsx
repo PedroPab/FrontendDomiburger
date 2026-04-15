@@ -1,19 +1,18 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { OrderService } from "../../../../apis/clientV2/OrderService";
 import { useAuth } from "../../../../Context/AuthContext";
 import { useMiContexto } from "../../../../Context";
 
 const useOrdersDay = () => {
-  //transformamos la fecha a un formato que acepta el backend con solo el dia , mes y año
-
-  const { token } = useAuth()
-  const orderService = new OrderService(token);
+  const { token } = useAuth();
+  const orderService = useMemo(() => new OrderService(token), [token]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [ordenes, setOrdenes] = useState([]);
 
-  const { kitchenSelectId: kitchenId } = useMiContexto()
-  const fetchOrders = async (startDate, endDate) => {
+  const { kitchenSelectId: kitchenId } = useMiContexto();
+
+  const fetchOrders = useCallback(async (startDate, endDate) => {
     setLoading(true);
     try {
       const response = await orderService.getOrdersDay({ kitchenId, startDate, endDate });
@@ -22,16 +21,14 @@ const useOrdersDay = () => {
       setError(error.message);
     }
     setLoading(false);
-  }
-
+  }, [orderService, kitchenId]);
 
   return {
-    error: error,
+    error,
     data: ordenes,
-    loading: loading,
+    loading,
     fetchOrders
-  }
-
+  };
 }
 
 export { useOrdersDay }

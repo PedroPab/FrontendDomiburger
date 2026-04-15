@@ -1,16 +1,15 @@
-
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useAuth } from "../../../Context/AuthContext";
 import { OrderService } from "../../../apis/clientV2/OrderService";
 
 const useOrderFindHistoryByCourier = () => {
-  const { token } = useAuth()
-  const service = new OrderService(token);
+  const { token } = useAuth();
+  const service = useMemo(() => new OrderService(token), [token]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
 
-  const fetchOrders = async ({ startDate, endDate, id }) => {
+  const fetchOrders = useCallback(async ({ startDate, endDate, id }) => {
     setLoading(true);
     try {
       const response = await service.getOrderByCourier({
@@ -23,14 +22,14 @@ const useOrderFindHistoryByCourier = () => {
       setError(error.message);
     }
     setLoading(false);
-  }
+  }, [service]);
 
   return {
-    error: error,
-    data: data,
-    loading: loading,
+    error,
+    data,
+    loading,
     fetchOrders
-  }
+  };
 }
 
 export { useOrderFindHistoryByCourier }

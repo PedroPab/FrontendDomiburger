@@ -1,30 +1,32 @@
 import { Dropdown, Image, Spinner } from "react-bootstrap";
 import { useAuth } from "../../Context/AuthContext";
-import { UsersService } from "../../apis/clientV2/usersService";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useRecepcion } from "../../Context/RecepcionContex";
+import { useCache } from "../../Context/CacheContext";
 import { OrderService } from "../../apis/clientV2/OrderService";
 import { toast } from "react-toastify";
 
 const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
   const { listDomiciliarios, openCloseModalAgregarDo } = useRecepcion();
   const { token } = useAuth();
-  const userService = new UsersService(token);
+  const { getUserById } = useCache();
+  const orderService = useMemo(() => new OrderService(token), [token]);
+
   const [loadUser, setLoadUser] = useState(false);
   const [dataUserCourier, setDataUserCourier] = useState(null);
   const [loadChangeCourier, setLoadChangeCourier] = useState(false);
 
-  const findUser = async () => {
+  const findUser = useCallback(async () => {
     try {
       setLoadUser(true);
-      const user = await userService.getByIdUser(assignedCourierUserId);
-      setDataUserCourier(user.body);
+      const user = await getUserById(assignedCourierUserId);
+      setDataUserCourier(user);
     } catch (error) {
-      toast.error(`Error al cargar el usuario: ${error?.response?.data?.message}`);
+      toast.error(`Error al cargar el usuario: ${error?.message}`);
     } finally {
       setLoadUser(false);
     }
-  };
+  }, [assignedCourierUserId, getUserById]);
 
   useEffect(() => {
     if (!assignedCourierUserId) {
@@ -38,11 +40,9 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
     } else {
       findUser();
     }
-  }, [token, assignedCourierUserId, listDomiciliarios]);
+  }, [assignedCourierUserId, listDomiciliarios, findUser]);
 
-  const orderService = new OrderService(token);
-
-  const updateCourierOrder = async (courierId) => {
+  const updateCourierOrder = useCallback(async (courierId) => {
     try {
       setLoadChangeCourier(true);
       await orderService.updateCourier(orderId, courierId);
@@ -51,7 +51,7 @@ const DeliveryDropdown = ({ assignedCourierUserId, orderId }) => {
     } finally {
       setLoadChangeCourier(false);
     }
-  };
+  }, [orderService, orderId]);
 
   return (
     <div className="d-flex align-items-center">

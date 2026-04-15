@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useAuth } from './AuthContext';
 import { UsersService } from '../apis/clientV2/usersService';
@@ -9,51 +9,42 @@ import { ProductsService } from '../apis/clientV2/ProductsService';
 
 export const RecepcionContexto = createContext()
 
- 
+
 export const ContextProviderRecepcion = ({ children }) => {
-  //las lista para tener  los domiciliarios  que queremos y no los todo los que hay
   const [listDomiciliarios, setListDomiciliarios] = useLocalStorage('listDomiciliarios1', [])
-
-  //la lista de todos los domiciliarios
   const [users, setUsers] = useLocalStorage('Domiciliarios1', []);
-
-  //domiciliarios seleccionados
   const [domiciliariosSeleccionados, setDomiciliariosSeleccionados] = useState([])
-  //estado seleccionado
   const [listProducts, setListProducts] = useState([])
   const { token } = useAuth()
 
-  //miramos todo los domiciliarios en la api
-  const userService = new UsersService(token);
-  const productosService = new ProductsService(token);
+  const userService = useMemo(() => new UsersService(token), [token]);
+  const productosService = useMemo(() => new ProductsService(token), [token]);
 
-  const findUser = async () => {
+  const findUser = useCallback(async () => {
     try {
-      const users = await userService.getByRole(ROLES.COURIER.value);
-      //filtramos los domiciliarios de la lista de listDomiciliarios para que que no muestre los que ya no están en la lista
-      const listDomiciliariosFilter = listDomiciliarios.filter(e => users.body.find(u => u.id === e.id))
+      const usersData = await userService.getByRole(ROLES.COURIER.value);
+      const listDomiciliariosFilter = listDomiciliarios.filter(e => usersData.body.find(u => u.id === e.id))
       setListDomiciliarios(listDomiciliariosFilter)
-      setUsers(users.body);
+      setUsers(usersData.body);
     } catch (error) {
-      console.log("🚀 ~ findUser ~ error:", error)
+      console.log("findUser error:", error)
       toast.error(`Error al cargar los domiciliarios ${error?.response?.data?.message}`);
     }
-  }
+  }, [userService, listDomiciliarios, setListDomiciliarios, setUsers]);
 
-  const findsProducts = async () => {
+  const findsProducts = useCallback(async () => {
     try {
       const products = await productosService.getAll();
       setListProducts(products.body);
     } catch (error) {
       toast.error(`Error al cargar los productos ${error?.response?.data?.message}`);
     }
-  }
+  }, [productosService]);
 
   useEffect(() => {
     findUser();
     findsProducts();
-  }
-  , [])
+  }, [])
 
   //el modal para agrega los domiciliarios
   const [showModalAgregarDomiciliarios, setShowModalAgregarDomiciliarios] = useState(false);

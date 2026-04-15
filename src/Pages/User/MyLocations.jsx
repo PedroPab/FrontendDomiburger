@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { Container, Row, Col, Spinner, Alert, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,25 +16,26 @@ const MyLocations = () => {
 
   const { usuarioActual, token } = useAuth();
   const idUser = usuarioActual?.uid;
-  const locationsService = new LocationsService(token)
-  useEffect(() => {
-    const findLocations = async () => {
-      try {
-        const rta = await locationsService.getByIdUser(idUser);
-        setLocations(rta?.body);
-      } catch (error) {
-        setErrorLocations(error);
-      } finally {
-        setLoadingLocations(false);
-      }
-    };
+  const locationsService = useMemo(() => new LocationsService(token), [token]);
 
+  const findLocations = useCallback(async () => {
+    try {
+      const rta = await locationsService.getByIdUser(idUser);
+      setLocations(rta?.body);
+    } catch (error) {
+      setErrorLocations(error);
+    } finally {
+      setLoadingLocations(false);
+    }
+  }, [locationsService, idUser]);
+
+  useEffect(() => {
     setErrorLocations(null);
     setLoadingLocations(true);
     if (idUser && token) {
       findLocations();
     }
-  }, [idUser, token]);
+  }, [idUser, token, findLocations]);
 
   return (
     <UserLayout>

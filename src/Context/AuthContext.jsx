@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext, useRef } from 'react';
+import { createContext, useState, useEffect, useContext, useRef, useMemo } from 'react';
 import { FirebaseAuth } from '../firebase/config';
 import { onAuthStateChanged, getIdToken, signOut } from 'firebase/auth';
 import { LOGIN_ROUTES } from '../Utils/const/namesRutes';
@@ -83,9 +83,10 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   // Obtención de datos adicionales del usuario
-  const usersService = new UsersService(token);
+  const usersService = useMemo(() => new UsersService(token), [token]);
   useEffect(() => {
     const fetchUserData = async () => {
+      if (!token) return;
       try {
         const response = await usersService.me();
         setUserData(response);
@@ -94,7 +95,7 @@ export const AuthProvider = ({ children }) => {
       }
     };
     fetchUserData();
-  }, [token]);
+  }, [token, usersService]);
 
   const isValidToken = async () => {
     return onAuthStateChanged(FirebaseAuth, async (user) => {

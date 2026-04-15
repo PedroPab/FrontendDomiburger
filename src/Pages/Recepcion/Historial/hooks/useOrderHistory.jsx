@@ -1,20 +1,17 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { OrderService } from "../../../../apis/clientV2/OrderService";
 import { useAuth } from "../../../../Context/AuthContext";
 
 const useOrderHistory = () => {
-  //transformamos la fecha a un formato que acepta el backend con solo el dia , mes y año
+  const { token, usuarioActual } = useAuth();
 
-  const { token, usuarioActual } = useAuth()
-
-
-  const orderService = new OrderService(token);
+  const orderService = useMemo(() => new OrderService(token), [token]);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [ordenes, setOrdenes] = useState([]);
 
-  const fetchOrders = async (startDate, endDate) => {
-    const userCreateId = usuarioActual?.uid
+  const fetchOrders = useCallback(async (startDate, endDate) => {
+    const userCreateId = usuarioActual?.uid;
 
     setLoading(true);
     try {
@@ -24,16 +21,14 @@ const useOrderHistory = () => {
       setError(error.message);
     }
     setLoading(false);
-  }
-
+  }, [orderService, usuarioActual?.uid]);
 
   return {
-    error: error,
+    error,
     data: ordenes,
-    loading: loading,
+    loading,
     fetchOrders
-  }
-
+  };
 }
 
 export { useOrderHistory }

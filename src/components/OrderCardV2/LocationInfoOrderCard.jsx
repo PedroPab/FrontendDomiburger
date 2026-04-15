@@ -1,31 +1,31 @@
 import { Accordion, Col, Row, Button, Spinner, Alert } from "react-bootstrap";
-import { LocationsService } from "../../apis/clientV2/LocationsService";
-import { useAuth } from "../../Context/AuthContext";
-import { useEffect, useState } from "react";
+import { useCache } from "../../Context/CacheContext";
+import { useEffect, useState, useCallback } from "react";
 import { toast } from "react-toastify";
-import { FaCopy, FaMapMarkerAlt } from "react-icons/fa"; // Íconos para mejor UX
+import { FaCopy, FaMapMarkerAlt } from "react-icons/fa";
 
 const LocationInfoOrderCard = ({ locationId }) => {
-  const { token } = useAuth();
-  const locationService = new LocationsService(token);
+  const { getLocationById } = useCache();
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const fetchLocation = useCallback(async () => {
+    if (!locationId) return;
+    try {
+      setLoading(true);
+      const locationData = await getLocationById(locationId);
+      setLocation(locationData);
+    } catch (err) {
+      setError("No se pudo cargar la ubicación. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
+    }
+  }, [locationId, getLocationById]);
+
   useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        setLoading(true);
-        const response = await locationService.getById(locationId);
-        setLocation(response.body);
-      } catch (error) {
-        setError("No se pudo cargar la ubicación. Inténtalo de nuevo.");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchLocation();
-  }, [locationId]);
+  }, [fetchLocation]);
 
   const urlAddress = encodeURIComponent(location?.address);
 

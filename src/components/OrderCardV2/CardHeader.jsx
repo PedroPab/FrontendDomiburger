@@ -1,17 +1,15 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useCallback } from "react";
 import { Card, Badge, Image, Spinner, OverlayTrigger, Popover } from "react-bootstrap";
-import { useAuth } from "../../Context/AuthContext";
-import { UsersService } from "../../apis/clientV2/usersService";
-import { ClientsService } from "../../apis/clientV2/ClientsService";
 import photoGeneric from "../../assets/img/photoGeneric.jpg";
 import { DetailsModalOrder } from "./DetailsModalOrder/index";
 import { useWorker } from "../../Context/WorkerContext";
+import { useCache } from "../../Context/CacheContext";
 import { ORIGINS } from "../../Utils/const/order/origins";
 import { convertToTimestamp } from "../../Utils/formatTime";
 
 const CardHeaderComponent = memo(({ order }) => {
-
-  const { listKitchens } = useWorker()
+  const { listKitchens } = useWorker();
+  const { getUserById, getClientById } = useCache();
   const kitchen = listKitchens.find(kitchen => kitchen.id === order?.assignedKitchenId);
 
   const { userId, dailyOrderNumber, clientId } = order;
@@ -19,25 +17,24 @@ const CardHeaderComponent = memo(({ order }) => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  const { token } = useAuth();
-  const usersService = new UsersService(token);
-  const clientsService = new ClientsService(token);
+  const fetchUser = useCallback(async () => {
+    setLoading(true);
+    try {
+      const user = userId
+        ? await getUserById(userId)
+        : clientId
+          ? await getClientById(clientId)
+          : null;
+      setUserClient(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+    setLoading(false);
+  }, [userId, clientId, getUserById, getClientById]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      setLoading(true);
-      const user = userId
-        ? await usersService.getByIdUser(userId)
-        : clientId
-          ? await clientsService.getById(clientId)
-          : null;
-
-      setUserClient(user?.body || null);
-      setLoading(false);
-    };
-
     if (userId || clientId) fetchUser();
-  }, [userId, clientId]);
+  }, [userId, clientId, fetchUser]);
 
   const userName = userClient?.name || "Sin nombre";
   const profilePicture = userClient?.photoUrl || photoGeneric;

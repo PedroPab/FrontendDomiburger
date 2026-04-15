@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { toast } from "react-toastify";
 import { statusNext } from "../../Utils/const/statusChange/listNextStatus";
 import { OrderService } from "../../apis/clientV2/OrderService";
@@ -9,9 +9,8 @@ import { useIsValidChangeStatus } from "./useIsValidChangeStatus";
 
 function NextStatusButton({ data }) {
   const { token } = useAuth();
-  const orderService = new OrderService(token);
+  const orderService = useMemo(() => new OrderService(token), [token]);
 
-  // Se obtiene el label del botón a partir del estado actual de la orden.
   const buttonLabel = statusOrderCol[data.status]?.textNextStatus || "Change Status";
 
   const [isLoading, setIsLoading] = useState(false);
@@ -23,14 +22,13 @@ function NextStatusButton({ data }) {
     setIsLoading(true);
     try {
       await orderService.changeStatus(id, previousState, nextState);
-      // toast.success("Order status updated");
     } catch (error) {
       console.error("Error updating order status:", error);
       toast.error(`Error changing order status: ${error?.message}`);
     } finally {
       setIsLoading(false);
     }
-  }, [data.id, data.status, orderService]);
+  }, [data.id, data.status, orderService, data]);
 
   //analizamos si el usuario puede cambiar el estado de la orden según su rol
   const isValidChange = useIsValidChangeStatus(data.status);

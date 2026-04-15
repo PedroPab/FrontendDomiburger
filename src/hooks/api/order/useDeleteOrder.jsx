@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { OrderService } from "../../../apis/clientV2/OrderService";
 import { useAuth } from "../../../Context/AuthContext";
 
@@ -8,9 +8,9 @@ const useDeleteOrder = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
-  const orderService = new OrderService(token)
+  const orderService = useMemo(() => new OrderService(token), [token]);
 
-  const deleteOrder = async (id) => {
+  const deleteOrder = useCallback(async (id) => {
     setLoading(true);
     try {
       const rta = await orderService.delete(id);
@@ -20,10 +20,9 @@ const useDeleteOrder = () => {
     } finally {
       setLoading(false);
     }
-  }
+  }, [orderService]);
 
   return { deleteOrder, loading, error, data };
-
 }
 
 export { useDeleteOrder };

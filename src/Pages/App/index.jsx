@@ -9,23 +9,25 @@ import { DomiciliarioRoutes } from './routes/DomiciliarioRoutes';
 import { PreferencesProvider } from '../../Context/PreferencesContext';
 import { UserRoutes } from './routes/UserRoutes';
 import { AuthProvider } from '../../Context/AuthContext';
-// import { UserRoutes } from './routes/UserRoutes';
+import { CacheProvider } from '../../Context/CacheContext';
 
 const AppRoutes = () => {
   return (
     <>
       <PreferencesProvider>
         <AuthProvider>
-          <Routes>
-            {LoginRoutes()}
-            {HomeRoutes()}
-            {AdminRoutes()}
-            {RecepcionRoutes()}
-            {DomiciliarioRoutes()}
-            {CocinaRoutes()}
-            {UserRoutes()}
-            {GeneralRoutes()}
-          </Routes>
+          <CacheProvider>
+            <Routes>
+              {LoginRoutes()}
+              {HomeRoutes()}
+              {AdminRoutes()}
+              {RecepcionRoutes()}
+              {DomiciliarioRoutes()}
+              {CocinaRoutes()}
+              {UserRoutes()}
+              {GeneralRoutes()}
+            </Routes>
+          </CacheProvider>
         </AuthProvider>
       </PreferencesProvider>
     </>

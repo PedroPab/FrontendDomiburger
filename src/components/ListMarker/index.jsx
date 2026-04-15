@@ -1,30 +1,34 @@
 import { Marker } from "@react-google-maps/api";
 import { iconMarker } from "./iconMarker";
 import { useWorker } from "../../Context/WorkerContext";
-import { LocationsService } from "../../apis/clientV2/LocationsService";
-import { useAuth } from "../../Context/AuthContext";
-import { useEffect, useState } from "react";
+import { useCache } from "../../Context/CacheContext";
+import { useEffect, useState, useCallback } from "react";
 
 const ListMarker = ({ pedidos }) => {
   const { setIdOrderSelect } = useWorker();
-  const { token } = useAuth();
-  const locationService = new LocationsService(token);
+  const { getLocationsByIds } = useCache();
 
   const [locations, setLocations] = useState([]);
 
-  useEffect(() => {
-    const fetchLocations = async () => {
-      const resolvedLocations = await Promise.all(
-        pedidos.map(async (order) => {
-          const location = await locationService.getById(order.locationId);
-          return { ...order, location: location.body };
-        })
-      );
-      setLocations(resolvedLocations);
-    };
+  const fetchLocations = useCallback(async () => {
+    if (!pedidos || pedidos.length === 0) {
+      setLocations([]);
+      return;
+    }
 
+    const locationIds = pedidos.map(order => order.locationId);
+    const fetchedLocations = await getLocationsByIds(locationIds);
+
+    const resolvedLocations = pedidos.map((order, index) => ({
+      ...order,
+      location: fetchedLocations[index]
+    }));
+    setLocations(resolvedLocations);
+  }, [pedidos, getLocationsByIds]);
+
+  useEffect(() => {
     fetchLocations();
-  }, [pedidos]);
+  }, [fetchLocations]);
 
   return (
     <>
