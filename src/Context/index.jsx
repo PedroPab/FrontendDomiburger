@@ -1,5 +1,5 @@
 // context/OrdersContext.js
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react';
 import { filtrarPedidos } from '../Utils/filtrarPedidos';
 import { usePreferences } from './PreferencesContext';
 import { io } from 'socket.io-client';
@@ -9,12 +9,15 @@ import { toast } from 'react-toastify';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNotificationSound } from '../hooks/useNotificationSound';
 import { useShowNotification } from '../hooks/useShowNotification';
+import { useOnlineStatus, CONNECTION_STATUS } from '../hooks/useConnectionStatus';
+import { SOCKET_OPTIONS } from '../hooks/useSocket';
 
 export const MiContexto = createContext();
 
 export const ContextProvider = ({ children }) => {
   const apiUrl = getUrlSocket();
-  const socket = useRef();
+  const socketRef = useRef(null);
+  const isSocketInitialized = useRef(false);
 
   const { roleSelect: ROLE } = usePreferences();
   const { usuarioActual, token, userData } = useAuth();
@@ -24,30 +27,54 @@ export const ContextProvider = ({ children }) => {
   const [idItemSelect, setIdItemSelect] = useState(null);
   const [zoomMaps, setZoomMaps] = useState(15);
   const [alertaActiva, setAlertaActiva] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
 
   const [kitchenSelectId, setKitchenSelectId] = useLocalStorage('kitchenSelectId', null);
   const { alertSound, errorCriticalSound, successSound } = useNotificationSound();
   const { notify } = useShowNotification();
 
+  // Detectar estado de internet
+  const isOnline = useOnlineStatus();
+
+  // Estado de conexión del socket
+  const [connectionStatus, setConnectionStatus] = useState(CONNECTION_STATUS.IDLE);
+  const hasPlayedConnectSound = useRef(false);
+
+  // Derivar isConnected para compatibilidad
+  const isConnected = connectionStatus === CONNECTION_STATUS.CONNECTED;
+
+  // Refs para valores actuales (evitar recrear socket)
+  const roleRef = useRef(ROLE);
+  const tokenRef = useRef(token);
+  const kitchenIdRef = useRef(kitchenSelectId);
+
+  // Actualizar refs cuando cambien los valores
+  useEffect(() => {
+    roleRef.current = ROLE;
+  }, [ROLE]);
+
+  useEffect(() => {
+    tokenRef.current = token;
+  }, [token]);
+
+  useEffect(() => {
+    kitchenIdRef.current = kitchenSelectId;
+  }, [kitchenSelectId]);
+
   const changeKitchen = (id) => {
     setKitchenSelectId(id);
   };
 
-  // Función que ordena los pedidos por fecha de creación y les asigna un número secuencial.
-  // Se asume que cada pedido tiene la propiedad "createdAt" (por ejemplo, en formato ISO).
-  const ordenarYNumerarPedidos = (orders) => {
+  const ordenarYNumerarPedidos = useCallback((orders) => {
     const sorted = orders.sort((a, b) => (a.dailyOrderNumber) - (b.dailyOrderNumber));
     return sorted.map((order, index) => ({ ...order, orderNumber: index + 1 }));
-  };
+  }, []);
 
-  // Función que filtra los pedidos según el rol, y luego los ordena y numera.
-  const actualizarPedidos = (orders) => {
-    const pedidosFiltrados = filtrarPedidos(orders, ROLE);
+  const actualizarPedidos = useCallback((orders) => {
+    const pedidosFiltrados = filtrarPedidos(orders, roleRef.current);
     return ordenarYNumerarPedidos(pedidosFiltrados);
-  };
+  }, [ordenarYNumerarPedidos]);
 
-  // Al inicio de la aplicación se asigna la cocina
+  // Asignación de cocina al inicio
   useEffect(() => {
     const assignedKitchens = userData?.assignedKitchens || [];
     if (assignedKitchens.length < 0) {
@@ -66,47 +93,120 @@ export const ContextProvider = ({ children }) => {
         return;
       }
     }
-    // Si tiene varias cocinas asignadas, se selecciona la primera
   }, [usuarioActual]);
 
-  const reconnectSocket = () => {
-    if (!isConnected) {
-      socket.current.connect();
-      console.log("Intentando reconectar...");
+  // Función para emitir login
+  const emitLogin = useCallback(() => {
+    if (socketRef.current?.connected && roleRef.current) {
+      const params = {
+        token: tokenRef.current,
+        role: roleRef.current,
+        kitchenId: kitchenIdRef.current
+      };
+      socketRef.current.emit('login', params);
+      console.log('Login emitido con:', params.role);
     }
-  };
+  }, []);
 
+  // Reconexión manual mejorada
+  const reconnectSocket = useCallback(() => {
+    if (!isOnline) {
+      toast.warning('Sin conexión a internet');
+      return;
+    }
+
+    if (socketRef.current && !socketRef.current.connected) {
+      socketRef.current.connect();
+      toast.info('Intentando reconectar...');
+    }
+  }, [isOnline]);
+
+  // Reconectar automáticamente cuando vuelve internet
   useEffect(() => {
-    socket.current = io(`${apiUrl}/apiV2`);
+    if (!socketRef.current) return;
 
-    console.log('Intentando conectar socket');
-    socket.current.connect();
+    if (isOnline && !socketRef.current.connected && isSocketInitialized.current) {
+      socketRef.current.connect();
+    }
+  }, [isOnline]);
 
-    // Conexión inicial
-    socket.current.on("connect", () => {
+  // Actualizar estado cuando cambia la conexión a internet
+  useEffect(() => {
+    if (!isOnline) {
+      setConnectionStatus(CONNECTION_STATUS.OFFLINE);
+    }
+  }, [isOnline]);
+
+  // Sonidos de conexión/desconexión
+  useEffect(() => {
+    if (connectionStatus === CONNECTION_STATUS.CONNECTED && !hasPlayedConnectSound.current) {
       successSound();
-      console.log(`Socket conectado 🏁, ID: ${socket.current.id}`);
-      setIsConnected(true);
-      if (ROLE) {
-        const params = {
-          token: token,
-          role: ROLE,
-          kitchenId: kitchenSelectId
-        };
-        socket.current.emit('login', params);
+      hasPlayedConnectSound.current = true;
+    } else if (connectionStatus === CONNECTION_STATUS.DISCONNECTED || connectionStatus === CONNECTION_STATUS.OFFLINE) {
+      if (hasPlayedConnectSound.current) {
+        errorCriticalSound();
       }
-      console.log("Variables de conexión:", ROLE);
+      hasPlayedConnectSound.current = false;
+    }
+  }, [connectionStatus, successSound, errorCriticalSound]);
+
+  // Re-emitir login cuando cambian ROLE o kitchenSelectId (sin recrear socket)
+  useEffect(() => {
+    if (isSocketInitialized.current && socketRef.current?.connected) {
+      emitLogin();
+    }
+  }, [ROLE, kitchenSelectId, emitLogin]);
+
+  // Inicialización del socket (solo una vez)
+  useEffect(() => {
+    // Evitar inicialización duplicada
+    if (isSocketInitialized.current) return;
+
+    socketRef.current = io(`${apiUrl}/apiV2`, SOCKET_OPTIONS);
+    isSocketInitialized.current = true;
+
+    console.log('Inicializando socket');
+    setConnectionStatus(CONNECTION_STATUS.CONNECTING);
+
+    // Conexión exitosa
+    socketRef.current.on("connect", () => {
+      console.log(`Socket conectado, ID: ${socketRef.current.id}`);
+      setConnectionStatus(CONNECTION_STATUS.CONNECTED);
+      emitLogin();
     });
 
-    // Manejo de desconexión
-    socket.current.on('disconnect', (reason) => {
-      console.log(`Socket desconectado 🥊, razón: ${reason}`);
-      errorCriticalSound();
-      setIsConnected(false);
+    // Desconexión
+    socketRef.current.on('disconnect', (reason) => {
+      console.log(`Socket desconectado, razón: ${reason}`);
+
+      if (reason === 'io client disconnect') {
+        setConnectionStatus(CONNECTION_STATUS.DISCONNECTED);
+      } else {
+        setConnectionStatus(CONNECTION_STATUS.RECONNECTING);
+      }
     });
 
-    // Manejo de mensajes generales
-    socket.current.on("message", (newMessage) => {
+    // Error de conexión
+    socketRef.current.on('connect_error', (error) => {
+      console.error('Error de conexión:', error.message);
+      setConnectionStatus(CONNECTION_STATUS.DISCONNECTED);
+    });
+
+    // Intentos de reconexión
+    if (socketRef.current.io) {
+      socketRef.current.io.on('reconnect_attempt', (attemptNumber) => {
+        console.log(`Intento de reconexión #${attemptNumber}`);
+        setConnectionStatus(CONNECTION_STATUS.RECONNECTING);
+      });
+
+      socketRef.current.io.on('reconnect', () => {
+        console.log('Reconexión exitosa');
+        setConnectionStatus(CONNECTION_STATUS.CONNECTED);
+      });
+    }
+
+    // Manejo de mensajes
+    socketRef.current.on("message", (newMessage) => {
       const { type, message } = newMessage;
       if (type === 'alert') {
         alertSound();
@@ -115,15 +215,15 @@ export const ContextProvider = ({ children }) => {
       toast(message);
     });
 
-    // Pedido inicial: se filtran, ordenan y numeran
-    socket.current.on('order/init', (orders) => {
+    // Pedidos iniciales
+    socketRef.current.on('order/init', (orders) => {
       console.log('Pedidos iniciales recibidos:', orders.length);
       const processedOrders = actualizarPedidos(orders);
       setItems(processedOrders);
     });
 
     // Cuando se crea un pedido
-    socket.current.on('order/create', (pedido) => {
+    socketRef.current.on('order/create', (pedido) => {
       toast(`Pedido creado 🚚, ${pedido.id}`);
       alertSound();
       setItems((prevItems) => {
@@ -134,7 +234,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     // Cuando se actualiza un pedido
-    socket.current.on('order/update', (pedido) => {
+    socketRef.current.on('order/update', (pedido) => {
       setItems((prevItems) => {
         const mapItems = new Map(prevItems.map((item) => [item.id, item]));
         mapItems.set(pedido.id, pedido);
@@ -143,7 +243,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     // Cuando se remueve un pedido
-    socket.current.on('order/remove', (pedido) => {
+    socketRef.current.on('order/remove', (pedido) => {
       console.warn("Pedido removido:", pedido);
       toast(`Pedido removido 🚚, ${pedido.id}`);
       setItems((prevItems) => {
@@ -154,7 +254,7 @@ export const ContextProvider = ({ children }) => {
     });
 
     // Cuando se elimina un pedido
-    socket.current.on('order/delete', (pedido) => {
+    socketRef.current.on('order/delete', (pedido) => {
       toast(`Pedido eliminado 🚚, ${pedido.id}`);
       setItems((prevItems) => {
         const mapItems = new Map(prevItems.map((item) => [item.id, item]));
@@ -163,19 +263,20 @@ export const ContextProvider = ({ children }) => {
       });
     });
 
-    // Limpiamos los listeners al desmontar
+    // Limpieza solo al desmontar el componente
     return () => {
-      console.warn('Desconectando socket...');
-      socket.current.off("connect");
-      socket.current.off("disconnect");
-      socket.current.off("message");
-      socket.current.off('order/init');
-      socket.current.off('order/create');
-      socket.current.off('order/update');
-      socket.current.off('order/remove');
-      socket.current.off('order/delete');
+      console.warn('Desmontando context, desconectando socket...');
+      if (socketRef.current) {
+        socketRef.current.removeAllListeners();
+        if (socketRef.current.io) {
+          socketRef.current.io.removeAllListeners();
+        }
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+      isSocketInitialized.current = false;
     };
-  }, [usuarioActual, ROLE, kitchenSelectId]);
+  }, [apiUrl]); // Solo depende de apiUrl
 
   return (
     <MiContexto.Provider
@@ -190,7 +291,10 @@ export const ContextProvider = ({ children }) => {
         setZoomMaps,
         alertaActiva,
         setAlertaActiva,
+        // Estados de conexión
+        connectionStatus,
         isConnected,
+        isOnline,
         reconnectSocket,
         kitchenSelectId,
         changeKitchen
