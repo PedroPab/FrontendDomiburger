@@ -22,6 +22,8 @@ const PaymentBreakdown = ({ totalPrice, delivery, orderItems }) => {
     return {
       ...item,
       ...product,
+      price: item.price ?? product?.price ?? 0,
+      note: item.note || "",
       complements: enrichedComplements,
     };
   }) || [];

@@ -1,8 +1,14 @@
 import { Table, Button, Spinner } from 'react-bootstrap';
-import { FaEye, FaEdit } from 'react-icons/fa';
+import { FaEye, FaEdit, FaUserCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { RoleList } from '../RoleList';
+import { ADMIN_ROUTES } from '../../Utils/const/namesRutes';
 
 const UsersTable = ({ users, loading, onViewDetails, onEditUser }) => {
+  const navigate = useNavigate();
+  const handleViewProfile = (id) => {
+    navigate(ADMIN_ROUTES.routes.USER_DETAIL.replace(':id', id));
+  };
   if (loading) {
     return (
       <div className="text-center py-5">
@@ -77,6 +83,14 @@ const UsersTable = ({ users, loading, onViewDetails, onEditUser }) => {
                     title="Editar usuario"
                   >
                     <FaEdit />
+                  </Button>
+                  <Button
+                    variant="outline-success"
+                    size="sm"
+                    onClick={() => handleViewProfile(user.id)}
+                    title="Ver perfil completo"
+                  >
+                    <FaUserCircle />
                   </Button>
                 </div>
               </td>

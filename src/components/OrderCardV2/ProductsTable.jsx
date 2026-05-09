@@ -45,7 +45,7 @@ const ProductsTable = ({ orderItems }) => {
                 <span
                   style={{ backgroundColor: item?.colorPrimary || "#000" }}
                   className="badge m-1">
-                  {item?.name}
+                  {item?.name} {item?.codes ? "(" + item?.codes.join(", ") + ")" : ""}
                 </span>
                 <span>
                   <ItemsComplements complements={item?.complements} />
