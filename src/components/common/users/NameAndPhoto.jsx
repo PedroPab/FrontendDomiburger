@@ -1,7 +1,8 @@
 import { Image } from "react-bootstrap"
 import photoGenericUser from "../../../assets/img/photoGeneric.jpg"
 
-const NameAndPhoto = ({ name, photo }) => {
+const NameAndPhoto = ({ name, photo, client }) => {
+  console.log("client en NameAndPhoto:", client);
   return (
     <div className="d-flex align-items-center">
       <Image

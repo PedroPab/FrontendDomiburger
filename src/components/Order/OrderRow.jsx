@@ -18,11 +18,12 @@ const OrderRow = ({ order }) => {
   // Consultamos el cliente y el repartidor
   const { data: clientData, fetchClient } = useClientFindById();
   const { data: userData, fetchUser } = useUserFindById();
-
+  const { data: courierData, fetchUser: fetchCourier } = useUserFindById();
   useEffect(() => {
     // Evitar llamadas innecesarias si no hay IDs
     if (order.clientId) fetchClient(order.clientId);
-    if (order.assignedCourierUserId) fetchUser(order.assignedCourierUserId);
+    if (order.userId) fetchUser(order.userId);
+    if (order.assignedCourierUserId) fetchCourier(order.assignedCourierUserId);
   }, [order.clientId, order.assignedCourierUserId]);
 
   // Resumimos los productos usando el hook correspondiente
@@ -62,13 +63,15 @@ const OrderRow = ({ order }) => {
           </Badge>
         </td>
         <td>
-          {clientData && (
-            <NameAndPhoto name={clientData.name} photo={clientData.photoUrl} />
+          {userData ? (
+            <NameAndPhoto name={userData.name} photo={userData.photoUrl} client={userData} />
+          ) : clientData && (
+            <NameAndPhoto name={clientData.name} photo={clientData.photoUrl} client={clientData} />
           )}
         </td>
         <td>
-          {userData && (
-            <NameAndPhoto name={userData.name} photo={userData.photoUrl} />
+          {courierData && (
+            <NameAndPhoto name={courierData.name} photo={courierData.photoUrl} client={courierData} />
           )}
         </td>
         <td>

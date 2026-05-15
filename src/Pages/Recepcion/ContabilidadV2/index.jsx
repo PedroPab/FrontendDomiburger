@@ -1,4 +1,5 @@
 import { Alert, Container, Spinner } from "react-bootstrap";
+import { FaChartBar } from "react-icons/fa";
 import LayoutRecepcion from "../../../Layout/Recepcion";
 import { OrdersRowsContainer } from "../../../components/Order/OrdersRowsContainer";
 import { useOrdersDay } from "./hooks/useOrdersDay";
@@ -6,32 +7,46 @@ import { FormFilterOrder } from "./FormFilterOrder";
 import { SummaryStatisticsOrders } from "./SummaryStatisticsOrders";
 
 const ContabilidadV2 = () => {
-
-  // Pedir las órdenes del día con fechas formateadas en UTCz
   const { error, data: ordenes, loading, fetchOrders } = useOrdersDay();
 
   return (
     <LayoutRecepcion>
-      <Container fluid>
-        <h1 className="text-center my-3">Contabilidad</h1>
+      <Container fluid className="py-3 px-3 px-md-4">
+        {/* Encabezado */}
+        <div className="d-flex align-items-center gap-2 mb-4">
+          <FaChartBar size={24} className="text-primary" />
+          <div>
+            <h4 className="mb-0 fw-bold">Contabilidad</h4>
+            <p className="mb-0 text-muted small">Consulta y análisis de pedidos por período</p>
+          </div>
+        </div>
 
-        {/* form filter order */}
+        {/* Filtro de fechas */}
         <FormFilterOrder fetchOrders={fetchOrders} loading={loading} />
 
-        {/* Mostrar si hay un error */}
-        {error && <Alert variant="danger">{error}</Alert>}
+        {/* Error */}
+        {error && (
+          <Alert variant="danger" className="d-flex align-items-center gap-2">
+            <strong>Error:</strong> {error}
+          </Alert>
+        )}
 
-        {/* Mostrar si está cargando */}
-        {loading && <div className="text-center"><Spinner animation="border" /></div>}
+        {/* Cargando */}
+        {loading && (
+          <div className="text-center py-5">
+            <Spinner animation="border" variant="primary" />
+            <p className="text-muted mt-2 small">Cargando pedidos...</p>
+          </div>
+        )}
 
-        {/* Mostrar datos estadísticos */}
-        <SummaryStatisticsOrders listOrders={ordenes} />
-        {/* Mostrar filas de las órdenes */}
-        <OrdersRowsContainer listOrders={ordenes} />
-
-        <hr className="mb-5" />
-
-
+        {/* Contenido */}
+        {!loading && (
+          <>
+            <SummaryStatisticsOrders listOrders={ordenes} />
+            <hr className="my-3" />
+            <OrdersRowsContainer listOrders={ordenes} />
+          </>
+        )}
       </Container>
     </LayoutRecepcion>
   );
