@@ -15,6 +15,7 @@ const OrderRow = ({ order }) => {
   const [open, setOpen] = useState(false);
   const colorStatus = statusOrderCol[order?.status]?.color || "#000000";
 
+  const [isUser, setIsUser] = useState(false);
   // Consultamos el cliente y el repartidor
   const { data: clientData, fetchClient } = useClientFindById();
   const { data: userData, fetchUser } = useUserFindById();
@@ -22,7 +23,10 @@ const OrderRow = ({ order }) => {
   useEffect(() => {
     // Evitar llamadas innecesarias si no hay IDs
     if (order.clientId) fetchClient(order.clientId);
-    if (order.userId) fetchUser(order.userId);
+    if (order.userId) {
+      fetchUser(order.userId);
+      setIsUser(true);
+    }
     if (order.assignedCourierUserId) fetchCourier(order.assignedCourierUserId);
   }, [order.clientId, order.assignedCourierUserId]);
 
@@ -31,6 +35,14 @@ const OrderRow = ({ order }) => {
   const { component: resumedItems, hasComplements } = ResumedItems(order?.orderItems, listProducts);
 
   const createdAt = convertToTimestamp(order.createdAt);
+
+  useEffect(() => {
+    //mostrar los datos del cliente, repartidor y usuario en consola para verificar que se están obteniendo correctamente
+    console.log("Cliente:", clientData);
+    console.log("Usuario:", userData);
+    console.log("Repartidor:", courierData);
+  }, [clientData, userData, courierData]);
+
 
   return (
     <>
@@ -63,10 +75,10 @@ const OrderRow = ({ order }) => {
           </Badge>
         </td>
         <td>
-          {userData ? (
+          {isUser && userData ? (
             <NameAndPhoto name={userData.name} photo={userData.photoUrl} client={userData} />
-          ) : clientData && (
-            <NameAndPhoto name={clientData.name} photo={clientData.photoUrl} client={clientData} />
+          ) : (
+            clientData && <NameAndPhoto name={clientData.name} photo={clientData.photoUrl} client={clientData} />
           )}
         </td>
         <td>
